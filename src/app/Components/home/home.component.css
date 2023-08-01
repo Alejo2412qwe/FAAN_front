@@ -10,14 +10,14 @@
   body{
     margin:0;
     padding: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(https://i.ibb.co/48v2hG8/vista-superior-alimentos-accesorios-mascotas.jpg) no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(https://i.ibb.co/KVbNL0h/juguetes-mascotas-goma-cuerda3.jpg) no-repeat;
     background-size: cover;
     color: black;
     font-family: "open sans";
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+
   }
   
 
@@ -51,6 +51,12 @@
   }
   
 
+  .introduction {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+  }
 
 
    /*----------------------VIDEO--------------------------*/
@@ -60,7 +66,6 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Aquí definimos la sombra con el valor 'rgba' para dar transparencia */
     padding: 20px; 
 }
 
@@ -167,5 +172,6 @@
     }
   }
 
+  
 
 
