@@ -42,3 +42,25 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+/* Ajustar el z-index y la posición de la ventana modal para evitar superposiciones */
+.ui-dialog {
+    z-index: 10000; /* Asegura que la ventana modal esté por encima de otros elementos */
+    position: fixed; /* Fija la posición de la ventana modal */
+    top: 50%; /* Ajusta la posición verticalmente */
+    left: 50%; /* Ajusta la posición horizontalmente */
+    transform: translate(-50%, -50%); /* Centra la ventana modal en la pantalla */
+  }
+  
+  /* Ajustar el contenido interno de la ventana modal */
+  .ui-dialog-content {
+    max-height: 80vh; /* Ajusta la altura máxima del contenido */
+    overflow-y: auto; /* Agrega desplazamiento vertical cuando el contenido es demasiado largo */
+  }
+ 
+  
+  
+  
+  
+  
+  

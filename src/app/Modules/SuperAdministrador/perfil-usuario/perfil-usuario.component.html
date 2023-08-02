@@ -1,35 +1,50 @@
-<!-- Facebook-style profile card -->
-<div class="card profile-card">
-    <div class="card-header bg-primary text-white">
-        <h4 class="m-0">{{persona.nombre1}} {{persona.nombre2}} {{persona.apellido1}} {{persona.apellido2}}</h4>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-4 profile-img-section">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apock web design</title>
+    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<section class="seccion-perfil-usuario">
+    <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
                 <img class="profile-img-lg img-fluid rounded-circle"
-                    [src]='"https://bucketgtmt.s3.amazonaws.com/" + usuario?.fotoPerfil' />
-                
-            </div>
-            <div class="col-md-8 profile-desc-section">
-                <h5 class="text-primary mb-3"><i class="bx bx-user mr-2"></i>Roles</h5>
-                <ul class="list-unstyled">
-                    <li *ngFor="let rol of roles">{{ rol }}</li>
-                </ul>
-                <h5 class="text-primary mt-4 mb-3"><i class="bx bx-info-circle mr-2"></i>Información Personal</h5>
-                <ul class="list-unstyled">
-                    <li><i class='bx bx-current-location mr-2'></i>{{persona.identificacion}}</li>
-                    <li><i class='bx bx-current-location mr-2'></i>{{persona.direccion}}</li>
-                    <li><i class='bx bxs-calendar mr-2'></i>{{persona.correo}}</li>
-                    <li><i class='bx bx-world mr-2'></i>{{persona.telefono}}</li>
-                    <li><i class='bx bx-phone mr-2'></i>{{persona.celular}}</li>
-                    <li><i class='bx bx-calendar mr-2'></i>{{persona.genero === 'M' ? 'Masculino' : 'Femenino'}}</li>
-                    <li><i class='bx bx-calendar mr-2'></i>{{persona.fechaNacimiento}}</li>
-                </ul>
-                <button type="button" (click)="showDialog()" class="btn btn-primary mt-4">Actualizar</button>
+                [src]='"https://bucketgtmt.s3.amazonaws.com/" + usuario?.fotoPerfil' />
+               
             </div>
         </div>
     </div>
-</div>
+    <div class="perfil-usuario-body">
+        <div class="perfil-usuario-bio">
+            <h4 class="titulo">{{persona.nombre1}} {{persona.nombre2}} {{persona.apellido1}} {{persona.apellido2}}</h4>
+            <h5 class="text-primary mb-3"><i class="bx bx-user mr-2"></i>Roles</h5>
+                <ul class="list-unstyled">
+                    <li *ngFor="let rol of roles">{{ rol }}</li>
+                </ul>
+        </div>
+        <h5 class="text-primary mt-4 mb-3"><i class="bx bx-info-circle mr-2"></i>Información Personal</h5>
+        <div class="perfil-usuario-footer">
+            
+            <ul class="lista-datos">
+                <li><i class='bx bx-current-location mr-2'></i>{{persona.identificacion}}</li>
+                <li><i class='bx bx-current-location mr-2'></i>{{persona.direccion}}</li>
+                <li><i class='bx bxs-calendar mr-2'></i>{{persona.correo}}</li>
+                <li><i class='bx bx-world mr-2'></i>{{persona.telefono}}</li>
+            </ul>
+            <ul class="lista-datos">
+                <li><i class='bx bx-phone mr-2'></i>{{persona.celular}}</li>
+                <li><i class='bx bx-calendar mr-2'></i>{{persona.genero === 'M' ? 'Masculino' : 'Femenino'}}</li>
+                <li><i class='bx bx-calendar mr-2'></i>{{persona.fechaNacimiento}}</li>
+            </ul>
+        </div>
+        <div class="redes-sociales">
+            <a type="button" (click)="showDialog()" class="boton-redes instagram "><i class="fas fa-edit"></i></a>
+        </div>
+    </div>
+</section>
 
 
 <!-- MODAL EDIT DATA -->
@@ -87,7 +102,7 @@
                     </div>
                 </div>
             </div>
-
+            <br>
             <div class="grid p-fluid m-2">
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
@@ -115,10 +130,12 @@
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
+                            
                             <select type="text" pInputText  name="genero" id="genero" [(ngModel)]="persona.genero">
                                 <option value="M">Masculino</option>
                                 <option value="F">Femenino</option>
                             </select>
+                            
                         </span>
                     </div>
                 </div>
@@ -127,7 +144,7 @@
 
 
             <!-- FILA 2-->
-
+            <br>
             <div class="grid p-fluid m-2">
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
@@ -161,7 +178,7 @@
             </div>
 
             <!-- FILA 3-->
-
+            <br>
             <div class="grid p-fluid m-2">
                 <div class="col-12 md:col-6 mt-1">
                     <div class="p-inputgroup">
