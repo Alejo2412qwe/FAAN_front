@@ -1,33 +1,35 @@
-<p-card header="" class="m-2">
-    <section class="profile_container">
-        <div class="profile_img_section">
-            <img class="profile_img-LG" [src]='"https://bucketgtmt.s3.amazonaws.com/" + usuario?.fotoPerfil' />
-            <div class="flag_wrapper">
-                <img class="flag" [src]='"https://bucketgtmt.s3.amazonaws.com/" + fundacion.logoFundacion' alt="logo" />
+<!-- Facebook-style profile card -->
+<div class="card profile-card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="m-0">{{persona.nombre1}} {{persona.nombre2}} {{persona.apellido1}} {{persona.apellido2}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 profile-img-section">
+                <img class="profile-img-lg img-fluid rounded-circle"
+                    [src]='"https://bucketgtmt.s3.amazonaws.com/" + usuario?.fotoPerfil' />
+                
+            </div>
+            <div class="col-md-8 profile-desc-section">
+                <h5 class="text-primary mb-3"><i class="bx bx-user mr-2"></i>Roles</h5>
+                <ul class="list-unstyled">
+                    <li *ngFor="let rol of roles">{{ rol }}</li>
+                </ul>
+                <h5 class="text-primary mt-4 mb-3"><i class="bx bx-info-circle mr-2"></i>Información Personal</h5>
+                <ul class="list-unstyled">
+                    <li><i class='bx bx-current-location mr-2'></i>{{persona.identificacion}}</li>
+                    <li><i class='bx bx-current-location mr-2'></i>{{persona.direccion}}</li>
+                    <li><i class='bx bxs-calendar mr-2'></i>{{persona.correo}}</li>
+                    <li><i class='bx bx-world mr-2'></i>{{persona.telefono}}</li>
+                    <li><i class='bx bx-phone mr-2'></i>{{persona.celular}}</li>
+                    <li><i class='bx bx-calendar mr-2'></i>{{persona.genero === 'M' ? 'Masculino' : 'Femenino'}}</li>
+                    <li><i class='bx bx-calendar mr-2'></i>{{persona.fechaNacimiento}}</li>
+                </ul>
+                <button type="button" (click)="showDialog()" class="btn btn-primary mt-4">Actualizar</button>
             </div>
         </div>
-        <div class="profile_desc_section">
-            <h3 *ngFor="let rol of roles">{{ rol }} </h3>
-            <h2>{{persona.nombre1}} {{persona.nombre2}} {{persona.apellido1}} {{persona.apellido2}} </h2>
-            <ul class="list-unstyled text-muted">
-                <li><i class='bx bx-current-location m-2'></i>{{persona.identificacion}}</li>
-                <li><i class='bx bx-current-location m-2'></i>{{persona.direccion}}</li>
-                <li><i class='bx bxs-calendar m-2'></i>{{persona.correo}} </li>
-                <li><i class='bx bx-world m-2'></i> {{persona.telefono}}</li>
-                <li><i class='bx bxs-calendar m-2'></i>{{persona.celular}} </li>
-                <li><i class='bx bxs-calendar m-2'></i>
-                    <span *ngIf="persona.genero === 'M'">Masculino</span>
-                    <span *ngIf="persona.genero === 'F'">Femenino</span>
-                </li>
-                <li><i class='bx bxs-calendar m-2'></i>{{persona.fechaNacimiento}} </li>
-            </ul>
-        </div>
-    </section>
-    <div class="container-lg">
-        <button type="button" (click)="showDialog()" class="btn btn-primarys m-2 card-img-top"
-            style="align-items: center;">Actualizar</button>
     </div>
-</p-card>
+</div>
 
 
 <!-- MODAL EDIT DATA -->
