@@ -1,5 +1,5 @@
-<p-card header="" class="m-2">
-    <h1 class="title">Control del Animal {{isIdAnimal}} </h1>
+<!-- <p-card header="" class="m-2">
+    <h1 class="title">Control del Animal </h1>
     <div class="d-flex align-items-center">
         <span class="p-input-icon-left" style="flex: 70%;">
             <i class="pi pi-search"></i>
@@ -15,25 +15,25 @@
 
 <div class="paleta-container">
     <div class="paleta">
-      <input type="checkbox" id="checkVacunas" (change)="showCard(1)" [(ngModel)]="showVacunas">
-      <label for="checkVacunas" class="paleta-label">Vacunas</label>
-      
-      <input type="checkbox" id="checkEnfermedades" (change)="showCard(2)" [(ngModel)]="showEnfermedades">
-      <label for="checkEnfermedades" class="paleta-label">Enfermedades</label>
-      
-      <input type="checkbox" id="checkTratamientos" (change)="showCard(3)" [(ngModel)]="showTratamientos">
-      <label for="checkTratamientos" class="paleta-label">Tratamientos</label>
-      
-      <input type="checkbox" id="checkAlergias" (change)="showCard(4)" [(ngModel)]="showAlergias">
-      <label for="checkAlergias" class="paleta-label">Alergias</label>
-      
-      <input type="checkbox" id="checkExamenesFisicos" (change)="showCard(5)" [(ngModel)]="showExamenesFisicos">
-      <label for="checkExamenesFisicos" class="paleta-label">Examenes Fisicos</label>
-    </div>
-  </div>
-  
+        <input type="checkbox" id="checkVacunas" (change)="showCard(1)" [(ngModel)]="showVacunas">
+        <label for="checkVacunas" class="paleta-label">Vacunas</label>
 
-  <p-card header="" class="m-2" *ngIf="selectedSections.includes(1)">
+        <input type="checkbox" id="checkEnfermedades" (change)="showCard(2)" [(ngModel)]="showEnfermedades">
+        <label for="checkEnfermedades" class="paleta-label">Enfermedades</label>
+
+        <input type="checkbox" id="checkTratamientos" (change)="showCard(3)" [(ngModel)]="showTratamientos">
+        <label for="checkTratamientos" class="paleta-label">Tratamientos</label>
+
+        <input type="checkbox" id="checkAlergias" (change)="showCard(4)" [(ngModel)]="showAlergias">
+        <label for="checkAlergias" class="paleta-label">Alergias</label>
+
+        <input type="checkbox" id="checkExamenesFisicos" (change)="showCard(5)" [(ngModel)]="showExamenesFisicos">
+        <label for="checkExamenesFisicos" class="paleta-label">Examenes Fisicos</label>
+    </div>
+</div>
+
+
+<p-card header="" class="m-2" *ngIf="selectedSections.includes(1)">
     <h1 class="title">Vacunas</h1>
     <div class="d-flex align-items-center">
         <button type="button" (click)="showModalVacuna()" class="btn btn-primarys m-2" style="flex: 80%;">Añadir
@@ -61,9 +61,9 @@
             </ng-template>
         </p-table>
     </div>
-  </p-card>
-  
-  <p-card header="" class="m-2" *ngIf="selectedSections.includes(2)">
+</p-card>
+
+<p-card header="" class="m-2" *ngIf="selectedSections.includes(2)">
     <h1 class="title">Efermedades</h1>
     <div class="d-flex align-items-center">
         <button type="button" (click)="showModalEnfermedad()" class="btn btn-primarys m-2" style="flex: 80%;">Añadir
@@ -91,9 +91,9 @@
             </ng-template>
         </p-table>
     </div>
-  </p-card>
-  
-  <p-card header="" class="m-2" *ngIf="selectedSections.includes(3)">
+</p-card>
+
+<p-card header="" class="m-2" *ngIf="selectedSections.includes(3)">
     <h1 class="title">Tratamientos</h1>
     <div class="d-flex align-items-center">
         <button type="button" (click)="showModalTratamiento()" class="btn btn-primarys m-2" style="flex: 80%;">Añadir
@@ -121,9 +121,9 @@
             </ng-template>
         </p-table>
     </div>
-  </p-card>
-  
-  <p-card header="" class="m-2" *ngIf="selectedSections.includes(4)">
+</p-card>
+
+<p-card header="" class="m-2" *ngIf="selectedSections.includes(4)">
     <h1 class="title">Alergias</h1>
     <div class="d-flex align-items-center">
         <button type="button" (click)="showModalAlergia()" class="btn btn-primarys m-2" style="flex: 80%;">Añadir
@@ -132,7 +132,7 @@
             Alergias</button>
     </div>
     <div class="card">
-        <p-table [value]="alergiasAnimales" >
+        <p-table [value]="alergiasAnimales">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Fecha Alergias</th>
@@ -151,9 +151,9 @@
             </ng-template>
         </p-table>
     </div>
-  </p-card>
-  
-  <p-card header="" class="m-2" *ngIf="selectedSections.includes(5)">
+</p-card>
+
+<p-card header="" class="m-2" *ngIf="selectedSections.includes(5)">
     <h1 class="title">Examenes Fisicos</h1>
     <div class="d-flex align-items-center">
         <button type="button" (click)="showModalExamenFisico()" class="btn btn-primarys m-2" style="flex: 80%;">Añadir
@@ -189,13 +189,13 @@
             </ng-template>
         </p-table>
     </div>
-  </p-card>
-  
+</p-card> -->
 
 
+<!-- //------------------------------------------- -->
 
 <!-- MODAL VACUNA -->
-<p-dialog header="Crear nueva vacuna" [(visible)]="visibleTipoVacuna" [modal]="true" [style]="{ width: '30vw' }"
+<!-- <p-dialog header="Crear nueva vacuna" [(visible)]="visibleTipoVacuna" [modal]="true" [style]="{ width: '30vw' }"
     [draggable]="false" [resizable]="false">
     <form (ngSubmit)="saveTipoVacuna()" ngNativeValidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
@@ -340,12 +340,12 @@
             <button type="submit" class="btn btn-primarys">Agregar vacuna</button>
         </div>
     </form>
-</p-dialog>
+</p-dialog> -->
 
 
 
 <!-- MODAL ENFERMEDAD -->
-<p-dialog header="Crear nueva enfermedad" [(visible)]="visibleTipoEnfermedad" [modal]="true" [style]="{ width: '30vw' }"
+<!-- <p-dialog header="Crear nueva enfermedad" [(visible)]="visibleTipoEnfermedad" [modal]="true" [style]="{ width: '30vw' }"
     [draggable]="false" [resizable]="false">
     <form (ngSubmit)="saveTipoEnfermedad()" ngNativeValidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
@@ -471,11 +471,11 @@
     </form>
 
     
-</p-dialog>
+</p-dialog> -->
 
 
 <!-- MODAL ALERGIAS -->
-<p-dialog header="Crear nueva alergias" [(visible)]="visibleTipoAlergia" [modal]="true" [style]="{ width: '30vw' }"
+<!-- <p-dialog header="Crear nueva alergias" [(visible)]="visibleTipoAlergia" [modal]="true" [style]="{ width: '30vw' }"
     [draggable]="false" [resizable]="false">
     <form (ngSubmit)="saveTipoAlergias()" ngNativeValidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
@@ -601,11 +601,11 @@
     </form>
 
     
-</p-dialog>
+</p-dialog> -->
 
 
 <!-- MODAL TRATAMIENTO -->
-<p-dialog header="Crear nueva tratamiento" [(visible)]="visibleTipoTratamiento" [modal]="true"
+<!-- <p-dialog header="Crear nueva tratamiento" [(visible)]="visibleTipoTratamiento" [modal]="true"
     [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="saveTipoTratamiento()" ngNativeValidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
@@ -730,10 +730,10 @@
             <button type="submit" class="btn btn-primarys">Agregar Tratamiento</button>
         </div>
     </form>
-</p-dialog>
+</p-dialog> -->
 
 <!-- MODAL EXAMEN FISICO -->
-<p-dialog header="Examen físico del animal" [(visible)]="visibleExamenFisico" [modal]="true" [style]="{ width: '30vw' }"
+<!-- <p-dialog header="Examen físico del animal" [(visible)]="visibleExamenFisico" [modal]="true" [style]="{ width: '30vw' }"
     [draggable]="false" [resizable]="false">
     <form (ngSubmit)="saveExamenFisicocrea()" ngNativeValidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
@@ -825,12 +825,12 @@
             </div>
         </div>
     </form>
-</p-dialog>
+</p-dialog> -->
 
 
 
 <!-- MODAL ANIMALES -->
-<p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
+<!-- <p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
     [resizable]="false">
 
     <p-card header="" class="m-5 text-center align-items-center">
@@ -842,9 +842,9 @@
                     </div>
                     <p class="nombre">{{mascotas.nombreAnimal}}</p>
                     <p class="placa"><span style="font-weight: bold;">Placa:</span> {{mascotas.placaAnimal}}</p>
-                    <div class="text-center">
-                        <!-- problema que habie en esta liene -->
-                        <button type="btn" (click)="selectAnimal(mascotas.idAnimal!,mascotas.fichaMedica!)"
+                    <div class="text-center"> -->
+<!-- problema que habie en esta liene -->
+<!-- <button type="btn" (click)="selectAnimal(mascotas.idAnimal!,mascotas.fichaMedica!)"
                             class="btn btn-primarys">Seleccionar</button>
                     </div>
                 </div>
@@ -859,4 +859,4 @@
         </div>
     </p-card>
 
-</p-dialog>
+</p-dialog> -->

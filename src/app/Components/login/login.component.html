@@ -1,50 +1,27 @@
-<div class="pirncipal">
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="row border rounded-5 p-3 bg-white box-area" style="box-shadow:0.5px -0.5px 12px 6.5px #00000036;">
-            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-                style="background: linear-gradient(0deg, #2e6db0 0%, #3b98b0 100%);">
-                <div class="featured-image mb-3">
-                    <img src="https://i.pinimg.com/originals/1f/d4/65/1fd465d8ddac0d9c77529ae73713331f.png"
-                        class="img-fluid" style="width: 250px;">
-                </div>
-                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">
-                    Bienvenido</p>
-                <small class="text-white text-wrap text-center"
-                    style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join experienced Designers on
-                    this
-                    platform.</small>
+<main>
+    <div class="lateral"></div>
+    <div class="login">
+        <div class="surface-card p-4 border-round w-full lg:w-6" style="background-color: #f7fafb;">
+            <div class="text-center mb-5">
+                <img src="../../../assets/img/logo.png" alt="Image" height="100" style="border-radius: 50%;" class="mb-3">
+                <div class="text-900 text-3xl font-medium mb-3">Bienvenido</div>
             </div>
-            <div class="col-md-6 right-box">
-                <div class="row align-items-center">
-                    <div class="header-text mb-4">
-                        <h2>Hola</h2>
-                        <p>Sistema fundacion FAAN.</p>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" name="username" [(ngModel)]="usuarioLoginDTO.username"
-                            class="form-control form-control-lg bg-light fs-6" placeholder="Username">
-                    </div>
-                    <div class="input-group mb-1">
-                        <input type="password" name="password" [(ngModel)]="usuarioLoginDTO.password"
-                            class="form-control form-control-lg bg-light fs-6" placeholder="Password">
-                    </div>
-                    <div class="input-group mb-5 d-flex justify-content-between">
-                        <div class="forgot">
+            <div>
+                <label for="username" class="block text-900 font-medium mb-2">Usuario</label>
+                <input id="username" type="text" name="username" [(ngModel)]="usuarioLoginDTO.username" pInputText class="w-full mb-3"  placeholder="Usuario">
 
-                            <small><a (click)="openDialogRecoverPassword()">Olvido su contraseña?</a></small>
-                        </div>
-                    </div>
-                    <div class="input-group mb-1">
-                        <button type="submit" (click)="singIn()"
-                            class="btn btn-lg btn-primarys w-100 fs-6">Login</button>
-                    </div>
+                <label for="password1" class="block text-900 font-medium mb-2">Contraseña</label>
+                <input id="password" type="password" name="password" [(ngModel)]="usuarioLoginDTO.password" pInputText class="w-full mb-3"  placeholder="*********">
+
+                <div class="flex align-items-center justify-content-between mb-6">
+                    <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer" (click)="openDialogRecoverPassword()">Olvido su contraseña?</a>
                 </div>
+
+                <button pButton (click)="singIn()" pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
             </div>
         </div>
     </div>
-</div>
-
-
+</main>
 
 <!-- IMPLEMENT RECOVER PASSWORD -->
 <p-dialog [(visible)]="dialogRecoverPassword" [style]="{ width: '450px', padding: screenWidth < 600 ? '10px' : '' }"

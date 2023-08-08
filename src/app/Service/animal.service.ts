@@ -22,7 +22,7 @@ export class AnimalService {
   }
 
   public getAllAnimalesPagesOrPlacaOrName(filtro: string, page: number, size: number, sort: string[]): Observable<Animal[]> {
-    return this.http.get<Animal[]>(environment.apiuri + '/animal/findBynameOrplaca?' + `filter=${filtro}&page=${page}&size=${size}&sort=${sort}`);
+    return this.http.get<Animal[]>(environment.apiuri + '/animal/findBynameAnimalOrPlacaAnimal/' + filtro + '?' + `&page=${page}&size=${size}&sort=${sort}`);
   }
 
   public getListaAnimal(): Observable<Animal[]> {

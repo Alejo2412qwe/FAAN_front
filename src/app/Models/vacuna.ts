@@ -1,4 +1,3 @@
-import { FichaMedica } from "./fichaMedica";
 import { TipoVacuna } from "./tipoVacuna";
 
 export class Vacuna {
@@ -8,5 +7,4 @@ export class Vacuna {
     observaciones?: string;
     estadoVacuna?: string;
     tipoVacuna?: TipoVacuna;
-    fichaMedica?: FichaMedica;
 }

@@ -2,24 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Animal } from 'src/app/Models/animal';
 import { DetalleAdopcion } from 'src/app/Models/detalleEncabezado';
 import { EncabezadoAdopcion } from 'src/app/Models/encabezadoAdopcion';
-import { FichaMedica } from 'src/app/Models/fichaMedica';
-import { FichaRegistro } from 'src/app/Models/fichaRegistro';
-import { Fundacion } from 'src/app/Models/fundacion';
 import { Persona } from 'src/app/Models/persona';
 import { RazaAnimal } from 'src/app/Models/razaAnimal';
-import { SituacionIngreso } from 'src/app/Models/situacionIngreso';
-import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { AnimalService } from 'src/app/Service/animal.service';
 import { DetalleEncabezadoService } from 'src/app/Service/detalleEncabezado.service';
 import { EncabezadoAdopcionService } from 'src/app/Service/encabezadoAdopcion.service';
-import { FichaMedicaService } from 'src/app/Service/fichaMedica.service';
-import { FichaRegistroService } from 'src/app/Service/fichaRegistro.service';
-import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
-import { SituacionIngresoService } from 'src/app/Service/situacionIngreso.service';
-import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 
 @Component({
 	selector: 'app-adopcion-animal',

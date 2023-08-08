@@ -20,9 +20,9 @@
     </p-card>
 
     <p-dataView #dv [value]="listAnimal" [paginator]="true" [rows]="12" filterBy="nombreAnimal" layout="grid">
-        <ng-template let-animal pTemplate="gridItem"  dataKey="idAnimal" [totalRecords]="totalAnimal"
-        [showCurrentPageReport]="true" [loading]="loadingAnimal" responsiveLayout="scroll" [responsive]="true" 
-        [rowHover]="true" [lazy]="true" (onLazyLoad)="loadAnimalLazy($event)">
+        <ng-template let-animal pTemplate="gridItem" dataKey="idAnimal" [totalRecords]="totalAnimal"
+            [showCurrentPageReport]="true" [loading]="loadingAnimal" responsiveLayout="scroll" [responsive]="true"
+            [rowHover]="true" [lazy]="true" (onLazyLoad)="loadAnimalLazy($event)">
             <div class="col-12 md:col-3 ">
                 <div class="animal-grid-item card">
                     <div class="animal-grid-item-content">
@@ -54,9 +54,9 @@
                     <div class="animal-grid-item-bottom">
                         <!-- <span class="animal-edadAnimal">{{animal.edadAnimal}}</span> -->
                         <p-button class="btnsize" icon="pi pi-user-plus" (onClick)="openAllDialog(animal)"
-                            *ngIf="mostrar == false">   Adopctar   </p-button>
+                            *ngIf="mostrar == false"> Adopctar </p-button>
                         <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
-                            *ngIf="mostrar == true">   Ver   </p-button>
+                            *ngIf="mostrar == true"> Ver </p-button>
                     </div>
 
 
@@ -148,72 +148,188 @@
                     <div class="col-12 md:col-12">
                         <div class="grid p-fluid align-items-center">
 
-                            <div class="col-12 md:col-6">
-                                <p-panel header="Datos Animal" [toggleable]="true" styleClass="mt-4">
-                                    <label for="nombreAnimal"><strong>Nombre Animal</strong></label>
-                                    <span class="p-input-icon-right">
-                                        <div class="p-inputgroup">
-                                            <input value="{{animalSelect.nombreAnimal}}" id="nombreAnimal" pInputText
-                                                disabled="true" />
-                                        </div>
-                                    </span>
+                            <div class="col-12 md:col-12">
 
-                                    <label for="placaAnimal"><strong>Placa Animal</strong></label>
-                                    <span class="p-input-icon-right ">
-                                        <div class="p-inputgroup">
-                                            <input value="{{animalSelect.placaAnimal}}" id="placaAnimal" pInputText
-                                                disabled="true" />
-                                        </div>
-                                    </span>
+                                <label for="fechaAnimal"><strong>Fecha de Adopcion</strong></label>
+                                <span class="p-input-icon-right ">
+                                    <div class="p-inputgroup">
+                                        <input id="fechaAnimal" value="{{fechaAdoption}}" pInputText disabled="true" />
+                                    </div>
+                                </span>
 
-                                    <label for="edadAnimal"><strong>Edad del Animal</strong></label>
-                                    <span class="p-input-icon-right ">
-                                        <div class="p-inputgroup">
-                                            <input value="{{animalSelect.edadAnimal}}" id="placaAnimal" pInputText
-                                                disabled="true" />
-                                        </div>
-                                    </span>
+                                <label for="observacionesAdopcion"><strong>Observaciones</strong></label>
+                                <span class="p-input-icon-right ">
+                                    <textarea rows="5" cols="30" id="observacionesAdopcion" pInputTextarea
+                                        [(ngModel)]="encabezadoAdopcionObject.observacion"></textarea>
+                                </span>
+                                <small class="p-error"
+                                    *ngIf="submitted && !encabezadoAdopcionObject.observacion && mostrar == false">Observaciones
+                                    is
+                                    required.</small>
 
-                                    <label for="tipoAnimal"><strong>Tipo del Animal</strong></label>
-                                    <span class="p-input-icon-right ">
-                                        <div class="p-inputgroup">
-                                            <input value="{{tipoAnimalSelect}}" id="placaAnimal" pInputText
-                                                disabled="true" />
-                                        </div>
-                                    </span>
 
-                                    <label for="razaAnimal"><strong>Raza del Animal</strong></label>
-                                    <span class="p-input-icon-right ">
-                                        <div class="p-inputgroup">
-                                            <input value="{{razaAnimalSelect}}" id="placaAnimal" pInputText
-                                                disabled="true" />
-                                        </div>
-                                    </span>
+                                <div class="row">
+                                    <div class="col-12 md:col-6">
+                                        <label for="nombreAnimal"><strong>Datos Animal</strong></label>
 
-                                    <label for="fotoAnimal"><strong>Foto del Animal</strong></label>
-                                    <p-panel header="Foto Animal">
-                                        <section class="seccion-animal-foto mb-5 mt-3">
-                                            <div class="imagen-container">
-                                                <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
-                                                    [alt]="animalSelect.nombreAnimal" width="40%" />
+                                        <p-card>
+                                            <div class="row">
+                                                <div class="col-12 md:col-6">
+                                                    <label for="nombreAnimal"><strong>Nombre Animal</strong></label>
+                                                    <span class="p-input-icon-right">
+                                                        <div class="p-inputgroup">
+                                                            <input value="{{animalSelect.nombreAnimal}}"
+                                                                id="nombreAnimal" pInputText disabled="true" />
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-12 md:col-6">
+                                                    <label for="placaAnimal"><strong>Placa Animal</strong></label>
+                                                    <span class="p-input-icon-right ">
+                                                        <div class="p-inputgroup">
+                                                            <input value="{{animalSelect.placaAnimal}}" id="placaAnimal"
+                                                                pInputText disabled="true" />
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-12 md:col-4">
+                                                    <label for="edadAnimal"><strong>Edad del Animal</strong></label>
+                                                    <span class="p-input-icon-right ">
+                                                        <div class="p-inputgroup">
+                                                            <input value="{{animalSelect.edadAnimal}}" id="placaAnimal"
+                                                                pInputText disabled="true" />
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-12 md:col-4">
+                                                    <label for="tipoAnimal"><strong>Tipo del Animal</strong></label>
+                                                    <span class="p-input-icon-right ">
+                                                        <div class="p-inputgroup">
+                                                            <input value="{{tipoAnimalSelect}}" id="placaAnimal"
+                                                                pInputText disabled="true" />
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-12 md:col-4">
+                                                    <label for="razaAnimal"><strong>Raza del Animal</strong></label>
+                                                    <span class="p-input-icon-right ">
+                                                        <div class="p-inputgroup">
+                                                            <input value="{{razaAnimalSelect}}" id="placaAnimal"
+                                                                pInputText disabled="true" />
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-12 md:col-12">
+                                                    <label for="fotoAnimal"><strong>Foto del Animal</strong></label>
+                                                    <p-card>
+                                                        <section class="seccion-animal-foto mb-5 mt-3">
+                                                            <div class="imagen-container">
+                                                                <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
+                                                                    [alt]="animalSelect.nombreAnimal" width="30%" />
+                                                            </div>
+                                                        </section>
+                                                    </p-card>
+                                                </div>
                                             </div>
-                                        </section>
-                                    </p-panel>
-                                </p-panel>
+
+                                            <!-- <label for="fotoAnimal"><strong>Foto del Animal</strong></label> -->
+                                            <!-- <p-panel header="Foto Animal"> -->
+
+                                            <!-- </p-panel> -->
+                                        </p-card>
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+                                        <br>
+                                        <p-card>
+                                            <label for="observacionesAdopcionDetalle"><strong>Observaciones
+                                                    Detalle</strong></label>
+                                            <span class="p-input-icon-right ">
+                                                <textarea rows="7" cols="30" id="observacionesAdopcionDetalle"
+                                                    pInputTextarea
+                                                    [(ngModel)]="detalleEncabesadoObject.observacion"></textarea>
+                                            </span>
+                                            <small class="p-error"
+                                                *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">Observaciones
+                                                Detalle is
+                                                required.</small>
+
+                                            <label for="fotoAnimal"><strong>Foto del Animal</strong></label>
+                                            <p-card>
+
+                                                <div class="perfil-usuario-portada" *ngIf="mostrar == true">
+                                                    <!-- <label for="fotoAnimal"><strong>Archivo de
+                                                            adopcion</strong></label> -->
+                                                    <!-- <p-panel header="Foto Animal"> -->
+                                                    <section class="seccion-animal-foto mb-5 mt-3">
+                                                        <div class="imagen-container">
+                                                            <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
+                                                                [alt]="animalSelect.nombreAnimal" width="30%" />
+                                                        </div>
+                                                    </section>
+                                                    <!-- </p-panel> -->
+                                                </div>
+
+                                                <!-- <p-panel header="Foto Animal" > -->
+                                                <section class="seccion-perfil-usuario mb-5 mt-3"
+                                                    *ngIf="mostrar == false">
+                                                    <div class="perfil-usuario-header">
+                                                        <div class="perfil-usuario-portada">
+                                                            <div class="perfil-usuario-avatar">
+                                                                <img [src]="avatarURL ? avatarURL: animal.fotoAnimal ? 'https://bucketgtmt.s3.amazonaws.com/' +animal.fotoAnimal: 'https://us.123rf.com/450wm/dervish37/dervish371805/dervish37180500017/101552833-icono-de-vector-gato-y-perro.jpg?ver=6'"
+                                                                    alt="img-avatar" height="165px">
+                                                                <input type="file" #fileInput style="display: none;"
+                                                                    accept="application/pdf, image/jpeg, image/jpg, image/png"
+                                                                    (change)="onBasicUpload($event)">
+
+                                                                <button type="button" class="boton-avatar"
+                                                                    pTooltip="Foto Animal" tooltipPosition="bottom">
+
+                                                                    <i class="fas fa-camera" style="font-size: 1.3rem"
+                                                                        (click)="fileInput.click()"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <small class="p-error"
+                                                                    *ngIf="submitted && !avatarURL  && mostrar == false"><strong
+                                                                        style="font-size: 14px;">Foto
+                                                                        es
+                                                                        requerido.</strong></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <!-- </p-panel> -->
+                                            </p-card>
+                                        </p-card>
+                                    </div>
+                                </div>
                             </div>
 
+                            <!-- <div class="col-12 md:col-12">
+                                <div class="row">
+                                    <div class="col-12 md:col-6">
 
-                            <div class="col-12 md:col-6">
-                                <p-panel header="Datos Adopcion" [toggleable]="true" styleClass="mt-4">
-                                    <label for="fechaAnimal"><strong>Fecha de Adopcion</strong></label>
+                                    </div>
+                                    <div class="col-12 md:col-6">
+
+                                    </div>
+                                </div> -->
+                            <!-- <p-panel header="Datos Adopcion" styleClass="mt-4"> -->
+                            <!-- <label for="fechaAnimal"><strong>Fecha de Adopcion</strong></label>
                                     <span class="p-input-icon-right ">
                                         <div class="p-inputgroup">
                                             <input id="fechaAnimal" value="{{fechaAdoption}}" pInputText
                                                 disabled="true" />
                                         </div>
-                                    </span>
+                                    </span> -->
 
-                                    <label for="observacionesAdopcion"><strong>Observaciones</strong></label>
+                            <!-- <label for="observacionesAdopcion"><strong>Observaciones</strong></label>
                                     <span class="p-input-icon-right ">
                                         <textarea rows="5" cols="30" id="observacionesAdopcion" pInputTextarea
                                             [(ngModel)]="encabezadoAdopcionObject.observacion"></textarea>
@@ -221,33 +337,24 @@
                                     <small class="p-error"
                                         *ngIf="submitted && !encabezadoAdopcionObject.observacion && mostrar == false">Observaciones
                                         is
-                                        required.</small>
+                                        required.</small> -->
 
-                                    <p-divider></p-divider>
+                            <!-- <p-divider></p-divider> -->
 
-                                    <label for="observacionesAdopcionDetalle"><strong>Observaciones
-                                            Detalle</strong></label>
-                                    <span class="p-input-icon-right ">
-                                        <textarea rows="5" cols="30" id="observacionesAdopcionDetalle" pInputTextarea
-                                            [(ngModel)]="detalleEncabesadoObject.observacion"></textarea>
-                                    </span>
-                                    <small class="p-error"
-                                        *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">Observaciones
-                                        Detalle is
-                                        required.</small>
 
-                                        <div class="perfil-usuario-portada" *ngIf="mostrar == true">
-                                            <label for="fotoAnimal"><strong>Archivo de
-                                                    adopcion</strong></label>
-                                            <p-panel header="Foto Animal">
-                                                <section class="seccion-animal-foto mb-5 mt-3">
-                                                    <div class="imagen-container">
-                                                        <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
-                                                            [alt]="animalSelect.nombreAnimal" width="40%" />
-                                                    </div>
-                                                </section>
-                                            </p-panel>
-                                        </div>
+
+                            <!-- <div class="perfil-usuario-portada" *ngIf="mostrar == true">
+                                        <label for="fotoAnimal"><strong>Archivo de
+                                                adopcion</strong></label>
+                                        <p-panel header="Foto Animal">
+                                            <section class="seccion-animal-foto mb-5 mt-3">
+                                                <div class="imagen-container">
+                                                    <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
+                                                        [alt]="animalSelect.nombreAnimal" width="40%" />
+                                                </div>
+                                            </section>
+                                        </p-panel>
+                                    </div>
 
                                     <p-panel header="Foto Animal" *ngIf="mostrar == false">
                                         <section class="seccion-perfil-usuario mb-5 mt-3">
@@ -277,9 +384,9 @@
                                                 </div>
                                             </div>
                                         </section>
-                                    </p-panel>
-                                </p-panel>
-                            </div>
+                                    </p-panel> -->
+                            <!-- </p-panel> -->
+                            <!-- </div> -->
 
                         </div>
                     </div>
