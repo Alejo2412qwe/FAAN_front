@@ -245,12 +245,12 @@
                                     </div>
 
                                     <div class="col-12 md:col-6">
-                                        <br>
+                                        <label for="nombreAnimal"><strong>Detalle Adopcion</strong></label>
                                         <p-card>
                                             <label for="observacionesAdopcionDetalle"><strong>Observaciones
                                                     Detalle</strong></label>
                                             <span class="p-input-icon-right ">
-                                                <textarea rows="7" cols="30" id="observacionesAdopcionDetalle"
+                                                <textarea rows="5" cols="30" id="observacionesAdopcionDetalle"
                                                     pInputTextarea
                                                     [(ngModel)]="detalleEncabesadoObject.observacion"></textarea>
                                             </span>
@@ -258,6 +258,7 @@
                                                 *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">Observaciones
                                                 Detalle is
                                                 required.</small>
+                                                <br>
 
                                             <label for="fotoAnimal"><strong>Foto del Animal</strong></label>
                                             <p-card>

@@ -117,11 +117,10 @@ export class AdopcionAnimalComponent implements OnInit {
 	}
 
 	closeAllDialog() {
-		if (this.mostrar) {
-			this.CloseDialogView();
-		} else {
-			this.CloseDialog();
+		if (!this.mostrar) {
+		this.submitted = false;
 		}
+		this.CloseDialog();
 	}
 
 	OpenDialog(animalse: Animal) {
@@ -134,13 +133,13 @@ export class AdopcionAnimalComponent implements OnInit {
 	}
 
 	CloseDialog() {
+		this.emptySelectedPerson();
+		this.detalleEncabesadoObject = {} as DetalleAdopcion;
+		this.encabezadoAdopcionObject = {} as EncabezadoAdopcion;
 		this.animalSelect = {} as Animal;
 		this.tipoAnimalSelect = '';
 		this.razaAnimalSelect = '';
-
-		this.submitted = false;
 		this.adopcionAnimalDialog = false;
-		this.cargar();
 	}
 
 	public onRowSelect(event: any) {
@@ -223,6 +222,7 @@ export class AdopcionAnimalComponent implements OnInit {
 						if (data2 != null) {
 							alert('succesfull created..');
 							this.CloseDialog();
+							this.cargar();
 							// this.listAnimal.push(data);
 							// this.closeDialog();
 						} else {
@@ -239,16 +239,6 @@ export class AdopcionAnimalComponent implements OnInit {
 	OpenDialogView(animalse: Animal) {
 		this.viewAdopcion(Number(animalse.idAnimal));
 		this.adopcionAnimalDialog = true;
-	}
-
-	CloseDialogView() {
-		this.emptySelectedPerson();
-		this.detalleEncabesadoObject = {} as DetalleAdopcion;
-		this.encabezadoAdopcionObject = {} as EncabezadoAdopcion;
-		this.animalSelect = {} as Animal;
-		this.tipoAnimalSelect = '';
-		this.razaAnimalSelect = '';
-		this.adopcionAnimalDialog = false;
 	}
 
 	viewAdopcion(idAnimal: number) {
