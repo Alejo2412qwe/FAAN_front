@@ -22,6 +22,7 @@ export class AdopcionAnimalComponent implements OnInit {
 	public submitted: boolean = false;
 	public mostrar: boolean = false;
 	public mostrarbusqueda: string = '';
+	public mostrarbusquedaPersona: string = '';
 	public opcionesMostrar: string[] = ['ADOPTADOS', 'NO ADOPTADOS'];
 
 	// activar o desactivar dialog
@@ -118,7 +119,7 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	closeAllDialog() {
 		if (!this.mostrar) {
-		this.submitted = false;
+			this.submitted = false;
 		}
 		this.CloseDialog();
 	}
@@ -150,13 +151,32 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.loadingPerson = true;
 		const page = event ? event.first / event.rows : 0;
 		const size = event ? event.rows : 4;
-		this.pageablePersona(page, size, ['identificacion', 'asc']);
+
+		if (this.mostrarbusquedaPersona == '') {
+			this.pageablePersona(page, size, ['identificacion', 'asc']);
+		} else {
+			this.pageablePersonaBusqueda(page, size, ['identificacion', 'asc']);
+		}
 	}
 
 	public pageablePersona(page: number, size: number, sort: string[]) {
 		try {
 			this.personaService
 				.getListaPersonas(page, size, sort)
+				.subscribe((data: any) => {
+					this.lisPersona = data.content;
+					this.totalPersons = data.totalElements;
+					this.loadingPerson = false;
+				});
+		} catch (error) {
+			throw new Error();
+		}
+	}
+
+	public pageablePersonaBusqueda(page: number, size: number, sort: string[]) {
+		try {
+			this.personaService
+				.getAllPersonasPagesOrCedulaOrApellido(this.mostrarbusquedaPersona, page, size, sort)
 				.subscribe((data: any) => {
 					this.lisPersona = data.content;
 					this.totalPersons = data.totalElements;

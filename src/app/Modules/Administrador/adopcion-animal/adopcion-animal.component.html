@@ -118,7 +118,12 @@
                                     requerido.</strong></small>
                         </div>
 
-
+                        <span class="p-input-icon-left" style="flex: 50%;">
+                            <i class="pi pi-search"></i>
+                            <input placeholder="Buscar Persona" type="text" id="isTextDigit" name="isTextDigit" pInputText
+                                style="width: 100%;" [(ngModel)]="mostrarbusquedaPersona" (ngModelChange)="loadPersonalLazy()" />
+                        </span>
+                        <br>
 
                         <p-table [value]="lisPersona" selectionMode="single" responsiveLayout="scroll"
                             [paginator]="true" [rows]="3" [responsive]="true" [rowHover]="true"
@@ -159,7 +164,7 @@
 
                                 <label for="observacionesAdopcion"><strong>Observaciones</strong></label>
                                 <span class="p-input-icon-right ">
-                                    <textarea rows="5" cols="30" id="observacionesAdopcion" pInputTextarea
+                                    <textarea rows="5" cols="30" id="observacionesAdopcion" pInputTextarea [disabled]="mostrar"
                                         [(ngModel)]="encabezadoAdopcionObject.observacion"></textarea>
                                 </span>
                                 <small class="p-error"
@@ -250,7 +255,7 @@
                                             <label for="observacionesAdopcionDetalle"><strong>Observaciones
                                                     Detalle</strong></label>
                                             <span class="p-input-icon-right ">
-                                                <textarea rows="5" cols="30" id="observacionesAdopcionDetalle"
+                                                <textarea rows="5" cols="30" id="observacionesAdopcionDetalle" [disabled]="mostrar"
                                                     pInputTextarea
                                                     [(ngModel)]="detalleEncabesadoObject.observacion"></textarea>
                                             </span>
