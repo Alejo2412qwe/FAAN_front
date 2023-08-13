@@ -98,9 +98,10 @@
 
 
 
-<p-dialog [(visible)]="razaAnimalDialog"
+<p-dialog [(visible)]="animalDialog"
 	[style]="{ width: screenWidth < 700 ? '100%' : '80%', padding: screenWidth < 700 ? '2%' : '' }"
-	header="REGISTRO ANIMAL" [modal]="true" styleClass="p-fluid">
+	header="{{animal.idAnimal ? 'GÉSTIONAR ANIMAL': 'REGISTRO ANIMAL'}}" [modal]="true" styleClass="p-fluid"
+	[closable]="animal.idAnimal ? true: false">
 	<ng-template pTemplate="content">
 
 
@@ -250,7 +251,7 @@
 
 					</div>
 
-					<div class="grid p-fluid align-items-center mt-2">
+					<div class="grid p-fluid align-items-center ">
 						<div class="col-12 md:col-6">
 							<label for="nombreRaza"><strong>Edad Animal</strong></label>
 
@@ -267,6 +268,22 @@
 
 							<small class="p-error" *ngIf="submitted && !animal.edadAnimal">Edad is required.</small>
 
+						</div>
+
+
+
+						<!-- implement code  -->
+						<div class="col-12 md:col-6 mt-2">
+							<!-- <div class="field"> -->
+							<label for="nombreRaza"><strong>Estatura</strong></label>
+							<p-dropdown [options]="listHeightAnimal" [(ngModel)]="selectedHeightAnimal"
+								[showClear]="true" placeholder="Seleccione Estatura" pTooltip="Estatura"
+								tooltipPosition="bottom"></p-dropdown>
+
+							<small class="p-error" *ngIf="submitted && isEmpty(tipoAnimal)">Estatura es
+								requerido.</small>
+
+							<!-- </div> -->
 						</div>
 					</div>
 
@@ -403,6 +420,44 @@
 			</div>
 
 			<div class="container mt-3">
+
+				<div class="row justify-content-center">
+					<div class="col-12 col-md-6">
+
+
+						<!-- <div class="field">
+							
+														<label for="nombreRaza"><strong>Descripción</strong></label>
+														<textarea id="descripcionFichaRegistro" name="descripcionFichaRegistro"
+															[class]="submitted && (!fichaRegister.descripcionFichaRegistro) ? 'ng-invalid ng-dirty':''"
+															pInputTextarea rows="3" cols="20" [(ngModel)]="fichaRegister.descripcionFichaRegistro"
+															required placeholder="Ingrese descripcion." pTooltip="Descripción"
+															tooltipPosition="bottom"></textarea>
+							
+														<small class="p-error"
+															*ngIf="submitted && !fichaRegister.descripcionFichaRegistro">Descripción
+															ingreso
+															es
+															requerido.</small>
+							
+													</div> -->
+
+						<label for="nombreRaza"><strong>Origen: </strong></label>
+						<span class="p-input-icon-right ">
+							<i class="pi pi-info-circle"
+								[style.color]="submitted && !fichaRegister.origen ? 'red':''"></i>
+							<div class="p-inputgroup">
+								<input type="text" [(ngModel)]="fichaRegister.origen"
+									[class]="submitted && (!fichaRegister.origen) ? 'ng-invalid ng-dirty':''"
+									id="nombreAnimal" name="nombreAnimal" pInputText placeholder="Origen.." required
+									pTooltip="Nombre Animal" tooltipPosition="bottom" />
+							</div>
+						</span>
+						<small class="p-error" *ngIf="submitted && !fichaRegister.origen">Origen es requerido.</small>
+
+
+					</div>
+				</div>
 				<div class="row justify-content-center">
 					<div class="col-12 col-md-6">
 						<div class="field">
@@ -422,6 +477,8 @@
 
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</p-panel>
@@ -431,7 +488,8 @@
 	</ng-template>
 
 	<ng-template pTemplate="footer">
-		<button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+		<button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+			(click)="hideDialog()"></button>
 		<button pButton pRipple [label]=" animal.idAnimal ? 'Actualizar': 'Guardar'" icon="pi pi-save"
 			class="p-button-text" (click)="saveAndUpdateAnimal()"></button>
 	</ng-template>
@@ -452,7 +510,7 @@
 	</ng-template>
 
 	<ng-template pTemplate="footer">
-		<button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+		<button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
 			(click)="closeDialogIconmeSituation()"></button>
 		<button pButton pRipple [label]="'Guardar'" icon="pi pi-save" class="p-button-text"
 			(click)="saveIncomeSituation()"></button>

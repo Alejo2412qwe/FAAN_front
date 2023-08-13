@@ -8,6 +8,7 @@ export class Animal {
     placaAnimal?: string;
     fotoAnimal?: string;
     edadAnimal?: number;
+    estatura?: string; //atribute add..
     estadoAnimal?: string;
     razaAnimal?: RazaAnimal;
     fichaRegistro?: FichaRegistro;

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { Animal } from 'src/app/Models/animal';
 
@@ -17,18 +18,13 @@ import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SituacionIngresoService } from 'src/app/Service/situacionIngreso.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 
-interface UploadEvent {
-	originalEvent: Event;
-	files: File[];
-}
-
 @Component({
 	selector: 'app-registro-mascotas',
 	templateUrl: './registro-mascotas.component.html',
 	styleUrls: ['./registro-mascotas.component.css'],
 })
 export class RegistroMascotasComponent implements OnInit {
-	public razaAnimalDialog: boolean = false;
+	public animalDialog: boolean = false;
 
 	public animal = new Animal();
 	public listAnimal: Animal[] = [];
@@ -73,6 +69,11 @@ export class RegistroMascotasComponent implements OnInit {
 	//FICHA REGISTER-----------------------------------
 	public fichaRegister = new FichaRegistro();
 
+	//ESTATURA-----------------------------------------
+	public listHeightAnimal: string[] | undefined;
+	public selectedHeightAnimal: string | undefined;
+
+
 	constructor(
 		private razaAnimalService: RazaAnimalService,
 		private tipoAnimalService: TipoAnimalService,
@@ -81,7 +82,8 @@ export class RegistroMascotasComponent implements OnInit {
 		private screenSizeService: ScreenSizeService,
 		private incomeSituationService: SituacionIngresoService,
 		private imagenService: ImagenService,
-		private fichaRegisterService: FichaRegistroService
+		private fichaRegisterService: FichaRegistroService,
+		private toastService: ToastrService,
 	) { }
 
 	ngOnInit(): void {
@@ -92,9 +94,20 @@ export class RegistroMascotasComponent implements OnInit {
 
 		this.pageablePersona(0, 3, ['idPersona', 'asc']);
 
-		//Size of the window..
 		this.getSizeWindowResize();
+
 		this.loading = true;
+	}
+
+	public getSizeWindowResize() {
+		const { width, height } = this.screenSizeService.getCurrentSize();
+		this.screenWidth = width;
+		this.screenHeight = height;
+
+		this.screenSizeService.onResize.subscribe(({ width, height }) => {
+			this.screenWidth = width;
+			this.screenHeight = height;
+		});
 	}
 
 	public findByAtributeName(code: number) {
@@ -169,7 +182,7 @@ export class RegistroMascotasComponent implements OnInit {
 		}
 	}
 
-	// event: LazyLoadEvent
+	// event: LazyLoadEvent 
 	public loadRazaAnimalLazy(event: any = null) {
 		this.loading = true;
 		const page = event ? event.first / event.rows : 0;
@@ -186,24 +199,14 @@ export class RegistroMascotasComponent implements OnInit {
 		this.pageablePersona(page, size, ['identificacion', 'asc']);
 	}
 
-	public getSizeWindowResize() {
-		const { width, height } = this.screenSizeService.getCurrentSize();
-		this.screenWidth = width;
-		this.screenHeight = height;
-
-		this.screenSizeService.onResize.subscribe(({ width, height }) => {
-			this.screenWidth = width;
-			this.screenHeight = height;
-		});
-	}
-
 	public saveAndUpdateAnimal() {
 		this.submitted = true;
-
-		// Validate campos
+		this.animal.estatura = this.selectedHeightAnimal;
+		// Validate fields
 		if (
 			this.animal.nombreAnimal?.trim() &&
 			this.animal.placaAnimal?.trim() &&
+			this.animal.estatura?.trim() &&
 			this.animal.edadAnimal &&
 			this.fichaRegister.descripcionFichaRegistro?.trim() &&
 			!this.isEmpty(this.tipoAnimal) &&
@@ -217,11 +220,13 @@ export class RegistroMascotasComponent implements OnInit {
 				if (this.avatarURL?.trim()) {
 					this.saveAnimal();
 				} else {
-					alert('campos incompletos2');
+					this.toastService.error('', 'CAMPOS INCOMPLETOS.', { timeOut: 2000 });
+					// alert('campos incompletos2');
 				}
 			}
 		} else {
-			alert('campos incompletos1');
+			this.toastService.error('', 'CAMPOS INCOMPLETOS.', { timeOut: 2000 });
+			// alert('campos incompletos1');
 		}
 	}
 
@@ -252,7 +257,6 @@ export class RegistroMascotasComponent implements OnInit {
 		}
 
 		const key = await this.uploadImage();
-		// Further code for saving the animal or any other processing.
 
 		this.fichaRegister.situacionIngreso = this.catchIncomeSituation;
 		this.fichaRegister.persona = this.persona;
@@ -426,16 +430,16 @@ export class RegistroMascotasComponent implements OnInit {
 	public avatarURL: string = '';
 	public selectedFile!: File;
 	public onBasicUpload(event: any) {
-		this.selectedFile = event.target.files[0];
+		let data = event.target.files[0];
 
+		if (data.size >= 1048576) {
+			this.toastService.error('', 'IMAGEN MUY GRANDE.', { timeOut: 2000 });
+			return;
+		}
+
+		this.selectedFile = data
 		const imageURL = URL.createObjectURL(this.selectedFile);
 		this.avatarURL = imageURL;
-		// console.log(this.selectedFile.size)
-		console.log(imageURL);
-		if (this.selectedFile && this.selectedFile.size > 1000000) {
-			event.target.value = null;
-		} else {
-		}
 	}
 
 	public openDialogIconmeSituation() {
@@ -463,12 +467,18 @@ export class RegistroMascotasComponent implements OnInit {
 						}, 500);
 					}
 				});
+		} else {
+			this.toastService.error('', 'CAMPO INCOMPLETO.', { timeOut: 2000 });
+
 		}
+
 	}
 
 	public closeDialogIconmeSituation() {
 		this.incomeSituation = {} as SituacionIngreso;
 		this.dialogIncomeSituation = false;
+
+
 	}
 	//
 	public clearInputAndStatus() {
@@ -478,7 +488,7 @@ export class RegistroMascotasComponent implements OnInit {
 	}
 
 	public closeDialog(): void {
-		this.razaAnimalDialog = false;
+		this.animalDialog = false;
 		this.animal = {} as Animal;
 		this.errorUnique = '';
 	}
@@ -487,14 +497,9 @@ export class RegistroMascotasComponent implements OnInit {
 		//get list income situation..
 		this.newMethodGeneral();
 
-		this.errorUnique = '';
-		this.animal = {} as Animal;
-		this.persona = {} as Persona;
-		this.tipoAnimal = {} as TipoAnimal;
-		this.razaAnimal = {} as RazaAnimal;
-		this.fichaRegister = {} as FichaRegistro;
-		this.submitted = false;
-		this.razaAnimalDialog = true;
+		this.cleanAllMethods();
+		this.catchIncomeSituation = {} as SituacionIngreso;
+		this.animalDialog = true;
 	}
 
 	public editAnimal(animal: Animal) {
@@ -505,19 +510,39 @@ export class RegistroMascotasComponent implements OnInit {
 		this.catchIncomeSituation = this.fichaRegister.situacionIngreso!;
 		this.persona = this.fichaRegister.persona!;
 		this.tipoAnimal = this.animal.razaAnimal?.tipoAnimal!;
-		this.razaAnimalDialog = true;
+		this.razaAnimal = this.animal.razaAnimal!;
+		this.selectedHeightAnimal = animal.estatura;
+		this.animalDialog = true;
 	}
 
 	public newMethodGeneral() {
 		this.findAllIncomeSituation();
 		this.findByAllTipoAnimales();
 		this.findByAllRazaAnimales();
+
+		this.loadingHeightAnimal();
+	}
+
+	public loadingHeightAnimal() {
+		this.listHeightAnimal = ["Grande", "Mediano", "Pequeño"];
 	}
 
 	public hideDialog() {
+		this.cleanAllMethods();
+
+		this.animalDialog = false;
+	}
+
+	public cleanAllMethods() {
+		this.errorUnique = '';
+		this.selectedHeightAnimal = '';
 		this.animal = {} as Animal;
-		this.razaAnimalDialog = false;
+		this.persona = {} as Persona;
+		this.tipoAnimal = {} as TipoAnimal;
+		this.razaAnimal = {} as RazaAnimal;
+		this.fichaRegister = {} as FichaRegistro;
 		this.submitted = false;
+
 	}
 
 	public localStorageRemoveItems() {
