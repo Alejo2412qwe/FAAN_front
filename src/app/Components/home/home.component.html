@@ -24,12 +24,25 @@
 
   <div class="wrap">
 		<h1>MASCOTAS</h1>
+
+    <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button" (click)="setEnableAll()"
+    (click)="getAllMascotas()">
+    <i class="fa-solid fa-list fa-fw space" style="margin-right: 10px;"></i>Todo</button>
+
+    <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button"
+                    *ngFor="let nombreTipo" (click)="getRazaAnimalById(nombreTipo.tipoAnimal)"
+                    (click)="getAllAnimalPerTipo(nombreTipo.tipoAnimal)" (click)="setEnable()"
+                    (click)="setDisabledGender()">
+                    <i class="fa-solid fa-list fa-fw space"
+                        style="margin-right: 10px;"></i>{{nombreTipo.nombretipo}}</button>
+
+
 		<div class="store-wrapper">
-			<div class="category_list">
+			<!--<div class="category_list">
 				<a  class="category_item" category="all">Todo</a>
 				<a  class="category_item" category="perro">Perros</a>
 				<a  class="category_item" category="gato">Gatos</a>
-			</div>
+			</div>-->
 			<section class="products-list">
 				<div class="product-item" category="perro">
 					<img [src]='"https://bucketgtmt.s3.amazonaws.com/" + animal.fotoAnimal'>

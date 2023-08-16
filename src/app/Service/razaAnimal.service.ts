@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from '../../environment/enviroment';
 import { RazaAnimal } from '../Models/razaAnimal';
 import { StorageService } from './storage.service';
+import { TipoAnimal } from '../Models/tipoAnimal';
 
 
 @Injectable({
@@ -45,4 +46,8 @@ export class RazaAnimalService {
     return this.http.post<RazaAnimal>(environment.apiuri + '/razaAnimal/save', razaAnimal);
   }
 
+  public findTipoAnimalById(idTipoAnimal: number): Observable<TipoAnimal> {
+    return this.http.get<TipoAnimal>(environment.apiuri + '/tipoanimal/findOne/' + idTipoAnimal);
+  }
 }
+
