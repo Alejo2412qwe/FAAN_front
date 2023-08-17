@@ -19,6 +19,7 @@ import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 export class AdopcionAnimalComponent implements OnInit {
 	// card view
 	public listAnimal: Animal[] = [];
+	public listAnimalSelectAdopcion: Animal[] = [];
 	public submitted: boolean = false;
 	public mostrar: boolean = false;
 	public mostrarbusqueda: string = '';
@@ -37,6 +38,12 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	public encabezadoAdopcionObject = new EncabezadoAdopcion();
 	public detalleEncabesadoObject = new DetalleAdopcion();
+
+	public multipleAnimalUno: boolean = false;
+	public multipleAnimal: boolean = false;
+	public listavacia: boolean = false;
+
+	clickedButtons: any[] = [];
 
 	//Size of window..
 	public screenWidth: number = 0;
@@ -75,16 +82,16 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.cargar();
 	}
 
+	// CARGAR LISTA DE ANIMALES Y PAGINACION
 	public cargar() {
 		this.listAnimal = [];
 		this.findPageableAnimal(0, 10, ['nombreAnimal', 'asc']);
-
 	}
 
 	public loadAnimalLazy(event: any = null) {
 		this.loadingAnimal = true;
 		const page = event ? event.first / event.rows : 0;
-		const size = event ? event.rows : 4;
+		const size = event ? event.rows : 10;
 		this.findPageableAnimal(page, size, ['nombreAnimal', 'asc']);
 	}
 
@@ -109,14 +116,22 @@ export class AdopcionAnimalComponent implements OnInit {
 		}
 	}
 
+
+	// DIALOGO ACTIVAR SOLO VER, ADOPTAR UNO O MAS
 	openAllDialog(animalse: Animal) {
 		if (this.mostrar) {
 			this.OpenDialogView(animalse);
 		} else {
-			this.OpenDialog(animalse);
+			if (this.multipleAnimal) {
+				this.OpenDialogList();
+			} else {
+				this.OpenDialog(animalse);
+			}
 		}
 	}
 
+
+	// AL PRECIONAR X DIALOGO
 	closeAllDialog() {
 		if (!this.mostrar) {
 			this.submitted = false;
@@ -124,25 +139,83 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.CloseDialog();
 	}
 
-	OpenDialog(animalse: Animal) {
-		this.animalSelect = animalse;
-		this.tipoAnimalSelect = animalse.razaAnimal?.tipoAnimal?.nombreTipo || '';
-		this.razaAnimalSelect = animalse.razaAnimal?.nombreRaza || '';
-
-		this.fechaAdoption = new Date();
-		this.adopcionAnimalDialog = true;
-	}
-
+	// LIMPIA AL CERRAR EL DIALOGO
 	CloseDialog() {
 		this.emptySelectedPerson();
+		this.clickedButtons = [];
+		this.listAnimalSelectAdopcion = [];
 		this.detalleEncabesadoObject = {} as DetalleAdopcion;
 		this.encabezadoAdopcionObject = {} as EncabezadoAdopcion;
 		this.animalSelect = {} as Animal;
 		this.tipoAnimalSelect = '';
 		this.razaAnimalSelect = '';
 		this.adopcionAnimalDialog = false;
+
+		this.multipleAnimal = false;
+		this.multipleAnimalUno = false;
+		this.listavacia = false;
 	}
 
+	// DIALOGO ADOPCION MAS DE UNO
+	OpenDialogList() {
+		this.fechaAdoption = new Date();
+		this.adopcionAnimalDialog = true;
+	}
+
+	// DIALOGO ADOPCION UNO
+	OpenDialog(animalse: Animal) {
+		if (animalse.idAnimal != null) {
+			this.animalSelect = animalse;
+			this.tipoAnimalSelect = animalse.razaAnimal?.tipoAnimal?.nombreTipo || '';
+			this.razaAnimalSelect = animalse.razaAnimal?.nombreRaza || '';
+		} else {
+			this.animalSelect = this.listAnimalSelectAdopcion[0];
+			if (this.listAnimalSelectAdopcion[0].razaAnimal?.tipoAnimal?.nombreTipo && this.listAnimalSelectAdopcion[0].razaAnimal?.nombreRaza) {
+				this.tipoAnimalSelect = this.listAnimalSelectAdopcion[0].razaAnimal?.tipoAnimal?.nombreTipo;
+				this.razaAnimalSelect = this.listAnimalSelectAdopcion[0].razaAnimal?.nombreRaza;
+			}
+		}
+
+		this.fechaAdoption = new Date();
+		this.adopcionAnimalDialog = true;
+	}
+
+	// LISTA DE ADOPCION MULTIPLE
+	selectAdopcion(anim: Animal) {
+		let existe = false;
+		for (let a = 0; a < this.listAnimalSelectAdopcion.length; a++) {
+			if (this.listAnimalSelectAdopcion[a].placaAnimal === anim.placaAnimal) {
+				this.listAnimalSelectAdopcion.splice(a, 1);
+				existe = true;
+				break;
+			}
+		}
+
+		if (!existe) {
+			this.listAnimalSelectAdopcion.push(anim);
+		}
+
+		if (this.listAnimalSelectAdopcion.length != 0) {
+			this.listavacia = true;
+		} else {
+			this.listavacia = false;
+		}
+
+		if (this.listAnimalSelectAdopcion.length == 1) {
+			this.multipleAnimalUno = true;
+		} else {
+			this.multipleAnimalUno = false;
+		}
+
+		if (this.listAnimalSelectAdopcion.length > 1) {
+			this.multipleAnimal = true;
+		} else {
+			this.multipleAnimal = false;
+		}
+		console.log(this.listAnimalSelectAdopcion.length + "   " + anim.nombreAnimal)
+	}
+
+	// SELECCION DE ADOPTANTE
 	public onRowSelect(event: any) {
 		this.persona = event;
 	}
@@ -150,7 +223,7 @@ export class AdopcionAnimalComponent implements OnInit {
 	public loadPersonalLazy(event: any = null) {
 		this.loadingPerson = true;
 		const page = event ? event.first / event.rows : 0;
-		const size = event ? event.rows : 4;
+		const size = event ? event.rows : 10;
 
 		if (this.mostrarbusquedaPersona == '') {
 			this.pageablePersona(page, size, ['identificacion', 'asc']);
@@ -187,6 +260,8 @@ export class AdopcionAnimalComponent implements OnInit {
 		}
 	}
 
+
+	// RESPONSIVE
 	public getSizeWindowResize() {
 		const { width, height } = this.screenSizeService.getCurrentSize();
 		this.screenWidth = width;
@@ -198,11 +273,13 @@ export class AdopcionAnimalComponent implements OnInit {
 		});
 	}
 
+	// VERIFICAR SI ESTA VACIO
 	public isEmpty(obj: any) {
 		// return Object.keys(obj).length === 0;
 		return obj ? Object.keys(obj).length === 0 : true;
 	}
 
+	// ALMACENAR ARCHIVO
 	public avatarURL: string = '';
 	public selectedFile!: File;
 	public onBasicUpload(event: any) {
@@ -218,11 +295,12 @@ export class AdopcionAnimalComponent implements OnInit {
 		}
 	}
 
+	// LIMPIAR ADOPTANTE
 	public emptySelectedPerson() {
 		this.persona = {} as Persona;
 	}
 
-
+	// ALMACENAR ADOPCION UNITARIA
 	saveAdopcion() {
 		this.submitted = true;
 
@@ -235,16 +313,11 @@ export class AdopcionAnimalComponent implements OnInit {
 				.subscribe((data1) => {
 					this.detalleEncabesadoObject.encabezadoAdopcion = data1;
 					this.detalleEncabesadoObject.animal = this.animalSelect;
-					console.log("sssssssssssssssssssssssssssssssssssss")
-					console.log(this.detalleEncabesadoObject)
-					console.log("sssssssssssssssssssssssssssssssssssss")
 					this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
 						if (data2 != null) {
 							alert('succesfull created..');
 							this.CloseDialog();
 							this.cargar();
-							// this.listAnimal.push(data);
-							// this.closeDialog();
 						} else {
 							alert('succesfull no created..');
 						}
@@ -256,11 +329,57 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	}
 
+	// ALMACENAR ADOPCION UNITARIA
+	saveAdopcionList() {
+		this.submitted = true;
+		let fini = 0;
+
+		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
+			&& this.listAnimalSelectAdopcion.length > 1 && !this.isEmpty(this.persona)) {
+
+			for (let a = 0; a < this.listAnimalSelectAdopcion.length; a++) {
+				this.detalleEncabezadoService.getfindByIdAnimal(Number(this.listAnimalSelectAdopcion[a].idAnimal)).subscribe(
+					(data) => {
+						if (data == null) {
+							this.encabezadoAdopcionObject.fechaAdopcion = this.fechaAdoption;
+							this.encabezadoAdopcionObject.persona = this.persona;
+							this.encabezadoAdopcion.saveEncabezadoAdopcion(this.encabezadoAdopcionObject)
+								.subscribe((data1) => {
+									this.detalleEncabesadoObject.encabezadoAdopcion = data1;
+									this.detalleEncabesadoObject.animal = this.listAnimalSelectAdopcion[a];
+									this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
+										fini++;
+										if (data2 != null) {
+											if (this.listAnimalSelectAdopcion.length == fini) {
+												alert('succesfull created..');
+												this.CloseDialog();
+												this.cargar();
+											}
+										} else {
+											alert('succesfull no created..');
+										}
+									});
+								});
+						} else {
+							fini++;
+							alert('Error al almacenar un animal ya registrado..');
+						}
+					}
+				)
+			}
+		} else {
+			alert('campos vacios..');
+		}
+
+	}
+
+	// DIALOGO ADOPCION VIEW A UNO
 	OpenDialogView(animalse: Animal) {
 		this.viewAdopcion(Number(animalse.idAnimal));
 		this.adopcionAnimalDialog = true;
 	}
 
+	// CARGAR DATOS DE ADPTADOS
 	viewAdopcion(idAnimal: number) {
 		this.detalleEncabezadoService.getfindByIdAnimal(idAnimal).subscribe(
 			(data) => {
@@ -278,5 +397,23 @@ export class AdopcionAnimalComponent implements OnInit {
 		)
 	}
 
+
+	selectAdopcionclicked(animal: Animal) {
+		const index = this.clickedButtons.indexOf(animal);
+		if (index === -1) {
+			this.clickedButtons.push(animal);
+		} else {
+			this.clickedButtons.splice(index, 1);
+		}
+	}
+
+	isButtonClicked(animal: Animal): boolean {
+		for (let a = 0; a < this.clickedButtons.length; a++) {
+		  if (this.clickedButtons[a].idAnimal == animal.idAnimal) {
+			return true;
+		  }
+		}
+		return false;
+	  }
 
 }

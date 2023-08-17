@@ -1,4 +1,4 @@
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environment/enviroment';
@@ -14,7 +14,11 @@ export class AnimalService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public findByAdoptadoOrNoAdoptado(page: number, size: number, adoptado: Boolean, NombreOrPlaca: string, sort: string[]): Observable<Animal[]> {
-    return this.http.get<Animal[]>(environment.apiuri + '/animal/findByAdoptadoOrNoAdoptado/' + adoptado + '?' + `busqueda=${NombreOrPlaca}&page=${page}&size=${size}&sort=${sort}`);
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','));
+    return this.http.get<Animal[]>(environment.apiuri + '/animal/findByAdoptadoOrNoAdoptado/' + adoptado + '?' + `busqueda=${NombreOrPlaca}`, {params});
   }
 
   public getAllAnimalesPages(page: number, size: number, sort: string[]): Observable<Animal[]> {

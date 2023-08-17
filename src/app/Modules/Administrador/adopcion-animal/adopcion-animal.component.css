@@ -73,3 +73,16 @@
     display: flex;
     justify-content: center;
   }
+
+  .top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 25%;
+    padding: 10px;
+  }
+
+  .clicked {
+  background-color: red; /* Cambia esto al color deseado */
+}

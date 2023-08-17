@@ -36,7 +36,11 @@ export class DetalleEncabezadoService {
 
 
   public getfindByIdAnimal(idAnimal: number):Observable<DetalleAdopcion >{
-    return this.http.get<DetalleAdopcion >(environment.apiuri+'/detalleadopcion/findByIdAnimal/' + idAnimal);
+    return this.http.get<DetalleAdopcion>(environment.apiuri+'/detalleadopcion/findByIdAnimal/' + idAnimal);
+  }
+
+  public getExistIdAnimal(idAnimal: number):Observable<Boolean >{
+    return this.http.get<Boolean>(environment.apiuri+'/detalleadopcion/existIdAnimal/' + idAnimal);
   }
 
 }
