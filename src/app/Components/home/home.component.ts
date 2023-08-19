@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit{
         this.ListAnimales
       });
   }
-
+  
   listRazas: RazaAnimal [] = [];
   public getRazaAnimalById(idTipoAnimal: number) {
     this.razaAnimalService.findTipoAnimalById(idTipoAnimal).subscribe(
