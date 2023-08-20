@@ -12,7 +12,7 @@ a:visited {
 } 
 
 body {
-    background-color: #fff;
+    background-color: #ffffff;
     margin: 8px 20px
 }
 
@@ -142,3 +142,33 @@ mark.silver {
     color: #32DC24;
     background: none;
 }
+
+      /*header*/
+
+      @import url(https://fonts.googleapis.com/css?family=Raleway);
+      nav {
+        margin-top: 0px;
+        padding: 24px;
+        text-align: center;
+        font-family: Raleway;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      }
+      
+      #nav-3 {
+        background: var(--blue);
+      }
+      
+      .menu {
+        transition: 0.4s;
+        font-size: 20px;
+        text-decoration: none;
+        padding: 0 10px;
+        margin: 0 10px;
+        color: #ffffff;
+      }
+      .menu:hover {
+        background-color: #ffffff;
+        color: #003cff;
+        padding: 24px 10px;
+      }
+      

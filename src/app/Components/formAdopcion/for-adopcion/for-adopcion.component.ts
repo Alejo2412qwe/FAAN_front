@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+//import * as pdfMake from "pdfmake/build/pdfmake";
+//import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+//(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
     selector: 'app-for-adopcion',
@@ -292,8 +292,8 @@ export class ForAdopcionComponent {
         };
 
         // Generar el PDF
-        const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-        pdfDocGenerator.open();
+        //const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+       // pdfDocGenerator.open();
     }
 
 
