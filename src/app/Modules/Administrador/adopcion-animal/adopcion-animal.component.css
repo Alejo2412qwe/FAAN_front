@@ -1,0 +1,88 @@
+:host ::ng-deep {
+    /* .p-dropdown {
+        width: 14rem;
+        font-weight: normal;
+    } */
+    
+    .animal-nombreAnimal {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .animal-placaAnimal {
+        margin: 0 0 1rem 0;
+        text-align: center;
+    }
+    
+    .animal-raza .animal-tipo .animal-edad {
+        font-weight: 600;
+        vertical-align: middle;
+    }
+
+    .animal-grid-item-content img {
+        width: 100%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        margin: 2rem 0;
+    }
+
+    .p-button {
+        margin-bottom: .5rem;
+        width: 100%;
+    }
+    
+    .product-grid-item {
+        margin: .5em;
+        border: 1px solid #dee2e6;
+    
+        .product-grid-item-top,
+        .product-grid-item-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        img {
+            width: 75%;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            margin: 2rem 0;
+        }
+    
+        .product-grid-item-content {
+            text-align: center;
+        }
+    
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+}
+
+.card {
+    padding: 2rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+.imagen-container {
+    margin: 2rem 0;
+    /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 25%;
+    padding: 10px;
+  }
+
+  .clicked {
+  background-color: red; /* Cambia esto al color deseado */
+}
