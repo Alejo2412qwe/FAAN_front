@@ -10,13 +10,14 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(https://i.ibb.co/KVbNL0h/juguetes-mascotas-goma-cuerda3.jpg) no-repeat;
+  background-color: #ffffff;
   background-size: cover;
   color: black;
   font-family: "open sans";
   height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: 'Lato', sans-serif; /* Cambiar tipo de letra */
 
 }
 
@@ -24,7 +25,7 @@ body {
 /* ------------------------ TOP SECTION ----------------*/
 
 .titles {
-  color: white;
+  color: rgb(0, 0, 0);
   text-align: center;
   width: 40vw;
   margin: 0 auto;
@@ -32,7 +33,7 @@ body {
 }
 
 .titles h4 {
-  color: white;
+  color: rgb(0, 0, 0);
   text-align: center;
   width: 40vw;
   margin: 0 auto;
@@ -85,7 +86,7 @@ body {
 }
 
 .box {
-  background: rgba(255, 255, 255, .5);
+  background: rgba(247, 250, 251);
   margin: 1rem;
   padding: .5rem;
   display: flex;
@@ -98,7 +99,7 @@ body {
 }
 
 .box:hover {
-  background: rgba(255, 255, 255, .7);
+  background: rgb(247, 250, 251);
   transform: translateY(-20%);
 }
 
@@ -241,7 +242,6 @@ body {
   width: 82%;
   display: flex;
   flex-wrap: wrap;
-  
 }
 
 
@@ -422,11 +422,10 @@ nav {
 }
 
 .transparent-box {
-  background-color: rgba(255, 255, 255, 0.5);
+  background: rgba(247, 250, 251);
   padding: 20px;
   max-width: 100%;
   margin: 0 auto;
-  border: 1px solid #e2e2e2;
   border-radius: 10px;
   /* Suavizar las esquinas */
   box-sizing: border-box;
