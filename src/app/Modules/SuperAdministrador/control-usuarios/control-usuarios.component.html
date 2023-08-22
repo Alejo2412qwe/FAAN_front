@@ -1,0 +1,258 @@
+<div class="card p-3">
+
+    <p-toolbar styleClass="mb-3 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2"
+                (click)="openNewUsuario()"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="listUsuarios" [lazy]="true" (onLazyLoad)="loadUsuarioLazy($event)" dataKey="idUsuario"
+        [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="size" [totalRecords]="totalRecords"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords}  Usuarios"
+        [showCurrentPageReport]="true" [loading]="loading"
+        [globalFilterFields]="['idUsuario', 'username', 'usuario.persona.identificacion']">
+
+        <ng-template pTemplate="caption">
+
+            <div class="grid p-fluid align-items-center">
+                <div class="col-12 md:col-8">
+                    <div class="p-inputgroup">
+                        <h5 class="m-0"><strong>REGISTRO DE USUARIOS</strong></h5><br>
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+
+
+        <ng-template pTemplate="header" class="text-aling-center">
+            <tr>
+                <th pSortableColumn="idUsuario" style="min-width:2rem"><strong>ID</strong> <p-sortIcon
+                        field="idUsuario"></p-sortIcon></th>
+
+                <th pSortableColumn="username" tyle="min-width:15rem"><strong>USERNAME</strong> <p-sortIcon
+                        field="username"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="persona.nombre1" style="min-width:15rem"><strong>NOMBRES/APELLIDOS</strong>
+                    <p-sortIcon field="persona.nombre1"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="persona.identificacion" style="min-width:10rem">
+                    <strong>IDENTIFICACION</strong> <p-sortIcon field="persona.identificacion"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="estadoUsuario" style="min-width:10rem"><strong>ESTADO</strong> <p-sortIcon
+                        field="estadoUsuario"></p-sortIcon>
+                </th>
+                <th>
+                    <strong> CAMBIARESTADO</strong> 
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+            <tr>
+                <td>{{ usuario.idUsuario }}</td>
+                <td><p-avatar src='https://bucketgtmt.s3.amazonaws.com/' styleClass="mr-2" size="large"
+                        shape="circle"></p-avatar></td>
+                <td>{{ usuario.persona.nombre1 }} {{ usuario.persona.apellido1 }}</td>
+                <td>{{ usuario.persona.identificacion }}</td>
+                <td><p-tag [value]="usuario.estadoUsuario ? 'Activado' : 'Desactivado'"
+                        [severity]="getSeverity(usuario.estadoUsuario)"></p-tag></td>
+                <td>
+                    <p-inputSwitch [(ngModel)]="checked" (onChange)="toggleUserState(usuario)"></p-inputSwitch>
+                </td>
+                <td>
+                    <button pButton pRipple pTooltip="Editar Usuario" tooltipPosition="top" icon="pi pi-pencil"
+                        (click)="editUsuario(usuario)"
+                        class="p-button-rounded p-button-success p-button-outlined mr-2"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">En total son {{ listUsuarios ?
+                totalRecords : 0 }} Usuarios.</div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-dialog [(visible)]="userDialog"
+    [style]="{ width: screenWidth < 700 ? '100%' : '80%', padding: screenWidth < 700 ? '2%' : '' }"
+    header="REGISTRO USUARIO" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <!-- USUARIO REGISTER -->
+        <div class="">
+
+            <div class="grid p-fluid align-items-center m-4">
+                <div class="col-12 md:col-8">
+                    <div class="grid p-fluid align-items-center">
+                        <div class="col-12 md:col-4">
+                            <label for="nombreRaza"><strong>Identificacion</strong></label>
+                            <span class="p-input-icon-right ">
+                                <i class="pi pi-info-circle"
+                                    [style.color]="submitted && !persona.identificacion ? 'red':''"></i>
+                                <div class="p-inputgroup">
+                                    <input type="text" pTooltip="Identificación" [(ngModel)]="persona.identificacion"
+                                        [class]="submitted && (!persona.identificacion) ? 'ng-invalid ng-dirty':''"
+                                        id="identificacion" name="identificacion" pInputText
+                                        placeholder="identificacion.." required />
+                                </div>
+                            </span>
+                            <small class="p-error" *ngIf="submitted && !persona.identificacion">Identificacion es
+                                obligatotia.</small>
+                        </div>
+                        <div class="col-12 md:col-4">
+                            <label for="nombre1"><strong>Nombre</strong></label>
+                            <span class="p-input-icon-right ">
+                                <i class="pi pi-info-circle"
+                                    [style.color]="submitted && !persona.nombre1 ? 'red':''"></i>
+                                <div class="p-inputgroup">
+                                    <input pTooltip="Nombre" type="text" [(ngModel)]="persona.nombre1"
+                                        [class]="submitted && !persona.nombre1 ? 'ng-invalid ng-dirty':''" id="nombre1"
+                                        name="nombre1" pInputText placeholder="Nombre.." required />
+                                </div>
+                            </span>
+                            <small class="p-error" *ngIf="submitted && !fullname">Apellido
+                                requeridos.</small>
+                        </div>
+                        <div class="col-12 md:col-4">
+                            <label for="apellido1"><strong>Apellido</strong></label>
+                            <span class="p-input-icon-right ">
+                                <i class="pi pi-info-circle"
+                                    [style.color]="submitted && !persona.apellido1 ? 'red':''"></i>
+                                <div class="p-inputgroup">
+                                    <input pTooltip="Apellido" type="text" [(ngModel)]="persona.apellido1"
+                                        [class]="submitted && !persona.apellido1 ? 'ng-invalid ng-dirty':''"
+                                        id="apellido1" name="apellido1" pInputText placeholder="Apellido.." required />
+                                </div>
+                            </span>
+                            <small class="p-error" *ngIf="submitted && !fullname">Nombres y Apellidos
+                                requeridos.</small>
+                        </div>
+                    </div>
+
+                    <div class="grid p-fluid align-items-center">
+                        <div class="col-12 md:col-6">
+                            <label for="nombreRaza"><strong>Celular</strong></label>
+                            <span class="p-input-icon-right ">
+                                <div class="p-inputgroup">
+                                    <input type="text" pTooltip="Celular" [(ngModel)]="persona.celular"
+                                        [class]="submitted && (!persona.celular) ? 'ng-invalid ng-dirty':''"
+                                        id="celular" name="celular" pInputText placeholder="celular.." />
+                                </div>
+                            </span>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <label for="nombreRaza"><strong>Correo</strong></label>
+                            <span class="p-input-icon-right ">
+                                <div class="p-inputgroup">
+                                    <input pTooltip="Correo" type="text" [(ngModel)]="persona.correo"
+                                        [class]="submitted && !persona.correo ? 'ng-invalid ng-dirty':''" id="correo"
+                                        name="correo" pInputText placeholder="Correo electronico.." required />
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid p-fluid align-items-center">
+                        <div class="col-12 md:col-6">
+                            <label for="nombreRaza"><strong>Username</strong></label>
+                            <span class="p-input-icon-right ">
+                                <i class="pi pi-info-circle"
+                                    [style.color]="submitted && !usuario.username ? 'red':''"></i>
+                                <div class="p-inputgroup">
+                                    <input type="text" pTooltip="Username" [(ngModel)]="usuario.username"
+                                        [class]="submitted && (!usuario.username) ? 'ng-invalid ng-dirty':''"
+                                        id="username" name="username" pInputText placeholder="username.." required />
+                                </div>
+                            </span>
+                            <small class="p-error" *ngIf="submitted && !usuario.username">Username es
+                                obligatotia.</small>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <label for="nombreRaza"><strong>Password</strong></label>
+                            <span class="p-input-icon-right ">
+                                <i class="pi pi-info-circle"
+                                    [style.color]="submitted && !usuario.password ? 'red':''"></i>
+                                <div class="p-inputgroup">
+                                    <input type="password" pTooltip="Contraseña" [(ngModel)]="usuario.password"
+                                        [class]="submitted && (!usuario.password) ? 'ng-invalid ng-dirty':''"
+                                        id="password" name="password" pPassword placeholder="password.." required />
+                                </div>
+                            </span>
+                            <small class="p-error" *ngIf="submitted && !usuario.password">Contraseña es
+                                obligatoria.</small>
+                        </div>
+                    </div>
+
+                    <div class="card col-12 md:col-12">
+                        <p class="m-1"><strong>Selecione los roles:</strong></p>
+                        <div *ngFor="let roles of listRoles" class="field-checkbox m-1">
+                            <p-checkbox name="roles" [value]="roles" [(ngModel)]="selectedRoles"
+                                [inputId]="roles.nombreRol"></p-checkbox>
+                            <label [for]="roles.idRol">{{ roles.nombreRol }}</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <p-panel header="Foto Usuario">
+                        <section class="seccion-perfil-usuario mb-5 mt-3">
+                            <div class="perfil-usuario-header">
+                                <div class="perfil-usuario-portada">
+                                    <div class="perfil-usuario-avatar">
+                                        <img [src]="avatarURL ? avatarURL: usuario.fotoPerfil? 'https://bucketgtmt.s3.amazonaws.com/' + usuario.fotoPerfil: 'https://us.123rf.com/450wm/dervish37/dervish371805/dervish37180500017/101552833-icono-de-vector-gato-y-perro.jpg?ver=6'"
+                                            alt="img-avatar" height="165px">
+                                        <input type="file" #fileInput style="display: none;"
+                                            accept="image/jpeg, image/jpg, image/png" (change)="onBasicUpload($event)">
+                                        <button type="button" class="boton-avatar">
+                                            <i class="fas fa-camera" style="font-size: 1.3rem"
+                                                (click)="fileInput.click()"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </p-panel>
+
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple [label]=" usuario.idUsuario ? 'Actualizar': 'Guardar'" icon="pi pi-save"
+            class="p-button-text" (click)="saveAndUpdateUsuario()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="desactivarUser"
+    [style]="{ width: screenWidth < 400 ? '50%' : '30%', padding: screenWidth < 400 ? '2%' : '' }"
+    header="CAMBIAR ESTADO DE USUARIO" [modal]="true" styleClass="p-fluid">
+
+    <div class="card shadow-3">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5>¿DESEA INHABILITAR ESTE USUARIO?</h5><br>
+                <p>Al hacerlo, el usuario perdera el acceso al sistema.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Inhabilitar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

@@ -80,7 +80,7 @@ import { AccordionModule } from 'primeng/accordion';
 import {SkeletonModule} from 'primeng/skeleton';
 // Fin de primeNG
 import { FieldsetModule } from 'primeng/fieldset';
-
+import { DragDropModule } from 'primeng/dragdrop';
 @NgModule({
   declarations: [],
   imports: [
@@ -88,6 +88,7 @@ import { FieldsetModule } from 'primeng/fieldset';
   ],
   exports: [
     AccordionModule,
+    DragDropModule,
     ToolbarModule,
     ButtonModule,
     MenubarModule,

@@ -1,0 +1,246 @@
+<div class="header">
+  <h1>NO COMPRES, ¡ADOPTA Y SALVA UNA VIDA!</h1>
+</div>
+
+<section class="intro">
+  <h2>Primeramente agradecemos tu interés en adoptar y dar una segunda oportunidad a uno de nuestros rescatados.</h2>
+  <p>
+    Para nosotros es muy importante cada uno de los perritos y gatitos que han sido rescatados ya que vienen de
+    maltrato, calle o abandono, motivo por el cuál debemos asegurarnos que estará en buenas manos bajo tu cuidado y
+    protección. Por ello te pedimos que antes de llenar el siguiente formulario, leas con atención las siguientes
+    consideraciones que debes tomar en cuenta antes de adoptar un animalito.
+  </p>
+  <p>
+    Si al terminar de leer aún estás convencido de adoptar, llena esta solicitud y envíala a nuestros contactos
+    0998681859 - 0987614520.
+  </p>
+</section>
+
+<section class="importantes">
+  <h2>I M P O R T A N T E</h2>
+  <h3>CONSIDERACIONES ANTES DE ADOPTAR</h3>
+  <p>
+    El tener una animalito puede ser muy gratificante, pero sólo si realmente has meditado esta decisión antes de
+    adogtar un compañero.
+    <br>
+    <br>
+    El hecho de que estés pensando en adoptar un animal de un refugio significa que eres una persona responsable y
+    humanitaria. Pero antes de tomar la decisión de traer un animalito a tu vida, tómate un momento para pensar en estos
+    puntos:
+    <br>
+    <br>
+    ¿Porqué quieres un animalito?
+
+    Adogtar un animalito simplemente por novelería o porque los niños han estado lloriqueando generalmente termina
+    siendo un gran error. No te olvides de que algunas especies pueden estar contigo 10, 15 o incluso 20 años.
+    <br>
+    <br>
+    ¿Tienes tiempo necesario?
+
+    Perros, gatos y otros animales de compañía no pueden ser ignorados simplemente porque estés cansado u ocupado,
+    necesitan comida, agua, ejercicio, cariño y compañía. Muchos animales en los refugios están allí porque sus dueños
+    no pensaron realmente cuánto tiempo llevaba cuidar de ellos.
+    <br>
+    <br>
+    Economía
+    Los costos de mantener un animalito pueden ser elevados:
+    Cuidados veterinarios, juguetes, comida y otros que se puedan ocasionar.
+    <br>
+    <br>
+    Otros.
+
+    Pulgas, lana en los muebles, travesuras, etc.
+    <br>
+    <br>
+    Te comprometes a hacerte cargo del animal por el resto de su vida, tomando en cuenta que vivirá un promedio
+    aproximado de 10 a 15 años?
+    <br>
+    <br>
+    Tomando estas consideraciones deseas continuar, llena la solicitud.
+  </p>
+</section>
+
+<h1>Formulario de Adopción de Animal de Compañía</h1>
+<form action="/procesar_formulario" method="post">
+  <fieldset>
+    <legend>Información Personal</legend>
+    <label>Nombre:</label>
+    <input type="text" id="nombre" required><br>
+
+    <label>Ocupación:</label>
+    <input type="text" id="ocupacion" required><br>
+
+    <label>Dirección Domiciliaria:</label>
+    <input type="text" id="direccion_domicilio" required><br>
+
+    <label>Dirección de Trabajo:</label>
+    <input type="text" id="direccion_trabajo" required><br>
+
+    <label>Correo Electrónico:</label>
+    <input type="email" id="correo" required><br>
+
+    <label>Teléfono de Casa:</label>
+    <input type="tel" id="telefono_casa"><br>
+
+    <label>Tel. Trabajo:</label>
+    <input type="tel" id="telefono_trabajo"><br>
+
+    <label>Celular:</label>
+    <input type="tel" id="celular" required><br>
+
+    <label>Estado Civil:</label>
+    <input type="text" id="estado_civil" required><br>
+
+    <label>Número de Miembros en la Familia:</label>
+    <input type="number" id="num_miembros_familia" required><br>
+
+    <label>Niños - Edad:</label>
+    <input type="text" id="ninos_edad" required><br>
+  </fieldset>
+
+  <fieldset>
+    <legend>Autorización de Adopción</legend>
+    <label>¿Quién es la persona que autorizará la adopción del animal? (madre, padre, tutor, etc) :</label>
+    <input type="text" id="autorizador" required><br>
+
+    <label>¿Están todos los miembros de la familia enterados y de acuerdo con la intención de adoptar un animal de
+      compañía?</label>
+    <input type="checkbox" id="acuerdo_familia_si" value="Si" required> Si<br>
+    <input type="checkbox" id="acuerdo_familia_no" value="No" required> No<br>
+
+    <label>Si es no, ¿por qué?</label>
+    <textarea id="razon_no_acuerdo" rows="3" cols="50"></textarea><br>
+  </fieldset>
+
+  <label>El animalito viviría con:</label>
+  <input type="checkbox" id="viveConmigo" value="Conmigo" required>Conmigo y mi familia<br>
+  <input type="checkbox" id="viveOtro" value="Otro" required>Es obsequio para un conocido<br>
+
+  <label>Como lo vas a considerar:</label>
+  <input type="checkbox" id="compania" value="Conmigo" required>Compañia<br>
+  <input type="checkbox" id="guardian" value="Otro" required>Guardian<br>
+  <input type="checkbox" id="miembroFamilia" value="Otro" required>Miembro de la familia<br>
+  <input type="checkbox" id="amigo" value="Otro" required>Amigo<br>
+
+  <label>¿Han tenido animales de compañía con anterioridad?</label>
+  <input type="checkbox" id="antesSi" value="Si" required> Si<br>
+  <input type="checkbox" id="antesNo" value="No" required> No<br>
+
+  <label>¿Qué animal era? DESCRIBA</label>
+  <textarea id="animalPasado" rows="3" cols="50"></textarea><br>
+
+  <label>¿Cuánto tiempo vivió con ustedes? </label>
+  <textarea id="tiempoPasado" rows="3" cols="50"></textarea><br>
+
+  <label>¿En dónde está ahora el animal? ¿Por qué? Falleció, Como?</label>
+  <textarea id="animalAhora" rows="3" cols="50"></textarea><br>
+
+  <label>¿Estaba vacunado? </label>
+  <input type="checkbox" id="vacunaSI" value="Si" required> Si<br>
+  <input type="checkbox" id="vacunaNO" value="No" required> No<br>
+
+  <label>¿Qué vacunas se le aplicaron? y ¿Cada cuánto tiempo se vacunaba?</label>
+  <textarea id="vacunasANTES" rows="3" cols="50"></textarea><br>
+
+  <label>¿Estaba desparasitado?</label>
+  <input type="checkbox" id="desparasitadoSI" value="Si" required> Si<br>
+  <input type="checkbox" id="desparasitadoNO" value="No" required> No<br>
+
+  <label>¿Cada cuánto tiempo se desparasitaba?</label>
+  <textarea id="tiempoDesparasita" rows="3" cols="50"></textarea><br>
+
+  <label>¿Cuántas horas del día permanecería solo?</label>
+  <input type="number" id="horasSolo" required><br>
+
+  <label>¿En dónde estaría mientras no hubiera nadie en casa? </label>
+  <textarea id="pasariaAnimal" rows="3" cols="50"></textarea><br>
+
+  <label>¿Hay alguien en su familia con problemas de alergias?</label>
+  <textarea id="problemaAlergia" rows="3" cols="50"></textarea><br>
+
+  <label>¿Qué sucedería si alguien resultara alérgico al animal?</label>
+  <textarea id="resultaAlergico" rows="3" cols="50"></textarea><br>
+
+  <label>¿Planea tener hijos? </label>
+  <input type="checkbox" id="planeaSI" value="Si" required> Si<br>
+  <input type="checkbox" id="planeaNO" value="No" required> No<br>
+
+  <label>¿Qué sucedería si usted o en caso de ser hombre, su pareja, quedara embarazada?</label>
+  <textarea id="embaraza" rows="3" cols="50"></textarea><br>
+
+  <label>¿Conoce los gastos que implica tener un perro o gato?</label>
+  <input type="checkbox" id="gastosSI" value="Si" required> Si<br>
+  <input type="checkbox" id="gastosNO" value="No" required> No<br>
+
+  <fieldset>
+    <legend>Información De La Vivienda</legend>
+    <label>Su vivienda es:</label>
+    <input type="checkbox" id="casa" value="Si" required>Casa<br>
+    <input type="checkbox" id="depa" value="No" required> Departamento<br>
+
+    <label>Su vivienda es:</label>
+    <input type="checkbox" id="propia" value="Si" required> Propia<br>
+    <input type="checkbox" id="rentada" value="No" required> Rentada<br>
+    <input type="checkbox" id="compartida" value="No" required> Compartida<br>
+
+    <label>¿Tiene jardín o patio?</label>
+    <input type="checkbox" id="jardin" value="Si" required> Jardin<br>
+    <input type="checkbox" id="patio" value="No" required> Patio<br>
+
+    <label>En que parte de tu casa va a vivir el animalito:</label>
+    <input type="checkbox" id="jardinParte" value="Si" required> Jardin<br>
+    <input type="checkbox" id="patioParte" value="No" required> Patio<br>
+    <input type="checkbox" id="azoteaParte" value="No" required> Azotea<br>
+    <input type="checkbox" id="dentroCasaParte" value="No" required> Dentro de la casa<br>
+
+    <label>¿En dónde dormiría?</label>
+    <input type="checkbox" id="dormirJardin" value="Si" required> Jardin<br>
+    <input type="checkbox" id="dormirPatio" value="No" required> Patio<br>
+    <input type="checkbox" id="dormirAzotea" value="No" required> Azotea<br>
+    <input type="checkbox" id="dormirDentroCasa" value="No" required> Dentro de la casa<br>
+
+    <label>Si vive en departamento, ¿hay otros vecinos que tengan animales de compañía? </label>
+    <textarea id="vecinosAnimales" rows="3" cols="50"></textarea><br>
+
+    <label>En caso de renta o condominio,¿cuentas con el permiso de tu casero o administración para poseer animales de
+      compañía?</label>
+    <input type="checkbox" id="permisoSI" value="Si" required> SI<br>
+    <input type="checkbox" id="permisoNO" value="No" required> NO<br>
+
+    <label>¿Qué sucedería si tuviera que mudarse a otra casa o ciudad /país? </label>
+    <textarea id="mudarseLugar" rows="3" cols="50"></textarea><br>
+
+    <label>¿Qué sucedería si al mudarse algún lugar donde no admiten perros o gatos o de tener algún problema familiar
+      o económico? </label>
+    <textarea id="mudarse" rows="3" cols="50"></textarea><br>
+
+    <label>¿Está dispuesto a que el perro o gato tenga un periodo de ajuste en el que aprenda dónde debe ir al baño y
+      se adapte a la familia?</label>
+    <input type="checkbox" id="dispuestoSI" value="Si" required> SI<br>
+    <input type="checkbox" id="dispuestoNO" value="No" required> NO<br>
+
+    <label>¿Cómo te enteraste de nosotros?</label>
+    <textarea id="enterarseNosotros" rows="3" cols="50"></textarea><br>
+
+    <label>otros comentarios.</label>
+    <textarea id="otrosComentarios" rows="3" cols="50"></textarea><br>
+
+  </fieldset>
+
+  <input type="submit" (click)="generarPDF()" value="Enviar">
+</form>
+
+
+<section class="requerimientosAdicionales">
+  <h2>Una vez llenado este formulario pasaremos a los siguientes requerimientos:</h2>
+  <p>
+    Después de conocer el perro o gato con interés en adoptar, se deberá realizar una visita de convivencia, así como
+    recibir una platica sobre el cuidado de una mascota.
+    Entregar copia de Identificación oficial y comprobante de domicilio (planilla servicios básicos)
+    Tener la disponibilidad de recibir una visita de parte de la asociación para conocer el lugar donde habitará el
+    animalito en adopción.
+    Segunda visita de familiarización y entrega de donativo de $ 15.00 o su equivalente en comida para perros los cual
+    ayudara a seguir con nuestra labor.
+    Es obligación de FAAN entregarte al animalito vacunado, desparasitado y esterilizado si tiene edad para hacerlo
+  </p>
+</section>

@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.isLogginPresent = this.storageService.isLoggedIn();
     if (this.isLogginPresent === true) {
-      this.getAllNotificaciones();
+      this.conectarWebSocket();
     }
   }
 
@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/login']).then(() => {
       this.isLogginPresent = false;
       localStorage.clear();
+      this.desconectarWebSocket();
     });
   }
 
@@ -75,22 +76,37 @@ export class AppComponent implements OnInit {
   }
 
   // NOTIFICACIONES
-  viewNotificacionesPanle: boolean = false;
-  listNotificaciones: Notificaciones[] = [];
+  listNotificaciones: any[] = []; // Aquí almacenarás las notificaciones recibidas
   countNotificaciones: number = 0;
-  public getAllNotificaciones() {
-    console.log("Connected notifications request..");
-    this.messageSubscription = this.webSocketService.getMessageObservable()
-    .subscribe((message: string) => {
-      console.log("--------------------------------");
-      console.log("--------------" +message);
-      this.receivedMessage = message;
-      const notificacion = JSON.parse(message) as Notificaciones;
-      this.listNotificaciones.push(notificacion);
-      console.log("------------------>" + this.listNotificaciones[0].cuerpoMensaje)
-    });
+  viewNotificacionesPanle: boolean = false;
 
+  // Método para conectar y recibir notificaciones
+  public conectarWebSocket(): void {
+    this.webSocketService.connect();
+    this.webSocketService.getMessageObservable().subscribe((message: string) => {
+      // Aquí procesas las notificaciones recibidas
+      const notificaciones = JSON.parse(message);
+      this.listNotificaciones = notificaciones;
+      this.countNotificaciones = this.listNotificaciones.length;
+    });
   }
 
+  // Método para desconectar el WebSocket
+  public desconectarWebSocket(): void {
+    this.webSocketService.disconnect();
+    this.listNotificaciones = []; // Limpias las notificaciones cuando te desconectas
+  }
+
+  // Formatear imagen
+  formatDate(timestamp: number): string {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
+  }
+
+  removerNotificacion(data:any){
+    this.notificacionService.updateNotificacionEstado(data._id).subscribe(data=>{
+      console.log("VISTO");
+    })
+  }
 }
 

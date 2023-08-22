@@ -1,0 +1,502 @@
+<p-card header="" class="m-2">
+    <h1 class="title">Control del Animal {{isIdAnimal}} </h1>
+    <div class="d-flex align-items-center">
+        <span class="p-input-icon-left" style="flex: 70%;">
+            <i class="pi pi-search"></i>
+            <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit"
+                [(ngModel)]="isTextDigit" pInputText style="width: 100%;" />
+        </span>
+        <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Seleccionar
+            Animal</button>
+    </div>
+</p-card>
+
+
+<!-- MODAL ANIMALES -->
+<p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
+    [resizable]="false">
+
+    <p-card header="" class="m-5 text-center align-items-center">
+        <div class="container">
+            <div class="cardA-container">
+                <div class="cardA" *ngFor="let mascotas of ListAnimales">
+                    <div class="img-wrapper">
+                        <img src="../../../../assets/img/dog_eyes.jpg" alt="Imagen de mascota">
+                    </div>
+                    <p class="nombre">{{mascotas.nombreAnimal}}</p>
+                    <p class="placa"><span style="font-weight: bold;">Placa:</span> {{mascotas.placaAnimal}}</p>
+                    <div class="text-center">
+                        <button type="btn" (click)="selectAnimal(mascotas.idAnimal!)"
+                            class="btn btn-primarys">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-5" style="text-align: center; align-items: center;">
+            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()"
+                class="btn btn-primarys p-button-rounded"><i class="pi pi-arrow-circle-left"></i></button>
+            <button *ngIf="isPage !== pageTotal" type="button" (click)="siguientePage()"
+                class="btn btn-primarys p-button-rounded " style="margin-left: 50px;"> <i
+                    class="pi pi-arrow-circle-right"></i></button>
+        </div>
+    </p-card>
+
+</p-dialog>
+
+
+<p-card header="" class="m-2">
+    <h1 class="title">Control Animal</h1>
+
+    <p-card>
+        <form (ngSubmit)="saveControl()" ngNativeValidate style="padding: 15px;">
+            <div class="grid p-fluid m-2">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="p-inputgroup">
+                        <p-calendar [inline]="false" [style]="{ 'position': 'relative', 'z-index': '1000' }"
+                            inputId="edad" class="ng-dirty" [showIcon]="false" placeholder="Fecha del Control"
+                            id="fechaControlAnimal" name="fechaControlAnimal" [(ngModel)]="control.fechaControlAnimal"
+                            [required]="true"></p-calendar>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid p-fluid m-2">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="text" pInputText id="nombreVeterinario" name="nombreVeterinario"
+                                [(ngModel)]="control.nombreVeterinario" pattern="[A-Za-z\s]+"
+                                title="Por favor ingrese solo letras" required />
+                            <label htmlFor="nombreVeterinario">Nombre Veterinario <span
+                                    class="red-asterisk"></span></label>
+
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="text" pInputText id="observaciones" name="observaciones"
+                                [(ngModel)]="control.observaciones" />
+                            <label htmlFor="observaciones"> Observacion <span class="red-asterisk"></span></label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid p-fluid m-2">
+                <div class="col-12 md:col-6 mt-1">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="number" pInputText id="pesoActual" name="pesoActual"
+                                [(ngModel)]="control.pesoActual" required pattern="[0-9]+"
+                                title="Por favor ingrese solo números" />
+                            <label htmlFor="pesoActual">Peso Actual <span class="red-asterisk"></span></label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6 mt-1">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <p-dropdown appendTo="body" id="selectEstado" name="selectEstado"
+                                [options]="estadosanimales" [(ngModel)]="selectEstado" [style]="{'width': 'calc(100%)'}"
+                                placeholder="Seleccione una estado" optionLabel="tipoEstadoAnimal"></p-dropdown>
+                            <button pButton type="button" (click)="showDialogToAddEstado()" label="Agregar Estado"
+                                class="p-button-primary p-button-rounded "></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <p-panel header="Agregar Vacuna" [toggleable]="true">
+                <button type="button" (click)="showModalTipoVacuna()" class="btn btn-primarys m-2"
+                    style="flex: 10%;">Agregar Nuevo Tipo de Vacuna</button>
+                <form ngNativeValidate style="padding: 15px;">
+                    <div class="grid p-fluid m-2">
+                        <div class="col-12 md:col-12 mt-1 justify-content-center">
+                            <p-dropdown appendTo="body" id="selectedVacuna" name="selectedVacuna"
+                                [options]="listTipoVacuna" [(ngModel)]="selectedVacuna"
+                                placeholder="Seleccione una vacuna" optionLabel="nombreVacuna"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid p-fluid m-2">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="observaciones" name="observaciones"
+                                        [(ngModel)]="vacuna.observaciones" />
+                                    <label htmlFor="observaciones"> Observacion <span
+                                            class="red-asterisk"></span></label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Proxima vacuna</h5>
+                    <div class="grid p-fluid m-2">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <p-calendar [inline]="true" [style]="{ 'position': 'relative', 'z-index': '1000' }"
+                                    inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha Proxima Vacuna"
+                                    id="fechaProximaVacuna" name="fechaProximaVacuna"
+                                    [(ngModel)]="vacuna.fechaProximaVacuna"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <button type="button" (click)="agregarVacuna()" class="btn btn-primarys m-2">Agregar Vacuna</button>
+                <button type="button" (click)="limpiarVacunasTemporales()" class="btn btn-primarys m-2">Eliminar Todo</button>
+
+                <div class="card centered-card">
+                    <p-table [value]="vacunasTemporales" responsiveLayout="scroll">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Fecha Vacunacion</th>
+                                <th>Nombre Vacuna</th>
+                                <th>Observaciones</th>
+                                <th>Quitar Vacuna</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-columns="columns" let-data>
+                            <tr>
+                                <td>{{ data.fechaVacuna | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ data.tipoVacuna.nombreVacuna }}</td>
+                                <td>{{ data.observaciones }}</td>
+                                <td>
+                                    <button (click)="eliminarVacuna(data)" pButton icon="pi pi-trash" class="btn btn-primarys m-2"></button>
+                                </td>
+
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-panel>
+
+
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primarys m-2" style="flex: 10%;">Guardar Control</button>
+            </div>
+        </form>
+    </p-card>
+
+
+    <div class="card m-5">
+        <p-table [value]="controlesanimales" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Fecha Control Animal</th>
+                    <th>Nombre Veterinario</th>
+                    <th>Peso Actual</th>
+                    <th>Estado Animal</th>
+                    <th>Descripción Estado</th>
+                    <th>Detalle Vacunas</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-columns="columns" let-data>
+                <tr>
+
+                    <td>{{ data.fechaControlAnimal }}</td>
+                    <td>{{ data.nombreVeterinario }}</td>
+                    <td>{{ data.pesoActual }}</td>
+                    <td>{{ data.tipoEstadoAnimal}}</td>
+                    <td>{{ data.descripcion}}</td>
+                    <td>
+                        <button type="button" (click)="VerDetalle(data.idControlAnimal)"
+                            class="btn btn-primarys m-2">Ver</button>
+                    </td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-card>
+
+<p-dialog header="Detalle Vacunas" [(visible)]="visibleVacuna" [modal]="true" [style]="{ width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <div class="card">
+        <p-table [value]="vacunasAnimales" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Fecha Vacunacion</th>
+                    <th>Nombre Vacuna</th>
+                    <th>Observaciones</th>
+                    <th>Editar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-columns="columns" let-data>
+                <tr>
+                    <td>{{ data.fechaVacuna }}</td>
+                    <td>{{ data.nombreVacuna }}</td>
+                    <td>{{ data.observaciones }}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>
+
+<p-dialog header="Editar Control" [(visible)]="visibleEditarControl" [modal]="true" [style]="{ width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <div class="card">
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="Nombre Veterinario" name="Nombre Veterinario"
+                            [(ngModel)]="nombrevete" />
+                        <label htmlFor="Nombre Veterinario"> Nombre Veterinario <span
+                                class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="observaciones" name="observaciones" [(ngModel)]="observa" />
+                        <label htmlFor="observaciones"> Observacion <span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="Peso" name="Peso" [(ngModel)]="pesoact" />
+                        <label htmlFor="Peso"> Peso <span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <h5>Fecha Control</h5>
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <p-calendar [inline]="true" [style]="{ 'position': 'relative', 'z-index': '1000' }" inputId="edad"
+                        class="ng-dirty" [showIcon]="true" placeholder="Fecha Proxima Vacuna" id="fechaProximaVacuna"
+                        name="fechaProximaVacuna" [(ngModel)]="fechacon"></p-calendar>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <button type="button" (click)="ActulizarDatosControl()" class="btn btn-primarys m-2">Editar Control</button>
+            <button type="button" (click)="CancelarEditarControl()" class="btn btn-primarys m-2">Cancelar</button>
+        </div>
+    </div>
+</p-dialog>
+
+
+
+
+<!-- MODAL VACUNA -->
+<!-- <p-dialog header="Crear nueva vacuna" [(visible)]="visibleTipoVacuna" [modal]="true" [style]="{ width: '30vw' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveTipoVacuna()" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="nombreVacuna" name="nombreVacuna"
+                            [(ngModel)]="tipoVacuna.nombreVacuna" />
+                        <label htmlFor="nombreVacuna" > Nombre Vacuna <span
+                                class="red-asterisk"></span></label>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="p-card-body">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primarys">Crear nueva vacuna</button>
+            </div>
+        </div>
+    </form>
+
+
+    <p-panel header="Tipo Vacuna" [toggleable]="true">
+        <div class="text-center">
+            <div *ngIf="!isEmpty(tipoVacuna); else notSubmittedContent">
+                <div class="">
+                    <div class="card persona-card">
+
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Información de Vacuna</h5>
+                            <div class="row mb-2">
+
+                                <div class="col">
+                                    <label><strong>Nombre Vacuna: </strong></label>
+                                    <span> <input [(ngModel)]="tipoVacunaSeleccionada.nombreVacuna" name="nombreVacuna"
+                                            class="form-control" required></span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col">
+                                    <label><strong>Nombre Vacuna: </strong></label>
+                                    <span> <input [(ngModel)]="tipoVacunaSeleccionada.estado" name="estado"
+                                            class="form-control" required></span>
+                                </div>>
+
+                            </div>
+
+                            <div class="text-center mt-2">
+
+                                <button pButton type="button" label="Editar" icon="pi pi-check"
+                                    (click)="actualizarVacuna()"></button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <ng-template #notSubmittedContent>
+
+
+
+                <p-table [value]="listTipoVacuna" selectionMode="single" responsiveLayout="scroll" [paginator]="true"
+                    [rows]="3" [responsive]="true" [rowHover]="true" (onRowSelect)="onRowSelect($event.data)"
+                    [showCurrentPageReport]="true" [loading]="loadingVacuna">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Nombres Vacuna </th>
+                            <th>Estado Vacuna </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-tipoVacuna>
+                        <tr [pSelectableRow]="rowData">
+                            <td>{{tipoVacuna.nombreVacuna}}</td>
+
+                            <td>{{tipoVacuna.estado}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </ng-template>
+
+
+        </div>
+
+
+    </p-panel>
+</p-dialog> -->
+
+<!-- <p-dialog header="Crear nueva vacuna" [(visible)]="visibleVacuna" [modal]="true" [style]="{ width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveVacuna()" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <p-calendar [inline]="true" [style]="{ 'position': 'relative', 'z-index': '1000' }" inputId="edad"
+                        class="ng-dirty" [showIcon]="true" placeholder="Fecha Vacunacion" id="fechaVacuna"
+                        name="fechaVacuna" [(ngModel)]="vacuna.fechaVacuna"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <p-panel header="Proxima Vacuna" [toggleable]="true">
+            <div class="grid p-fluid m-2">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="p-inputgroup">
+                        <p-calendar [inline]="true" [style]="{ 'position': 'relative', 'z-index': '1000' }"
+                            inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha Proxima Vacuna"
+                            id="fechaProximaVacuna" name="fechaProximaVacuna"
+                            [(ngModel)]="vacuna.fechaProximaVacuna"></p-calendar>
+                    </div>
+                </div>
+            </div>
+        </p-panel>
+
+
+
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="observaciones" name="observaciones"
+                            [(ngModel)]="vacuna.observaciones" />
+                        <label htmlFor="observaciones" > Observacion <span
+                                class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primarys">Agregar vacuna</button>
+        </div>
+    </form>
+</p-dialog> -->
+
+
+
+<!-- MODAL VACUNA -->
+<p-dialog header="Crear nueva vacuna" [(visible)]="visibleTipoVacuna" [modal]="true" [style]="{ width: '30vw' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveTipoVacuna()" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="nombreVacuna" name="nombreVacuna"
+                            [(ngModel)]="tipoVacuna.nombreVacuna" />
+                        <label htmlFor="nombreVacuna"> Nombre Vacuna <span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="p-card-body">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primarys">Crear nueva vacuna</button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+<!-- MODAL ESTADO -->
+<p-dialog header="Crear estado animal" [(visible)]="estadovisible" [modal]="true" [style]="{ width: '30vw'}"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)=" (saveEstadoAnimal())" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="tipoEstadoAnimal" name="tipoEstadoAnimal"
+                            [(ngModel)]="estadoAnimal.tipoEstadoAnimal" />
+                        <label htmlFor="nombreVeterinario">Estado<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="descripcion" name="descripcion"
+                            [(ngModel)]="estadoAnimal.descripcion" />
+                        <label htmlFor="observaciones"> Descripción <span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="p-card-body">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primarys">Agregar Estado</button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
