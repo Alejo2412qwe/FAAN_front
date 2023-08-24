@@ -448,3 +448,18 @@ nav {
     padding: 8px 16px;
   }
 }
+
+.floating {
+  max-width: 100%;
+  height: auto;
+  animation: float 2s ease-in-out infinite; /* Aplica la animación */
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0); /* Empieza y termina en la posición original */
+  }
+  50% {
+    transform: translateY(-10px); /* Punto más alto del movimiento */
+  }
+}
