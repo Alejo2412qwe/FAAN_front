@@ -146,10 +146,16 @@
 
 /* Fancy style */
 body {
-  font-family: "Open sans", sans-serif;
-  font-size: 10px;
-  font-weight: 100;
-  color: white;
+
+  background-color: #ffffff;
+    padding: 0;
+    background-size: cover;
+    color: black;
+    font-family: "open sans";
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Lato', sans-serif;
 }
 
 .content {
