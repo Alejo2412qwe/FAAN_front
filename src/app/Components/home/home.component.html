@@ -1,91 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Yarn Over</title>
-  
+
+
 </head>
 
 <body>
 
+  <header>
+    <div>
+      <nav id="nav-3">
+        <a class="link-3" [routerLink]="['/home']">Home</a>
+        <a class="link-3" [routerLink]="['/home']">Informacion</a>
+        <a class="link-3" [routerLink]="['/donaciones']">Donaciones</a>
+        <a class="link-3" [routerLink]="['/contacto']">Contactos</a>
+        <a class="link-3" [routerLink]="['/login']">Log In</a>
+      </nav>
+    </div>
+  </header>
+
+
   <section class="titles">
 
-
-    <img src="https://i.ibb.co/JRJmDHJ/imagen-2023-08-02-202446789.png" alt="" >
+    <img src="https://i.ibb.co/JRJmDHJ/imagen-2023-08-02-202446789.png" alt="">
     <!-- <h1>FUNDACIÓN FAAN</h1> -->
 
     <h4>Familia, Amor y Animal</h4>
 
-   
+
     <br>
   </section>
 
   <div class="wrap">
-		<h1>MASCOTAS</h1>
+    <h1>MASCOTAS</h1>
 
     <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button" (click)="setEnableAll()"
-    (click)="getAllMascotas()">
-    <i class="fa-solid fa-list fa-fw space" style="margin-right: 10px;"></i>Todo</button>
+      (click)="getAllMascotas()">
+      <i class="fa-solid fa-list fa-fw space" style="margin-right: 10px;"></i>Todo</button>
 
-    <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button"
-                    *ngFor="let nombreTipo" (click)="getRazaAnimalById(nombreTipo.tipoAnimal)"
-                    (click)="getAllAnimalPerTipo(nombreTipo.tipoAnimal)" (click)="setEnable()"
-                    (click)="setDisabledGender()">
-                    <i class="fa-solid fa-list fa-fw space"
-                        style="margin-right: 10px;"></i>{{nombreTipo.nombretipo}}</button>
+    <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button" *ngFor="let nombreTipo"
+      (click)="getRazaAnimalById(nombreTipo.tipoAnimal)" (click)="getAllAnimalPerTipo(nombreTipo.tipoAnimal)"
+      (click)="setEnable()" (click)="setDisabledGender()">
+      <i class="fa-solid fa-list fa-fw space" style="margin-right: 10px;"></i>{{nombreTipo.nombretipo}}</button>
 
 
-		<div class="store-wrapper">
-			<!--<div class="category_list">
+    <div class="store-wrapper">
+      <!--<div class="category_list">
 				<a  class="category_item" category="all">Todo</a>
 				<a  class="category_item" category="perro">Perros</a>
 				<a  class="category_item" category="gato">Gatos</a>
 			</div>-->
-			<section class="products-list">
-				<div class="product-item" category="perro">
-					<img [src]='"https://bucketgtmt.s3.amazonaws.com/" + animal.fotoAnimal'>
-				</div>
-			</section>
-		</div>
-	</div>
+      <section class="products-list">
+        <div class="product-item" category="perro">
+          <img [src]='"https://bucketgtmt.s3.amazonaws.com/" + animal.fotoAnimal'>
+        </div>
+      </section>
+    </div>
+  </div>
 
 
-  <section class="introduction" >
+  <section class="introduction">
 
     <h1>Una Esperanza para los Sin Hogar Fundación FAAN</h1>
     <h4>Familia, Amor y Animal</h4>
 
-      <p>
-        En el bullicioso corazón de nuestra comunidad, un problema persistente y desgarrador ha estado clamando por atención durante demasiado tiempo: los animales callejeros que, día tras día, luchan por sobrevivir en un mundo implacable. Sin refugio, sin alimento adecuado y sin el amor incondicional que merecen, estas almas vulnerables enfrentan innumerables adversidades.
-      </p>
-      <p>
-        Sin embargo, en medio de la oscuridad y el abandono, surge una luz brillante y esperanzadora: FAAN. Somos una organización dedicada a marcar la diferencia en la vida de estos indefensos amigos de cuatro patas que han sido desplazados y olvidados por la sociedad.
-      </p>
-      <p>
-        Nuestra misión es clara y apasionada: proporcionar un refugio seguro, cuidados médicos, alimentación adecuada y lo más importante cariño y afecto para cada animal callejero que cruzará nuestro camino. Creemos en el poder transformador del amor, la compasión y estamos decididos a restaurar la fe en la humanidad para estos seres inocentes.
-      </p>
-      <p>
-        Como fundación no solo nos esforzamos por brindar atención inmediata y de alta calidad a estos animales desfavorecidos, sino que también trabajamos arduamente para concientizar a la sociedad sobre la importancia de la adopción responsable, la esterilización y el respeto por la vida de todas las criaturas que comparten nuestro planeta.
-      </p>
-      <p>
-        A través de programas de adopción, campañas de esterilización, educación comunitaria y esfuerzos de rescate. FAAN se posiciona como un faro de esperanza y compasión en nuestra comunidad y más allá. Creemos firmemente que con el apoyo de personas compasivas como tú, podemos hacer una diferencia significativa y duradera en la vida de estos animales que tanto necesitan nuestra ayuda.
-      </p>
-      <p>
-        Únete a nosotros en esta noble causa mientras continuamos nuestro viaje para convertir el sufrimiento en sonrisas y el abandono en amor incondicional. Juntos podemos ser la voz de aquellos que no tienen voz, la esperanza para los sin hogar y el cambio que tanto necesitan.
-      </p>
-    
-      <h4>¡Bienvenido a Fundación la FAAN donde juntos construiremos un mundo más compasivo y amable para nuestros amigos peludos sin hogar!</h4>
-   
+    <p style="min-width:15rem">
+      En el bullicioso corazón de nuestra comunidad, un problema persistente y desgarrador ha estado clamando por
+      atención durante demasiado tiempo: los animales callejeros que, día tras día, luchan por sobrevivir en un mundo
+      implacable. Sin refugio, sin alimento adecuado y sin el amor incondicional que merecen, estas almas vulnerables
+      enfrentan innumerables adversidades.
+    </p>
+    <p style="min-width:15rem">
+      Sin embargo, en medio de la oscuridad y el abandono, surge una luz brillante y esperanzadora: FAAN. Somos una
+      organización dedicada a marcar la diferencia en la vida de estos indefensos amigos de cuatro patas que han sido
+      desplazados y olvidados por la sociedad.
+    </p>
+    <p>
+      Nuestra misión es clara y apasionada: proporcionar un refugio seguro, cuidados médicos, alimentación adecuada y
+      lo más importante cariño y afecto para cada animal callejero que cruzará nuestro camino. Creemos en el poder
+      transformador del amor, la compasión y estamos decididos a restaurar la fe en la humanidad para estos seres
+      inocentes.
+    </p>
+    <p>
+      Como fundación no solo nos esforzamos por brindar atención inmediata y de alta calidad a estos animales
+      desfavorecidos, sino que también trabajamos arduamente para concientizar a la sociedad sobre la importancia de
+      la adopción responsable, la esterilización y el respeto por la vida de todas las criaturas que comparten nuestro
+      planeta.
+    </p>
+    <p>
+      A través de programas de adopción, campañas de esterilización, educación comunitaria y esfuerzos de rescate.
+      FAAN se posiciona como un faro de esperanza y compasión en nuestra comunidad y más allá. Creemos firmemente que
+      con el apoyo de personas compasivas como tú, podemos hacer una diferencia significativa y duradera en la vida de
+      estos animales que tanto necesitan nuestra ayuda.
+    </p>
+    <p>
+      Únete a nosotros en esta noble causa mientras continuamos nuestro viaje para convertir el sufrimiento en
+      sonrisas y el abandono en amor incondicional. Juntos podemos ser la voz de aquellos que no tienen voz, la
+      esperanza para los sin hogar y el cambio que tanto necesitan.
+    </p>
+
+    <h4>¡Bienvenido a Fundación la FAAN donde juntos construiremos un mundo más compasivo y amable para nuestros
+      amigos peludos sin hogar!</h4>
+
     <br>
   </section>
   <section>
 
     <div class="video-youtube">
 
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/02VY3wCVV64" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/02VY3wCVV64" title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
     </div>
 
   </section>
@@ -95,7 +126,10 @@
     <h1>Como Llegar</h1>
     <h4>sigue el video</h4>
     <div class="video-youtube">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/wCZjk1SDTG4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/wCZjk1SDTG4" title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
     </div>
   </section>
 
@@ -111,7 +145,9 @@
       <div class="text">
         <a href="">
           <h3>QUIENES SOMOS</h3>
-          <p>FAAN es un grupo de defensa animal, sin ánimo de lucro, que tiene como finalidad ayudar y acoger a cuantos animales abandonados en situaciones de riesgo se pueda, a su vez busca crear conciencia en cuanto al respeto animal.</p>
+          <p>FAAN es un grupo de defensa animal, sin ánimo de lucro, que tiene como finalidad ayudar y acoger a
+            cuantos animales abandonados en situaciones de riesgo se pueda, a su vez busca crear conciencia en cuanto
+            al respeto animal.</p>
         </a>
       </div>
 
@@ -119,16 +155,18 @@
 
     <div class="box">
 
-  
+
 
       <div class="text">
         <a href="">
           <h3>OBJETIVOS</h3>
           <p>
-            • Rescatar animales abandonados en situación de riesgo y buscarles un hogar responsable luego de haber tenido atención médica oportuna y rehabilitación social en caso de requerirse.
+            • Rescatar animales abandonados en situación de riesgo y buscarles un hogar responsable luego de haber
+            tenido atención médica oportuna y rehabilitación social en caso de requerirse.
             <br>• Disminuir el maltrato animal creando conciencia acerca del tema.
             <br>• Fomentar la importancia de la esterilización de animales de compañía para evitar la sobrepoblación.
-            <br>• Reducir el número de animales abandonados</p>
+            <br>• Reducir el número de animales abandonados
+          </p>
         </a>
       </div>
 
@@ -136,19 +174,32 @@
 
     <div class="box">
 
-   
+
 
       <div class="text">
         <a href="">
           <h3>FINANCIAMIENTO
-        </h3>
-          <p>Nos financiamos de las donaciones realizadas por personas particulares o empresas que desean aportar con nuestra causa , además de recaudar fondos mediante diversas actividades realizadas por el grupo , tales como ventas de artículos donados, realización de rifas, eventos y venta de productos varios.</p>
+          </h3>
+          <p>Nos financiamos de las donaciones realizadas por personas particulares o empresas que desean aportar con
+            nuestra causa , además de recaudar fondos mediante diversas actividades realizadas por el grupo , tales
+            como ventas de artículos donados, realización de rifas, eventos y venta de productos varios.</p>
         </a>
       </div>
 
     </div>
   </section>
 
+  <div class="floating">
+    <section class="adop">
+      <div class="transparent-box">
+        <h4>NO COMPRES, ¡ADOPTA Y SALVA UNA VIDA!</h4>
+        <button class="custom-btn btn-2" [routerLink]="['/formulario-adopcion']"> ADOPTA </button>
+      </div>
+    </section>
+    <br>
+    <br>
+    <br>
+  </div>
 
 </body>
 

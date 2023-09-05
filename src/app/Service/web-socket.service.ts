@@ -6,31 +6,45 @@ import { Observable, Subject } from 'rxjs';
 })
 export class WebSocketService {
 
-  private socket: WebSocket;
+  private socket: WebSocket | undefined;
   private messageSubject: Subject<string> = new Subject<string>();
+  private connected: boolean = false;
 
-  constructor() {
+  constructor() {}
+
+  public connect(): void {
+    if (this.connected) {
+      return; // Ya está conectado, no hagas nada
+    }
 
     this.socket = new WebSocket('ws://localhost:8080/my-websocket-endpoint');
 
-
     this.socket.onopen = () => {
       console.log('Conexión WebSocket establecida');
+      this.connected = true;
     };
 
     this.socket.onmessage = (event) => {
       console.log('Mensaje recibido desde el servidor:', event.data);
+      this.handleMessage(event);
     };
 
     this.socket.onclose = () => {
       console.log('Conexión WebSocket cerrada');
+      this.connected = false;
     };
 
     this.socket.onerror = (error) => {
       console.error('Error en la conexión WebSocket:', error);
     };
+  }
 
-
+  public disconnect(): void {
+    if (!this.connected) {
+      return; // Ya está desconectado, no hagas nada
+    }
+    this.socket!.close();
+    this.connected = false;
   }
 
   public getMessageObservable(): Observable<string> {
@@ -41,6 +55,4 @@ export class WebSocketService {
     const message = event.data;
     this.messageSubject.next(message);
   }
-
-
 }

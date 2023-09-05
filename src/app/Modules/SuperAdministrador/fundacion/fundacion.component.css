@@ -1,4 +1,3 @@
-
 .input-file {
 	padding: 30px;
 	width: 300px;
@@ -51,4 +50,65 @@
 .input-file-upload:hover .upload-label {
 	background: #eaf5fe;
 	color: #3b70f1;
+}
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------- */
+
+/* styles.css o styles.scss */
+.custom-danger-color {
+	background-color: red;
+	/* Cambia este color al que desees */
+	color: white;
+	/* Cambia este color al que desees */
+}
+
+
+/* PHOTON IMPLEMENT */
+.seccion-perfil-usuario .perfil-usuario-header {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1.25rem;
+}
+
+.seccion-perfil-usuario .perfil-usuario-avatar {
+	position: relative;
+
+	width: 180px;
+	height: 180px;
+	align-items: center;
+	justify-content: center;
+	border: 7px solid #FFFFFF;
+	background-color: #DFE5F2;
+	border-radius: 50%;
+	box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+	margin-bottom: 15px;
+
+}
+
+.seccion-perfil-usuario .perfil-usuario-avatar img {
+	width: 100%;
+	height: 100%;
+
+	object-fit: cover;
+
+	border-radius: 50%;
+}
+
+.seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
+	position: absolute;
+	right: -2px;
+	bottom: -2px;
+	border: 0;
+	background-color: #fff;
+	box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	cursor: pointer;
 }

@@ -1,3 +1,8 @@
+.centered-card {
+  width: 70%;
+  margin: 0 auto;
+}
+
 .cardA-container {
     display: flex;
     flex-wrap: wrap;

@@ -16,10 +16,6 @@ export class NotifacionesService {
     return this.http.post<Notificaciones>(environment.apiuri + '/notificaciones/save', notifiacion);
   }
 
-
-  // public getNotificacion(): Observable<Notificacion[]> {
-  //   return this.http.get<Notificacion[]>(environment.apiuri + '/notificaciones');
-  // }
   public getNotificacion(): Observable<Notificaciones[]> {
     return this.http.get<Notificaciones[]>(environment.apiuri + '/notificaciones').pipe(
       tap((notificaciones: Notificaciones[]) => {
@@ -27,5 +23,11 @@ export class NotifacionesService {
       })
     );
   }
+
+  public updateNotificacionEstado(idNotificacion: string): Observable<any> {
+    return this.http.get<any>(environment.apiuri + '/updateEstado/notificaciones/' + idNotificacion);
+  }
+
+
 
 }

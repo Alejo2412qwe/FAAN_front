@@ -1,33 +1,42 @@
-<div class="contenedor">
-  <form>
-    <input type="radio" id="Slide1" name="slider" titulo="Facebook" autofocus="autofocus" checked="checked" />
-    <input type="radio" id="Slide2" name="slider" titulo="Instagram" />
-    <input type="radio" id="Slide3" name="slider" titulo="Gmail" />
-    <div class="labels">
-      <label for="Slide1" id="Slide1" class="Slide">
-        <div class="content">
-          <a href="https://www.facebook.com/familiaamoranimal">
-            <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="">
-          </a>
-          <h1><strong>CONTACTANOS!!</strong></h1>
-        </div>
-      </label>
-      <label for="Slide2" id="Slide2" class="Slide">
-        <div class="content">
-          <a href="https://www.instagram.com/fundacionfaan/?fbclid=IwAR1kh-vqTeHG2C8epRfRXqg34qu4ZNP8jRCAxm-hAgLJrV5zjLtA6dYx3X4%2F">
-            <img src="https://cdn.pixabay.com/photo/2021/06/15/12/17/instagram-6338401_1280.png">
-          </a>
-          <h1>NO TE OLVIDES SEGUIRNOS!!!!</h1>
-          <h1>@faancuenca</h1>
-        </div> 
-      </label>
-      <label for="Slide3" id="Slide3" class="Slide">
-        <div class="content">
-          <img src="https://1000logos.net/wp-content/uploads/2018/05/Gmail-Logo.jpg" alt="">
-          <h1>POR SI DESEAS CONTACTARNOS!!!!</h1>
-          <h1>info@faanecuador.org</h1>
-        </div>
-      </label>
-    </div>
-  </form>
-</div>
+
+<header>
+    <nav id="nav-3">
+      <a class="link-3" [routerLink]="['/home']">Home</a>
+      <a class="link-3" [routerLink]="['/home']">Informacion</a>
+      <a class="link-3" [routerLink]="['/donaciones']">Donaciones</a>
+      <a class="link-3" [routerLink]="['/contacto']">Contactos</a>
+    </nav>
+</header>
+
+<body>
+  <div class="center-container">
+    <section>
+      <div class="content">
+        <a href="https://www.facebook.com/familiaamoranimal">
+          <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="" class="floating-image">
+        </a>
+        <br>
+        <h1>CONTACTANOS!!</h1>
+        <br>
+      </div>
+      <div class="content">
+        <a
+          href="https://www.instagram.com/fundacionfaan/?fbclid=IwAR1kh-vqTeHG2C8epRfRXqg34qu4ZNP8jRCAxm-hAgLJrV5zjLtA6dYx3X4%2F">
+          <img src="https://cdn.pixabay.com/photo/2021/06/15/12/17/instagram-6338401_1280.png"  class="floating-image">
+        </a>
+        <br>
+        <h1>NO TE OLVIDES SEGUIRNOS!!!!</h1>
+        <h1>@faancuenca</h1>
+        <br>
+      </div>
+      <div class="content">
+        <img src="https://1000logos.net/wp-content/uploads/2018/05/Gmail-Logo.jpg" alt="" class="floating-image">
+        <br>
+        <h1>SI DESEAS CONTACTARNOS!!!!</h1>
+        <h1>info@faanecuador.org</h1>
+      </div>
+    </section>
+
+  </div>
+
+</body>

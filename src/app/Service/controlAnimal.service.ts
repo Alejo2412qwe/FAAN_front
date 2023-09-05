@@ -29,6 +29,7 @@ export class ControlAnimalService {
   }
 
   public updateControl(idControl:number, control: ControlAnimal):Observable<ControlAnimal>{
+    console.log("udateentrop");
     return this.http.put<ControlAnimal>(environment.apiuri+'/controlAnimal/update/'+idControl, control);
   }
 

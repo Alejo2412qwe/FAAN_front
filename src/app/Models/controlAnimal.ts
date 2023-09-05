@@ -1,7 +1,7 @@
 import { Animal } from "./animal";
 import { EstadoAnimal } from "./estadoAnimal";
 export class ControlAnimal {
-    idControlAnimal?: number;
+    idControlAnimal!: number;
     fechaControlAnimal?: Date;
     observaciones?: string;
     estadoControl?: boolean;

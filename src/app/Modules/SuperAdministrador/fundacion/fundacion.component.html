@@ -1,144 +1,284 @@
 <p-card header="">
-  <div class="container">
-    <div class="text-center">
-      <img class="img-avatar rounded-circle" [src]='"https://bucketgtmt.s3.amazonaws.com/" + fundacion.logoFundacion' />
-      <h1> {{fundacion.nombreFundacion}} </h1>
-      <p style="text-align: center;">{{fundacion.acronimo}}</p>
+    <div class="container">
+        <div class="text-center">
+            <img class="img-avatar rounded-circle"
+                [src]="fundacion.logoFundacion ? 'https://bucketgtmt.s3.amazonaws.com/' + fundacion.logoFundacion : 'assets/img/faan.jpg'" />
+            <div class="text-5xl font-bold text-900">{{ fundacion.nombreFundacion }}</div>
+
+            <p style="text-align: center;">{{fundacion.acronimo}}</p>
+            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+        </div>
+
+        <!-- <div class="grid">
+            <div class="col-12 lg:col-4">
+                <div class="p-3 h-full">
+                    <div class="shadow-8 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
+
+                        <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-map-marker"></i>
+                                <span class="font-semibold">Ubicados</span>
+                            </span>
+                        </div>
+
+                        <div class="text-600 mt-1">{{fundacion.direccion }}</div>
+                        <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 lg:col-4">
+                <div class="p-3 h-full">
+                    <div class="shadow-8 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
+
+                        <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-globe"></i>
+                                <span class="font-semibold">Página Web</span>
+                            </span>
+                        </div>
+                        <div class="text-600 mt-1"><a href={{fundacion.paginaWeb}}>{{fundacion.paginaWeb}}</a></div>
+                        <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 lg:col-4">
+                <div class="p-3 h-full">
+                    <div class="shadow-8 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
+
+                        <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-clock"></i>
+                                <span class="font-semibold">Horarios</span>
+                            </span>
+                        </div>
+                        <div class="text-600 mt-1">{{fundacion.horarios }}</div>
+                        <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+
+        <div class="left mx-2 mt-4">
+            <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+                    <i class="pi pi-map-marker"></i>
+                    <span class="font-semibold">{{fundacion.direccion }}</span>
+                </span>
+            </div>
+
+            <div class="flex align-items-center gap-3 mt-2">
+                <span class="flex align-items-center gap-2">
+                    <i class="pi pi-globe"></i>
+                    <span class="font-semibold"><a href={{fundacion.paginaWeb}}>{{fundacion.paginaWeb}}</a></span>
+                </span>
+            </div>
+
+            <div class="flex align-items-center gap-3 mt-2">
+                <span class="flex align-items-center gap-2">
+                    <i class="pi pi-clock"></i>
+                    <span class="font-semibold">{{fundacion.horarios }}</span>
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="data mt-4">
+
+            <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+
+                    <span class="font-semibold">Nuestro Objetivo:</span>
+                </span>
+            </div>
+
+            <li class="flex align-items-center mb-3 mt-2">
+                <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                <span class="text-900">{{fundacion.objetivo}}</span>
+            </li>
+
+        </div>
+
+
+
+        <div style="text-align: right">
+            <p-button (click)="showDialog()" icon="pi pi-window-maximize" label="Actualizar"
+                pTooltip="Actualizar información" tooltipPosition="bottom"></p-button>
+        </div>
+
+
     </div>
-    <ul class="list-unstyled text-muted">
-      <li><i class='bx bx-current-location m-2'></i>{{fundacion.direccion}}</li>
-      <li><i class='bx bx-world m-2'></i> <a href={{fundacion.paginaWeb}}>{{fundacion.paginaWeb}}</a></li>
-      <li><i class='bx bxs-calendar m-2'></i>{{fundacion.horarios}} </li>
-    </ul>
-    <p>{{fundacion.objetivo}}</p>
 
-    <button pButton pRipple label="Actualizar" class="p-button-primary mr-2" style="width: 100%;"
-      (click)="showDialog()"></button>
 
-  </div>
 </p-card>
 
 <!-- MODAL EDIT DATA -->
 <p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
-  [resizable]="false">
+    [resizable]="false">
 
 
-  <form (ngSubmit)="updateFundacionById()" ngNativeValidate style="padding: 15px;">
+    <form (ngSubmit)="updateFundacionById()" ngNativeValidate style="padding: 15px;">
+        <div class="data shadow-2" style="border-radius: 8px">
 
-    <p-card header="" class="m-5 text-center align-items-center">
+            <div class="p-5 text-center align-items-center ">
 
-      <div class="grid p-fluid m-4">
-        <div class="card flex justify-content-center">
-          <div class="col-12 md:col-12 mt-1">
-            <div class="p-inputgroup">
-              <span class="p-float-label">
-                <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)" />
-              </span>
+                <div class=" grid p-fluid ">
+
+                    <div class=" col-12 md:col-12">
+
+
+
+                        <section class="seccion-perfil-usuario mb-5 ">
+                            <div class="perfil-usuario-header">
+                                <div class="perfil-usuario-portada">
+                                    <div class="perfil-usuario-avatar">
+                                        <img [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? 'https://bucketgtmt.s3.amazonaws.com/' + fundacion.logoFundacion : 'assets/img/faan.jpg'"
+                                            alt="img-avatar" height="165px">
+                                        <input type="file" #fileInput style="display: none;"
+                                            accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)">
+
+                                        <button type="button" class="boton-avatar" pTooltip="Logo Fundación"
+                                            tooltipPosition="bottom">
+
+                                            <i class="fas fa-camera" style="font-size: 1.3rem"
+                                                (click)="fileInput.click()"></i>
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="grid p-fluid m-2">
+                    <div class="col-12 md:col-4 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="ruc" name="ruc" [disabled]="true"
+                                    title="Este campo no se puede editar" [(ngModel)]="fundacion.ruc" />
+
+                                <label htmlFor="ruc" class="pi pi-id-card"> Ruc <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-4 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="nombreFundacion" name="nombreFundacion"
+                                    [(ngModel)]="fundacion.nombreFundacion" pTooltip="Nombre Fundacion"
+                                    tooltipPosition="bottom" />
+                                <label htmlFor="nombreFundacion" class="pi pi-user"> Nombre Fundacion <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-4 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="eslogan" name="eslogan"
+                                    [(ngModel)]="fundacion.eslogan" pTooltip="Eslogan" tooltipPosition="bottom" />
+                                <label htmlFor="eslogan" class="pi pi-user"> Eslogan <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILA 2-->
+
+                <div class="grid p-fluid m-2">
+                    <div class="col-12 md:col-6 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="acronimo" name="acronimo"
+                                    [(ngModel)]="fundacion.acronimo" pTooltip="Acronimo" tooltipPosition="bottom" />
+                                <label htmlFor="acronimo" class="pi pi-map-marker"> Acronimo <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="correo" name="correo" [(ngModel)]="fundacion.correo"
+                                    pTooltip="Email" tooltipPosition="bottom" />
+                                <label htmlFor="correo" class="pi pi-user"> Correo<span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILA 3-->
+
+                <div class="grid p-fluid m-2">
+                    <div class="col-12 md:col-4 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="direccion" name="direccion"
+                                    [(ngModel)]="fundacion.direccion" pTooltip="Ubicación" tooltipPosition="bottom" />
+                                <label htmlFor="direccion" class="pi pi-phone"> Direccion <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-4 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="paginaWeb" name="paginaWeb"
+                                    [(ngModel)]="fundacion.paginaWeb" pTooltip="Dirección Web"
+                                    tooltipPosition="bottom" />
+                                <label htmlFor="paginaWeb" class="pi pi-mobile"> Pagina Web <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-4 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="horarios" name="horarios"
+                                    [(ngModel)]="fundacion.horarios" pTooltip="Horario de apertura"
+                                    tooltipPosition="bottom" />
+                                <label htmlFor="horarios" class="pi pi-mobile"> horarios <span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid p-fluid m-2">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <textarea rows="5" cols="30" pInputTextarea pInputText id="objetivo" name="objetivo"
+                                    [(ngModel)]="fundacion.objetivo" pTooltip="Objetivo de la fundación"
+                                    tooltipPosition="bottom">{{fundacion.objetivo}} </textarea>
+                                <label htmlFor="objetivo" class="pi pi-user"> Objetivo<span
+                                        class="red-asterisk"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-card-body">
+                    <div class="text-center">
+                        <button type="submit" pButton label="Guardar Cambios" icon="pi pi-save"
+                            pTooltip="Guardar información" tooltipPosition="bottom"></button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-
-
-      <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-4 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="ruc" name="ruc" [disabled]="true" title="Este campo no se puede editar"
-                [(ngModel)]="fundacion.ruc" />
-              <label htmlFor="ruc" class="pi pi-id-card"> Ruc <span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-
-        <div class="col-12 md:col-4 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="nombreFundacion" name="nombreFundacion"
-                [(ngModel)]="fundacion.nombreFundacion" />
-              <label htmlFor="nombreFundacion" class="pi pi-user"> Nombre Fundacion <span
-                  class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-
-        <div class="col-12 md:col-4 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="eslogan" name="eslogan" [(ngModel)]="fundacion.eslogan" />
-              <label htmlFor="eslogan" class="pi pi-user"> Eslogan <span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- FILA 2-->
-
-      <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-6 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="acronimo" name="acronimo" [(ngModel)]="fundacion.acronimo" />
-              <label htmlFor="acronimo" class="pi pi-map-marker"> Acronimo <span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-
-        <div class="col-12 md:col-6 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="correo" name="correo" [(ngModel)]="fundacion.correo" />
-              <label htmlFor="correo" class="pi pi-user"> Correo<span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- FILA 3-->
-
-      <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-4 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="direccion" name="direccion" [(ngModel)]="fundacion.direccion" />
-              <label htmlFor="direccion" class="pi pi-phone"> Direccion <span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-        <div class="col-12 md:col-4 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="paginaWeb" name="paginaWeb" [(ngModel)]="fundacion.paginaWeb" />
-              <label htmlFor="paginaWeb" class="pi pi-mobile"> Pagina Web <span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-        <div class="col-12 md:col-4 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <input type="text" pInputText id="horarios" name="horarios" [(ngModel)]="fundacion.horarios" />
-              <label htmlFor="horarios" class="pi pi-mobile"> horarios <span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-12 mt-1">
-          <div class="p-inputgroup">
-            <span class="p-float-label">
-              <textarea rows="5" cols="30" pInputTextarea pInputText id="objetivo" name="objetivo"
-                [(ngModel)]="fundacion.objetivo">{{fundacion.objetivo}} </textarea>
-              <label htmlFor="objetivo" class="pi pi-user"> Objetivo<span class="red-asterisk"></span></label>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="p-card-body">
-        <div class="text-center">
-          <button type="submit" pButton label="Actualizar" icon="pi pi-user"></button>
-        </div>
-      </div>
-    </p-card>
-  </form>
+    </form>
 
 </p-dialog>
