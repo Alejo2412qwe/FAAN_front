@@ -256,12 +256,7 @@ export class RegistroMascotasComponent implements OnInit {
 			this.animal.placaAnimal = this.generatePlacaAnimal(8);
 		}
 
-		let key: string
-		try {
-			key = await this.uploadImage();
-		} catch (error) {
-			console.error("Upload image a problem");
-		}
+		const key = await this.uploadImage();
 
 		this.fichaRegister.situacionIngreso = this.catchIncomeSituation;
 		this.fichaRegister.persona = this.persona;
@@ -290,12 +285,7 @@ export class RegistroMascotasComponent implements OnInit {
 
 	public async updateAnimal() {
 		if (this.avatarURL?.trim()) {
-			try {
-				this.animal.fotoAnimal = await this.uploadImage();
-			} catch (error) {
-				console.error('A problme upload.')
-			}
-
+			this.animal.fotoAnimal = await this.uploadImage();
 		}
 
 		this.fichaRegister.situacionIngreso = this.catchIncomeSituation;
@@ -492,8 +482,8 @@ export class RegistroMascotasComponent implements OnInit {
 
 	public closeDialogIconmeSituation() {
 		this.incomeSituation = {} as SituacionIngreso;
-		this.dialogIncomeSituation =
-			false;
+		this.dialogIncomeSituation = 
+		false;
 
 
 	}

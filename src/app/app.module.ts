@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -23,13 +23,9 @@ import { AdopcionAnimalComponent } from './Modules/Administrador/adopcion-animal
 import { ControlPersonComponent } from './Modules/Administrador/control-person/control-person.component';
 import { HomeComponent } from './Components/home/home.component';
 import { RecoverPasswordComponent } from './Components/recover-password/recover-password.component';
-
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
-import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
-
 
 @NgModule({
   declarations: [
@@ -47,10 +43,9 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
     ControlPersonComponent,
     HomeComponent,
     RecoverPasswordComponent,
-
     ForAdopcionComponent,
     DonacionesComponent,
-    ContactoComponent
+    ContactoComponent 
   ],
   imports: [
     BrowserModule,
@@ -63,14 +58,9 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
     CommonModule,
     BrowserAnimationsModule,
     SlickCarouselModule,
-    ToastrModule.forRoot(),
-    NgxUiLoaderModule
+    ToastrModule.forRoot()
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoaderPeticionesInterceptor,
-    multi: true
-  }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
