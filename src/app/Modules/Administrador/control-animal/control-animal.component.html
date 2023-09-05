@@ -64,7 +64,8 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
                             <input type="text" pInputText id="nombreVeterinario" name="nombreVeterinario"
-                                [(ngModel)]="control.nombreVeterinario" />
+                                [(ngModel)]="control.nombreVeterinario" 
+                                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"/>
                             <label htmlFor="nombreVeterinario">Nombre Veterinario<span
                                     class="red-asterisk"></span></label>
                         </span>
@@ -87,7 +88,8 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
                             <input type="text" pInputText id="pesoActual" name="pesoActual"
-                                [(ngModel)]="control.pesoActual" />
+                                [(ngModel)]="control.pesoActual" 
+                                oninput="this.value = this.value.replace(/\D/g, '')"/>
                             <label htmlFor="pesoActual"> Peso Actual <span class="red-asterisk"></span></label>
                         </span>
                     </div>

@@ -44,7 +44,7 @@ const routes: Routes = [
 
   // SHARED
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'fundacion', component: FundacionComponent },//no vale...
+  { path: 'fundacion', component: FundacionComponent },
   { path: 'perfil-usuario', component: PerfilUsuarioComponent },
 
   // SUPERADMIN
@@ -52,7 +52,7 @@ const routes: Routes = [
 
   // PUBLIC
   { path: 'login', component: LoginComponent },
-  { path: 'formulario-adopcion', component: ForAdopcionComponent },//falta
+  { path: 'formulario-adopcion', component: ForAdopcionComponent },
   { path: 'donaciones', component: DonacionesComponent },
   { path: 'contacto', component: ContactoComponent },
   { path: '**', redirectTo: 'login' },
