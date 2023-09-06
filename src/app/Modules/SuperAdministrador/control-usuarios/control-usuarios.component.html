@@ -3,12 +3,12 @@
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2"
-                (click)="openNewUsuario()"></button>
+                (click)="openNewUsuario()" pTooltip="Nuevo usuario" tooltipPosition="bottom"></button>
         </ng-template>
 
-        <ng-template pTemplate="right">
+        <!-- <ng-template pTemplate="right">
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template>
+        </ng-template> -->
     </p-toolbar>
 
     <p-table #dt [value]="listUsuarios" [lazy]="true" (onLazyLoad)="loadUsuarioLazy($event)" dataKey="idUsuario"
@@ -51,7 +51,7 @@
                         field="estadoUsuario"></p-sortIcon>
                 </th>
                 <th>
-                    <strong> CAMBIARESTADO</strong> 
+                    <strong> CAMBIAR ESTADO</strong>
                 </th>
                 <th>
 
@@ -62,8 +62,8 @@
         <ng-template pTemplate="body" let-usuario>
             <tr>
                 <td>{{ usuario.idUsuario }}</td>
-                <td><p-avatar src='https://bucketgtmt.s3.amazonaws.com/' styleClass="mr-2" size="large"
-                        shape="circle"></p-avatar></td>
+                <td><p-avatar src='https://bucketgtmt.s3.amazonaws.com/' size="normal" shape="circle"
+                        pTooltip="Foto de perfil"></p-avatar> {{ usuario.username }}</td>
                 <td>{{ usuario.persona.nombre1 }} {{ usuario.persona.apellido1 }}</td>
                 <td>{{ usuario.persona.identificacion }}</td>
                 <td><p-tag [value]="usuario.estadoUsuario ? 'Activado' : 'Desactivado'"
@@ -147,9 +147,8 @@
                             <label for="nombreRaza"><strong>Celular</strong></label>
                             <span class="p-input-icon-right ">
                                 <div class="p-inputgroup">
-                                    <input type="text" pTooltip="Celular" [(ngModel)]="persona.celular"
-                                        [class]="submitted && (!persona.celular) ? 'ng-invalid ng-dirty':''"
-                                        id="celular" name="celular" pInputText placeholder="celular.." />
+                                    <input type="text" pTooltip="Celular" [(ngModel)]="persona.celular" id="celular"
+                                        name="celular" pInputText placeholder="celular.." />
                                 </div>
                             </span>
                         </div>

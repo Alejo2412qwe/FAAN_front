@@ -1,55 +1,3 @@
-
-export class Formulario {
-
-    nombre?: string;
-    ocupacion?: string;
-    ubicaciondomicilio?: string;
-    direccion?: string;
-    correo?: string;
-    telefonocasa?: string;
-    telefonotrabajo?: string;
-    celular?: string;
-    estadocivil?: string;
-    numeroMiembros?: number;
-    edadNinos?: number; // -----
-
-    autorizacion?: string;
-    todoMiembrosAcuerdo?: string;
-    siesno?: string;
-    viviraCon?: string;
-    considerar?: string;
-    animalesAnterioridad?: string;
-    animalPasado?: string;
-    tiempoPasado?: string;
-    animalAhora?: string;
-    vacunado?: string;
-    vacunasAntes?: string;
-    desparasitado?: string;
-    tiempoDesparasitado?: string;
-    horasSolo?: string;
-    pasariaAnimal?: string;
-    problemaAlergia?: string;
-    resultaAlergico?: string;
-    planeaHijos?: string;
-    embaraza?: string;
-    conoceGastos?: string;
-    tipoVivienda?: string;
-    vivienda?: string;
-    jardioPatio?: string;
-    parteCasa?: string;
-    dormirParte?: string;
-    vecinosAnimales?: string;
-    permiso?: string;
-    mudarseLugar?: string;
-    mudarse?: string;
-    dispuesto?: string;
-    enterarse?: string;
-    otrosComentarios?: string;
-
-}
-
-
-
 export class Form {
 
     nombre?: string;
@@ -61,8 +9,8 @@ export class Form {
     telefonoTrabajo?: string;
     celular?: string;
     estadoCivil?: string;
-    numeroMiembros?: number;
-    edadNinos?: number; // -----
+    numeroMiembros?:string;
+    edadNinos?: string; // -----
 
     autorizacion1?: string;
     todoMiembrosAcuerdo2?: string;
@@ -77,27 +25,27 @@ export class Form {
     vacunado10?: string;
     vacunasAntes11?: string;
     desparasitado12?: string;
-    // tiempoDesparasitado12?: string;
-    horasSolo13?: string;
-    pasariaAnimal14?: string;
-    problemaAlergia15?: string;
-    resultaAlergico16?: string;
-    planeaHijos17?: string;
-    embaraza18?: string;
-    conoceGastos19?: string;
-    separacionFamilia20?: string; //-----------------------------
+    tiempoDesparasitado13?: string;
+    horasSolo14?: string;
+    pasariaAnimal15?: string;
+    problemaAlergia16?: string;
+    resultaAlergico17?: string;
+    planeaHijos18?: string;
+    embaraza19?: string;
+    conoceGastos20?: string;
+    separacionFamilia21?: string; //-----------------------------
 
-    tipoVivienda21?: string;
-    vivienda21?: string;
-    jardioPatio22?: string;
-    parteCasaVivirAnimal23?: string;
-    dormirAnimalParte24?: string;
-    vecinosAnimales25?: string;
-    permiso26?: string;
-    mudarseLugar27?: string;
-    mudarse28?: string;
-    dispuesto29?: string;
-    enterarse30?: string;
-    otrosComentarios31?: string;
+    tipoVivienda22?: string;
+    vivienda23?: string;
+    jardioPatio24?: string;
+    parteCasaVivirAnimal25?: string;
+    dormirAnimalParte26?: string;
+    vecinosAnimales27?: string;
+    permiso28?: string;
+    mudarseLugar29?: string;
+    mudarse30?: string;
+    dispuesto31?: string;
+    enterarse32?: string;
+    otrosComentarios33?: string;
 
 }

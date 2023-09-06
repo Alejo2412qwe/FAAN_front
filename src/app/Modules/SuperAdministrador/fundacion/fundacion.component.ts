@@ -40,7 +40,7 @@ export class FundacionComponent implements OnInit {
 
     public showDialog() {
         this.visible = true;
-        this.clearData();
+        //this.clearData();
     }
 
     selectedFile!: File;
