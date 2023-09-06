@@ -1,3 +1,15 @@
+<!-- NUEVO LOADER -->
+<ngx-ui-loader bgsColor="#3b82f6" bgsPosition="center-center" bgsType="ball-scale-multiple" blur=5 delay=0
+    fastFadeOut=true fgsColor="#3b82f6" fgsPosition="center-center" fgsType="square-jelly-box"
+    logoPosition="center-center" logoUrl="" masterLoaderId="master" overlayBorderRadius="0"
+    overlayColor="rgba(207,207,207,0.8)" pbColor="#3b82f6" pbDirection="ltr" text="Espere un momento..."
+    textColor="#3b82f6" textPosition="center-center" maxTime=-1 minTime=300></ngx-ui-loader>
+
+
+
+
+
+
 <div *ngIf="isLogginPresent === false">
     <router-outlet></router-outlet>
 </div>
@@ -87,7 +99,8 @@
             <span class="text-green-500 font-medium">{{ data.fullNameMascota }} <br></span>
             <span class="text-500">{{ data.cuerpoMensaje }}</span>
             <div class="flex justify-content mt-3">
-                <p-button icon="pi pi-check" label="Visto" (onClick)="removerNotificacion(data)" styleClass="p-button-success"></p-button>
+                <p-button icon="pi pi-check" label="Visto" (onClick)="removerNotificacion(data)"
+                    styleClass="p-button-success"></p-button>
             </div>
         </div>
     </div>

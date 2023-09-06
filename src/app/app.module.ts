@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -27,6 +27,8 @@ import { RecoverPasswordComponent } from './Components/recover-password/recover-
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
+import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 
 @NgModule({
@@ -48,7 +50,7 @@ import { ContactoComponent } from './Components/contacto/contacto/contacto.compo
 
     ForAdopcionComponent,
     DonacionesComponent,
-    ContactoComponent 
+    ContactoComponent
   ],
   imports: [
     BrowserModule,
@@ -61,9 +63,14 @@ import { ContactoComponent } from './Components/contacto/contacto/contacto.compo
     CommonModule,
     BrowserAnimationsModule,
     SlickCarouselModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgxUiLoaderModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderPeticionesInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
