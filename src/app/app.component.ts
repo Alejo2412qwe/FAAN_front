@@ -7,6 +7,7 @@ import { Notificaciones } from './Models/notificacion';
 import { Message } from 'primeng/api';
 import { WebSocketService } from './Service/web-socket.service';
 import { Subscription } from 'rxjs';
+import { SharedService } from './util/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -33,13 +34,16 @@ export class AppComponent implements OnInit {
     private router: Router,
     private storageService: StorageService,
     private notificacionService: NotifacionesService,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private sharedService: SharedService, // Inject the SharedService
   ) {
-    _CargarScript.Cargar(["dashboard"]);
+    // _CargarScript.Cargar(["main"]);
   }
 
   ngOnInit(): void {
     this.isLogginPresent = this.storageService.isLoggedIn();
+    // this.isLogginPresent = this.sharedService.getIsLogginPresent();
+    console.log(this.isLogginPresent)
     if (this.isLogginPresent === true) {
       this.conectarWebSocket();
     }
@@ -103,8 +107,8 @@ export class AppComponent implements OnInit {
     return date.toLocaleDateString();
   }
 
-  removerNotificacion(data:any){
-    this.notificacionService.updateNotificacionEstado(data._id).subscribe(data=>{
+  removerNotificacion(data: any) {
+    this.notificacionService.updateNotificacionEstado(data._id).subscribe(data => {
       console.log("VISTO");
     })
   }
