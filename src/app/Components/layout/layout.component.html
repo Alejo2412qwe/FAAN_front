@@ -23,96 +23,72 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
-
-
                 <li class="nav-item dropdown">
 
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-bell"></i>
-                        <span class="badge bg-primary badge-number">4</span>
+                        <span class="badge bg-primary badge-number">{{countNotificaciones}}</span>
                     </a><!-- End Notification Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                         <li class="dropdown-header">
-                            En este momento usted tiene 4 notifications
+                            En este momento usted tiene {{countNotificaciones}} notifications
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        <!--  -->
+                        <p-scrollPanel [style]="{ width: '100%', maxHeight: '400px' }">
 
-                        <li class="notification-item">
-                            <i class="bi bi-exclamation-circle text-warning"></i>
-                            <div>
-                                <h4>Lorem Ipsum</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>30 min. ago</p>
+                            <!--  -->
+                            <div class="notification" *ngFor="let data of listNotificaciones">
+                                <li class="notification-item">
+                                    <!-- <i class="bi bi-exclamation-circle text-warning"></i> -->
+                                    <i [class]="'bi bi-exclamation-circle text-'+ dayExact(data.diasFaltantes)"></i>
+                                    <div>
+                                        <h4>{{ data.cuerpoMensaje }}</h4>
+                                        <p>{{ data.fullNameMascota }}</p>
+                                        <p>{{formatDate(data.proximaFechaFacunacion) }}</p>
+
+                                        <div class="flex justify-content mt-3">
+                                            <p-button label="Marcar como visto" icon="pi pi-eye"
+                                                styleClass="p-button-sm"
+                                                (onClick)="removerNotificacion(data)"></p-button>
+
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                             </div>
-                        </li>
 
+                            <!--  -->
+
+                        </p-scrollPanel>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li class="notification-item">
-                            <i class="bi bi-x-circle text-danger"></i>
-                            <div>
-                                <h4>Atque rerum nesciunt</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>1 hr. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-check-circle text-success"></i>
-                            <div>
-                                <h4>Sit rerum fuga</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>2 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <div>
-                                <h4>Dicta reprehenderit</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="dropdown-footer">
-                            <a href="#">Show all notifications</a>
-                        </li>
 
                     </ul><!-- End Notification Dropdown Items -->
 
                 </li><!-- End Notification Nav -->
-
-
 
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="assets/img/dog_eyes.jpg" alt="Profile" class="rounded-circle" width="30px"
                             height="30px">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{userLoggin.toUpperCase()}}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
-                            <span>Web Designer</span>
+                            <h6>{{userLoggin.toUpperCase()}}</h6>
+                            <span>{{rolLoggin}}</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -168,7 +144,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Animales</span><i
+                    <i class="bi bi-clipboard-plus-fill"></i><span>Animales</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -183,6 +159,16 @@
                         </a>
                     </li>
 
+                </ul>
+            </li><!-- End  Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#adoption-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-clipboard2-fill"></i><span>Adopciones</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="adoption-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
                     <li>
                         <a routerLink="adopcion-animal">
                             <i class="bi bi-circle"></i><span>Adopciones Animales</span>
@@ -190,7 +176,7 @@
                     </li>
 
                 </ul>
-            </li><!-- End Components Nav -->
+            </li><!-- End  Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -205,7 +191,7 @@
                     </li>
 
                 </ul>
-            </li><!-- End Forms Nav -->
+            </li><!-- End  Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -220,11 +206,12 @@
                     </li>
 
                 </ul>
-            </li><!-- End Tables Nav -->
+            </li><!-- End  Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Usuarios</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-person-lines-fill"></i><span>Usuarios</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -234,11 +221,11 @@
                     </li>
 
                 </ul>
-            </li><!-- End Charts Nav -->
+            </li><!-- End  Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gem"></i><span>Persona</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-person-square"></i><span>Persona</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -248,16 +235,16 @@
                     </li>
 
                 </ul>
-            </li><!-- End Icons Nav -->
+            </li><!-- End  Nav -->
 
             <li class="nav-heading">Pages</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" routerLink="fundacion">
-                    <i class="bi bi-person"></i>
+                    <i class="bi bi-building-fill-gear"></i>
                     <span>Fundacion</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
+            </li><!-- End  Page Nav -->
 
         </ul>
 
