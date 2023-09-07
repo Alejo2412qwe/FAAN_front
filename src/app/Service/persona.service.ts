@@ -45,4 +45,8 @@ export class PersonaService {
     return this.http.post<Persona>(environment.apiuri + '/persona/save', persona);
   }
 
+  public getAllPersonasPagesOrCedulaOrApellido(filtro: string, page: number, size: number, sort: string[]): Observable<Persona[]> {
+    return this.http.get<Persona[]>(environment.apiuri + '/persona/findByCedulaOrNombre/' + filtro + '?' + `&page=${page}&size=${size}&sort=${sort}`);
+  }
+
 }

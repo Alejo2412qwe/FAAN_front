@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ImageService } from 'src/app/Service/image.service';
 import { Form } from 'src/app/Models/fomulario';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 import { ToastrService } from 'ngx-toastr';
+import { EXCLUDE_FIELDS, stylesForm } from 'src/app/util/const-validate';
 
 
 @Component({
@@ -12,99 +13,49 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './for-adopcion.component.html',
     styleUrls: ['./for-adopcion.component.css']
 })
-export class ForAdopcionComponent {
-    public formulario: Form = new Form();
-    private ban: boolean = true;
-    private patternLetras: string = "[a-zA-Z ]{2,254}";
-    private patternCorreo: string = "^[\\w-+]+(\\.[\\w-]{1,62}){0,126}@[\\w-]{1,63}(\\.[\\w-]{1,62})+/[\\w-]+$";
-    private patternTelefonos: string = "^(?:\+593|593|0)(?:2|3|4|5|6|7|8|9)(?:\d{7})$"
-    private patternNumeros: string = "^[0-9]+$"
+export class ForAdopcionComponent implements OnInit {
+    public formulario = new Form();
+    public submitted: boolean = false;
+    public loading: boolean = false;
+    public error: string = 'Llena este campo.'
+
+    public listPersonaAutorizada: any[] = [
+        { name: 'Madre' },
+        { name: 'Padre' },
+        { name: 'Tutor' },]
 
     constructor(private imageService: ImageService, private toastr: ToastrService) { }
 
-    public ejecutar() {
-        if (this.validarFormulario()) {
-            this.generarPDF()
-            this.toastr.success('Formulario generado correctamente. ¡Gracias!');
+    ngOnInit(): void {
+    }
+
+    public formValidate() {
+        this.submitted = true;
+        this.loading = true;
+        if (
+            Object.entries(this.formulario)
+                .filter(([key]) => !EXCLUDE_FIELDS.includes(key))
+                .every(([_, value]) => value) &&
+            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(this.formulario.correoE!)
+        ) {
+            this.generarPDF();
         } else {
-            this.toastr.error('Error en el formulario. Por favor, verifica los campos.');
-            console.log('COMPRUEBE LOS CAMPOS')
+            this.loading = false;
+            this.toastr.error(
+                '',
+                'REVISE LOS CAMPOS OBLIGATORIOS'
+            );
         }
     }
 
-    validarFormulario(): boolean {
-
-        //letras, numeros y telefonos
-        if (!this.formulario.nombre?.match(this.patternLetras) &&
-            !this.formulario.ocupacion?.match(this.patternLetras) &&
-            !this.formulario.direccionDomiciliaria?.match(this.patternLetras) &&
-            !this.formulario.direccionTrabajo?.match(this.patternLetras) &&
-            !this.formulario.correoE?.match(this.patternCorreo) &&
-            !this.formulario.telefonoCasa?.match(this.patternTelefonos) &&
-            !this.formulario.telefonoTrabajo?.match(this.patternTelefonos) &&
-            !this.formulario.celular?.match(this.patternTelefonos) &&
-            !this.formulario.estadoCivil?.match(this.patternLetras) &&
-            !this.formulario.numeroMiembros?.match(this.patternNumeros) &&
-            !this.formulario.edadNinos?.match(this.patternNumeros) &&
-            !this.formulario.autorizacion1?.match(this.patternLetras) &&
-            !this.formulario.animalPasado7?.match(this.patternLetras) &&
-            !this.formulario.tiempoVivido8?.match(this.patternLetras) &&
-            !this.formulario.animalAhora9?.match(this.patternLetras) &&
-            !this.formulario.vacunasAntes11?.match(this.patternLetras) &&
-            !this.formulario.tiempoDesparasitado13?.match(this.patternLetras) &&
-            !this.formulario.horasSolo14?.match(this.patternLetras) &&
-            !this.formulario.pasariaAnimal15?.match(this.patternLetras) &&
-            !this.formulario.problemaAlergia16?.match(this.patternLetras) &&
-            !this.formulario.resultaAlergico17?.match(this.patternLetras) &&
-            !this.formulario.embaraza19?.match(this.patternLetras) &&
-            !this.formulario.separacionFamilia21?.match(this.patternLetras) &&
-            !this.formulario.mudarseLugar29?.match(this.patternLetras) &&
-            !this.formulario.mudarse30?.match(this.patternLetras) &&
-            !this.formulario.enterarse32?.match(this.patternLetras) &&
-            !this.formulario.otrosComentarios33?.match(this.patternLetras)
-        ) {
-            this.ban = false;
-        }
-
-
-        return this.ban;
+    public validarCorreoE(correo: string): boolean {
+        const patronCorreo = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        return patronCorreo.test(correo);
     }
 
     public async generarPDF() {
-        console.log(this.formulario)
-
-        const styles = {
-            header: {
-                fontSize: 18,
-                bold: true,
-                alignment: 'center',
-                margin: [0, 0, 0, 10]
-            },
-            subtittle: {
-                fontSize: 14,
-                bold: true,
-            },
-            question: {
-                fontSize: 12,
-                bold: true,
-            },
-            roundedImage: {
-                mask: {
-                    type: 'ellipse',
-                },
-                alignment: 'center',
-                margin: [0, 0, 0, 10]
-            },
-            subheader: {
-                fontSize: 14,
-                bold: true,
-                margin: [0, 10, 0, 5]
-            }
-        };
-
 
         const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/faan.jpg');
-
 
         const documentDefinition = {
             content: [
@@ -188,7 +139,7 @@ export class ForAdopcionComponent {
                 { text: '\n VIVIENDA', style: 'subheader' },
 
                 { text: `\n 21. Tu vivienda es: Casa_${this.formulario.tipoVivienda22 === 'A' ? 'X' : ''}_ Departamento_${this.formulario.tipoVivienda22 === 'B' ? 'X' : ''}_`, style: 'question' },
-                { text: `Tu vivienda es: Propia__${this.formulario.vivienda23 === 'A' ? 'X' : ''}_ Rentada _${this.formulario.vivienda23 === 'B' ? 'X' : ''}_ Compartida _${this.formulario.vivienda23 === 'C' ? 'X' : ''}__`, style: 'question' },
+                { text: `Tu vivienda es: Propia__${this.formulario.vivienda23 === 'A' ? 'X' : ''}_ Rentada _${this.formulario.vivienda23 === 'B' ? 'X' : ''}_ Compartida _${this.formulario.vivienda23 === 'C' ? 'X' : ''}__Compartida _${this.formulario.vivienda23 === 'D' ? 'X' : ''}__`, style: 'Otra' },
 
                 { text: '\n 22. ¿Tiene jardín o patio? ', style: 'question' },
                 { text: '\n' + this.formulario.jardioPatio24, },
@@ -241,13 +192,13 @@ export class ForAdopcionComponent {
                     text: 'Si al terminar de leer aún estas convencido de aDOGtar, llénala esta solicitud y envíala a nuestros contactos 0998681859 - 0987614520.'
                 },
 
-
             ],
-            styles: styles
+            styles: stylesForm
         };
 
         const pdfDocGenerator = pdfMake.createPdf(documentDefinition as any);
-        pdfDocGenerator.download('ejemplo.pdf');
-
+        pdfDocGenerator.download('Formulario.pdf');
+        this.submitted = false;
+        this.loading = false;
     }
 }
