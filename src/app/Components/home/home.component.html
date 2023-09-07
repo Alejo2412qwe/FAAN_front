@@ -1,156 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Yarn Over</title>
-  
-</head>
+<div class="p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap"
+  style="background-color: var(--blue)">
+  <div class="font-bold mr-4">FAAN</div>
+  <div class="align-items-center hidden lg:flex">
+    <span class="line-height-3">🐶 Fundación Familia Amor Animal</span>
+  </div>
+</div>
 
-<body>
-
-  <section class="titles">
-
-
-    <img src="https://i.ibb.co/JRJmDHJ/imagen-2023-08-02-202446789.png" alt="" >
-    <!-- <h1>FUNDACIÓN FAAN</h1> -->
-
-    <h4>Familia, Amor y Animal</h4>
-
-   
-    <br>
-  </section>
-
-  <div class="wrap">
-		<h1>MASCOTAS</h1>
-
-    <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button" (click)="setEnableAll()"
-    (click)="getAllMascotas()">
-    <i class="fa-solid fa-list fa-fw space" style="margin-right: 10px;"></i>Todo</button>
-
-    <button class="btn btn-primary w-100 btn2 mb-2 text-start" type="button"
-                    *ngFor="let nombreTipo" (click)="getRazaAnimalById(nombreTipo.tipoAnimal)"
-                    (click)="getAllAnimalPerTipo(nombreTipo.tipoAnimal)" (click)="setEnable()"
-                    (click)="setDisabledGender()">
-                    <i class="fa-solid fa-list fa-fw space"
-                        style="margin-right: 10px;"></i>{{nombreTipo.nombretipo}}</button>
-
-
-		<div class="store-wrapper">
-			<!--<div class="category_list">
-				<a  class="category_item" category="all">Todo</a>
-				<a  class="category_item" category="perro">Perros</a>
-				<a  class="category_item" category="gato">Gatos</a>
-			</div>-->
-			<section class="products-list">
-				<div class="product-item" category="perro">
-					<img [src]='"https://bucketgtmt.s3.amazonaws.com/" + animal.fotoAnimal'>
-				</div>
-			</section>
-		</div>
-	</div>
-
-
-  <section class="introduction" >
-
-    <h1>Una Esperanza para los Sin Hogar Fundación FAAN</h1>
-    <h4>Familia, Amor y Animal</h4>
-
-      <p>
-        En el bullicioso corazón de nuestra comunidad, un problema persistente y desgarrador ha estado clamando por atención durante demasiado tiempo: los animales callejeros que, día tras día, luchan por sobrevivir en un mundo implacable. Sin refugio, sin alimento adecuado y sin el amor incondicional que merecen, estas almas vulnerables enfrentan innumerables adversidades.
-      </p>
-      <p>
-        Sin embargo, en medio de la oscuridad y el abandono, surge una luz brillante y esperanzadora: FAAN. Somos una organización dedicada a marcar la diferencia en la vida de estos indefensos amigos de cuatro patas que han sido desplazados y olvidados por la sociedad.
-      </p>
-      <p>
-        Nuestra misión es clara y apasionada: proporcionar un refugio seguro, cuidados médicos, alimentación adecuada y lo más importante cariño y afecto para cada animal callejero que cruzará nuestro camino. Creemos en el poder transformador del amor, la compasión y estamos decididos a restaurar la fe en la humanidad para estos seres inocentes.
-      </p>
-      <p>
-        Como fundación no solo nos esforzamos por brindar atención inmediata y de alta calidad a estos animales desfavorecidos, sino que también trabajamos arduamente para concientizar a la sociedad sobre la importancia de la adopción responsable, la esterilización y el respeto por la vida de todas las criaturas que comparten nuestro planeta.
-      </p>
-      <p>
-        A través de programas de adopción, campañas de esterilización, educación comunitaria y esfuerzos de rescate. FAAN se posiciona como un faro de esperanza y compasión en nuestra comunidad y más allá. Creemos firmemente que con el apoyo de personas compasivas como tú, podemos hacer una diferencia significativa y duradera en la vida de estos animales que tanto necesitan nuestra ayuda.
-      </p>
-      <p>
-        Únete a nosotros en esta noble causa mientras continuamos nuestro viaje para convertir el sufrimiento en sonrisas y el abandono en amor incondicional. Juntos podemos ser la voz de aquellos que no tienen voz, la esperanza para los sin hogar y el cambio que tanto necesitan.
-      </p>
-    
-      <h4>¡Bienvenido a Fundación la FAAN donde juntos construiremos un mundo más compasivo y amable para nuestros amigos peludos sin hogar!</h4>
-   
-    <br>
-  </section>
-  <section>
-
-    <div class="video-youtube">
-
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/02VY3wCVV64" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-
-  </section>
-
-  <section class="titles">
-
-    <h1>Como Llegar</h1>
-    <h4>sigue el video</h4>
-    <div class="video-youtube">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/wCZjk1SDTG4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <section class="container-boxes">
-    <div class="box">
-      <div class="text">
-        <a href="">
-          <h3>QUIENES SOMOS</h3>
-          <p>FAAN es un grupo de defensa animal, sin ánimo de lucro, que tiene como finalidad ayudar y acoger a cuantos animales abandonados en situaciones de riesgo se pueda, a su vez busca crear conciencia en cuanto al respeto animal.</p>
-        </a>
+<div class="m-4 grid grid-nogutter surface-section text-800">
+  <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
+    <section>
+      <span class="block text-6xl font-bold mb-1">Fundación Familia Amor Animal</span>
+      <div class="text-6xl text-primary font-bold mb-3">
+        organización dedicada a la protección,concienciación y defensa
       </div>
+      <p class="mt-0 mb-4 text-700 line-height-3">
+        Por 8 años, FAAN ( Fundación Familia Amor Animal ) ha servido como
+        santuario para perros maltratados, abandonados, descuidados y de alto
+        rango en el área metropolitana de Cuenca, Ecuador, con un temporal
+        refugio ubicado en Tarqui. Actualmente hay más de 150 perros a nuestro
+        cuidado. FAAN es una organización ecuatoriana sin fines de lucro
+        dedicada al bienestar y la seguridad de los animales en el área
+        metropolitana de Cuenca.
+      </p>
+      <button pButton pRipple label="Iniciar sesión"
+        class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" (click)="goLogin()"></button>
+    </section>
+  </div>
+  <div class="col-12 md:col-6 overflow-hidden">
+    <img src="../../../assets/img/narner.png" alt="Image" class="md:ml-auto block md:h-full"
+      style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)" />
+  </div>
+</div>
 
-    </div>
-
-    <div class="box">
-
-  
-
-      <div class="text">
-        <a href="">
-          <h3>OBJETIVOS</h3>
-          <p>
-            • Rescatar animales abandonados en situación de riesgo y buscarles un hogar responsable luego de haber tenido atención médica oportuna y rehabilitación social en caso de requerirse.
-            <br>• Disminuir el maltrato animal creando conciencia acerca del tema.
-            <br>• Fomentar la importancia de la esterilización de animales de compañía para evitar la sobrepoblación.
-            <br>• Reducir el número de animales abandonados</p>
-        </a>
+<div class="m-5 surface-card p-4 shadow-2 border-round">
+  <div class="text-3xl font-medium text-900 mb-3 text-center">
+    Videos Informativos
+  </div>
+  <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
+    <div class="grid">
+      <div class="col-12 md:col-6 mb-6 px-5">
+        <div class="text-900 text-xl mb-3 font-medium">Acerca de FAAN</div>
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/02VY3wCVV64" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
       </div>
-
-    </div>
-
-    <div class="box">
-
-   
-
-      <div class="text">
-        <a href="">
-          <h3>FINANCIAMIENTO
-        </h3>
-          <p>Nos financiamos de las donaciones realizadas por personas particulares o empresas que desean aportar con nuestra causa , además de recaudar fondos mediante diversas actividades realizadas por el grupo , tales como ventas de artículos donados, realización de rifas, eventos y venta de productos varios.</p>
-        </a>
+      <div class="col-12 md:col-6 mb-6 px-5">
+        <div class="text-900 text-xl mb-3 font-medium">Ubicación</div>
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/wCZjk1SDTG4" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
       </div>
-
     </div>
-  </section>
+  </div>
+</div>
 
+<div class="m-5 surface-card p-4 shadow-2 border-round">
+  <p-carousel [value]="ListAnimales" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+    <ng-template let-animal pTemplate="item">
+      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+        <div class="mb-3">
+          <img src="https://img.freepik.com/foto-gratis/perrito-joven-posando-alegre_155003-28765.jpg"
+            [alt]="animal.fotoAnimal" class="w-6 shadow-2" />
+        </div>
+        <div>
+          <h4 class="mb-1">{{ animal.nombreAnimal }}</h4>
+          <h6 class="mt-0 mb-3">
+            <!-- {{ "Raza" + animal.razaAnimal!.nombreRaza }} -->
+          </h6>
+          <div class="car-buttons mt-5">
+            <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"
+              (onClick)="goFormulario()"></p-button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
 
-</body>
+<!-- SECCTION CONTACTOS -->
+<section id="contacto" data-aos="fade-up">
+  <h3 class="titulo-seccion">Contactanos</h3>
+  <div class="contenedor-form">
+    <form id="form" action="">
+      <div class="fila mitad">
+        <input type="text" placeholder="Nombre Completo *" class="input-mitad" name="emailjs_name" id="emailjs_name"
+          required />
+        <input type="email" placeholder="Dirección de Email" class="input-mitad" name="emailjs_email" id="emailjs_email"
+          required />
+      </div>
+      <div class="fila">
+        <input type="text" placeholder="Tema..." class="input-full" name="emailjs_tema" id="emailjs_tema" required />
+      </div>
+      <div class="fila">
+        <textarea name="emailjs_mensaje" id="emailjs_mensaje" cols="30" rows="10" placeholder="Tu Mensaje..."
+          class="input-full"></textarea>
+      </div>
+      <input type="submit" value="Enviar Mensaje" id="button-send" class="btn-enviar" />
+    </form>
+  </div>
+  <p id="msg" class="msg"></p>
+</section>
 
+<!-- SECCION FOOTER -->
+<footer>
+  <p class="text-center">Todos los derechos reservados - 2023</p>
+</footer>
 
-</html>
+<!-- BUTTON WHATSAPP -->
+<a href="https://wa.link/6ffvwu" class="btn-wsp" target="_blank">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
