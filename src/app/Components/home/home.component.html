@@ -1,7 +1,5 @@
-<div
-  class="p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap"
-  style="background-color: var(--blue)"
->
+<div class="p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap"
+  style="background-color: var(--blue)">
   <div class="font-bold mr-4">FAAN</div>
   <div class="align-items-center hidden lg:flex">
     <span class="line-height-3">🐶 Fundación Familia Amor Animal</span>
@@ -9,13 +7,9 @@
 </div>
 
 <div class="m-4 grid grid-nogutter surface-section text-800">
-  <div
-    class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center"
-  >
+  <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
     <section>
-      <span class="block text-6xl font-bold mb-1"
-        >Fundación Familia Amor Animal</span
-      >
+      <span class="block text-6xl font-bold mb-1">Fundación Familia Amor Animal</span>
       <div class="text-6xl text-primary font-bold mb-3">
         organización dedicada a la protección,concienciación y defensa
       </div>
@@ -28,22 +22,13 @@
         dedicada al bienestar y la seguridad de los animales en el área
         metropolitana de Cuenca.
       </p>
-      <button
-        pButton
-        pRipple
-        label="Iniciar sesión"
-        class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"
-        (click)="goLogin()"
-      ></button>
+      <button pButton pRipple label="Iniciar sesión"
+        class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" (click)="goLogin()"></button>
     </section>
   </div>
   <div class="col-12 md:col-6 overflow-hidden">
-    <img
-      src="../../../assets/img/narner.png"
-      alt="Image"
-      class="md:ml-auto block md:h-full"
-      style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
-    />
+    <img src="../../../assets/img/narner.png" alt="Image" class="md:ml-auto block md:h-full"
+      style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)" />
   </div>
 </div>
 
@@ -55,62 +40,38 @@
     <div class="grid">
       <div class="col-12 md:col-6 mb-6 px-5">
         <div class="text-900 text-xl mb-3 font-medium">Acerca de FAAN</div>
-        <iframe
-          width="100%"
-          height="500"
-          src="https://www.youtube.com/embed/02VY3wCVV64"
-          title="YouTube video player"
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/02VY3wCVV64" title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+          allowfullscreen></iframe>
       </div>
       <div class="col-12 md:col-6 mb-6 px-5">
         <div class="text-900 text-xl mb-3 font-medium">Ubicación</div>
-        <iframe
-          width="100%"
-          height="500"
-          src="https://www.youtube.com/embed/wCZjk1SDTG4"
-          title="YouTube video player"
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/wCZjk1SDTG4" title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+          allowfullscreen></iframe>
       </div>
     </div>
   </div>
 </div>
 
 <div class="m-5 surface-card p-4 shadow-2 border-round">
-  <p-carousel
-    [value]="ListAnimales"
-    [numVisible]="3"
-    [numScroll]="1"
-    [responsiveOptions]="responsiveOptions"
-  >
+  <p-carousel [value]="ListAnimales" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
     <ng-template let-animal pTemplate="item">
-      <div
-        class="border-1 surface-border border-round m-2 text-center py-5 px-3"
-      >
+      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
         <div class="mb-3">
-          <img
-            src="http://localhost/8080/imagenes/{{ animal.fotoAnimal }}"
-            [alt]="animal.fotoAnimal"
-            class="w-6 shadow-2"
-          />
+          <img src="https://img.freepik.com/foto-gratis/perrito-joven-posando-alegre_155003-28765.jpg"
+            [alt]="animal.fotoAnimal" class="w-6 shadow-2" />
         </div>
         <div>
           <h4 class="mb-1">{{ animal.nombreAnimal }}</h4>
           <h6 class="mt-0 mb-3">
-            {{ "Raza" + animal.razaAnimal!.nombreRaza }}
+            <!-- {{ "Raza" + animal.razaAnimal!.nombreRaza }} -->
           </h6>
           <div class="car-buttons mt-5">
-            <p-button
-              type="button"
-              styleClass="p-button-success p-button-rounded mr-2"
-              icon="pi pi-star-fill"
-              (onClick)="goFormulario()"
-            ></p-button>
+            <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"
+              (onClick)="goFormulario()"></p-button>
           </div>
         </div>
       </div>
@@ -124,49 +85,19 @@
   <div class="contenedor-form">
     <form id="form" action="">
       <div class="fila mitad">
-        <input
-          type="text"
-          placeholder="Nombre Completo *"
-          class="input-mitad"
-          name="emailjs_name"
-          id="emailjs_name"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Dirección de Email"
-          class="input-mitad"
-          name="emailjs_email"
-          id="emailjs_email"
-          required
-        />
+        <input type="text" placeholder="Nombre Completo *" class="input-mitad" name="emailjs_name" id="emailjs_name"
+          required />
+        <input type="email" placeholder="Dirección de Email" class="input-mitad" name="emailjs_email" id="emailjs_email"
+          required />
       </div>
       <div class="fila">
-        <input
-          type="text"
-          placeholder="Tema..."
-          class="input-full"
-          name="emailjs_tema"
-          id="emailjs_tema"
-          required
-        />
+        <input type="text" placeholder="Tema..." class="input-full" name="emailjs_tema" id="emailjs_tema" required />
       </div>
       <div class="fila">
-        <textarea
-          name="emailjs_mensaje"
-          id="emailjs_mensaje"
-          cols="30"
-          rows="10"
-          placeholder="Tu Mensaje..."
-          class="input-full"
-        ></textarea>
+        <textarea name="emailjs_mensaje" id="emailjs_mensaje" cols="30" rows="10" placeholder="Tu Mensaje..."
+          class="input-full"></textarea>
       </div>
-      <input
-        type="submit"
-        value="Enviar Mensaje"
-        id="button-send"
-        class="btn-enviar"
-      />
+      <input type="submit" value="Enviar Mensaje" id="button-send" class="btn-enviar" />
     </form>
   </div>
   <p id="msg" class="msg"></p>

@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
         numScroll: 1
       }
     ];
+    this.getAllMascotas()
 
   }
 
@@ -80,6 +81,7 @@ export class HomeComponent implements OnInit {
       this.animalesService.getAllAnimalesPagesOrPlacaOrName(this.isTextDigit!, this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
         if (data !== null) {
           this.ListAnimales = data.content;
+          console.log("----")
           console.log(data.content)
           this.pageTotal = data.totalPages
         }
