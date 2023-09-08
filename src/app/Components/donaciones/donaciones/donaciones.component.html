@@ -12,74 +12,99 @@
         <div>
             <nav id="nav-3">
                 <a class="link-3" [routerLink]="['/home']">Home</a>
-                <a class="link-3" [routerLink]="['/home']">Informacion</a>
+                <a class="link-3" [routerLink]="['/informacion']">Informacion</a>
                 <a class="link-3" [routerLink]="['/donaciones']">Donaciones</a>
                 <a class="link-3" [routerLink]="['/contacto']">Contactos</a>
             </nav>
         </div>
     </header>
 
-    <table STYLE="width:100%; background-color:#ffffff; border-color:#ffffff; border-style:solid; border-width:1px;">
+    <table STYLE="width:83%; background-color:#ffffff; border-color:#ffffff; border-style:solid; border-width:3px; margin-left: 8%;">
         <tr>
             <td STYLE="width:100%;">
                 <BR>
-                <H1>Ayuda a los Animales de Cuenca, Ecuador</H1>
-                <H2>
+                <H1 style="text-align: center;">Ayuda a los Animales de Cuenca, Ecuador</H1><br>
+                <H2 style="text-align: center;">
                     Done a FAAN (Fundación Familia Amor Animal) y ayude a nuestros perros a obtener una<BR>
                     "Nueva correa en la vida"
-                </H2>
+                </H2><br><br>
                 <H4><b>Agradecemos todas y cada una de las contribuciones</b>... Cada poquito cuenta. Su donación nos
                     ayudará a crear este santuario amoroso, seguro y pacífico para los perros mayores y más vulnerables
-                    de Cuenca y cuidarlos hasta que los ayudemos a encontrar un hogar Fur-ever.</H4>
+                    de Cuenca y cuidarlos hasta que los ayudemos a encontrar un hogar Fur-ever.</H4><br>
                 <H3>&nbsp;* Considere unirse a nuestro Paws Circle para benefactores especiales y conmemore su nombre
                     y/o el de su mascota en el nuevo refugio o conviértase en un "Padre de perros" para nuestros perros
                     del refugio con su regalo mensual.
                     <BR><BR>
+
                     <div style="text-align:center;">
                         <IMG SRC="https://www.faanecuador.org/images/paws1.png" ALT="paws donations awards">&nbsp;<IMG
                             SRC="https://www.faanecuador.org/images/paws2.png" ALT="paws donations awards"><BR>
                         <IMG SRC="https://www.faanecuador.org/images/paws3.png" ALT="paws donations awards">&nbsp;<IMG
                             SRC="https://www.faanecuador.org/images/paws4.png" ALT="paws donations awards">
                     </div>
+
+                    
+
                     <BR><BR>
                     *FAAN (Fundación Familia Amor Animal) está afiliada a nuestra organización hermana 501(c) (3) sin
                     fines de lucro ubicada en los Estados Unidos
                 </H3>
                 <H5>(Con todas las donaciones y obsequios a FAAN, (depósito bancario, tarjeta de crédito o cheque a
                     nombre de Amici Cannis) le pedimos que designe su obsequio como aplicado a nuestra campaña capital
-                    para el Refugio FAAN o Apoyo Continuo para los 150 animales en nuestro Envíe un correo electrónico
+                    para el Refugio FAAN o Apoyo Continuo para los 150 animales en nuestro refugio. <br> Envíe un correo electrónico
                     confirmando su nombre, correo electrónico y monto de la donación, preferiblemente con su recibo o
-                    una copia de su cheque a &nbsp;<a href="http://scr.im/inscr">info@faanecuador.org</a> &nbsp; - Esto
+                    una copia de su cheque a &nbsp;<a href="http://scr.im/inscr">info@faanecuador.org</a> &nbsp;. <br> Esto
                     respalda tanto nuestra contabilidad financiera como el compromiso de FAAN con el reconocimiento de
                     donantes)</H5>
                 <BR><BR>
                 <div style="text-align:center;">
                     <H1>Aquí hay maneras fáciles de hacer su regalo hoy<BR>a los perros de FAAN:</H1>
                 </div>
-                <BR><BR>
-                <div style="text-align:center;">
-                    <H3>1. &nbsp;&nbsp;Envíe su cheque de donación en los USA:</H3>
-                    <H4>
-                        to: <BR>
-                        Amici Cannis USA<BR>
-                        1008 Centre Avenue<BR>
-                        Ft. Collins, Colorado 80526<BR>
-                        <i>Indique: Su donación a FAAN/Refugio</i><BR>
-                        Cuenta: 1000-817-9654<BR>
-                        <i>FEIN# 46-5202586</i><BR>
-                    </H4>
-                    <BR>
-                    <H3>2. &nbsp;&nbsp;Transferencia Bancaria Fundación en Ecuador:</H3>
-                    <H4>
-                        Cuenta Oficial:<BR>
-                        Fundación Familia Amor Animal
-                    </H4>
-                    <IMG SRC="https://www.faanecuador.org/es/images/44.jpg" ALT="donate to help animals">
-                    <BR><BR>
-                    <H3>
-                        3. Haga arreglos para que un miembro del equipo voluntario de FAAN lo recoja en Cuenca al <a
-                            href="http://scr.im/inscr">info@faanecuador.org</a></H3>
-                </div>
+
+                    <div class="contenedor-acordeon">
+                        <div class="acordeon">
+                            <input type="radio" name="acordeon" id="btn-acordeon1" class="btn-acordeon">
+                            <label for="btn-acordeon1">
+                                <H3>1. &nbsp;&nbsp;Envíe su cheque de donación en los USA:</H3>
+                            </label>
+                            <div class="contenido-acordeon">
+                                <H4>
+                                    to: <BR>
+                                    Amici Cannis USA<BR>
+                                    1008 Centre Avenue<BR>
+                                    Ft. Collins, Colorado 80526<BR>
+                                    <i>Indique: Su donación a FAAN/Refugio</i><BR>
+                                    Cuenta: 1000-817-9654<BR>
+                                    <i>FEIN# 46-5202586</i><BR>
+                                </H4> 
+                            </div>
+                        </div>
+                        <div class="acordeon">
+                         <input type="radio" name="acordeon" id="btn-acordeon2" class="btn-acordeon">
+                         <label for="btn-acordeon2">
+                            <H3>2. &nbsp;&nbsp;Transferencia Bancaria Fundación en Ecuador:</H3>
+                         </label>
+                         <div class="contenido-acordeon" style="align-items: center;">
+                            <H4>
+                                Cuenta Oficial:<BR>
+                                Fundación Familia Amor Animal
+                            </H4>
+                            <IMG SRC="https://www.faanecuador.org/es/images/44.jpg" ALT="donate to help animals">    
+                         </div>
+                     </div>
+                     <div class="acordeon">
+                         <input type="radio" name="acordeon" id="btn-acordeon3" class="btn-acordeon">
+                         <label for="btn-acordeon3">
+                            <H3>3. &nbsp;&nbsp;¿Desea hacer arreglos?</H3>
+                         </label>
+                         <div class="contenido-acordeon">
+                            <H3>
+                                Haga arreglos para que un miembro del equipo voluntario de FAAN lo recoja en Cuenca al <a
+                                    href="http://scr.im/inscr">info@faanecuador.org</a></H3>
+                         </div>
+                     </div>
+                    </div>
+                
                 <BR><BR>
                 <hr
                     style='background-color:#000000; border-width:0; color:#ffffff; height:1px; line-height:0; text-align:left; width:91%;'>
@@ -87,6 +112,9 @@
             </td>
         </tr>
     </table>
+
+    
+
 </body>
 
 </html>

@@ -20,6 +20,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
+import { InformacionComponent } from './Components/informacion/informacion.component';
 
 
 
@@ -55,6 +56,7 @@ const routes: Routes = [
   { path: 'formulario-adopcion', component: ForAdopcionComponent },
   { path: 'donaciones', component: DonacionesComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'informacion', component: InformacionComponent },
   { path: '**', redirectTo: 'home' },
 ];
 

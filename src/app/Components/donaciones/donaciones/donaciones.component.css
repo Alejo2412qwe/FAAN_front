@@ -186,3 +186,59 @@ mark.silver {
     background: none;
 }
 
+/*Acordeon desplegable*/
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+.contenedor-acordeon{
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 80px;
+}
+.contenedor-acordeon h2{
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 35px;
+}
+.acordeon{
+    background: #fff;
+}
+.acordeon label{
+    display: block;
+    padding: 20px;
+    font-size: 20px;
+    background: #48d6e9;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: all 300ms ease;
+}
+.acordeon label:hover{
+    background: #b6f3ff;
+}
+.acordeon .contenido-acordeon{
+    padding: 0px;
+    margin: 0px 20px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 300ms ease;
+}
+.btn-acordeon:checked ~ .contenido-acordeon{
+    max-height: 600px;
+    padding: 15px 0px;
+}
+.btn-acordeon{
+    display: none;
+}
+
+
+/*Carruesel*/
+.carousel-item{
+    height: 30rem;
+    background-color: #48d6e9;
+}
