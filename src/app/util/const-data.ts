@@ -1,0 +1,4 @@
+export const ROLS_SYSTEM = [
+    "SUPERADMINISTRADOR",
+    "ADMINISTRADOR"
+]

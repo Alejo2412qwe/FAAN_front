@@ -5,7 +5,7 @@ import { Usuario } from 'src/app/Models/models';
 import { AuthService } from 'src/app/Service/auth.service';
 import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
-import { SharedService } from 'src/app/util/shared.service';
+import { SharedService } from 'src/app/util/service/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -97,11 +97,10 @@ export class LoginComponent implements OnInit {
             }
             setTimeout(() => {
               this.router.navigate(['/dashboard']).then(() => {
-                this.sharedService.setIsLogginPresent(true); // Set the value here
+                this.sharedService.setIsLogginPresent(true); // Set 
                 window.location.reload();
               });
-              // window.location.reload();
-              // location.replace('/dashboard');
+
             }, 1500);
           }
         }

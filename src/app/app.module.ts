@@ -32,6 +32,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,8 @@ import { LayoutComponent } from './Components/layout/layout.component';
     ForAdopcionComponent,
     DonacionesComponent,
     ContactoComponent,
-    LayoutComponent
+    LayoutComponent,
+
   ],
   imports: [
     BrowserModule,

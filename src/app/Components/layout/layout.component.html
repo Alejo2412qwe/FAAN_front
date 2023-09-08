@@ -18,8 +18,6 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
@@ -140,102 +138,24 @@
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li>
+            <!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-clipboard-plus-fill"></i><span>Animales</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+            <li class="nav-item" *ngFor="let menuP of listSidebar">
+                <a class="nav-link collapsed" [attr.data-bs-target]="'#' + menuP.idNavigation" data-bs-toggle="collapse"
+                    href="#">
+                    <i [class]="menuP.icon"></i><span>{{menuP.title}}</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a routerLink="registro-mascota">
-                            <i class="bi bi-circle"></i><span>Registro Animal</span>
+                <ul [id]="menuP.idNavigation" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li *ngFor="let subMenu of menuP.subMenu">
+                        <a [routerLink]="subMenu.path">
+                            <i class="bi bi-circle"></i><span>{{subMenu.subTitle}}</span>
                         </a>
                     </li>
-                    <li>
-                        <a routerLink="control-animal">
-                            <i class="bi bi-circle"></i><span>Control Animal</span>
-                        </a>
-                    </li>
-
                 </ul>
-            </li><!-- End  Nav -->
+            </li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#adoption-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-clipboard2-fill"></i><span>Adopciones</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="adoption-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                    <li>
-                        <a routerLink="adopcion-animal">
-                            <i class="bi bi-circle"></i><span>Adopciones Animales</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li><!-- End  Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Animal Tipos</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a routerLink="animal-tipo">
-                            <i class="bi bi-circle"></i><span>Gestión Tipo Animal</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li><!-- End  Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Animal Razas</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a routerLink="animal-raza">
-                            <i class="bi bi-circle"></i><span>Gestión Raza Animal</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li><!-- End  Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person-lines-fill"></i><span>Usuarios</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a routerLink="control-usuario">
-                            <i class="bi bi-circle"></i><span>Control Usuario</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li><!-- End  Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person-square"></i><span>Persona</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a routerLink="person/gestion">
-                            <i class="bi bi-circle"></i><span>Control Persona</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li><!-- End  Nav -->
+            <!-- End  Nav NG-->
 
             <li class="nav-heading">Pages</li>
 
@@ -244,7 +164,8 @@
                     <i class="bi bi-building-fill-gear"></i>
                     <span>Fundacion</span>
                 </a>
-            </li><!-- End  Page Nav -->
+            </li>
+            <!-- End  Page Nav -->
 
         </ul>
 

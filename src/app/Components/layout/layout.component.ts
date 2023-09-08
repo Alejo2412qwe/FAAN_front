@@ -6,7 +6,8 @@ import { NotifacionesService } from 'src/app/Service/notifaciones.service';
 import { StorageService } from 'src/app/Service/storage.service';
 import { WebSocketService } from 'src/app/Service/web-socket.service';
 import { clearLocalStorage } from 'src/app/util/local-storage-manager';
-import { SharedService } from 'src/app/util/shared.service';
+import { SharedService } from 'src/app/util/service/shared.service';
+import { SidebarService } from 'src/app/util/service/sidebar.service';
 
 @Component({
   selector: 'app-layout',
@@ -21,16 +22,16 @@ export class LayoutComponent implements OnInit {
   public isLogginPresent: boolean = false;
 
   //ImplementSocket
-  private messageSubscription!: Subscription;
   public receivedMessage!: string;
   title = 'WebSocketClient';
   stock: any = {};
-  private webSocket!: WebSocket;
 
   //User
   public userLoggin: string = '';
   //Rol
   public rolLoggin: string = '';
+
+  public listSidebar: any[] = [];
 
 
   constructor(
@@ -39,13 +40,16 @@ export class LayoutComponent implements OnInit {
     private storageService: StorageService,
     private notificacionService: NotifacionesService,
     private webSocketService: WebSocketService,
-    private sharedService: SharedService, // Inject the SharedService
-
+    private sharedService: SharedService,
+    private sidebarService: SidebarService
   ) {
     _CargarScript.Cargar(["main"]);
   }
 
   ngOnInit() {
+    this.listSidebar = this.sidebarService.dataMenu;
+    console.log(this.listSidebar);
+
     this.isLogginPresent = this.storageService.isLoggedIn();
     console.log(this.isLogginPresent)
     if (this.isLogginPresent === true) {
