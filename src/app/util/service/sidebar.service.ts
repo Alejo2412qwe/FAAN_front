@@ -72,7 +72,7 @@ export class SidebarService {
       icon: 'bi bi-person-square',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'person/gestion', subTitle: 'Control de las Personas' },
+        { path: 'person/gestion', subTitle: 'Control de las Personas/Rescatistas' },
 
       ]
     },
