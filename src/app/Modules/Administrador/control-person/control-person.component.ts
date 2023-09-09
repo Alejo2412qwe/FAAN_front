@@ -5,11 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { Persona } from 'src/app/Models/persona';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
-class Response{
-  ci?:string;
+class Response {
+  ci?: string;
+  emailValidate?: string;
 }
 @Component({
   selector: 'app-control-person',
@@ -102,9 +104,9 @@ export class ControlPersonComponent implements OnInit {
 
     return new Date().getFullYear() - fechaNacimiento.getFullYear() < 18
       ? {
-          fechaNacimientoInvalida: true,
-          mensaje: 'Debe ser mayor de edad.',
-        }
+        fechaNacimientoInvalida: true,
+        mensaje: 'Debe ser mayor de edad.',
+      }
       : null;
   }
 
@@ -177,13 +179,32 @@ export class ControlPersonComponent implements OnInit {
     this.submitted = true;
     this.person = this.formPerson.value;
 
-    if (this.person.idPersona) {
-      this.updatePerson();
-    } else {
-      //this.savePerson();
-      this.validarCedula(this.person.identificacion!);
-    }
+    this.validateEmailAndCi(this.person.identificacion!, this.person.correo!);
   }
+
+  public validateEmailAndCi(identificacion: string, email: string) {
+
+    const existIdentificacion = this.personService.existByIdentificacion(identificacion);
+    const existEmail = this.personService.existsByEmail(email);
+
+    forkJoin([existIdentificacion, existEmail]).subscribe(
+      ([cedulaRepetidaResp, emailRepetidoResp]) => {
+
+        this.respose.ci = cedulaRepetidaResp ? 'Identificación existente' : ''
+        this.respose.emailValidate = emailRepetidoResp ? 'Direccón de correo existente' : '';
+
+        if (!cedulaRepetidaResp && !emailRepetidoResp) {
+
+          if (this.person.idPersona) {
+            this.updatePerson();
+          } else {
+            this.savePerson();
+          }
+        }
+      }
+    );
+  }
+
 
   public isEmpty(obj: any) {
     return obj ? Object.keys(obj).length === 0 : true;
@@ -204,17 +225,7 @@ export class ControlPersonComponent implements OnInit {
     });
   }
 
-public validarCedula(identificacion:string){
-  this.personService.cedulaRepetida(identificacion).subscribe(
-    (resp)=>{
-      if(resp){
-        this.respose.ci='cedula repetida'
-      }else{
-        this.savePerson()!
-      }
-    }
-  )
-}
+
 
   public updatePerson() {
     this.personService

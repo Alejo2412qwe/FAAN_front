@@ -115,9 +115,10 @@
                     <small class="text-danger"
                         *ngIf="formPerson.get('identificacion')?.errors?.['minlength']"><strong>Minimo
                             requerido es 10.</strong></small>
-                    <small class="text-danger" 
-                        *ngIf="respose && respose.ci">
-                        <strong>Cédula ya ingresada</strong></small>
+                    <small class="text-danger" *ngIf="respose && respose.ci">
+                        <strong>{{respose.ci}}</strong></small>
+
+
                 </div>
 
 
@@ -138,6 +139,8 @@
                     <small class="text-danger" *ngIf="formPerson.get('correo')?.errors?.['pattern']"><strong>Dirección
                             de correo
                             invalido.</strong> </small>
+                    <small class="text-danger" *ngIf="respose && respose.emailValidate">
+                        <strong>{{respose.emailValidate}}</strong></small>
                 </div>
             </div>
 
