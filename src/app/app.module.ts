@@ -32,6 +32,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
 import { InformacionComponent } from './Components/informacion/informacion/informacion.component';
 import { HeaderComponent } from './Components/header/header.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 
 
@@ -57,6 +58,7 @@ import { HeaderComponent } from './Components/header/header.component';
     ContactoComponent,
     LayoutComponent,
     HeaderComponent,
+    FooterComponent,
 
   ],
   imports: [
