@@ -20,12 +20,11 @@ import { HomeComponent } from './Components/home/home.component';
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
+import { InformacionComponent } from './Components/informacion/informacion/informacion.component';
 
 
 
 const routes: Routes = [
-  //Public
-  { path: 'home', component: HomeComponent },
 
   //Password recover..
   { path: 'recover/password/:token', component: RecoverPasswordComponent },
@@ -54,12 +53,13 @@ const routes: Routes = [
 
   // PUBLIC
   { path: 'login', component: LoginComponent },
-
+  { path: 'informacion', component: InformacionComponent },
   { path: 'formulario-adopcion', component: ForAdopcionComponent },
   { path: 'donaciones', component: DonacionesComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'home', component: HomeComponent },
 
-  { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'home' },
    
 ];
 

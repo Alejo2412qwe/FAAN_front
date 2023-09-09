@@ -30,6 +30,7 @@ import { ContactoComponent } from './Components/contacto/contacto/contacto.compo
 import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
+import { InformacionComponent } from './Components/informacion/informacion/informacion.component';
 
 
 
@@ -49,7 +50,7 @@ import { LayoutComponent } from './Components/layout/layout.component';
     ControlPersonComponent,
     HomeComponent,
     RecoverPasswordComponent,
-
+    InformacionComponent,
     ForAdopcionComponent,
     DonacionesComponent,
     ContactoComponent,
