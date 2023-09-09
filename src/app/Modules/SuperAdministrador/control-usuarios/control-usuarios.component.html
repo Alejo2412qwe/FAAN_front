@@ -199,8 +199,8 @@
                     <div class="card col-12 md:col-12">
                         <p class="m-1"><strong>Selecione los roles:</strong></p>
                         <div *ngFor="let roles of listRoles" class="field-checkbox m-1">
-                            <p-checkbox name="roles" [value]="roles" [(ngModel)]="selectedRoles"
-                                [inputId]="roles.nombreRol"></p-checkbox>
+                            <p-radioButton name="roles" [value]="roles" [(ngModel)]="selectedRoles"
+                                [inputId]="roles.nombreRol"></p-radioButton>
                             <label [for]="roles.idRol">{{ roles.nombreRol }}</label>
                         </div>
                     </div>
