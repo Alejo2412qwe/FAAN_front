@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/Models/models';
 import { AuthService } from 'src/app/Service/auth.service';
 import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
+import { SharedService } from 'src/app/util/service/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private screenSizeService: ScreenSizeService,
-    private sendEmailRecoverService: RecoverPasswordService
+    private sendEmailRecoverService: RecoverPasswordService,
+    private sharedService: SharedService, // Inject the SharedService
   ) {
     this.formulario = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]]
@@ -80,6 +82,8 @@ export class LoginComponent implements OnInit {
           if (this.infoUsuario.roles.length! > 1) {
             this.modalView();
           } else {
+            this.sharedService.setIsLogginPresent(true);
+
             alert('BIENVENIDO')
             // STORE IN STORAGE
             // localStorage.setItem('token', String(this.infoUsuario.token));
@@ -92,8 +96,11 @@ export class LoginComponent implements OnInit {
               localStorage.setItem('rol', String(rol.nombreRol));
             }
             setTimeout(() => {
-              window.location.reload();
-              location.replace('/dashboard');
+              this.router.navigate(['/dashboard']).then(() => {
+                this.sharedService.setIsLogginPresent(true); // Set 
+                window.location.reload();
+              });
+
             }, 1500);
           }
         }

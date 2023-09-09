@@ -29,6 +29,8 @@ import { DonacionesComponent } from './Components/donaciones/donaciones/donacion
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
 import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { LayoutComponent } from './Components/layout/layout.component';
+
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
     ForAdopcionComponent,
     DonacionesComponent,
-    ContactoComponent
+    ContactoComponent,
+    LayoutComponent,
+
   ],
   imports: [
     BrowserModule,

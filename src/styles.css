@@ -19,7 +19,7 @@
 	--dark-blue: #0C5FCD;
 	--red: #FC3B56;
 
-	/**/
+
 	--btn-primary: #52a4b7;
 }
 
@@ -34,7 +34,7 @@ body {
 	overflow-x: hidden;
 }
 
-/*TITLE*/
+
 .title {
 	color: #000;
 	margin: 5px;
@@ -47,14 +47,14 @@ p {
 	text-align: justify;
 }
 
-/*AVATAR*/
+
 .img-avatar {
 	height: 120px;
 	width: 120px;
 	margin: -60px auto 0 auto;
 }
 
-/*BUTTONS*/
+
 .btn-primarys {
 	background: #65b2cc;
 	border: none;
