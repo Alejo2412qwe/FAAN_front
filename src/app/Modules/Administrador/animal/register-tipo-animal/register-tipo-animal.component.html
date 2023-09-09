@@ -2,7 +2,7 @@
 
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2"
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="openNewTipoAnimal()"></button>
         </ng-template>
 
@@ -96,7 +96,7 @@
                 <input type="text"
                     [class]="submitted && (!tipoAnimal.nombreTipo || errorUnique) ? 'ng-invalid ng-dirty':''"
                     id="nombreTipo" placeholder="Nombre tipo" pInputText [(ngModel)]="tipoAnimal.nombreTipo" required
-                    autofocus oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"/>
+                    autofocus />
             </span>
             <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo">Name is required.</small>
             <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo || errorUnique">{{errorUnique}}</small>

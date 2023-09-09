@@ -68,7 +68,7 @@
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="persona.nombre1" oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"/>
+                            <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="persona.nombre1" />
                             <label htmlFor="nombre1" class="pi pi-user"> Primer Nombre <span
                                     class="red-asterisk"></span></label>
                         </span>
@@ -78,7 +78,7 @@
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="persona.nombre2" oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"/>
+                            <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="persona.nombre2" />
                             <label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre <span
                                     class="red-asterisk"></span></label>
                         </span>
@@ -91,8 +91,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
                             <input type="text" pInputText id="apellido1" name="apellido1" [disabled]="true"
-                                title="Este campo no se puede editar" [(ngModel)]="persona.apellido1" 
-                                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"/>
+                                title="Este campo no se puede editar" [(ngModel)]="persona.apellido1" />
                             <label htmlFor="apellido1" class="pi pi-id-card"> Primer Apellido <span
                                     class="red-asterisk"></span></label>
                         </span>
@@ -103,8 +102,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
                             <input type="text" pInputText id="apellido2" name="apellido2"
-                                [(ngModel)]="persona.apellido2" 
-                                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"/>
+                                [(ngModel)]="persona.apellido2" />
                             <label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido <span
                                     class="red-asterisk"></span></label>
                         </span>
@@ -143,7 +141,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
                             <input type="text" pInputText id="telefono" name="telefono"
-                                [(ngModel)]="persona.telefono" oninput="this.value = this.value.replace(/\D/g, '')"/>
+                                [(ngModel)]="persona.telefono" />
                             <label htmlFor="telefono" class="pi pi-mobile"> Telefono <span
                                     class="red-asterisk"></span></label>
                         </span>
@@ -152,7 +150,7 @@
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="celular" name="celular" [(ngModel)]="persona.celular" oninput="this.value = this.value.replace(/\D/g, '')"/>
+                            <input type="text" pInputText id="celular" name="celular" [(ngModel)]="persona.celular" />
                             <label htmlFor="celular" class="pi pi-mobile"> Celular <span
                                     class="red-asterisk"></span></label>
                         </span>
