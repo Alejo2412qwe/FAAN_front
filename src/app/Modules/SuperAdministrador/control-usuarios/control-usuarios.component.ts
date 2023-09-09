@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { Persona } from 'src/app/Models/persona';
 import { Rol } from 'src/app/Models/rol';
 import { Usuario } from 'src/app/Models/usuario';
@@ -27,6 +28,16 @@ export class ControlUsuariosComponent implements OnInit {
     private imagenService: ImagenService
 
   ) { }
+
+  numerosIdentificacio?: number;
+
+  obtenerNumeroDeLetras() {
+    this.numerosIdentificacio = this.persona.identificacion!.length;
+    console.log("numero ---> " + this.numerosIdentificacio);
+    if (this.numerosIdentificacio >= 10) {
+      this.pageablePersonaBusqueda();
+    }
+  }
 
   ngOnInit(): void {
     this.getAllUsuario(0, this.size, ['idUsuario', 'asc']);
@@ -63,23 +74,20 @@ export class ControlUsuariosComponent implements OnInit {
     }
   }
 
-
-  
-  
   checked: boolean = true;
 
   getSeverity(estadoUsuario: boolean): string {
     return estadoUsuario ? 'success' : 'danger';
   }
-  
+
   toggleUserState(usuario: any) {
-   usuario.estadoUsuario = this.checked;
-   this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
-     .subscribe(updatedUser => {
-       console.log('User updated:', updatedUser);
- 
-     });
- }
+    usuario.estadoUsuario = this.checked;
+    this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
+      .subscribe(updatedUser => {
+        console.log('User updated:', updatedUser);
+
+      });
+  }
 
   // ADD UPDATE
   public editUsuario(usuario: Usuario) {
@@ -89,8 +97,8 @@ export class ControlUsuariosComponent implements OnInit {
   }
 
   //CHANGE STATE
-  public inhaUser(usuario: Usuario){
-    this.usuario = {...usuario};
+  public inhaUser(usuario: Usuario) {
+    this.usuario = { ...usuario };
     this.persona = this.usuario.persona;
     this.desactivarUser = true;
   }
@@ -117,15 +125,14 @@ export class ControlUsuariosComponent implements OnInit {
   usuario = new Usuario();
 
   public async saveNewUsuario() {
-    const key = await this.uploadImage();
+    ///const key = await this.uploadImage();
     this.personaService.savePersona(this.persona).subscribe((data) => {
       this.persona = data
-      console.log(this.persona)
       this.usuario.idUsuario = 0;
       this.usuario.persona = this.persona;
       this.usuario.roles = this.selectedRoles;
       this.usuario.estadoUsuario = true;
-      this.usuario.fotoPerfil = key;
+      this.usuario.fotoPerfil = "key";
       this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
         this.usuario = data;
         alert('SUCESSFULL')
@@ -142,15 +149,15 @@ export class ControlUsuariosComponent implements OnInit {
   public updateUsuario() {
     this.usuario.roles = this.selectedRoles
     this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
-      if(data!=null){
-        this.usuario = {...this.usuario}
+      if (data != null) {
+        this.usuario = { ...this.usuario }
 
         this.personaService.updatePersona(this.persona.idPersona!, this.persona)
-        .subscribe((data1)=> {
-          if(data1!=null){
-            alert('datos actualizados')
-          }
-        })
+          .subscribe((data1) => {
+            if (data1 != null) {
+              alert('datos actualizados')
+            }
+          })
       }
     }, (error) => {
       console.log('2', error)
@@ -237,4 +244,27 @@ export class ControlUsuariosComponent implements OnInit {
     this.fullname = '';
   }
 
+  // AUTOCOMPLETE
+  listPeople: Persona[] = [];
+  selectedPeople = new Persona();
+  filteredPeople: any;
+  loadingPerson!: boolean;
+  sort: string[] = ["identificacion"];
+
+  public pageablePersonaBusqueda() {
+    this.personaService.getAllPersonasPagesOrCedulaOrApellido(this.persona.identificacion!, 0, 50, this.sort)
+      .subscribe((data: any) => {
+        this.listPeople = data.content;
+        this.loadingPerson = false;
+        this.listPeople.forEach(element => {
+          this.persona = element
+        });
+      });
+  }
+
+  public buscar(identificacion:string){
+    if (identificacion.length >= 10) {
+      this.pageablePersonaBusqueda();
+    }
+  }
 }

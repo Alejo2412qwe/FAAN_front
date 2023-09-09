@@ -24,6 +24,9 @@ export class PersonaService {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/pageable/find', { params });
   }
 
+  public getAll(): Observable<Persona[]> {
+    return this.http.get<Persona[]>(environment.apiuri + '/persona/list');
+  }
 
   public getListaPersonas(page: number, size: number, sort: string[]): Observable<Persona[]> {
     let params = new HttpParams()
