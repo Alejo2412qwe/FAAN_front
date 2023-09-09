@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { environment } from '../../environment/enviroment';
 import { Persona } from '../Models/persona';
 import { StorageService } from './storage.service';
@@ -52,11 +52,13 @@ export class PersonaService {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/findByCedulaOrNombre/' + filtro + '?' + `&page=${page}&size=${size}&sort=${sort}`);
   }
 
-  public existByIdentificacion(cedula: string): Observable<boolean> {
+  public existByIdentificacion(cedula: string, equalsCedula: boolean): Observable<boolean> {
+    if (equalsCedula) return of(false);
     return this.http.get<boolean>(environment.apiuri + `/persona/cedulaRegistra/${cedula}`);
   }
 
-  public existsByEmail(email: string): Observable<boolean> {
+  public existsByEmail(email: string, equalsEmail: boolean): Observable<boolean> {
+    if (equalsEmail) return of(false);
     return this.http.get<boolean>(environment.apiuri + `/persona/correoRegistrado/${email}`);
   }
 
