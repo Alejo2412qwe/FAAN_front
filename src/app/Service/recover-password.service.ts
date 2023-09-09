@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../Models/usuario';
-import { environment } from '../environment/enviroment';
 import { RecoverPassword } from '../Models/recover-password';
+import { environment } from 'src/environment/enviroment';
 
 @Injectable({
   providedIn: 'root'
