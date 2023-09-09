@@ -99,21 +99,21 @@
                     <div class="grid p-fluid align-items-center">
                         <div class="col-12 md:col-4">
                             <label for="nombreRaza"><strong>Identificación</strong></label>
-                            <div class="card flex justify-content-center">
+                            <!-- <div class="card flex justify-content-center">
                                 <p-autoComplete [(ngModel)]="selectedPeople" [suggestions]="filteredPeople" (completeMethod)="filterPeople($event)" field="name"></p-autoComplete>
-                            </div>
-                            <!-- <span class="p-input-icon-right ">
+                            </div> -->
+                            <span class="p-input-icon-right ">
                                 <i class="pi pi-info-circle"
                                     [style.color]="submitted && !persona.identificacion ? 'red':''"></i>
                                 <div class="p-inputgroup">
                                     <input type="text" pTooltip="Identificación" [(ngModel)]="persona.identificacion"
                                         [class]="submitted && (!persona.identificacion) ? 'ng-invalid ng-dirty':''"
                                         id="identificacion" name="identificacion" pInputText
-                                        placeholder="identificacion.." required />
+                                        placeholder="identificacion.." (input)="obtenerNumeroDeLetras()" required />
                                 </div>
                             </span>
                             <small class="p-error" *ngIf="submitted && !persona.identificacion">Identificacion es
-                                obligatotia.</small> -->
+                                obligatotia.</small>
                         </div>
                         <div class="col-12 md:col-4">
                             <label for="nombre1"><strong>Nombre</strong></label>

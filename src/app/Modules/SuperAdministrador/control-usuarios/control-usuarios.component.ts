@@ -29,6 +29,16 @@ export class ControlUsuariosComponent implements OnInit {
 
   ) { }
 
+  numerosIdentificacio?: number;
+
+  obtenerNumeroDeLetras() {
+    this.numerosIdentificacio = this.persona.identificacion!.length;
+    console.log("numero ---> " + this.numerosIdentificacio);
+    if (this.numerosIdentificacio >= 10) {
+      this.pageablePersonaBusqueda();
+    }
+  }
+
   ngOnInit(): void {
     this.getAllUsuario(0, this.size, ['idUsuario', 'asc']);
     this.getSizeWindowResize();
@@ -63,9 +73,6 @@ export class ControlUsuariosComponent implements OnInit {
       throw new Error()
     }
   }
-
-
-
 
   checked: boolean = true;
 
@@ -118,15 +125,14 @@ export class ControlUsuariosComponent implements OnInit {
   usuario = new Usuario();
 
   public async saveNewUsuario() {
-    const key = await this.uploadImage();
+    ///const key = await this.uploadImage();
     this.personaService.savePersona(this.persona).subscribe((data) => {
       this.persona = data
-      console.log(this.persona)
       this.usuario.idUsuario = 0;
       this.usuario.persona = this.persona;
       this.usuario.roles = this.selectedRoles;
       this.usuario.estadoUsuario = true;
-      this.usuario.fotoPerfil = key;
+      this.usuario.fotoPerfil = "key";
       this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
         this.usuario = data;
         alert('SUCESSFULL')
@@ -245,25 +251,20 @@ export class ControlUsuariosComponent implements OnInit {
   loadingPerson!: boolean;
   sort: string[] = ["identificacion"];
 
-  public pageablePersonaBusqueda(identificacion:string) {
-    this.personaService.getAllPersonasPagesOrCedulaOrApellido(identificacion, 0, 50, this.sort)
+  public pageablePersonaBusqueda() {
+    this.personaService.getAllPersonasPagesOrCedulaOrApellido(this.persona.identificacion!, 0, 50, this.sort)
       .subscribe((data: any) => {
         this.listPeople = data.content;
         this.loadingPerson = false;
+        this.listPeople.forEach(element => {
+          this.persona = element
+        });
       });
   }
 
-  filterPeople(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < (this.listPeople as any[]).length; i++) {
-        let country = (this.listPeople as any[])[i];
-        if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-            filtered.push(country);
-        }
+  public buscar(identificacion:string){
+    if (identificacion.length >= 10) {
+      this.pageablePersonaBusqueda();
     }
-
-    this.filteredPeople = filtered;
-}
+  }
 }
