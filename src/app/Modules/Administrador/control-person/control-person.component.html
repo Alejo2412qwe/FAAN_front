@@ -103,7 +103,7 @@
                 <label for="identificacion"><strong>Ingrese su identificacion</strong></label>
                 <input type="identificacion" pInputText id="identificacion" name="identificacion"
                     placeholder="Cédula..." formControlName="identificacion"
-                    [class.is-invalid]="formPerson.get('identificacion')!.invalid && formPerson.get('identificacion')!.touched"
+                    [class.is-invalid]="(respose && respose.ci) || formPerson.get('identificacion')!.invalid && formPerson.get('identificacion')!.touched"
                     class="form-control" formcontrolname="identificacion" [maxlength]="10"
                     onkeypress='return event.charCode >= 48 && event.charCode <= 57' required autofocus />
 
@@ -129,7 +129,7 @@
                 <label for="correo"><strong>Ingrese su correo electrónico.</strong></label>
                 <input type="correo" pInputText id="correo" name="correo" placeholder="Ej: example@email.com"
                     formControlName="correo"
-                    [class.is-invalid]="formPerson.get('correo')!.invalid && formPerson.get('correo')!.touched"
+                    [class.is-invalid]="(respose && respose.emailValidate) || formPerson.get('correo')!.invalid && formPerson.get('correo')!.touched"
                     class="form-control" formcontrolname="correo" required />
 
                 <div
