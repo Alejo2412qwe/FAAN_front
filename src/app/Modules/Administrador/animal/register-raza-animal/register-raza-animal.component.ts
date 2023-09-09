@@ -4,6 +4,7 @@ import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-raza-animal',
@@ -38,7 +39,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
   public valueAtribute: string = '';
   public submitFindAtribute: boolean = false;
 
-  constructor(private razaAnimalService: RazaAnimalService, private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService) { }
+  constructor(private razaAnimalService: RazaAnimalService, private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.findPagableRazaAnimal(0, 4, ['idRazaAnimal', 'asc']);
@@ -138,7 +139,9 @@ export class RegisterRazaAnimalComponent implements OnInit {
       this.razaAnimal.estadoRaza = 'A';
       this.razaAnimalService.saveRazaAnimal(razaAnimal).subscribe((data) => {
         if (data != null) {
-          alert('succesfull created..')
+          this.toastr.success(
+            'CREADO CORRECTAMENTE'
+          );
           this.listRazaAnimal.push(data);
           this.closeDialog();
         }
@@ -162,7 +165,9 @@ export class RegisterRazaAnimalComponent implements OnInit {
           throw new Error()
         }
         this.closeDialog();
-        alert('succesfull updated..')
+        this.toastr.success(
+          'ACTUALIZADO CORRECTAMENTE'
+        );
       }
     }, (err) => {
       console.log(err)
@@ -184,7 +189,9 @@ export class RegisterRazaAnimalComponent implements OnInit {
       .subscribe((data) => {
         if (data != null) {
           if (razaAnimal.estadoRaza) {
-            alert('Update')
+            this.toastr.success(
+              'ACTUALIZADO'
+          );
           }
         }
       });

@@ -3,6 +3,7 @@ import { throwError } from 'rxjs';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-register-tipo-animal',
@@ -20,12 +21,12 @@ export class RegisterTipoAnimalComponent implements OnInit {
     public ListTipoAnimal: TipoAnimal[] = [];
 
     public errorUnique: string = '';
-
+   
     //Size of window..
     public screenWidth: number = 0;
     public screenHeight: number = 0;
 
-    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService) { }
+    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService) { }
 
     ngOnInit(): void {
         this.findPageableTipoAnimal();
@@ -71,21 +72,35 @@ export class RegisterTipoAnimalComponent implements OnInit {
 
     public createTipoAnimal(tipoAnimal: TipoAnimal): void {
         try {
+            if(!this.tipoAnimal?.nombreTipo || !this.tipoAnimal?.descripcionAnimal){
+                this.toastr.warning(
+                    'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+                    
+                  );
+
+            }else {
             this.tipoAnimal.estadoTipo = 'A';
             this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe((data) => {
                 if (data != null) {
-                    alert('succesfull created..')
+                    this.toastr.success(
+                        'CREADO CORRECTAMENTE'
+                    );
                     this.ListTipoAnimal.push(data);
                     this.closeDialog();
                 }
             }, (err) => {
                 if (err.error) {
-                    this.errorUnique = 'Nombre existente.';
+                    
+                    this.toastr.error(
+                        'Nombre existente'
+                    );
                 }
             })
+        }
         } catch (error) {
             throw new Error()
         }
+        
     }
 
     public updateTipoAnimal(tipoAnimal: TipoAnimal): void {
@@ -98,12 +113,14 @@ export class RegisterTipoAnimalComponent implements OnInit {
                     throw new Error()
                 }
                 this.closeDialog();
-                alert('succesfull updated..')
+               
+                this.toastr.success('ACTUALIZADO CORRECTAMENTE.');
             }
         }, (err) => {
             console.log(err)
             if (err.status === 400) {
                 this.errorUnique = 'Nombre existente.';
+                
             }
         })
     }
@@ -120,7 +137,8 @@ export class RegisterTipoAnimalComponent implements OnInit {
             .subscribe((data) => {
                 if (data != null) {
                     if (tipoAnimal.estadoTipo) {
-                        alert('Update')
+                        this.toastr.success('ACTUALIZADO .');
+                        
                     }
                 }
             });

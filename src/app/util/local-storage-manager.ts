@@ -20,5 +20,4 @@ export const getTokenTimeOut = (token: string) => {
 export const clearLocalStorage = () => {
     localStorage.clear();
     sessionStorage.clear();
-    console.log('limpiado')
 };

@@ -20,23 +20,21 @@ import { HomeComponent } from './Components/home/home.component';
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
+import { InformacionComponent } from './Components/informacion/informacion.component';
 
 
 
 const routes: Routes = [
-  //Public
-  { path: 'home', component: HomeComponent },
 
   //Password recover..
   { path: 'recover/password/:token', component: RecoverPasswordComponent },
-  // { path: 'recover-password', component: RecoverPasswordComponent },
 
   { path: 'person/gestion', component: ControlPersonComponent },
 
   // MASCOTAS
 
   { path: 'registro-mascota', component: RegistroMascotasComponent},
-  { path: 'control-animal', component: ControlAnimalComponent},
+  { path: 'control-animal', component: ControlAnimalComponent},//falta valida
   { path: 'adopcion-animal', component: AdopcionAnimalComponent},
 
 
@@ -46,21 +44,20 @@ const routes: Routes = [
 
   // SHARED
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'fundacion', component: FundacionComponent },
+  { path: 'fundacion', component: FundacionComponent },//no vale...
   { path: 'perfil-usuario', component: PerfilUsuarioComponent },
 
   // SUPERADMIN
-  { path: 'control-usuario', component: ControlUsuariosComponent },
+  { path: 'control-usuario', component: ControlUsuariosComponent },//no vale
 
   // PUBLIC
   { path: 'login', component: LoginComponent },
-
+  { path: 'home', component: HomeComponent },
   { path: 'formulario-adopcion', component: ForAdopcionComponent },
   { path: 'donaciones', component: DonacionesComponent },
   { path: 'contacto', component: ContactoComponent },
-
-  { path: '**', redirectTo: 'login' },
-   
+  { path: 'informacion', component: InformacionComponent },
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({

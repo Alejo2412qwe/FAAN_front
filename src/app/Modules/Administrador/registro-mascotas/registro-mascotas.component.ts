@@ -278,7 +278,9 @@ export class RegistroMascotasComponent implements OnInit {
 
 				this.animalService.saveAnimal(this.animal).subscribe((data) => {
 					if (data != null) {
-						alert('succesfull created..');
+						this.toastService.success(
+							'CREADO CORRECTAMENTE'
+						);
 						this.listAnimal.push(data);
 						this.closeDialog();
 					}
@@ -309,7 +311,9 @@ export class RegistroMascotasComponent implements OnInit {
 					.updateAnimal(this.animal.idAnimal!, this.animal)
 					.subscribe((data) => {
 						if (data != null) {
-							alert('succesfull updated..');
+							this.toastService.success(
+								'ACTUALIZADO CORRECTAMENTE'
+							);
 							const indexfind = this.listAnimal.findIndex(
 								(animal) => animal.idAnimal === data.idAnimal
 							);
@@ -346,7 +350,9 @@ export class RegistroMascotasComponent implements OnInit {
 			.subscribe((data) => {
 				if (data != null) {
 					if (razaAnimal.estadoRaza) {
-						alert('Update');
+						this.toastService.success(
+							'ACTUALIZADO'
+						);
 					}
 				}
 			});

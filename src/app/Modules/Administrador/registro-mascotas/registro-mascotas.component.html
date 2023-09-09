@@ -224,7 +224,8 @@
 									<input type="text" [(ngModel)]="animal.nombreAnimal"
 										[class]="submitted && (!animal.nombreAnimal) ? 'ng-invalid ng-dirty':''"
 										id="nombreAnimal" name="nombreAnimal" pInputText placeholder="Nombre.." required
-										pTooltip="Nombre Animal" tooltipPosition="bottom" />
+										pTooltip="Nombre Animal" tooltipPosition="bottom"
+										oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')" />
 								</div>
 							</span>
 							<small class="p-error" *ngIf="submitted && !animal.nombreAnimal">Name is required.</small>
@@ -450,7 +451,8 @@
 								<input type="text" [(ngModel)]="fichaRegister.origen"
 									[class]="submitted && (!fichaRegister.origen) ? 'ng-invalid ng-dirty':''"
 									id="nombreAnimal" name="nombreAnimal" pInputText placeholder="Origen.." required
-									pTooltip="Nombre Animal" tooltipPosition="bottom" />
+									pTooltip="Nombre Animal" tooltipPosition="bottom"
+									oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')" />
 							</div>
 						</span>
 						<small class="p-error" *ngIf="submitted && !fichaRegister.origen">Origen es requerido.</small>
@@ -503,7 +505,7 @@
 		<div class="field">
 			<label for="name">Nombre situación</label>
 			<input type="text" pInputText id="name" [(ngModel)]="incomeSituation.nombreSituacionIngreso" required
-				autofocus />
+				autofocus oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')" />
 			<small class="p-error" *ngIf="submittedIncomeSituation && !incomeSituation.nombreSituacionIngreso">Name is
 				required.</small>
 		</div>
