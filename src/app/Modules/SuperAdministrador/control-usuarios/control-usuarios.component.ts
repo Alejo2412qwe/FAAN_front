@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { Persona } from 'src/app/Models/persona';
 import { Rol } from 'src/app/Models/rol';
 import { Usuario } from 'src/app/Models/usuario';
@@ -64,22 +65,22 @@ export class ControlUsuariosComponent implements OnInit {
   }
 
 
-  
-  
+
+
   checked: boolean = true;
 
   getSeverity(estadoUsuario: boolean): string {
     return estadoUsuario ? 'success' : 'danger';
   }
-  
+
   toggleUserState(usuario: any) {
-   usuario.estadoUsuario = this.checked;
-   this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
-     .subscribe(updatedUser => {
-       console.log('User updated:', updatedUser);
- 
-     });
- }
+    usuario.estadoUsuario = this.checked;
+    this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
+      .subscribe(updatedUser => {
+        console.log('User updated:', updatedUser);
+
+      });
+  }
 
   // ADD UPDATE
   public editUsuario(usuario: Usuario) {
@@ -89,8 +90,8 @@ export class ControlUsuariosComponent implements OnInit {
   }
 
   //CHANGE STATE
-  public inhaUser(usuario: Usuario){
-    this.usuario = {...usuario};
+  public inhaUser(usuario: Usuario) {
+    this.usuario = { ...usuario };
     this.persona = this.usuario.persona;
     this.desactivarUser = true;
   }
@@ -142,15 +143,15 @@ export class ControlUsuariosComponent implements OnInit {
   public updateUsuario() {
     this.usuario.roles = this.selectedRoles
     this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
-      if(data!=null){
-        this.usuario = {...this.usuario}
+      if (data != null) {
+        this.usuario = { ...this.usuario }
 
         this.personaService.updatePersona(this.persona.idPersona!, this.persona)
-        .subscribe((data1)=> {
-          if(data1!=null){
-            alert('datos actualizados')
-          }
-        })
+          .subscribe((data1) => {
+            if (data1 != null) {
+              alert('datos actualizados')
+            }
+          })
       }
     }, (error) => {
       console.log('2', error)
@@ -237,4 +238,32 @@ export class ControlUsuariosComponent implements OnInit {
     this.fullname = '';
   }
 
+  // AUTOCOMPLETE
+  listPeople: Persona[] = [];
+  selectedPeople = new Persona();
+  filteredPeople: any;
+  loadingPerson!: boolean;
+  sort: string[] = ["identificacion"];
+
+  public pageablePersonaBusqueda(identificacion:string) {
+    this.personaService.getAllPersonasPagesOrCedulaOrApellido(identificacion, 0, 50, this.sort)
+      .subscribe((data: any) => {
+        this.listPeople = data.content;
+        this.loadingPerson = false;
+      });
+  }
+
+  filterPeople(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.listPeople as any[]).length; i++) {
+        let country = (this.listPeople as any[])[i];
+        if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+            filtered.push(country);
+        }
+    }
+
+    this.filteredPeople = filtered;
+}
 }

@@ -98,8 +98,11 @@
                 <div class="col-12 md:col-8">
                     <div class="grid p-fluid align-items-center">
                         <div class="col-12 md:col-4">
-                            <label for="nombreRaza"><strong>Identificacion</strong></label>
-                            <span class="p-input-icon-right ">
+                            <label for="nombreRaza"><strong>Identificación</strong></label>
+                            <div class="card flex justify-content-center">
+                                <p-autoComplete [(ngModel)]="selectedPeople" [suggestions]="filteredPeople" (completeMethod)="filterPeople($event)" field="name"></p-autoComplete>
+                            </div>
+                            <!-- <span class="p-input-icon-right ">
                                 <i class="pi pi-info-circle"
                                     [style.color]="submitted && !persona.identificacion ? 'red':''"></i>
                                 <div class="p-inputgroup">
@@ -110,7 +113,7 @@
                                 </div>
                             </span>
                             <small class="p-error" *ngIf="submitted && !persona.identificacion">Identificacion es
-                                obligatotia.</small>
+                                obligatotia.</small> -->
                         </div>
                         <div class="col-12 md:col-4">
                             <label for="nombre1"><strong>Nombre</strong></label>
