@@ -98,7 +98,10 @@
                 <div class="col-12 md:col-8">
                     <div class="grid p-fluid align-items-center">
                         <div class="col-12 md:col-4">
-                            <label for="nombreRaza"><strong>Identificacion</strong></label>
+                            <label for="nombreRaza"><strong>Identificación</strong></label>
+                            <!-- <div class="card flex justify-content-center">
+                                <p-autoComplete [(ngModel)]="selectedPeople" [suggestions]="filteredPeople" (completeMethod)="filterPeople($event)" field="name"></p-autoComplete>
+                            </div> -->
                             <span class="p-input-icon-right ">
                                 <i class="pi pi-info-circle"
                                     [style.color]="submitted && !persona.identificacion ? 'red':''"></i>
@@ -106,7 +109,7 @@
                                     <input type="text" pTooltip="Identificación" [(ngModel)]="persona.identificacion"
                                         [class]="submitted && (!persona.identificacion) ? 'ng-invalid ng-dirty':''"
                                         id="identificacion" name="identificacion" pInputText
-                                        placeholder="identificacion.." required />
+                                        placeholder="identificacion.." (input)="obtenerNumeroDeLetras()" required />
                                 </div>
                             </span>
                             <small class="p-error" *ngIf="submitted && !persona.identificacion">Identificacion es
@@ -199,8 +202,8 @@
                     <div class="card col-12 md:col-12">
                         <p class="m-1"><strong>Selecione los roles:</strong></p>
                         <div *ngFor="let roles of listRoles" class="field-checkbox m-1">
-                            <p-checkbox name="roles" [value]="roles" [(ngModel)]="selectedRoles"
-                                [inputId]="roles.nombreRol"></p-checkbox>
+                            <p-radioButton name="roles" [value]="roles" [(ngModel)]="selectedRoles"
+                                [inputId]="roles.nombreRol"></p-radioButton>
                             <label [for]="roles.idRol">{{ roles.nombreRol }}</label>
                         </div>
                     </div>

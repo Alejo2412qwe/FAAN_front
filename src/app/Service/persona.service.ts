@@ -24,6 +24,9 @@ export class PersonaService {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/pageable/find', { params });
   }
 
+  public getAll(): Observable<Persona[]> {
+    return this.http.get<Persona[]>(environment.apiuri + '/persona/list');
+  }
 
   public getListaPersonas(page: number, size: number, sort: string[]): Observable<Persona[]> {
     let params = new HttpParams()
@@ -47,6 +50,10 @@ export class PersonaService {
 
   public getAllPersonasPagesOrCedulaOrApellido(filtro: string, page: number, size: number, sort: string[]): Observable<Persona[]> {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/findByCedulaOrNombre/' + filtro + '?' + `&page=${page}&size=${size}&sort=${sort}`);
+  }
+
+  cedulaRepetida(cedula: string): Observable<boolean> {
+    return this.http.get<boolean>(environment.apiuri+`/persona/cedulaRegistra/${cedula}`);
   }
 
 }
