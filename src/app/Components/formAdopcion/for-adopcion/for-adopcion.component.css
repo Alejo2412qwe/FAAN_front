@@ -423,3 +423,45 @@ button:hover .button-text {
   flex-direction: column;
   align-items: center;
 }
+
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+nav {
+  margin-top: 0px;
+  padding: 24px;
+  text-align: center;
+  font-family: Raleway;
+}
+
+#nav-3 {
+  background: var(--blue);
+}
+
+.link-3 {
+  transition: 0.4s;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.link-3:hover {
+  background-color: #ffffff;
+  color: #003cff;
+  padding: 24px 10px;
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 768px){
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; /* Centra verticalmente los enlaces */
+    padding: 10px; /* Ajusta el relleno para dispositivos pequeños */
+    background: var(--blue);
+  }
+  .link-3{
+    margin: 5px;
+  }
+}
