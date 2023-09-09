@@ -49,4 +49,8 @@ export class PersonaService {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/findByCedulaOrNombre/' + filtro + '?' + `&page=${page}&size=${size}&sort=${sort}`);
   }
 
+  cedulaRepetida(cedula: string): Observable<boolean> {
+    return this.http.get<boolean>(environment.apiuri+`/persona/cedulaRegistra/${cedula}`);
+  }
+
 }

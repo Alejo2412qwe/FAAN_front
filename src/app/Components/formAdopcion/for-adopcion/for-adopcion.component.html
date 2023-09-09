@@ -157,6 +157,7 @@
                                 required />
                             <label for="float-input">Dirección de trabajo</label>
                         </span>
+                        <small class="p-error" *ngIf="submitted && !formulario.direccionTrabajo">{{error}}</small>
                     </div>
 
                     <div class="col-12 md:col-4 mt-2">
@@ -189,7 +190,7 @@
                                 onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' />
                             <label for="float-input">Teléfono Trabajo</label>
                         </span>
-
+                        <small class="p-error" *ngIf="submitted && !formulario.telefonoTrabajo">{{error}}</small>
                     </div>
 
                     <div class="col-12 md:col-4 mt-2">
@@ -377,7 +378,8 @@
                 <!-- 7 -->
                 <div class="p-grid p-fluid mt-2">
                     <div class="p-col-12 p-md-12 mt-2">
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.animalPasado7 ? 'color: red':''">
                             7. ¿Qué animal era?
                         </label>
 
@@ -390,7 +392,9 @@
                 <!-- 8 -->
                 <div class="p-grid p-fluid mt-2">
                     <div class="p-col-12 p-md-12 mt-2">
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.tiempoVivido8 ? 'color: red':''">
+
                             8. ¿Cuánto tiempo vivió con ustedes?
                         </label>
 
@@ -404,7 +408,8 @@
                 <div class="p-grid p-fluid mt-2">
                     <div class="p-col-12 p-md-12 mt-2">
 
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.animalAhora9 ? 'color: red':''">
                             9. ¿En dónde está ahora el animal? ¿Por qué? Falleció, Como?
                         </label>
                         <textarea rows="4" cols="30" pInputTextarea [(ngModel)]="formulario.animalAhora9"
@@ -416,10 +421,10 @@
                 <div class="p-grid p-fluid mt-2">
                     <div class="p-col-12 p-md-12 mt-2">
 
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.vacunado10 ? 'color: red':''">
                             10. ¿Estaba vacunado?
                         </label>
-
                         <div class="flex align-items-center">
                             <p-radioButton name="vacunado10" value="SI"
                                 [(ngModel)]="formulario.vacunado10"></p-radioButton>
@@ -440,7 +445,8 @@
 
 
                     <div class="col-12 md:col-6">
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.vacunasAntes11 ? 'color: red':''">
                             11. ¿Qué vacunas se le aplicaron? y ¿Cada cuánto tiempo se vacunaba?
                         </label>
                         <textarea rows="4" cols="30" pInputTextarea [(ngModel)]="formulario.vacunasAntes11"
@@ -448,7 +454,8 @@
                     </div>
 
                     <div class="col-12 md:col-6">
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.desparasitado12 ? 'color: red':''">
                             12. ¿Estaba desparasitado? ¿Cada cuánto tiempo se desparasitaba?
                         </label>
                         <textarea rows="4" cols="30" pInputTextarea [(ngModel)]="formulario.desparasitado12"
@@ -461,7 +468,8 @@
                 <!-- 13 -->
                 <div class="p-grid p-fluid mt-2">
                     <div class="p-col-12 p-md-12 mt-2">
-                        <label class="font-bold block mb-2">
+                        <label class="font-bold block mb-2"
+                            [style]="submitted && !formulario.horasSolo14 ? 'color: red':''">
                             13. ¿Cuántas horas del día permanecería solo?
                         </label>
                         <p-inputNumber [(ngModel)]="formulario.horasSolo14" name="horasSolo14" mode="decimal"
