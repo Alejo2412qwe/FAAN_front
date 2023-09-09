@@ -31,6 +31,7 @@ import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.int
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
 import { InformacionComponent } from './Components/informacion/informacion/informacion.component';
+import { HeaderComponent } from './Components/header/header.component';
 
 
 
@@ -55,6 +56,7 @@ import { InformacionComponent } from './Components/informacion/informacion/infor
     DonacionesComponent,
     ContactoComponent,
     LayoutComponent,
+    HeaderComponent,
 
   ],
   imports: [
