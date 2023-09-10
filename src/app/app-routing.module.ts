@@ -26,30 +26,33 @@ import { InformacionComponent } from './Components/informacion/informacion/infor
 
 const routes: Routes = [
 
+  // { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+
+
   //Password recover..
-  { path: 'recover/password/:token', component: RecoverPasswordComponent },
+  { path: 'recover/password/:token', component: RecoverPasswordComponent, data: { titulo: 'Dashboard' } },
   // { path: 'recover-password', component: RecoverPasswordComponent },
 
-  { path: 'person/gestion', component: ControlPersonComponent },
+  { path: 'person/gestion', component: ControlPersonComponent, data: { titulo: 'Personas' } },
 
   // MASCOTAS
 
-  { path: 'registro-mascota', component: RegistroMascotasComponent},
-  { path: 'control-animal', component: ControlAnimalComponent},
-  { path: 'adopcion-animal', component: AdopcionAnimalComponent},
+  { path: 'registro-mascota', component: RegistroMascotasComponent, data: { titulo: 'Animal' } },
+  { path: 'control-animal', component: ControlAnimalComponent, data: { titulo: 'Control Animal' } },
+  { path: 'adopcion-animal', component: AdopcionAnimalComponent, data: { titulo: 'Adopcion' } },
 
 
   //REGISTRO DE TIPO DE ANIMAL-----------------------------------------------------
-  { path: 'animal-tipo', component: RegisterTipoAnimalComponent },
-  { path: 'animal-raza', component: RegisterRazaAnimalComponent },
+  { path: 'animal-tipo', component: RegisterTipoAnimalComponent, data: { titulo: 'Tipo Animal' } },
+  { path: 'animal-raza', component: RegisterRazaAnimalComponent, data: { titulo: 'Raza Animal' } },
 
   // SHARED
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'fundacion', component: FundacionComponent },
-  { path: 'perfil-usuario', component: PerfilUsuarioComponent },
+  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+  { path: 'fundacion', component: FundacionComponent, data: { titulo: 'Fundacion' } },
+  { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil usuario' } },
 
   // SUPERADMIN
-  { path: 'control-usuario', component: ControlUsuariosComponent },
+  { path: 'control-usuario', component: ControlUsuariosComponent, data: { titulo: 'Usuarios' } },
 
   // PUBLIC
   { path: 'login', component: LoginComponent },
@@ -60,11 +63,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
   { path: '**', redirectTo: 'home' },
-   
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
