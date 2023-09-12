@@ -7,11 +7,6 @@
   background-image: url('https://molyacuarium.com/wp-content/uploads/2020/09/Banner-web.4.jpg');
 } */
 
-.header{
-  text-align: center;
-  padding: 20px;
-}
-
 img {
   max-width: 100%; /* Hace que la imagen sea responsive */
   border-radius: 10px;
