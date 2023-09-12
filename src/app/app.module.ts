@@ -34,7 +34,8 @@ import { InformacionComponent } from './Components/informacion/informacion/infor
 import { HeaderComponent } from './Components/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { FooterdComponent } from './shared/footerd/footerd.component';
+
 
 
 
@@ -62,7 +63,7 @@ import { FooterComponent } from './shared/footer/footer.component';
     HeaderComponent,
     SidebarComponent,
     BreadcrumbsComponent,
-    FooterComponent,
+    FooterdComponent,
 
   ],
   imports: [
