@@ -199,13 +199,42 @@
                         </div>
                     </div>
 
-                    <div class="card col-12 md:col-12">
-                        <p class="m-1"><strong>Selecione los roles:</strong></p>
-                        <div *ngFor="let roles of listRoles" class="field-checkbox m-1">
-                            <p-radioButton name="roles" [value]="roles" [(ngModel)]="selectedRoles"
-                                [inputId]="roles.nombreRol"></p-radioButton>
-                            <label [for]="roles.idRol">{{ roles.nombreRol }}</label>
+                    <div class="card col-12 md:col-8">
+                        <p class="m-1"><strong>Seleccione los roles:</strong></p>
+
+
+                        <div *ngFor="let role of listRoles" class="field-checkbox mt-2">
+
+
+                            <button *ngIf="isRoleAssigned(role)" type="button" pButton pRipple [label]="role.nombreRol!"
+                                class="w-full custom-button" (click)="addRolsUser(role)"
+                                [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
+                                <p-tag [icon]="'pi pi-'+(isRoleAssigned(role)? 'times':'check')"
+                                    [severity]="isRoleAssigned(role)? 'success':'danger'"
+                                    [value]="isRoleAssigned(role)?'Rol Asignado':'Asignar Rol'"
+                                    [pTooltip]="'Aplaste el boton para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
+                                    tooltipPosition="bottom"></p-tag>
+                            </button>
+
+
+                            <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple
+                                [label]="role.nombreRol!" class="w-full custom-button" (click)="addRolsUser(role)"
+                                [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
+                                <p-tag [icon]="'pi pi-'+(isRoleAssigned(role)? 'times':'check')"
+                                    [severity]="isRoleAssigned(role)? 'success':'danger'"
+                                    [value]="isRoleAssigned(role)?'Rol Asignado':'Asignar Rol'"
+                                    [pTooltip]="'Aplaste el botón para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
+                                    tooltipPosition="bottom"></p-tag>
+                            </button>
+
                         </div>
+
+                        <!-- <div *ngFor="let role of listRoles" class="field-checkbox">
+                            <input type="checkbox" [checked]="isRoleAssigned(role)"
+                                (change)="asignarRolesUsuario(role)">
+                            <label>{{ isRoleAssigned(role) ? 'Asig' : 'No asignado' }}</label>
+                        </div> -->
+
                     </div>
 
                 </div>

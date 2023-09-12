@@ -15,9 +15,6 @@ import { UsuarioService } from 'src/app/Service/usuario.service';
   styleUrls: ['./control-usuarios.component.css']
 })
 
-
-
-
 export class ControlUsuariosComponent implements OnInit {
 
   constructor(
@@ -43,6 +40,7 @@ export class ControlUsuariosComponent implements OnInit {
     this.getAllUsuario(0, this.size, ['idUsuario', 'asc']);
     this.getSizeWindowResize();
     this.loading = true;
+    this.getAllRolesFull();
   }
 
   //VARIABLE FOR SEARCH BY ATRIBUTE NAME
@@ -94,6 +92,9 @@ export class ControlUsuariosComponent implements OnInit {
     this.usuario = { ...usuario };
     this.persona = this.usuario.persona;
     this.userDialog = true;
+
+    //ADD FOR ME------------------------------------------------------------------------------
+    this.rolsAddUser = [...this.usuario.roles!];
   }
 
   //CHANGE STATE
@@ -135,6 +136,7 @@ export class ControlUsuariosComponent implements OnInit {
       this.usuario.fotoPerfil = "key";
       this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
         this.usuario = data;
+        this.usuario.roles = this.rolsAddUser; //ADD FOR ME
         alert('SUCESSFULL')
       }, (error) => {
         console.log('2', error)
@@ -147,15 +149,18 @@ export class ControlUsuariosComponent implements OnInit {
 
   // UPDATE USUARIO
   public updateUsuario() {
-    this.usuario.roles = this.selectedRoles
+    this.usuario.roles = this.rolsAddUser //ADD FOR ME
     this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
       if (data != null) {
         this.usuario = { ...this.usuario }
+        const index = this.listUsuarios.findIndex(i => i.idUsuario === data.idUsuario)
+        this.listUsuarios[index] = data;
 
         this.personaService.updatePersona(this.persona.idPersona!, this.persona)
           .subscribe((data1) => {
             if (data1 != null) {
               alert('datos actualizados')
+              this.userDialog = false;
             }
           })
       }
@@ -182,7 +187,7 @@ export class ControlUsuariosComponent implements OnInit {
   desactivarUser = false;
 
   public openNewUsuario() {
-    this.getAllRolesFull();
+    this.rolsAddUser = [];
     this.persona = {} as Persona;
     this.usuario = {} as Usuario;
     this.userDialog = true;
@@ -262,9 +267,36 @@ export class ControlUsuariosComponent implements OnInit {
       });
   }
 
-  public buscar(identificacion:string){
+  public buscar(identificacion: string) {
     if (identificacion.length >= 10) {
       this.pageablePersonaBusqueda();
     }
   }
+
+
+  //ADD NEW METHODS -- ROLS ADD--------------------------------------
+  public rolsAddUser: Rol[] = [];
+  //ASIGNAR ROLES A USUARIO
+  public addRolsUser(rol: Rol) {
+
+    const index = this.rolsAddUser.findIndex(
+      (item) => item.idRol === rol.idRol
+    );
+
+    if (index !== -1) {
+      this.rolsAddUser.splice(index, 1);
+    } else {
+      this.rolsAddUser.push(rol);
+    }
+
+    console.log(this.rolsAddUser);
+  }
+
+  public isRoleAssigned(role: Rol): boolean {
+
+    return this.rolsAddUser.some(
+      (assignedRole) => assignedRole.idRol === role.idRol
+    );
+  }
+
 }
