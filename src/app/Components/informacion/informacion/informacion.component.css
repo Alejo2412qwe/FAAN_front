@@ -139,3 +139,66 @@ body {
 .text {
   padding: .4rem;
 }
+
+.container-boxes {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los boxes se envuelvan en pantallas más pequeñas */
+  justify-content: space-around;
+  align-items: flex-start; /* Cambiado a "flex-start" para que los boxes se alineen en la parte superior */
+  max-width: 90vw;
+  margin: 20px auto;
+}
+
+.box {
+  background: rgba(247, 250, 251);
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 380px;
+  transition: transform 0.3s ease;
+  width: calc(33.33% - 2rem); /* Para que haya 3 boxes por fila en pantallas grandes */
+}
+
+.box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.text {
+  text-align: center;
+}
+
+.text h3 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.text p {
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+.text a {
+  text-decoration: none;
+  color: #0078d4;
+  transition: color 0.3s ease;
+}
+
+.text a:hover {
+  color: #003cff;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .container-boxes {
+    justify-content: center; /* Centra los boxes en pantallas pequeñas */
+  }
+
+  .box {
+    width: calc(50% - 2rem); /* Para que haya 2 boxes por fila en pantallas medianas */
+  }
+}
