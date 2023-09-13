@@ -28,27 +28,8 @@
             
                     <label for="mensaje">Mensaje:</label>
                     <textarea id="mensaje" required></textarea><br>
-                    <button type="submit" id="button-send" class="btn-enviar"><span class="icono-enviar"></span> Enviar Mensaje</button>
+                    <button type="submit" (click)="enviarCorreo()" id="button-send" class="btn-enviar"><span class="icono-enviar"></span> Enviar Mensaje</button>
                 </form>
-            
-                <script>
-                    document.getElementById('button-send').addEventListener('click', function() {
-                        const nombre = document.getElementById('nombre').value;
-                        const email = document.getElementById('email').value;
-                        const mensaje = document.getElementById('mensaje').value;
-            
-                        const asunto = 'Mensaje de contacto de ' + nombre;
-                        const cuerpo = 'Nombre: ' + nombre + '\n' +
-                                       'Email: ' + email + '\n' +
-                                       'Mensaje: ' + mensaje;
-            
-                        const mailtoURL = 'mailto:tucorreo@gmail.com' +
-                                          '?subject=' + encodeURIComponent(asunto) +
-                                          '&body=' + encodeURIComponent(cuerpo);
-            
-                        window.location.href = mailtoURL;
-                    });
-                </script>
             </div>
             <p id="msg" class="msg"></p>
         </section>
