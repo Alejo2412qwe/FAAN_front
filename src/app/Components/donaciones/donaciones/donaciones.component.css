@@ -19,7 +19,6 @@ body {
     background-size: cover;
     color: black;
     font-family: "open sans";
-    height: 100vh;
     display: flex;
     flex-direction: column;
     font-family: 'Lato', sans-serif;
