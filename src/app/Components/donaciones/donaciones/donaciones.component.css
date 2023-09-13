@@ -311,3 +311,16 @@ mark.silver {
     margin-right: 10px;
     color: #70b8d0;
 }
+.icono-moneda::before {
+    content: "\f0d6"; /* Código del icono de moneda de Font Awesome */
+    font-family: FontAwesome;
+    font-size: 48px;
+    margin-right: 10px;
+}
+.icono-perro::before {
+    content: "\f6d3"; /* Código del icono de perro de Font Awesome */
+    font-family: FontAwesome; /* Fuente de Font Awesome */
+    font-size: 48px; /* Tamaño del icono */
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    color: #70b8d0; /* Color del icono de perro */
+  }
