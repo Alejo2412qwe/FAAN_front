@@ -113,27 +113,27 @@ nav {
     padding: 24px;
     text-align: center;
     font-family: Raleway;
-  }
-  
-  #nav-3 {
+}
+
+#nav-3 {
     background: var(--blue);
-  }
-  
-  .link-3 {
+}
+
+.link-3 {
     transition: 0.4s;
     color: #ffffff;
     font-size: 20px;
     text-decoration: none;
     padding: 0 10px;
     margin: 0 10px;
-  }
-  
-  .link-3:hover {
+}
+
+.link-3:hover {
     background-color: #ffffff;
     color: #003cff;
     padding: 24px 10px;
     border-radius: 50%;
-  }
+}
 
 
 .indexbutton:hover {
@@ -188,27 +188,32 @@ mark.silver {
 
 /*Acordeon desplegable*/
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
 }
-.contenedor-acordeon{
+
+.contenedor-acordeon {
     width: 100%;
     max-width: 800px;
     margin: auto;
     margin-top: 80px;
 }
-.contenedor-acordeon h2{
+
+.contenedor-acordeon h2 {
     text-align: center;
     font-size: 40px;
     margin-bottom: 35px;
 }
-.acordeon{
+
+.acordeon {
     background: #fff;
 }
-.acordeon label{
+
+.acordeon label {
     display: block;
     padding: 20px;
     font-size: 20px;
@@ -218,27 +223,70 @@ mark.silver {
     margin-bottom: 2px;
     transition: all 300ms ease;
 }
-.acordeon label:hover{
+
+.acordeon label:hover {
     background: #b6f3ff;
 }
-.acordeon .contenido-acordeon{
+
+.acordeon .contenido-acordeon {
     padding: 0px;
     margin: 0px 20px;
     max-height: 0px;
     overflow: hidden;
     transition: all 300ms ease;
 }
-.btn-acordeon:checked ~ .contenido-acordeon{
+
+.btn-acordeon:checked~.contenido-acordeon {
     max-height: 600px;
     padding: 15px 0px;
 }
-.btn-acordeon{
+
+.btn-acordeon {
     display: none;
 }
 
 
 /*Carruesel*/
-.carousel-item{
+.carousel-item {
     height: 30rem;
     background-color: #48d6e9;
+}
+
+.superior ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.superior li {
+    position: relative;
+}
+
+.superior img {
+    max-width: 100%;
+    height: 75%;
+    width: 100%;
+    border: 0px solid transparent;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    transition: clip-path 0.5s ease-in-out;
+}
+
+.superior img:hover {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.texto-superior {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 200px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    text-shadow:
+        -4px -4px 0 rgba(0, 0, 0, 0.8), /* Sombra superior izquierda */
+        4px -4px 0 rgba(0, 0, 0, 0.8), /* Sombra superior derecha */
+        -4px 4px 0 rgba(0, 0, 0, 0.8), /* Sombra inferior izquierda */
+        4px 4px 0 rgba(0, 0, 0, 0.8); /* Sombra inferior derecha */
 }
