@@ -16,8 +16,8 @@ export class SidebarService {
       icon: 'bi bi-clipboard-plus-fill',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'registro-mascota', subTitle: 'Registro de los Animales' },
-        { path: 'control-animal', subTitle: 'Control de los Animales' }
+        { path: 'registro-mascota', subTitle: 'Registro Animal' },
+        { path: 'control-animal', subTitle: 'Control Animal' }
       ]
     },
 
@@ -28,29 +28,29 @@ export class SidebarService {
       icon: 'bi bi-clipboard2-fill',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'adopcion-animal', subTitle: 'Adopción de los Animales' },
+        { path: 'adopcion-animal', subTitle: 'Adopciones Animales' },
 
       ]
     },
 
     {
-      title: 'Tipo de Animales',
+      title: 'Animal Tipos',
       idNavigation: "tipoAnimal-nav",
       icon: 'bi bi-journal-text',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'animal-tipo', subTitle: 'Gestión del Tipo de Animal' },
+        { path: 'animal-tipo', subTitle: 'Gestión Tipo Animal' },
 
       ]
     },
 
     {
-      title: 'Tipos de Razas',
+      title: 'Animal Razas',
       idNavigation: "razaAnimal-nav",
       icon: 'bi bi-layout-text-window-reverse',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'animal-raza', subTitle: 'Gestión de la Raza'},
+        { path: 'animal-raza', subTitle: 'Gestión Raza Animal' },
 
       ]
     },
@@ -61,18 +61,18 @@ export class SidebarService {
       icon: 'bi bi-person-lines-fill',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'control-usuario', subTitle: 'Control de Usuarios' },
+        { path: 'control-usuario', subTitle: 'Control Usuario' },
 
       ]
     },
 
     {
-      title: 'Personas',
+      title: 'Persona',
       idNavigation: "controlPerson-nav",
       icon: 'bi bi-person-square',
       rols: ROLS_SYSTEM,
       subMenu: [
-        { path: 'person/gestion', subTitle: 'Control de las Personas/Rescatistas' },
+        { path: 'person/gestion', subTitle: 'Control Persona' },
 
       ]
     },

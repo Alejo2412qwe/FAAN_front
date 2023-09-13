@@ -3,7 +3,6 @@ import { TokenData } from "../interface/token-data";
 
 export enum LocalStorageKeys {
     TOKEN = "token",
-    ROL = 'rol'
 }
 
 export const getToken = (key: string) => {
@@ -23,17 +22,3 @@ export const clearLocalStorage = () => {
     sessionStorage.clear();
     console.log('limpiado')
 };
-
-export const isLoggedInKey = (rol: string) => {
-    const user = localStorage.getItem(rol);
-    console.log('En el strorage--> ' + user);
-    if (user) {
-        return true;
-    }
-    return false;
-}
-
-export const getRole = (rol: string) => {
-    return localStorage.getItem(rol);
-}
-

@@ -13,6 +13,7 @@ import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
+import { FOLDER_DOCUMENTS } from 'src/app/util/const-data';
 
 @Component({
 	selector: 'app-adopcion-animal',
@@ -304,7 +305,7 @@ export class AdopcionAnimalComponent implements OnInit {
 	public async uploadImage() {
 		try {
 			const result = await this.imagenService
-				.savePictureInBuket(this.selectedFile)
+				.savePictureInBuket(this.selectedFile, FOLDER_DOCUMENTS)
 				.toPromise();
 			return result.key;
 		} catch (error) {
@@ -428,11 +429,11 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	isButtonClicked(animal: Animal): boolean {
 		for (let a = 0; a < this.clickedButtons.length; a++) {
-		  if (this.clickedButtons[a].idAnimal == animal.idAnimal) {
-			return true;
-		  }
+			if (this.clickedButtons[a].idAnimal == animal.idAnimal) {
+				return true;
+			}
 		}
 		return false;
-	  }
+	}
 
 }

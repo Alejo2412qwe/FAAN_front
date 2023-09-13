@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environment/enviroment';
 import { Persona } from '../Models/persona';
 import { StorageService } from './storage.service';
@@ -24,9 +24,6 @@ export class PersonaService {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/pageable/find', { params });
   }
 
-  public getAll(): Observable<Persona[]> {
-    return this.http.get<Persona[]>(environment.apiuri + '/persona/list');
-  }
 
   public getListaPersonas(page: number, size: number, sort: string[]): Observable<Persona[]> {
     let params = new HttpParams()
@@ -50,16 +47,6 @@ export class PersonaService {
 
   public getAllPersonasPagesOrCedulaOrApellido(filtro: string, page: number, size: number, sort: string[]): Observable<Persona[]> {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/findByCedulaOrNombre/' + filtro + '?' + `&page=${page}&size=${size}&sort=${sort}`);
-  }
-
-  public existByIdentificacion(cedula: string, equalsCedula: boolean): Observable<boolean> {
-    if (equalsCedula) return of(false);
-    return this.http.get<boolean>(environment.apiuri + `/persona/cedulaRegistra/${cedula}`);
-  }
-
-  public existsByEmail(email: string, equalsEmail: boolean): Observable<boolean> {
-    if (equalsEmail) return of(false);
-    return this.http.get<boolean>(environment.apiuri + `/persona/correoRegistrado/${email}`);
   }
 
 }

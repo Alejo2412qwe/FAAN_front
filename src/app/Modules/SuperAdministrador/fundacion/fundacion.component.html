@@ -2,7 +2,7 @@
     <div class="container">
         <div class="text-center">
             <img class="img-avatar rounded-circle"
-                [src]="fundacion.logoFundacion ? 'https://bucketgtmt.s3.amazonaws.com/' + fundacion.logoFundacion : 'assets/img/faan.jpg'" />
+                [src]="fundacion.logoFundacion ? getUriFile(fundacion.logoFundacion) : 'assets/img/faan.jpg'" />
             <div class="text-5xl font-bold text-900">{{ fundacion.nombreFundacion }}</div>
 
             <p style="text-align: center;">{{fundacion.acronimo}}</p>
@@ -83,7 +83,7 @@
                             <div class="perfil-usuario-header">
                                 <div class="perfil-usuario-portada">
                                     <div class="perfil-usuario-avatar">
-                                        <img [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? 'https://bucketgtmt.s3.amazonaws.com/' + fundacion.logoFundacion : 'assets/img/faan.jpg'"
+                                        <img [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? getUriFile(fundacion.logoFundacion) : 'assets/img/faan.jpg'"
                                             alt="img-avatar" height="165px">
                                         <input type="file" #fileInput style="display: none;"
                                             accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)">

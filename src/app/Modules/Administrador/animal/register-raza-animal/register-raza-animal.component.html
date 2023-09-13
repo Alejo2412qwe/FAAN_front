@@ -54,7 +54,7 @@
                         field="nombreRaza"></p-sortIcon>
                 </th>
 
-                <th pSortableColumn="tipoAnimal.nombreTipo" style="min-width:15rem"><strong>NOMBRE DEL TIPO</strong>
+                <th pSortableColumn="tipoAnimal.nombreTipo" style="min-width:15rem"><strong>NOMBRE TIPO</strong>
                     <p-sortIcon field="tipoAnimal.nombreTipo"></p-sortIcon>
                 </th>
                 <th></th>
@@ -95,7 +95,7 @@
 
 
         <div class="field">
-            <label for="nombreRaza"><strong>Tipo de Raza</strong></label>
+            <label for="nombreRaza"><strong>Tipo Raza</strong></label>
 
             <!--    [style]="{'max-height': '70px', 'overflow-y': 'auto'}" -->
             <p-dropdown [options]="listTipoAnimals" [(ngModel)]="tipoAnimal" optionLabel="nombreTipo" [filter]="true"
@@ -113,14 +113,14 @@
                     </div>
                 </ng-template>
             </p-dropdown>
-            <small class="p-error" *ngIf="submitted && isEmpty(tipoAnimal)">Tipo de animal es requerido.</small>
+            <small class="p-error" *ngIf="submitted && isEmpty(tipoAnimal)">Tipo animal is required.</small>
 
         </div>
 
 
 
         <div class="field">
-            <label for="nombreRaza"><strong>Nombre de la Raza</strong></label>
+            <label for="nombreRaza"><strong>Nombre Raza</strong></label>
 
             <span class="p-input-icon-right ">
                 <i class="pi pi-info-circle"
@@ -130,7 +130,7 @@
                     id="nombreRaza" name="nombreRaza" placeholder="Nombre raza" pInputText
                     [(ngModel)]="razaAnimal.nombreRaza" required autofocus />
             </span>
-            <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza">Nombre es requerido.</small>
+            <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza">Name is required.</small>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza || errorUnique">{{errorUnique}}</small>
 
         </div>
@@ -138,7 +138,7 @@
 
         <div *ngIf="razaAnimal.idRazaAnimal; else notRazaPresent">
             <div class="field" *ngIf="razaAnimal.idRazaAnimal">
-                <label for="nombreRaza"><strong>Estado de la Raza</strong></label>
+                <label for="nombreRaza"><strong>Estado Raza</strong></label>
 
                 <div class=" text-center">
                     <i [class]="'pi' + ( razaAnimal.estadoRaza === 'A' ? ' pi-verified' : ' pi-times-circle')"

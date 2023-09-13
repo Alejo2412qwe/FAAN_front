@@ -17,6 +17,7 @@ import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SituacionIngresoService } from 'src/app/Service/situacionIngreso.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
 
 @Component({
 	selector: 'app-registro-mascotas',
@@ -238,7 +239,7 @@ export class RegistroMascotasComponent implements OnInit {
 	public async uploadImage() {
 		try {
 			const result = await this.imagenService
-				.savePictureInBuket(this.selectedFile)
+				.savePictureInBuket(this.selectedFile, FOLDER_IMAGES)
 				.toPromise();
 			return result.key;
 		} catch (error) {
@@ -560,5 +561,10 @@ export class RegistroMascotasComponent implements OnInit {
 		localStorage.removeItem('listTipos');
 		localStorage.removeItem('listRazas');
 		localStorage.removeItem('listIncomeSituarion');
+	}
+
+	//OBTENER LA IMAGEN NEW MOTHOD------------------------------
+	public getUriFile(fileName: string): string {
+		return getFile(fileName, FOLDER_IMAGES);
 	}
 }

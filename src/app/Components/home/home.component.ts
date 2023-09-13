@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { Animal } from 'src/app/Models/animal';
-import { Fundacion } from 'src/app/Models/fundacion';
 import { RazaAnimal } from 'src/app/Models/razaAnimal';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { AnimalService } from 'src/app/Service/animal.service';
 import { CargarScrpitsService } from 'src/app/Service/cargar-scrpits.service';
-import { FundacionService } from 'src/app/Service/fundacion.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 
@@ -35,29 +33,13 @@ export class HomeComponent implements OnInit {
     private razaAnimalService: RazaAnimalService,
     private tipoAnimalService: TipoAnimalService,
     private router: Router,
-    private fundacionService: FundacionService,
 
   ) {
     _CargarScript.Cargar(["home"]);
   }
 
-  // MODEL
-  public fundacion = new Fundacion();
-
-  public getDataFundation(idFundacion: number) {
-    this.fundacionService.getFundacionById(idFundacion).subscribe({
-      next: (resp) => {
-        this.fundacion = resp;
-      }, error: (err) => {
-        console.error('err');
-      }
-    });
-  }
-
-
   ngOnInit(): void {
 
-    this.getDataFundation(1);
 
     // RESPONSIVE
     this.responsiveOptions = [
