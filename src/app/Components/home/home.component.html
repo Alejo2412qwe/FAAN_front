@@ -1,11 +1,4 @@
-<div class="p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap"
-  style="background-color: var(--blue)">
-  <div class="font-bold mr-4">FAAN</div>
-  <div class="align-items-center hidden lg:flex">
-    <span class="line-height-3">🐶 Fundación Familia Amor Animal</span>
-  </div>
-</div>
-
+<app-header></app-header>
 <div class="m-4 grid grid-nogutter surface-section text-800">
   <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
     <section>
@@ -14,13 +7,7 @@
         organización dedicada a la protección, concienciación y defensa
       </div>
       <p class="mt-0 mb-4 text-700 line-height-3">
-        Por 8 años, FAAN ( Fundación Familia Amor Animal ) ha servido como
-        santuario para perros maltratados, abandonados, descuidados y de alto
-        rango en el área metropolitana de Cuenca, Ecuador, con un temporal
-        refugio ubicado en Tarqui. Actualmente hay más de 150 perros a nuestro
-        cuidado. FAAN es una organización ecuatoriana sin fines de lucro
-        dedicada al bienestar y la seguridad de los animales en el área
-        metropolitana de Cuenca.
+        {{fundacion.objetivo}}
       </p>
       <button pButton pRipple label="Iniciar sesión"
         class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" (click)="goLogin()"></button>
@@ -104,9 +91,7 @@
 </section>
 
 <!-- SECCION FOOTER -->
-<footer>
-  <p class="text-center">Todos los derechos reservados - 2023</p>
-</footer>
+<app-footer></app-footer>
 
 <!-- BUTTON WHATSAPP -->
 <a href="https://wa.link/6ffvwu" class="btn-wsp" target="_blank">

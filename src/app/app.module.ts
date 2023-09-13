@@ -30,6 +30,8 @@ import { ContactoComponent } from './Components/contacto/contacto/contacto.compo
 import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
+import { HeaderComponent } from './Components/header/header.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 
 
@@ -54,6 +56,8 @@ import { LayoutComponent } from './Components/layout/layout.component';
     DonacionesComponent,
     ContactoComponent,
     LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
 
   ],
   imports: [
