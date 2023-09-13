@@ -147,19 +147,7 @@ nav {
     border-radius: 5px;
 }
 
-.btn-enviar {
-    background-color: #0077cc;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
 
-.btn-enviar:hover {
-    background-color: #0055aa;
-}
 
 .msg {
     color: #0077cc;
@@ -209,3 +197,47 @@ nav {
 }
 
 
+
+.titulo-seccion {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  text-shadow:
+      -2px -2px 0 rgba(0, 0, 0, 0.5),
+      2px -2px 0 rgba(0, 0, 0, 0.5),
+      -2px 2px 0 rgba(0, 0, 0, 0.5),
+      2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.icono-contacto::before {
+  content: "\f0e0"; /* Código del icono de contacto de Font Awesome */
+  font-family: FontAwesome;
+  font-size: 48px;
+  margin-right: 10px;
+  color: #70b8d0;
+}
+.btn-enviar {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #70b8d0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn-enviar:hover {
+  background-color: #5a9dbf;
+}
+.icono-enviar::before {
+  content: "\f1d8"; /* Código del icono de enviar de Font Awesome */
+  font-family: FontAwesome;
+  font-size: 24px;
+  margin-right: 10px;
+}

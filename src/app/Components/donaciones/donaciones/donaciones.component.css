@@ -290,3 +290,24 @@ mark.silver {
         -4px 4px 0 rgba(0, 0, 0, 0.8), /* Sombra inferior izquierda */
         4px 4px 0 rgba(0, 0, 0, 0.8); /* Sombra inferior derecha */
 }
+
+.titulo-importante {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    text-shadow:
+        -2px -2px 0 rgba(0, 0, 0, 0.5),
+        2px -2px 0 rgba(0, 0, 0, 0.5),
+        -2px 2px 0 rgba(0, 0, 0, 0.5),
+        2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.icono-gato::before {
+    content: "\f6c8"; /* Código del icono de gato de Font Awesome */
+    font-family: FontAwesome;
+    font-size: 48px;
+    margin-right: 10px;
+    color: #70b8d0;
+}
