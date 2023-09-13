@@ -1,0 +1,345 @@
+/*header*/
+
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+nav {
+  margin-top: 0px;
+  padding: 24px;
+  text-align: center;
+  font-family: Raleway;
+}
+
+#nav-3 {
+  background: var(--blue);
+}
+
+.link-3 {
+  transition: 0.4s;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.link-3:hover {
+  background-color: #ffffff;
+  color: #003cff;
+  padding: 24px 10px;
+  border-radius: 50%;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos el 100% del alto de la ventana */
+}
+
+.floating-image {
+  max-width: 100%;
+  height: auto;
+  animation: float 2s ease-in-out infinite; /* Aplica la animación */
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0); /* Empieza y termina en la posición original */
+  }
+  50% {
+    transform: translateY(-10px); /* Punto más alto del movimiento */
+  }
+}
+
+h1 {
+  font-size: 36px;
+  font-family: Arial, Verdana;
+  color: #70b8d0
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  background-size: cover;
+  color: black;
+  font-family: "open sans";
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Lato', sans-serif; /* Cambiar tipo de letra */
+
+}
+
+/* cARRUSEL */
+
+.slider-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow-x: scroll;
+}
+
+.slider-container img {
+  flex: 0 0 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/*Informacion*/
+.container-boxes {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.box {
+  flex: 1;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.box:hover {
+  transform: scale(1.05); /* Efecto de escala al pasar el ratón */
+}
+
+.box h3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.box p {
+  font-size: 16px;
+}
+
+/* Estilo para el icono */
+.icon {
+  font-size: 40px;
+  color: #FFA500; /* Color naranja para el icono */
+  margin-bottom: 10px;
+  text-shadow:
+      -1px -1px 0 #333, /* Sombra superior izquierda */
+      1px -1px 0 #333, /* Sombra superior derecha */
+      -1px 1px 0 #333, /* Sombra inferior izquierda */
+      1px 1px 0 #333; /* Sombra inferior derecha */
+}
+
+
+.text h3 {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 0;
+}
+
+.text p {
+  margin-top: 2rem;
+  line-height: 1.5rem;
+  text-align: left;
+}
+
+.text {
+  padding: .4rem;
+}
+
+.container-boxes {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los boxes se envuelvan en pantallas más pequeñas */
+  justify-content: space-around;
+  align-items: flex-start; /* Cambiado a "flex-start" para que los boxes se alineen en la parte superior */
+  max-width: 90vw;
+  margin: 20px auto;
+}
+
+.box {
+  background: rgba(247, 250, 251);
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 380px;
+  transition: transform 0.3s ease;
+  width: calc(33.33% - 2rem); /* Para que haya 3 boxes por fila en pantallas grandes */
+}
+
+.box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.text {
+  text-align: center;
+}
+
+.text h3 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.text p {
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+.text a {
+  text-decoration: none;
+  color: #0078d4;
+  transition: color 0.3s ease;
+}
+
+.text a:hover {
+  color: #003cff;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .container-boxes {
+    justify-content: center; /* Centra los boxes en pantallas pequeñas */
+  }
+
+  .box {
+    width: calc(50% - 2rem); /* Para que haya 2 boxes por fila en pantallas medianas */
+  }
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.slider{
+width: 100%;
+height: 600px;
+overflow: hidden;
+}
+.slider ul{
+  display: flex;
+  animation: cambio 20s infinite alternate linear;
+  width: 400%;
+}
+.slider li{
+  width: 100%;
+  list-style: none;
+}
+.slider img{
+  width: 100%;
+  height: 60%;
+}
+@keyframes cambio{
+  0%{margin-left: 0;}
+  20%{margin-left: 0;}
+  
+  25%{margin-left: -100%;}
+  45%{margin-left: -100%;}
+  
+  50%{margin-left: -200%;}
+  70%{margin-left: -200%;}
+  
+  75%{margin-left: -300%;}
+  100%{margin-left: -300%;}
+}
+@media only screen and (min-width:320px) and (max-width:768px){
+.slider, .slider ul, .slider img{
+  height: 100vh;
+}
+}
+.slider::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px; /* Ajusta la altura de la onda según tus preferencias */
+  background: linear-gradient(to bottom, transparent 0%, white 100%);
+}
+.slider {
+  overflow: hidden;
+  position: relative;
+}
+
+.slider ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.slider li {
+  float: left;
+}
+
+.slider img {
+  width: 100%;
+  height: auto;
+}
+
+
+/* Estilo para el icono de gato */
+.animated-icon {
+  font-size: 36px;
+  color: #FFA500; /* Color naranja para el gato */
+  animation: bounce 2s infinite;
+}
+
+/* Animación de rebote para el icono de gato */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+  }
+  40% {
+      transform: translateY(-10px);
+  }
+  60% {
+      transform: translateY(-5px);
+  }
+}
+h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bold; /* Negrita */
+}
+
+h5 {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+/* Estilo para el efecto 3D y sombras */
+.text-3d {
+  display: inline-block;
+  text-transform: uppercase; /* Convertir texto a mayúsculas */
+  text-shadow: 
+      -1px -1px 0 #333, /* Sombra superior izquierda */
+      1px -1px 0 #333, /* Sombra superior derecha */
+      -1px 1px 0 #333, /* Sombra inferior izquierda */
+      1px 1px 0 #333; /* Sombra inferior derecha */
+  transform: skew(-5deg, -5deg); /* Efecto 3D */
+}
+/* Estilo 3D para el encabezado */
+h5 {
+  font-size: 24px;
+  font-weight: bold; /* Negrita */
+  text-transform: uppercase;
+  text-align: center;
+  color: #333; /* Color del texto */
+  text-shadow:
+      -2px -2px 0 #FFA500, /* Sombra superior izquierda en naranja */
+      2px -2px 0 #FFA500, /* Sombra superior derecha en naranja */
+      -2px 2px 0 #FFA500, /* Sombra inferior izquierda en naranja */
+      2px 2px 0 #FFA500; /* Sombra inferior derecha en naranja */
+}
+
+/* Estilo para el icono */
+.icon a {
+  font-size: 24px;
+  color: #FFA500; /* Color naranja para el icono */
+  font-weight: bold; /* Negrita */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
