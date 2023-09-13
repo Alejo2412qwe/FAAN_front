@@ -32,6 +32,10 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
+import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
+import { FooterdComponent } from './shared/footerd/footerd.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { InformationComponent } from './Components/information/information.component';
 
 
 
@@ -58,6 +62,10 @@ import { FooterComponent } from './Components/footer/footer.component';
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
+    BreadcrumbsComponent,
+    FooterdComponent,
+    SidebarComponent,
+    InformationComponent,
 
   ],
   imports: [
