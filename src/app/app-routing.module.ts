@@ -20,7 +20,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
-import { InformacionComponent } from './Components/informacion/informacion/informacion.component';
+import { InformationComponent } from './Components/information/information.component';
 
 
 
@@ -56,7 +56,7 @@ const routes: Routes = [
 
   // PUBLIC
   { path: 'login', component: LoginComponent },
-  { path: 'informacion', component: InformacionComponent },
+  { path: 'informacion', component: InformationComponent },
   { path: 'formulario-adopcion', component: ForAdopcionComponent },
   { path: 'donaciones', component: DonacionesComponent },
   { path: 'contacto', component: ContactoComponent },

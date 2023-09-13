@@ -30,15 +30,12 @@ import { ContactoComponent } from './Components/contacto/contacto/contacto.compo
 import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LayoutComponent } from './Components/layout/layout.component';
-import { InformacionComponent } from './Components/informacion/informacion/informacion.component';
 import { HeaderComponent } from './Components/header/header.component';
-
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { FooterComponent } from './Components/footer/footer.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { FooterdComponent } from './shared/footerd/footerd.component';
-
-import { FooterComponent } from './Components/footer/footer.component';
-
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { InformationComponent } from './Components/information/information.component';
 
 
 
@@ -58,17 +55,17 @@ import { FooterComponent } from './Components/footer/footer.component';
     ControlPersonComponent,
     HomeComponent,
     RecoverPasswordComponent,
-    InformacionComponent,
+
     ForAdopcionComponent,
     DonacionesComponent,
     ContactoComponent,
     LayoutComponent,
     HeaderComponent,
-    SidebarComponent,
+    FooterComponent,
     BreadcrumbsComponent,
     FooterdComponent,
-    FooterComponent,
-
+    SidebarComponent,
+    InformationComponent,
 
   ],
   imports: [
