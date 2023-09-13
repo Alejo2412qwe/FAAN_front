@@ -439,3 +439,31 @@ button:hover .button-text {
     margin: 5px;
   }
 }
+.titulo-importante {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  text-shadow:
+      -2px -2px 0 rgba(0, 0, 0, 0.5), /* Sombra superior izquierda */
+      2px -2px 0 rgba(0, 0, 0, 0.5), /* Sombra superior derecha */
+      -2px 2px 0 rgba(0, 0, 0, 0.5), /* Sombra inferior izquierda */
+      2px 2px 0 rgba(0, 0, 0, 0.5); /* Sombra inferior derecha */
+}
+
+.icono-importante::before {
+  content: "\f071"; /* Código del icono de Font Awesome (puedes cambiarlo según el icono que desees) */
+  font-family: FontAwesome; /* Fuente de Font Awesome */
+  font-size: 60px; /* Tamaño del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+.icono-perro::before {
+  content: "\f6d3"; /* Código del icono de perro de Font Awesome */
+  font-family: FontAwesome; /* Fuente de Font Awesome */
+  font-size: 48px; /* Tamaño del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+  color: #70b8d0; /* Color del icono de perro */
+}

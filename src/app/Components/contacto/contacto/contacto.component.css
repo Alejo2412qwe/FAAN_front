@@ -1,107 +1,3 @@
-
-/* Fancy style */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-  background-size: cover;
-  color: black;
-  font-family: "open sans";
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Lato', sans-serif;
-  /* Cambiar tipo de letra */
-}
-
-
-.content .block {
-  width: inherit;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.5;
-  margin: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.content .block span,
-.content .block span i {
-  margin: 0 42px;
-}
-
-.content .block span i {
-  margin-bottom: 22px;
-}
-
-.content .block span i:before {
-  font-size: 20px;
-}
-
-.Slide:nth-child(even) .content .block {
-  color: #717171;
-}
-
-#Slide5 .content .block {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-#Slide5 .content .block i {
-  margin: 0 12px;
-  vertical-align: middle;
-}
-
-h1 {
-
-  color: #70b8d0;
-  font-size: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  text-align: center;
-
-}
-
-ol {
-  text-align: left;
-  list-style-type: decimal;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-  -webkit-transition: all 0.25s linear;
-  transition: all 0.25s linear;
-}
-
-a:hover {
-  color: rebeccapurple;
-}
-
-img {
-  width: 6%;
-  /* Ancho deseado para las imágenes */
-  height: 14px;
-  /* Alto deseado para las imágenes */
-  overflow: hidden;
-  /* Ocultar cualquier parte de la imagen que exceda el contenedor */
-  display: block; /* Asegurar que la imagen sea un elemento de bloque */
-  margin: 0 auto; /* Margen automático horizontal para centrar */
-
-}
-
-/*header*/
-
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 
 nav {
@@ -151,4 +47,197 @@ nav {
   50% {
     transform: translateY(-10px); /* Punto más alto del movimiento */
   }
+}
+
+.social {
+	position: fixed; /* Hacemos que la posición en pantalla sea fija para que siempre se muestre en pantalla*/
+	left: 0; /* Establecemos la barra en la izquierda */
+	top: 200px; /* Bajamos la barra 200px de arriba a abajo */
+	z-index: 2000; /* Utilizamos la propiedad z-index para que no se superponga algún otro elemento como sliders, galerías, etc */
+}
+
+	.social ul {
+		list-style: none;
+	}
+
+	.social ul li a {
+		display: inline-block;
+		color:#fff;
+		background: #65b2cc;
+		padding: 10px 15px;
+		text-decoration: none;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease; /* Establecemos una transición a todas las propiedades */
+	}
+  
+
+	.social ul li a:hover {
+		background: #000; /* Cambiamos el fondo cuando el usuario pase el mouse */
+		padding: 10px 30px; /* Hacemos mas grande el espacio cuando el usuario pase el mouse */
+	}
+  
+
+  .social .card-list {
+    list-style: none;
+    padding: 0;
+   
+    justify-content: flex-start; /* Alinea los íconos al margen izquierdo */
+  }
+  
+  .social .card-item {
+    margin-right: 20px; /* Espaciado entre los íconos (puedes ajustar este valor) */
+  }
+  
+  .social .card-item a i {
+    font-size: 35px; /* Cambia el tamaño de los íconos según tus preferencias */
+    color: #ffffff; /* Cambia el color de los íconos si es necesario */
+  }
+  
+  .social .card-item a i.fa-instagram {
+    font-size: 40px; /* Ajusta el tamaño del icono de Instagram según tus preferencias */
+    color: #ffffff; /* Cambia el color del icono si es necesario */
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://www.infobae.com/new-resizer/NNwFv_CNtXTiPQxsFWKuXahosQM=/filters:format(webp):quality(85)/arc-anglerfish-arc2-prod-infobae.s3.amazonaws.com/public/NVWQSYGX3RC7ZBEHLPLDVXA3PU.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    height: 100vh; /* Establece la altura de la ventana de visualización */
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  transform: translateZ(0);
+  width: 650px; /* Ancho del contenedor del formulario */
+  margin-left:820PX ; /* Margen izquierdo automático para centrarlo en la derecha */
+  margin-right: 0; /* Establece el margen derecho a 0 */
+}
+
+
+.contact-section {
+    padding: 20px; /* Reduce el espaciado interior */
+    text-align: center;
+}
+
+.contact-section h3 {
+    color: #0077cc;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.contenedor-form {
+    padding: 20px;
+}
+
+.input-full,
+.input-mitad {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+
+.msg {
+    color: #0077cc;
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#footer-bottom {
+  background-color: #333; /* Color de fondo gris (plomo) */
+  padding: 20px 0; /* Espaciado interior */
+  color: #fff; /* Color del texto */
+  text-align: center; /* Centra horizontalmente el contenido */
+}
+
+.et-social-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.et-social-icons li {
+  display: inline-block; /* Muestra los íconos en línea */
+  margin: 0 10px; /* Espacio entre íconos */
+}
+
+.et-social-icons a {
+  text-decoration: none;
+  color: #fff; /* Color de los iconos */
+  font-size: 24px; /* Tamaño de los íconos */
+  transition: transform 0.3s; /* Efecto de transformación al pasar el mouse */
+}
+
+.et-social-icons a:hover {
+  transform: scale(1.2); /* Aumenta el tamaño al pasar el mouse */
+}
+
+#footer-info {
+  margin: 10px 0; /* Espacio superior e inferior del párrafo */
+  font-size: 14px;
+  text-align: center; /* Centra horizontalmente el texto */
+}
+
+#footer-info a {
+  color: #fff; /* Color de los enlaces en el texto */
+  text-decoration: none;
+}
+
+
+
+.titulo-seccion {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  text-shadow:
+      -2px -2px 0 rgba(0, 0, 0, 0.5),
+      2px -2px 0 rgba(0, 0, 0, 0.5),
+      -2px 2px 0 rgba(0, 0, 0, 0.5),
+      2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.icono-contacto::before {
+  content: "\f0e0"; /* Código del icono de contacto de Font Awesome */
+  font-family: FontAwesome;
+  font-size: 48px;
+  margin-right: 10px;
+  color: #70b8d0;
+}
+.btn-enviar {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #70b8d0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn-enviar:hover {
+  background-color: #5a9dbf;
+}
+.icono-enviar::before {
+  content: "\f1d8"; /* Código del icono de enviar de Font Awesome */
+  font-family: FontAwesome;
+  font-size: 24px;
+  margin-right: 10px;
 }
