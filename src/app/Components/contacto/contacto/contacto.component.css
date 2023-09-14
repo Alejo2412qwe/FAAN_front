@@ -140,14 +140,42 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-  transform: translateZ(0);
-  width: 650px;
-  /* Ancho del contenedor del formulario */
-  margin-left: 820PX;
-  /* Margen izquierdo automático para centrarlo en la derecha */
-  margin-right: 0;
-  /* Establece el margen derecho a 0 */
+  width: 100%;
+  height: 70%;
+  max-width: 700px;
+  margin: 20px auto;
+  
 }
+/* Estilos para las etiquetas */
+label {
+  font-size: 18px; /* Tamaño de fuente */
+  color: #333; /* Color del texto */
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+  margin-bottom: 8px; /* Espacio entre las etiquetas y los campos de entrada */
+  display: block; /* Hacer que las etiquetas sean bloques para ocupar todo el ancho disponible */
+}
+
+/* Estilos para los campos de entrada */
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%; /* Ocupar todo el ancho disponible */
+  padding: 10px; /* Espacio interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 5px; /* Borde redondeado */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+@media (min-width: 768px) {
+  /* Aplicar estos estilos solo en pantallas más grandes (a partir de 768px de ancho) */
+  .container {
+    float: right; /* Colocar el contenedor a la derecha */
+    clear: none; /* Evitar que se desplace debajo de otros elementos flotantes */
+  }
+}
+
+
+
 
 
 .contact-section {
