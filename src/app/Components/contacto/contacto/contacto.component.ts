@@ -1,56 +1,42 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
+import { EnviarGmail } from 'src/app/Models/enviargmail';
+import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
+
 @Component({
   selector: 'app-contacto',
   templateUrl: './contacto.component.html',
   styleUrls: ['./contacto.component.css']
 })
 export class ContactoComponent {
+  public enviarG = new EnviarGmail();
 
-  constructor(private toastr: ToastrService) { }
 
-  // ...
+  constructor(
+    private enviarGmail:RecoverPasswordService,
+    private toastr: ToastrService
 
+  ) {}
   enviarCorreo() {
-    const nombreInput = document.getElementById('nombre') as HTMLInputElement;
-    const emailInput = document.getElementById('email') as HTMLInputElement;
-    const mensajeTextarea = document.getElementById('mensaje') as HTMLTextAreaElement;
-
-    const nombre = nombreInput.value.trim(); // Elimina espacios en blanco al principio y al final
-    const email = emailInput.value.trim();
-    const mensaje = mensajeTextarea.value.trim();
-
-    // Verificar que los campos no estén vacíos
-    if (nombre === '' || email === '' || mensaje === '') {
-      this.toastr.error('Por favor, complete todos los campos antes de enviar el correo.');
-      return;
+    if (
+      this.enviarG.nombre &&
+      this.enviarG.correo &&
+      this.enviarG.asunto &&
+      this.enviarG.mensaje
+    ) {
+      console.log(this.enviarG);
+      this.enviarGmail.enviarGmail(this.enviarG).subscribe((data) => {
+        console.log(data);
+        this.toastr.success("Enviado Correctamente");
+        this.enviarG.nombre = "";
+        this.enviarG.correo = "";
+        this.enviarG.asunto = "";
+        this.enviarG.mensaje = "";
+      });
+    } else {
+      this.toastr.error("Por favor, complete todos los campos requeridos");
     }
-
-    // Verificar si el correo electrónico es válido utilizando una expresión regular
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(email)) {
-      this.toastr.error('Por favor, ingrese una dirección de correo electrónico válida.');
-      return;
-    }
-
-    const asunto = 'Mensaje de contacto de ' + nombre;
-    const cuerpo = 'Nombre: ' + nombre + '\n' +
-      'Email: ' + email + '\n' +
-      'Mensaje: ' + mensaje;
-
-    const mailtoURL = 'mailto:info@faanecuador.org' +
-      '?subject=' + encodeURIComponent(asunto) +
-      '&body=' + encodeURIComponent(cuerpo);
-
-    window.location.href = mailtoURL;
-
-    // Limpiar los campos después de enviar el correo
-    nombreInput.value = '';
-    emailInput.value = '';
-    mensajeTextarea.value = '';
   }
-
-
 }
 

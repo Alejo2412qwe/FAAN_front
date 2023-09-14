@@ -14,20 +14,33 @@
   </ul>
 </div>
 <body>
-    <div class="container">
-        <section id="contacto" data-aos="fade-up" class="contact-section">
-            <h3 class="titulo-seccion"><span class="icono-contacto"></span> Contáctanos</h3>
-            
-            <div class="contenedor-form">
-                <form id="formulario">
-                    <label for="nombre"><span class="fa fa-user"></span> Nombre:</label>
-                    <input type="text" id="nombre" required autofocus oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"><br>
-            
-                    <label for="email"><span class="fa fa-envelope"></span> Email:</label>
-                    <input type="email" id="email" required><br>
-            
-                    <label for="mensaje">Mensaje:</label>
-                    <textarea id="mensaje" required style="height: 145px; resize: none;"></textarea><br>
+  <div class="container">
+    <section id="contacto" data-aos="fade-up" class="contact-section">
+      <h3 class="titulo-seccion"><span class="icono-contacto"></span> Contáctanos</h3>
+      <div class="contenedor-form">
+        <form (ngSubmit)="enviarCorreo()">
+          <div class="fila mitad">
+            <input type="text" placeholder="Nombre Completo *" class="input-mitad" name="emailjs_name" id="emailjs_name"
+            [(ngModel)]="enviarG.nombre"required />
+            <input type="email" placeholder="Dirección de Email" class="input-mitad" name="emailjs_email"
+            [(ngModel)]="enviarG.correo"id="emailjs_email" required />
+          </div>
+          <div class="fila">
+            <input type="text" placeholder="Tema..." class="input-full" name="emailjs_tema" id="emailjs_tema"
+            [(ngModel)]="enviarG.asunto"required />
+          </div>
+          <div class="fila">
+            <textarea name="emailjs_mensaje" id="emailjs_mensaje" cols="30" rows="10" placeholder="Tu Mensaje..."
+            [(ngModel)]="enviarG.mensaje"class="input-full"></textarea>
+          </div>
+          <button type="submit" id="button-send" class="btn-enviar"><span class="icono-enviar"></span> Enviar
+            Mensaje</button>
+
+        </form>
+      </div>
+      <p id="msg" class="msg"></p>
+    </section>
+  </div>
 
                     <button type="submit" (click)="enviarCorreo()" id="button-send" class="btn-enviar"><span class="icono-enviar"></span> Enviar Mensaje</button>
                 </form>
@@ -37,13 +50,6 @@
     </div>
     
 </body>
-<footer id="footer-bottom">
-  <div >
-      <ul class="et-social-icons">
-          <li><a href="https://www.facebook.com/familiaamoranimal" target="_blank"><i class="fab fa-facebook"></i></a></li>
-          <li><a href="https://www.instagram.com/fundacionfaan/?fbclid=IwAR1kh-vqTeHG2C8epRfRXqg34qu4ZNP8jRCAxm-hAgLJrV5zjLtA6dYx3X4%2F" target="_blank"><i class="fab fa-instagram"></i></a></li>
-          <li><a href="mailto:info@faanecuador.org" target="_blank"><i class="fas fa-envelope"></i></a></li>
-      </ul>
-      <p id="footer-info">© 2023 <a >Fundación FAAN</a>. Todos los derechos reservados.</p>
-  </div>
-</footer>
+
+<app-footer></app-footer>
+
