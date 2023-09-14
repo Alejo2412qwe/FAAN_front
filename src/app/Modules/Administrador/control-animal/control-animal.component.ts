@@ -76,7 +76,7 @@ export class ControlAnimalComponent implements OnInit {
 
 
 
-  isTextDigit: string = '';
+  isTextDigit!: string;
   public getAllMascotas(): void {
     try {
       this.animalesService.getAllAnimalesPagesOrPlacaOrName(this.isTextDigit, this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
@@ -214,9 +214,9 @@ export class ControlAnimalComponent implements OnInit {
   saveTipoVacuna() {
     this.tipoVacuna.estado = true;
     this.tipoVacunaService.saveTipoVacuna(this.tipoVacuna).subscribe((data) => {
+      alert('SUCESSFULL');
       this.tipoVacuna = {} as TipoVacuna;
       this.visibleTipoVacuna = false;
-      this.getAllTiposVacunas();
     })
   }
 
@@ -245,6 +245,7 @@ export class ControlAnimalComponent implements OnInit {
   saveEstadoAnimal() {
     this.estadoAnimal.estado = 'A';
     this.estadoAnimalService.saveEstadoAnimal(this.estadoAnimal).subscribe(data => {
+      alert('SUCESSFULL');
       this.getListEstadoAnimal();
     })
   }
@@ -342,6 +343,7 @@ export class ControlAnimalComponent implements OnInit {
       this.vacuna.estadoVacuna = true;
     this.vacunaService.saveVacuna(this.vacuna).subscribe((data) => {
       console.log(data);
+      alert('SUCESSFULL');
       this.getListaVacunasByIdControlAnimal(this.isControlAnimal.idControlAnimal!)
       this.vacuna = {} as Vacuna;
       this.isControlAnimal = {} as ControlAnimal;

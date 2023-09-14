@@ -11,9 +11,19 @@ export class ImagenService {
 
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
-  public savePictureInBuket(file: File): Observable<any> {
+  //AWS NOT USE
+  // public savePictureInBuket(file: File): Observable<any> {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   return this.http.post<any>(environment.apiuri + '/assets/uploads', formData);
+  // }
+
+  //SERVER SPRING
+  public savePictureInBuket(file: File, folder: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>(environment.apiuri + '/assets/uploads', formData);
+    formData.append('folder', folder);
+    return this.http.post<any>(environment.apiuri + '/upload', formData);
   }
+
 }

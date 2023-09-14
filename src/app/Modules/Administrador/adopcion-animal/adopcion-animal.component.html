@@ -4,7 +4,7 @@
     <p-card header="" class="m-2">
         <h1 class="title">Adopcion del Animal </h1>
         <div class="d-flex align-items-center">
-            <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS" onIcon="pipi-heart-fill"
+            <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS" onIcon="pi pi-heart-fill"
                 offIcon="pi pi-heart" style="flex: 20%;" (onChange)="cargar()"></p-toggleButton>
 
             <span class="p-input-icon-left" style="flex: 50%;">
@@ -351,7 +351,7 @@
                                                     required.</small>
                                                 <br>
 
-                                                <label for="fotoAnimal"><strong>Formulario de la adopción previamente realizado por el adoptante</strong></label>
+                                                <label for="fotoAnimal"><strong>Foto del Animal</strong></label>
                                                 <p-card>
 
                                                     <div class="perfil-usuario-portada" *ngIf="mostrar == true">
@@ -376,7 +376,7 @@
                                                                     <img [src]="avatarURL ? avatarURL: animal.fotoAnimal ? 'https://bucketgtmt.s3.amazonaws.com/' +animal.fotoAnimal: 'https://thumbs.dreamstime.com/b/icono-de-l%C3%ADnea-documento-archivo-copia-simple-vector-relleno-plana-papel-s%C3%ADmbolo-delgado-logo-pictograma-negro-s%C3%B3lido-aislado-271230212.jpg'"
                                                                         alt="img-avatar" height="165px">
                                                                     <input type="file" #fileInput style="display: none;"
-                                                                        accept="application/pdf"
+                                                                        accept="application/pdf, image/jpeg, image/jpg, image/png"
                                                                         (change)="onBasicUpload($event)">
 
                                                                     <button type="button" class="boton-avatar"

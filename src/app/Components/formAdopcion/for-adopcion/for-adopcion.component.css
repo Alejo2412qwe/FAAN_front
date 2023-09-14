@@ -7,13 +7,9 @@
   background-image: url('https://molyacuarium.com/wp-content/uploads/2020/09/Banner-web.4.jpg');
 } */
 
-.header{
-  text-align: center;
-  padding: 20px;
-}
-
 img {
-  max-width: 100%; /* Hace que la imagen sea responsive */
+  max-width: 100%;
+  /* Hace que la imagen sea responsive */
   border-radius: 10px;
 }
 
@@ -124,8 +120,6 @@ label.inputLabel {
   height: 2px;
   background-color: #5592a7;
 } */
-
-
 
 .layout2 {
   width: 90%;
@@ -434,44 +428,61 @@ button:hover .button-text {
   align-items: center;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-
-nav {
-  margin-top: 0px;
-  padding: 24px;
-  text-align: center;
-  font-family: Raleway;
-}
-
-#nav-3 {
-  background: var(--blue);
-}
-
-.link-3 {
-  transition: 0.4s;
-  color: #ffffff;
-  font-size: 20px;
-  text-decoration: none;
-  padding: 0 10px;
-  margin: 0 10px;
-}
-
-.link-3:hover {
-  background-color: #ffffff;
-  color: #003cff;
-  padding: 24px 10px;
-  border-radius: 50%;
-}
-
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   nav {
     display: flex;
     flex-wrap: wrap;
-    align-items: center; /* Centra verticalmente los enlaces */
-    padding: 10px; /* Ajusta el relleno para dispositivos pequeños */
+    align-items: center;
+    /* Centra verticalmente los enlaces */
+    padding: 10px;
+    /* Ajusta el relleno para dispositivos pequeños */
     background: var(--blue);
   }
-  .link-3{
+
+  .link-3 {
     margin: 5px;
   }
+}
+
+.titulo-importante {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  text-shadow:
+    -2px -2px 0 rgba(0, 0, 0, 0.5),
+    /* Sombra superior izquierda */
+    2px -2px 0 rgba(0, 0, 0, 0.5),
+    /* Sombra superior derecha */
+    -2px 2px 0 rgba(0, 0, 0, 0.5),
+    /* Sombra inferior izquierda */
+    2px 2px 0 rgba(0, 0, 0, 0.5);
+  /* Sombra inferior derecha */
+}
+
+.icono-importante::before {
+  content: "\f071";
+  /* Código del icono de Font Awesome (puedes cambiarlo según el icono que desees) */
+  font-family: FontAwesome;
+  /* Fuente de Font Awesome */
+  font-size: 60px;
+  /* Tamaño del icono */
+  margin-right: 10px;
+  /* Espacio entre el icono y el texto */
+}
+
+.icono-perro::before {
+  content: "\f6d3";
+  /* Código del icono de perro de Font Awesome */
+  font-family: FontAwesome;
+  /* Fuente de Font Awesome */
+  font-size: 48px;
+  /* Tamaño del icono */
+  margin-right: 10px;
+  /* Espacio entre el icono y el texto */
+  color: #70b8d0;
+  /* Color del icono de perro */
 }

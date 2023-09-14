@@ -8,9 +8,7 @@ import {
 import { Persona } from 'src/app/Models/persona';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
-class Response{
-  ci?:string;
-}
+
 @Component({
   selector: 'app-control-person',
   templateUrl: './control-person.component.html',
@@ -18,7 +16,7 @@ class Response{
 })
 export class ControlPersonComponent implements OnInit {
   public personDialog: boolean = false;
-  public respose = new Response();
+
   public person = new Persona();
 
   public submitted: boolean = false;
@@ -180,8 +178,7 @@ export class ControlPersonComponent implements OnInit {
     if (this.person.idPersona) {
       this.updatePerson();
     } else {
-      //this.savePerson();
-      this.validarCedula(this.person.identificacion!);
+      this.savePerson();
     }
   }
 
@@ -203,18 +200,6 @@ export class ControlPersonComponent implements OnInit {
       },
     });
   }
-
-public validarCedula(identificacion:string){
-  this.personService.cedulaRepetida(identificacion).subscribe(
-    (resp)=>{
-      if(resp){
-        this.respose.ci='cedula repetida'
-      }else{
-        this.savePerson()!
-      }
-    }
-  )
-}
 
   public updatePerson() {
     this.personService
@@ -257,7 +242,6 @@ public validarCedula(identificacion:string){
 
   public openNewPerson() {
     this.errorUnique = '';
-    this.respose = {} as Response;
     this.formPerson.reset();
     this.person = {} as Persona;
     this.submitted = false;

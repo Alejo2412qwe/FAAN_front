@@ -100,9 +100,9 @@
                 formcontrolname="idPersona" />
 
             <div class="field">
-                <label for="identificacion"><strong>Ingrese su identificacion</strong></label>
+                <label for="identificacion"><strong>Ingrese su identificacion electrónico.</strong></label>
                 <input type="identificacion" pInputText id="identificacion" name="identificacion"
-                    placeholder="Cédula..." formControlName="identificacion"
+                    placeholder="Dirección de identificacion electrónico" formControlName="identificacion"
                     [class.is-invalid]="formPerson.get('identificacion')!.invalid && formPerson.get('identificacion')!.touched"
                     class="form-control" formcontrolname="identificacion" [maxlength]="10"
                     onkeypress='return event.charCode >= 48 && event.charCode <= 57' required autofocus />
@@ -115,9 +115,6 @@
                     <small class="text-danger"
                         *ngIf="formPerson.get('identificacion')?.errors?.['minlength']"><strong>Minimo
                             requerido es 10.</strong></small>
-                    <small class="text-danger" 
-                        *ngIf="respose && respose.ci">
-                        <strong>Cédula ya ingresada</strong></small>
                 </div>
 
 
