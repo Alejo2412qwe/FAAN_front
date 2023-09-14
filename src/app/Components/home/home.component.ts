@@ -135,11 +135,4 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  enviarCorreo(){
-    console.log(this.enviarG)
-    this.enviarGmail.enviarGmail(this.enviarG).subscribe(data=>{
-      console.log(data);
-      this.toastr.success("Enviado Correctamente")
-    });
-  }
 }
