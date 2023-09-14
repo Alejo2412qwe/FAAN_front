@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contacto',
@@ -6,6 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./contacto.component.css']
 })
 export class ContactoComponent {
+
+  constructor(private toastr: ToastrService) { }
+
+  // ...
 
   enviarCorreo() {
     const nombreInput = document.getElementById('nombre') as HTMLInputElement;
@@ -18,8 +23,8 @@ export class ContactoComponent {
 
     // Verificar que los campos no estén vacíos
     if (nombre === '' || email === '' || mensaje === '') {
-      alert('Por favor, complete todos los campos antes de enviar el correo.');
-      return; // Detener la ejecución si hay campos vacíos
+      this.toastr.error('Por favor, complete todos los campos antes de enviar el correo.');
+      return;
     }
 
     const asunto = 'Mensaje de contacto de ' + nombre;
