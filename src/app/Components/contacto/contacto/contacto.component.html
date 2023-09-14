@@ -1,49 +1,61 @@
-<header>
-  <div class="p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap"
-    style="background-color: var(--blue)">
-    <div class="font-bold mr-4">FAAN</div>
-    <div class="align-items-center hidden lg:flex">
-      <span class="line-height-3">🐶 Fundación Familia Amor Animal</span>
-    </div>
-  </div>
-  <nav id="nav-3">
-    <a class="link-3" [routerLink]="['/home']">Home</a>
-    <a class="link-3" [routerLink]="['/informacion']">Informacion</a>
-    <a class="link-3" [routerLink]="['/formulario-adopcion']">Formulario para adopcion</a>
-    <a class="link-3" [routerLink]="['/donaciones']">Donaciones</a>
-    <a class="link-3" [routerLink]="['/contacto']">Contactos</a>
-  </nav>
-</header>
+<app-header></app-header>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - Fundación de Mascotas</title>
+  <link rel="stylesheet" href="contacto.component.css">
+</head>
+<div class="social">
+  <ul class="card-list">
+    <li class="card-item"><a href="https://www.facebook.com/familiaamoranimal" target="_blank"><i
+          class="fab fa-facebook"></i></a></li>
+    <li class="card-item"><a
+        href="https://www.instagram.com/fundacionfaan/?fbclid=IwAR1kh-vqTeHG2C8epRfRXqg34qu4ZNP8jRCAxm-hAgLJrV5zjLtA6dYx3X4%2F"
+        target="_blank"><i class="fab fa-instagram"></i></a></li>
+    <li class="card-item"><a href="mailto:info@faanecuador.org" target="_blank"><i class="fas fa-envelope"></i></a></li>
+  </ul>
+</div>
 
 <body>
-  <div class="center-container">
-    <section>
-      <div class="content">
-        <a href="https://www.facebook.com/familiaamoranimal">
-          <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="" class="floating-image">
-        </a>
-        <br>
-        <h1>CONTACTANOS!!</h1>
-        <br>
-      </div>
-      <div class="content">
-        <a
-          href="https://www.instagram.com/fundacionfaan/?fbclid=IwAR1kh-vqTeHG2C8epRfRXqg34qu4ZNP8jRCAxm-hAgLJrV5zjLtA6dYx3X4%2F">
-          <img src="https://cdn.pixabay.com/photo/2021/06/15/12/17/instagram-6338401_1280.png" class="floating-image">
-        </a>
-        <br>
-        <h1>NO TE OLVIDES SEGUIRNOS!!!!</h1>
-        <h1>@faancuenca</h1>
-        <br>
-      </div>
-      <div class="content">
-        <img src="https://1000logos.net/wp-content/uploads/2018/05/Gmail-Logo.jpg" alt="" class="floating-image">
-        <br>
-        <h1>SI DESEAS CONTACTARNOS!!!!</h1>
-        <h1>info@faanecuador.org</h1>
-      </div>
-    </section>
+  <div class="container">
+    <section id="contacto" data-aos="fade-up" class="contact-section">
+      <h3 class="titulo-seccion"><span class="icono-contacto"></span> Contáctanos</h3>
+      <div class="contenedor-form">
+        <form id="form" action="">
+          <div class="fila mitad">
+            <input type="text" placeholder="Nombre Completo *" class="input-mitad" name="emailjs_name" id="emailjs_name"
+              required />
+            <input type="email" placeholder="Dirección de Email" class="input-mitad" name="emailjs_email"
+              id="emailjs_email" required />
+          </div>
+          <div class="fila">
+            <input type="text" placeholder="Tema..." class="input-full" name="emailjs_tema" id="emailjs_tema"
+              required />
+          </div>
+          <div class="fila">
+            <textarea name="emailjs_mensaje" id="emailjs_mensaje" cols="30" rows="10" placeholder="Tu Mensaje..."
+              class="input-full"></textarea>
+          </div>
+          <button type="submit" id="button-send" class="btn-enviar"><span class="icono-enviar"></span> Enviar
+            Mensaje</button>
 
+        </form>
+      </div>
+      <p id="msg" class="msg"></p>
+    </section>
   </div>
 
 </body>
+<footer id="footer-bottom">
+  <div>
+    <ul class="et-social-icons">
+      <li><a href="https://www.facebook.com/familiaamoranimal" target="_blank"><i class="fab fa-facebook"></i></a></li>
+      <li><a
+          href="https://www.instagram.com/fundacionfaan/?fbclid=IwAR1kh-vqTeHG2C8epRfRXqg34qu4ZNP8jRCAxm-hAgLJrV5zjLtA6dYx3X4%2F"
+          target="_blank"><i class="fab fa-instagram"></i></a></li>
+      <li><a href="mailto:info@faanecuador.org" target="_blank"><i class="fas fa-envelope"></i></a></li>
+    </ul>
+    <p id="footer-info">© 2023 <a>Fundación FAAN</a>. Todos los derechos reservados.</p>
+  </div>
+</footer>

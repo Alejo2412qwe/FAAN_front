@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Fundacion } from 'src/app/Models/fundacion';
 import { FundacionService } from 'src/app/Service/fundacion.service';
 import { ImagenService } from 'src/app/Service/imagen.service';
+import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
 
 @Component({
     selector: 'app-fundacion',
@@ -80,7 +81,7 @@ export class FundacionComponent implements OnInit {
     public async uploadImage() {
         try {
             const result = await this.imagenService
-                .savePictureInBuket(this.selectedFile)
+                .savePictureInBuket(this.selectedFile, FOLDER_IMAGES)
                 .toPromise();
             return result.key;
         } catch (error) {
@@ -92,5 +93,10 @@ export class FundacionComponent implements OnInit {
         this.selectedFile = {} as File;
         this.avatarURL = ''
         this.visible = false
+    }
+
+    //OBTENER LA IMAGEN NEW MOTHOD------------------------------
+    public getUriFile(fileName: string): string {
+        return getFile(fileName, FOLDER_IMAGES);
     }
 }

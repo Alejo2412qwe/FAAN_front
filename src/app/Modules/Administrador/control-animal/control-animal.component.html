@@ -1,7 +1,11 @@
 <p-card header="" class="m-2">
-    <h1 class="title">Control del Animal </h1>
+    <h1 class="title">Control del Animal {{isIdAnimal}} </h1>
     <div class="d-flex align-items-center">
-
+        <span class="p-input-icon-left" style="flex: 70%;">
+            <i class="pi pi-search"></i>
+            <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit"
+                [(ngModel)]="isTextDigit" pInputText style="width: 100%;" />
+        </span>
         <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Seleccionar
             Animal</button>
     </div>
@@ -11,13 +15,7 @@
 <!-- MODAL ANIMALES -->
 <p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
     [resizable]="false">
-    <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Buscar
-        Animal</button>
-    <span class="p-input-icon-left" style="flex: 70%;">
-        <i class="pi pi-search"></i>
-        <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit"
-            [(ngModel)]="isTextDigit" pInputText style="width: 100%;" />
-    </span>
+
     <p-card header="" class="m-5 text-center align-items-center">
         <div class="container">
             <div class="cardA-container">
