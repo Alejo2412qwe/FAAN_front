@@ -3,7 +3,8 @@ import { TokenData } from "../interface/token-data";
 
 export enum LocalStorageKeys {
     TOKEN = "token",
-    ROL = 'rol'
+    ROL = 'rol',
+    USER_NAME = 'username'
 }
 
 export const getToken = (key: string) => {
@@ -36,4 +37,10 @@ export const isLoggedInKey = (rol: string) => {
 export const getRole = (rol: string) => {
     return localStorage.getItem(rol);
 }
+
+export const getUserName = (username: string) => {
+    return localStorage.getItem(username);
+}
+
+export const EXPORT_DATE_NOW = new Date().toLocaleDateString();
 

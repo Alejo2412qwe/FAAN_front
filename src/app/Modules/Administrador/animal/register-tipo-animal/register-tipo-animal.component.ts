@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { throwError } from 'rxjs';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { ImageService } from 'src/app/Service/image.service';
+
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { TIPO_ANIMAL } from 'src/app/util/const-validate';
+import { EXPORT_DATE_NOW, LocalStorageKeys, getUserName } from 'src/app/util/local-storage-manager';
+import { generateCustomContent } from 'src/app/util/data-reutilizable';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
 
 @Component({
     selector: 'app-register-tipo-animal',
@@ -26,7 +34,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
     public screenWidth: number = 0;
     public screenHeight: number = 0;
 
-    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService) { }
+    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService, private imageService: ImageService) { }
 
     ngOnInit(): void {
         this.findPageableTipoAnimal();
@@ -159,7 +167,68 @@ export class RegisterTipoAnimalComponent implements OnInit {
         this.submitted = false;
     }
 
-}
+    public async generatePdfAllTips() {
+        if (this.ListTipoAnimal.length === 0) {
+            this.toastr.info(
+                '',
+                'NO HAY INFORMACIÓN',
+                { timeOut: 1500 }
+            );
+            return;
+        }
 
-// para vaciar una interface
-//    this.tipoAnimal = {} as TipoAnimal;
+        const tableData = this.ListTipoAnimal.map(item => [
+            { text: item.idTipoAnimal },
+            { text: item.nombreTipo, },
+            { text: item.descripcionAnimal, },
+            { text: item.estadoTipo === 'A' ? 'Activo' : 'Inactivo', }
+        ]);
+
+        const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/faan.jpg');
+
+        const docDefinition = {
+
+            content:
+                [
+                    generateCustomContent(imageDataUrl, 'Informe tipo de animales'),
+                    {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', 'auto', '*', 'auto'],
+                            body: [['ID', 'NOMBRE', 'DESCRIPCIÓN', 'ESTADO'], ...tableData],
+                        },
+                        style: 'table',
+
+                        layout: {
+                            fillColor: (rowI: number, node: any, columI: number) => {
+                                return rowI === 0 ? '#65b2cc' : rowI % 2 === 0 ? '#CCCCCC' : ''
+                            },
+                            hLineWidth: () => 0.2,
+                            vLineWidth: () => 0.2,
+                        }
+
+                    },
+                ]
+            ,
+            footer: function (currentPage: number, pageCount: number) {
+                return {
+                    text: `Pagina ${currentPage.toString()} de ${pageCount}`,
+                    style: 'footer',
+                    alignment: 'center',
+                    margin: [0, 10],
+                    fontSize: 14,
+                    color: '#3498db',
+                };
+            },
+            styles: TIPO_ANIMAL,
+            defaultStyle: {
+                border: '1px solid black'
+            }
+        };
+
+
+        pdfMake.createPdf(docDefinition as any).open();
+        // pdfMake.createPdf(docDefinition as any)download('tipo_animal.pdf');
+    }
+
+}
