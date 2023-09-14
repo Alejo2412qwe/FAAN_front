@@ -59,6 +59,7 @@
                                 id="fechaControlAnimal" name="fechaControlAnimal"
                                 [(ngModel)]="control.fechaControlAnimal" [required]="true"></p-calendar>
                         </div>
+                        <small class="p-error" *ngIf="submitted && !control.fechaControlAnimal">Fecha es requerido.</small>
                     </div>
                 </div>
 
@@ -71,8 +72,9 @@
                                     title="Por favor ingrese solo letras" required />
                                 <label htmlFor="nombreVeterinario">Nombre Veterinario <span
                                         class="red-asterisk"></span></label>
-
+                                        <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es requerido.</small>
                             </span>
+                            
                         </div>
                     </div>
 
@@ -96,6 +98,7 @@
                                     title="Por favor ingrese solo números" />
                                 <label htmlFor="pesoActual">Peso Actual <span class="red-asterisk"></span></label>
                             </span>
+                            <small class="p-error" *ngIf="submitted && !control.pesoActual">Peso es requerido.</small>
                         </div>
                     </div>
 
@@ -109,6 +112,7 @@
                                 <button pButton type="button" (click)="showDialogToAddEstado()" label="Agregar Estado"
                                     class="p-button-primary p-button-rounded "></button>
                             </span>
+                            <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado Animla es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -124,6 +128,7 @@
                                     [options]="listTipoVacuna" [(ngModel)]="selectedVacuna"
                                     placeholder="Seleccione una vacuna" optionLabel="nombreVacuna"></p-dropdown>
                             </div>
+                            <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es requerido.</small>
                         </div>
                         <div class="grid p-fluid m-2">
                             <div class="col-12 md:col-12 mt-1">

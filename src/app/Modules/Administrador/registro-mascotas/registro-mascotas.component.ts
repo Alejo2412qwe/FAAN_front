@@ -260,7 +260,7 @@ export class RegistroMascotasComponent implements OnInit {
 		try {
 			key = await this.uploadImage();
 		} catch (error) {
-			console.error("Upload image a problem");
+			this.toastService.error('Upload image a problem');
 		}
 
 		this.fichaRegister.situacionIngreso = this.catchIncomeSituation;
@@ -278,7 +278,7 @@ export class RegistroMascotasComponent implements OnInit {
 
 				this.animalService.saveAnimal(this.animal).subscribe((data) => {
 					if (data != null) {
-						alert('succesfull created..');
+						this.toastService.success('succesfull created.');
 						this.listAnimal.push(data);
 						this.closeDialog();
 					}
@@ -291,7 +291,7 @@ export class RegistroMascotasComponent implements OnInit {
 			try {
 				this.animal.fotoAnimal = await this.uploadImage();
 			} catch (error) {
-				console.error('A problme upload.')
+				this.toastService.error('A problem upload');
 			}
 
 		}
@@ -309,7 +309,7 @@ export class RegistroMascotasComponent implements OnInit {
 					.updateAnimal(this.animal.idAnimal!, this.animal)
 					.subscribe((data) => {
 						if (data != null) {
-							alert('succesfull updated..');
+							this.toastService.success('succesfull updated');
 							const indexfind = this.listAnimal.findIndex(
 								(animal) => animal.idAnimal === data.idAnimal
 							);
@@ -346,7 +346,7 @@ export class RegistroMascotasComponent implements OnInit {
 			.subscribe((data) => {
 				if (data != null) {
 					if (razaAnimal.estadoRaza) {
-						alert('Update');
+						this.toastService.success('Update');
 					}
 				}
 			});
