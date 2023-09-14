@@ -106,11 +106,13 @@
                                     <input type="text" pTooltip="Identificación" [(ngModel)]="persona.identificacion"
                                         [class]="submitted && (!persona.identificacion) ? 'ng-invalid ng-dirty':''"
                                         id="identificacion" name="identificacion" pInputText
-                                        placeholder="identificacion.." required />
+                                        placeholder="identificacion.." required autofocus
+                                        oninput="this.value = this.value.replace(/[^\d]/g, ''); if (this.value.length > 10) this.value = this.value.slice(0, 10);"
+                                        maxlength="10" />
+
                                 </div>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !persona.identificacion">Identificacion es
-                                obligatotia.</small>
+
                         </div>
                         <div class="col-12 md:col-4">
                             <label for="nombre1"><strong>Nombre</strong></label>
@@ -120,11 +122,11 @@
                                 <div class="p-inputgroup">
                                     <input pTooltip="Nombre" type="text" [(ngModel)]="persona.nombre1"
                                         [class]="submitted && !persona.nombre1 ? 'ng-invalid ng-dirty':''" id="nombre1"
-                                        name="nombre1" pInputText placeholder="Nombre.." required />
+                                        name="nombre1" pInputText placeholder="Nombre.." required autofocus
+                                        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')" />
                                 </div>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !fullname">Apellido
-                                requeridos.</small>
+
                         </div>
                         <div class="col-12 md:col-4">
                             <label for="apellido1"><strong>Apellido</strong></label>
@@ -134,11 +136,12 @@
                                 <div class="p-inputgroup">
                                     <input pTooltip="Apellido" type="text" [(ngModel)]="persona.apellido1"
                                         [class]="submitted && !persona.apellido1 ? 'ng-invalid ng-dirty':''"
-                                        id="apellido1" name="apellido1" pInputText placeholder="Apellido.." required />
+                                        id="apellido1" name="apellido1" pInputText placeholder="Apellido.." required
+                                        autofocus
+                                        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')" />
                                 </div>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !fullname">Nombres y Apellidos
-                                requeridos.</small>
+
                         </div>
                     </div>
 
@@ -148,7 +151,8 @@
                             <span class="p-input-icon-right ">
                                 <div class="p-inputgroup">
                                     <input type="text" pTooltip="Celular" [(ngModel)]="persona.celular" id="celular"
-                                        name="celular" pInputText placeholder="celular.." />
+                                        name="celular" pInputText placeholder="celular.." required autofocus
+                                        oninput="this.value = this.value.replace(/[^\d]/g, '')" />
                                 </div>
                             </span>
                         </div>
@@ -177,8 +181,7 @@
                                         id="username" name="username" pInputText placeholder="username.." required />
                                 </div>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !usuario.username">Username es
-                                obligatotia.</small>
+
                         </div>
                         <div class="col-12 md:col-6">
                             <label for="nombreRaza"><strong>Password</strong></label>
@@ -191,8 +194,7 @@
                                         id="password" name="password" pPassword placeholder="password.." required />
                                 </div>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !usuario.password">Contraseña es
-                                obligatoria.</small>
+
                         </div>
                     </div>
 

@@ -8,6 +8,7 @@ import { RolService } from 'src/app/Service/rol.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { UsuarioService } from 'src/app/Service/usuario.service';
 import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-control-usuarios',
@@ -25,7 +26,8 @@ export class ControlUsuariosComponent implements OnInit {
     private personaService: PersonaService,
     private rolesService: RolService,
     private screenSizeService: ScreenSizeService,
-    private imagenService: ImagenService
+    private imagenService: ImagenService,
+    private toastr: ToastrService
 
   ) { }
 
@@ -118,10 +120,27 @@ export class ControlUsuariosComponent implements OnInit {
   usuario = new Usuario();
 
   public async saveNewUsuario() {
+    if (this.areFieldsEmpty()) {
+      this.toastr.error('Por favor, complete todos los campos antes de registrar.');
+      return;
+    }
+    const correo = this.usuario.persona?.correo; // Utiliza el operador ?. para acceder al correo de manera segura
+
+    if (!correo || !this.isValidEmail(correo)) {
+      this.toastr.error('Por favor, ingrese un correo electrónico válido.');
+      return;
+    }
+    const cedula = this.usuario.persona?.identificacion; // Utiliza el operador ?. para acceder al correo de manera segura
+   
+    if (!cedula || !this.isValidEcuadorianCedula(cedula)) {
+      this.toastr.error('Por favor, ingrese una cédula ecuatoriana válida.');
+      return;
+    }
     const key = await this.uploadImage();
+
     this.personaService.savePersona(this.persona).subscribe((data) => {
-      this.persona = data
-      console.log(this.persona)
+      this.persona = data;
+      console.log(this.persona);
       this.usuario.idUsuario = 0;
       this.usuario.persona = this.persona;
       this.usuario.roles = this.selectedRoles;
@@ -129,18 +148,100 @@ export class ControlUsuariosComponent implements OnInit {
       this.usuario.fotoPerfil = key;
       this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
         this.usuario = data;
-        alert('SUCESSFULL')
+        this.toastr.success('REGISTRADO CON ÉXITO');
       }, (error) => {
-        console.log('2', error)
-      })
+        console.log('2', error);
+      });
     }, (error) => {
-      console.log('1', error)
+      console.log('1', error);
     });
   }
 
+  private areFieldsEmpty(): boolean {
+    // Verificar si los campos requeridos están vacíos
+    if (
+      !this.usuario.persona.nombre1 ||
+      !this.usuario.persona.apellido1 ||
+      !this.usuario.persona.identificacion ||
+      !this.usuario.username ||
+      !this.usuario.persona.correo ||
+      !this.usuario.persona.celular ||
+      !this.usuario.password
+
+      // Agregar más campos requeridos aquí
+    ) {
+      return true; // Al menos un campo requerido está vacío
+    }
+
+    return false; // Todos los campos requeridos tienen datos
+  }
+  private isValidEcuadorianCedula(cedula: string): boolean {
+    // Verificar que la cédula tenga exactamente 10 dígitos numéricos
+    if (!/^\d{10}$/.test(cedula)) {
+      return false;
+    }
+  
+    const digitos = cedula.split('').map(Number);
+    const provincia = Number(cedula.substring(0, 2));
+    const tercerDigito = digitos[2];
+  
+    // Validar la provincia (debe estar entre 1 y 24)
+    if (provincia < 1 || provincia > 24) {
+      return false;
+    }
+  
+    // Validar el tercer dígito (debe estar entre 0 y 6)
+    if (tercerDigito < 0 || tercerDigito > 6) {
+      return false;
+    }
+  
+    // Calcular el dígito verificador
+    const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+    let suma = 0;
+  
+    for (let i = 0; i < 9; i++) {
+      let producto = digitos[i] * coeficientes[i];
+      if (producto > 9) {
+        producto -= 9;
+      }
+      suma += producto;
+    }
+  
+    const digitoVerificadorCalculado = 10 - (suma % 10);
+  
+    // El último dígito de la cédula debe ser igual al dígito verificador calculado
+    return digitos[9] === digitoVerificadorCalculado;
+  }
+  
+  
+  
+  
+  private isValidEmail(email: string): boolean {
+    // Expresión regular para validar un correo electrónico
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
 
   // UPDATE USUARIO
   public updateUsuario() {
+    if (this.areFieldsEmpty()) {
+      this.toastr.error('Por favor, complete todos los campos antes de registrar.');
+      return;
+    }
+
+    const correo = this.usuario.persona?.correo; // Utiliza el operador ?. para acceder al correo de manera segura
+
+    if (!correo || !this.isValidEmail(correo)) {
+      this.toastr.error('Por favor, ingrese un correo electrónico válido.');
+      return;
+    }
+
+    const cedula = this.usuario.persona?.identificacion; // Utiliza el operador ?. para acceder al correo de manera segura
+    console.log(cedula)
+    if (!cedula || !this.isValidEcuadorianCedula(cedula)) {
+      this.toastr.error('Por favor, ingrese una cédula ecuatoriana válida.');
+      return;
+    }
     this.usuario.roles = this.selectedRoles
     this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
       if (data != null) {
@@ -149,7 +250,7 @@ export class ControlUsuariosComponent implements OnInit {
         this.personaService.updatePersona(this.persona.idPersona!, this.persona)
           .subscribe((data1) => {
             if (data1 != null) {
-              alert('datos actualizados')
+              this.toastr.success('ACTUALIZADO CORRECTAMENTE');
             }
           })
       }
