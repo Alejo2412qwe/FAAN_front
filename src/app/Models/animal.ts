@@ -10,6 +10,7 @@ export class Animal {
     edadAnimal?: number;
     estatura?: string; //atribute add..
     estadoAnimal?: string;
+    esterilizado?: boolean;
     razaAnimal?: RazaAnimal;
     fichaRegistro?: FichaRegistro;
     fundacion?: Fundacion;

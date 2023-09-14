@@ -12,8 +12,16 @@ export class TipoAnimalService {
 
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
-  public findByAllTipoAnimal(page: number, size: number, sort: string[]): Observable<TipoAnimal[]> {
+  public findByAllTipoAnimalPageable(page: number, size: number, sort: string[]): Observable<TipoAnimal[]> {
     return this.http.get<TipoAnimal[]>(environment.apiuri + '/tipoanimal/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
+  }
+
+  public findByAllTipoAnimal(): Observable<TipoAnimal[]> {
+    return this.http.get<TipoAnimal[]>(environment.apiuri + '/tipoanimal/list');
+  }
+
+  public findByAllTipoAnimalStatus(): Observable<TipoAnimal[]> {
+    return this.http.get<TipoAnimal[]>(environment.apiuri + '/tipoanimal/status');
   }
 
   public saveTipoAnimal(tipoAnimal: TipoAnimal): Observable<TipoAnimal> {

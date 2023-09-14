@@ -1,12 +1,9 @@
 <div class="card p-3">
 
-    <!-- <p>Width: {{ screenWidth }}px</p>
-<p>Height: {{ screenHeight }}px</p> -->
-
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="openNewRazaAnimal()"></button>
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+                (click)="openNewRazaAnimal()" pTooltip="Crear nueva raza" tooltipPosition="bottom"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -16,7 +13,7 @@
 
     <p-table #dt [value]="listRazaAnimal" [lazy]="true" (onLazyLoad)="loadRazaAnimalLazy($event)" dataKey="id"
         [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
-        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} tipos animales"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} Raza animales"
         [showCurrentPageReport]="true" [loading]="loading"
         [globalFilterFields]="['idRazaAnimal', 'nombreRaza', 'tipoAnimal.nombreTipo']">
 
@@ -25,23 +22,24 @@
             <div class="grid p-fluid align-items-center">
                 <div class="col-12 md:col-8">
                     <div class="p-inputgroup">
-                        <h5 class="m-0"><strong>Razas animales</strong></h5><br>
+                        <h5 class="m-0"><strong>Razas de Animales</strong></h5><br>
                     </div>
                 </div>
 
                 <div class="col-12 md:col-4">
                     <div class="p-inputgroup">
-                        <input type="text" [(ngModel)]="valueAtribute" pInputText placeholder="Search by name raza.." />
+                        <input type="text" [(ngModel)]="valueAtribute" pInputText placeholder="Buscar..."
+                            pTooltip="Buscar por nombre de raza" tooltipPosition="bottom" />
                         <button type="button" pButton pRipple [class]="submitFindAtribute ? 'p-button-danger' : ''"
                             [icon]="'pi' + (submitFindAtribute ? ' pi-times' : ' pi-search')" styleClass="p-button-warn"
                             [disabled]="valueAtribute ? false: true"
-                            (click)="submitFindAtribute ? clearInputAndStatus() : findByAtributeName() "></button>
+                            (click)="submitFindAtribute ? clearInputAndStatus() : findByAtributeName() "
+                            [pTooltip]="'' + (submitFindAtribute ? 'Limpiar' : ' Buscar por raza')"
+                            tooltipPosition="bottom"></button>
                     </div>
 
                 </div>
-
             </div>
-
         </ng-template>
 
 
@@ -57,7 +55,7 @@
                 <th pSortableColumn="tipoAnimal.nombreTipo" style="min-width:15rem"><strong>NOMBRE TIPO</strong>
                     <p-sortIcon field="tipoAnimal.nombreTipo"></p-sortIcon>
                 </th>
-                <th></th>
+                <th style="min-width:8rem"><strong>GESTIÓN</strong></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-razaAnimal>
@@ -70,18 +68,21 @@
                 <td>
                     <button pButton pRipple icon="pi pi-pencil"
                         class="p-button-rounded p-button-success p-button-outlined mr-2"
-                        (click)="editRazaAnimal(razaAnimal)"></button>
+                        (click)="editRazaAnimal(razaAnimal)" [pTooltip]="'Editar Raza: '+razaAnimal.nombreRaza"
+                        tooltipPosition="bottom"></button>
 
                     <button pButton pRipple [icon]="razaAnimal.estadoRaza === 'A' ? 'pi pi-check' : 'pi pi-trash'"
                         [ngClass]="'p-button-rounded ' + (razaAnimal.estadoRaza === 'A' ? 'p-button-secondary' : 'p-button-danger') + ' p-button-outlined mt-1'"
-                        (click)="eliminadoLogicoDeLosTiposAnimales(razaAnimal)">
+                        (click)="eliminadoLogicoDeLosTiposAnimales(razaAnimal)"
+                        [pTooltip]="(razaAnimal.estadoRaza === 'A' ? 'Desactivar':'Activar')+' Raza: '+razaAnimal.nombreRaza"
+                        tooltipPosition="bottom">
                     </button>
 
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">En total son {{ listRazaAnimal ?
+            <div class="flex align-items-center justify-content-between">En total hay {{ listRazaAnimal ?
                 totalRecords : 0 }} Razas de animales.</div>
         </ng-template>
     </p-table>
@@ -128,36 +129,14 @@
                 <input type="text"
                     [class]="submitted && (!razaAnimal.nombreRaza || errorUnique) ? 'ng-invalid ng-dirty':''"
                     id="nombreRaza" name="nombreRaza" placeholder="Nombre raza" pInputText
-                    [(ngModel)]="razaAnimal.nombreRaza" required autofocus />
+                    [(ngModel)]="razaAnimal.nombreRaza"
+                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
+                    [maxlength]="30" required autofocus />
             </span>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza">Name is required.</small>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza || errorUnique">{{errorUnique}}</small>
 
         </div>
-
-
-        <div *ngIf="razaAnimal.idRazaAnimal; else notRazaPresent">
-            <div class="field" *ngIf="razaAnimal.idRazaAnimal">
-                <label for="nombreRaza"><strong>Estado Raza</strong></label>
-
-                <div class=" text-center">
-                    <i [class]="'pi' + ( razaAnimal.estadoRaza === 'A' ? ' pi-verified' : ' pi-times-circle')"
-                        [style]="'font-size: 4.5rem; color:' + (razaAnimal.estadoRaza === 'A' ? 'green': 'red') "></i>
-
-                    <div class="text-content m-3">
-                        <p-message icon="pi pi-exclamation-triangle"
-                            [severity]="razaAnimal.estadoRaza === 'A' ? 'success' : 'error'"
-                            [text]="razaAnimal.estadoRaza === 'A' ? 'RAZA ACTIVA' : 'RAZA INACTIVA'"></p-message>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <ng-template #notRazaPresent>
-            <div class=" text-center mt-6">
-                <i class="pi pi-spin pi-cog" style="font-size: 4.5rem; color: gray"></i>
-            </div>
-        </ng-template>
-
 
 
 

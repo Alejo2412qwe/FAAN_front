@@ -27,8 +27,19 @@ export class AnimalService {
       .set('size', size)
       .set('sort', sort.join(','))
       .set('filter', filtro)
-      console.log(params);
-    return this.http.get<Animal[]>(environment.apiuri + '/animal/findBynameOrplaca',{params});
+    console.log(params);
+    return this.http.get<Animal[]>(environment.apiuri + '/animal/findBynameOrplaca', { params });
+  }
+
+  public getAllAnimalAtribute(page: number, size: number, sort: string[], nameAtribute: string, valueAtricute: string): Observable<Animal[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+      .set('columnName', nameAtribute)
+      .set('value', valueAtricute);
+
+    return this.http.get<Animal[]>(environment.apiuri + '/animal/pageable/find', { params });
   }
 
   public getListaAnimal(): Observable<Animal[]> {

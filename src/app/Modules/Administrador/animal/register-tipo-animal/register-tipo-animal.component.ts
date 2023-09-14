@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
@@ -25,11 +26,10 @@ export class RegisterTipoAnimalComponent implements OnInit {
     public screenWidth: number = 0;
     public screenHeight: number = 0;
 
-    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService) { }
+    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService) { }
 
     ngOnInit(): void {
         this.findPageableTipoAnimal();
-
         this.getSizeWindowResize();
     }
 
@@ -45,17 +45,9 @@ export class RegisterTipoAnimalComponent implements OnInit {
     }
 
     public findPageableTipoAnimal() {
-        try {
-            this.tipoAnimalService.findByAllTipoAnimal(0, 3, []).subscribe((data: any) => {
-                if (data !== null) {
-                    console.log(data)
-                    this.ListTipoAnimal = data.content;
-                }
-            });
-        } catch (error) {
-            throw new Error()
-        }
-
+        this.tipoAnimalService.findByAllTipoAnimal().subscribe((data) => {
+            this.ListTipoAnimal = data;
+        });
     }
 
     public saveAndUpdateTipoAnimal() {
@@ -66,44 +58,53 @@ export class RegisterTipoAnimalComponent implements OnInit {
             } else {
                 this.createTipoAnimal(this.tipoAnimal);
             }
+        } else {
+            this.toastr.info(
+                '',
+                'LLENE LOS CAMPOS'
+            );
         }
     }
 
-    public createTipoAnimal(tipoAnimal: TipoAnimal): void {
-        try {
-            this.tipoAnimal.estadoTipo = 'A';
-            this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe((data) => {
-                if (data != null) {
-                    alert('succesfull created..')
-                    this.ListTipoAnimal.push(data);
-                    this.closeDialog();
-                }
-            }, (err) => {
+    public createTipoAnimal(tipoAnimal: TipoAnimal) {
+        this.tipoAnimal.estadoTipo = 'A';
+        this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe({
+            next: (resp) => {
+                this.toastr.success(
+                    '',
+                    'CORRECTO AL CREAR'
+                );
+                this.ListTipoAnimal.push(resp);
+                this.closeDialog();
+            },
+            error: (err) => {
                 if (err.error) {
                     this.errorUnique = 'Nombre existente.';
+                    this.toastr.error(
+                        '',
+                        'Nombre existente.'
+                    );
                 }
-            })
-        } catch (error) {
-            throw new Error()
-        }
+            }
+        })
     }
 
-    public updateTipoAnimal(tipoAnimal: TipoAnimal): void {
-        this.tipoAnimalService.updateTipoAnimal(tipoAnimal.idTipoAnimal!, tipoAnimal).subscribe((data) => {
-            if (data != null) {
-                try {
-                    const indexfind = this.ListTipoAnimal.findIndex((tanimal) => tanimal.idTipoAnimal === data.idTipoAnimal);
-                    this.ListTipoAnimal[indexfind] = data;
-                } catch (error) {
-                    throw new Error()
-                }
+    public updateTipoAnimal(tipoAnimal: TipoAnimal) {
+        this.tipoAnimalService.updateTipoAnimal(tipoAnimal.idTipoAnimal!, tipoAnimal).subscribe({
+            next: (resp) => {
+                const indexfind = this.ListTipoAnimal.findIndex((tanimal) => tanimal.idTipoAnimal === resp.idTipoAnimal);
+                this.ListTipoAnimal[indexfind] = resp;
+                this.toastr.success(
+                    '',
+                    'CORRECTO AL ACTUALIZAR'
+                );
                 this.closeDialog();
-                alert('succesfull updated..')
-            }
-        }, (err) => {
-            console.log(err)
-            if (err.status === 400) {
-                this.errorUnique = 'Nombre existente.';
+            },
+            error: (err) => {
+                this.toastr.error(
+                    '',
+                    'Inconveniente al actualizar.'
+                );
             }
         })
     }
@@ -117,11 +118,18 @@ export class RegisterTipoAnimalComponent implements OnInit {
             .updateTipoAnimal(
                 tipoAnimal.idTipoAnimal!, tipoAnimal
             )
-            .subscribe((data) => {
-                if (data != null) {
-                    if (tipoAnimal.estadoTipo) {
-                        alert('Update')
-                    }
+            .subscribe({
+                next: (resp) => {
+                    this.toastr.success(
+                        '',
+                        'CORRECTO AL' + (tipoAnimal.estadoTipo === 'A' ? ' HABILITAR' : ' INHABILITAR')
+                    );
+                },
+                error: (err) => {
+                    this.toastr.error(
+                        '',
+                        'Inconveniente al actualizar.'
+                    );
                 }
             });
     }
