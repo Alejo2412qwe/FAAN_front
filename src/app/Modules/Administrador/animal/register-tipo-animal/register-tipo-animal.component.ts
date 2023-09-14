@@ -71,6 +71,12 @@ export class RegisterTipoAnimalComponent implements OnInit {
 
     public createTipoAnimal(tipoAnimal: TipoAnimal): void {
         try {
+
+            // Valida que solo se ingrese letras y espacio
+            if (tipoAnimal.nombreTipo !== undefined && !/^[A-Za-z\s]+$/.test(tipoAnimal.nombreTipo)) {
+                this.errorUnique='El nombre solo debe contener letras.';
+            }
+            
             this.tipoAnimal.estadoTipo = 'A';
             this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe((data) => {
                 if (data != null) {

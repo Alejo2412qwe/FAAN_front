@@ -135,6 +135,10 @@ export class RegisterRazaAnimalComponent implements OnInit {
 
   public saveRazaAnimal(razaAnimal: RazaAnimal) {
     try {
+      if (razaAnimal.nombreRaza !== undefined && !/^[A-Za-z\s]+$/.test(razaAnimal.nombreRaza)) {
+        this.errorUnique='El nombre de la rza solo debe contener letras.';
+    }
+
       this.razaAnimal.estadoRaza = 'A';
       this.razaAnimalService.saveRazaAnimal(razaAnimal).subscribe((data) => {
         if (data != null) {
