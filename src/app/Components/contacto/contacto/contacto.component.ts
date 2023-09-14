@@ -16,16 +16,25 @@ export class ContactoComponent {
     private toastr: ToastrService
 
   ) {}
-  enviarCorreo(){
-    console.log(this.enviarG)
-    this.enviarGmail.enviarGmail(this.enviarG).subscribe(data=>{
-      console.log(data);
-      this.toastr.success("Enviado Correctamente")
-      this.enviarG.nombre ="";
-      this.enviarG.correo ="";
-      this.enviarG.asunto ="";
-      this.enviarG.mensaje ="";
-    });
+  enviarCorreo() {
+    if (
+      this.enviarG.nombre &&
+      this.enviarG.correo &&
+      this.enviarG.asunto &&
+      this.enviarG.mensaje
+    ) {
+      console.log(this.enviarG);
+      this.enviarGmail.enviarGmail(this.enviarG).subscribe((data) => {
+        console.log(data);
+        this.toastr.success("Enviado Correctamente");
+        this.enviarG.nombre = "";
+        this.enviarG.correo = "";
+        this.enviarG.asunto = "";
+        this.enviarG.mensaje = "";
+      });
+    } else {
+      this.toastr.error("Por favor, complete todos los campos requeridos");
+    }
   }
 }
  
