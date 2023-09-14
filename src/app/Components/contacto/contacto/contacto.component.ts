@@ -27,6 +27,13 @@ export class ContactoComponent {
       return;
     }
 
+    // Verificar si el correo electrónico es válido utilizando una expresión regular
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      this.toastr.error('Por favor, ingrese una dirección de correo electrónico válida.');
+      return;
+    }
+
     const asunto = 'Mensaje de contacto de ' + nombre;
     const cuerpo = 'Nombre: ' + nombre + '\n' +
       'Email: ' + email + '\n' +

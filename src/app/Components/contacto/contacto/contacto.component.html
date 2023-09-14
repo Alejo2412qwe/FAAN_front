@@ -20,14 +20,15 @@
             
             <div class="contenedor-form">
                 <form id="formulario">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" required><br>
+                    <label for="nombre"><span class="fa fa-user"></span> Nombre:</label>
+                    <input type="text" id="nombre" required autofocus oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')"><br>
             
-                    <label for="email">Email:</label>
+                    <label for="email"><span class="fa fa-envelope"></span> Email:</label>
                     <input type="email" id="email" required><br>
             
                     <label for="mensaje">Mensaje:</label>
-                    <textarea id="mensaje" required></textarea><br>
+                    <textarea id="mensaje" required style="height: 145px; resize: none;"></textarea><br>
+
                     <button type="submit" (click)="enviarCorreo()" id="button-send" class="btn-enviar"><span class="icono-enviar"></span> Enviar Mensaje</button>
                 </form>
             </div>
