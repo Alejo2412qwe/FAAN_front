@@ -39,7 +39,7 @@ export class ContactoComponent {
       'Email: ' + email + '\n' +
       'Mensaje: ' + mensaje;
 
-    const mailtoURL = 'mailto:cabrerapedro32@gmail.com' +
+    const mailtoURL = 'mailto:info@faanecuador.org' +
       '?subject=' + encodeURIComponent(asunto) +
       '&body=' + encodeURIComponent(cuerpo);
 
