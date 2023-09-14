@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/Service/auth.service';
 import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SharedService } from 'src/app/util/service/shared.service';
+import {ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
     private screenSizeService: ScreenSizeService,
     private sendEmailRecoverService: RecoverPasswordService,
     private sharedService: SharedService, // Inject the SharedService
+    private toastr: ToastrService
   ) {
     this.formulario = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]]
@@ -65,7 +68,7 @@ export class LoginComponent implements OnInit {
   // METHOD AUTHENTICATION USER
   public singIn(): void {
     if (!this.usuarioLoginDTO.password || !this.usuarioLoginDTO.password) {
-      alert('EMPYTY FIELDS')
+      this.toastr.error('CAMPOS VACIOS','ERROR');
     } else {
       this.authService.login(this.usuarioLoginDTO).subscribe(data => {
         if (!data) {
@@ -84,7 +87,7 @@ export class LoginComponent implements OnInit {
           } else {
             this.sharedService.setIsLogginPresent(true);
 
-            alert('BIENVENIDO')
+            this.toastr.success('Bienvenido','Inicio de sesión exitoso')
             // STORE IN STORAGE
             // localStorage.setItem('token', String(this.infoUsuario.token));
             localStorage.setItem('id_username', String(this.infoUsuario.idUsuario));

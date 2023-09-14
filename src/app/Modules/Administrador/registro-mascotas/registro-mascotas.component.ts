@@ -222,12 +222,10 @@ export class RegistroMascotasComponent implements OnInit {
 					this.saveAnimal();
 				} else {
 					this.toastService.error('', 'CAMPOS INCOMPLETOS.', { timeOut: 2000 });
-					// alert('campos incompletos2');
 				}
 			}
 		} else {
 			this.toastService.error('', 'CAMPOS INCOMPLETOS.', { timeOut: 2000 });
-			// alert('campos incompletos1');
 		}
 	}
 

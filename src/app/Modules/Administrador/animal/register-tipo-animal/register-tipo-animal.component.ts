@@ -3,6 +3,8 @@ import { throwError } from 'rxjs';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { Toast, ToastrService } from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-register-tipo-animal',
@@ -25,7 +27,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
     public screenWidth: number = 0;
     public screenHeight: number = 0;
 
-    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService) { }
+    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService,private toastr: ToastrService) { }
 
     ngOnInit(): void {
         this.findPageableTipoAnimal();
@@ -74,7 +76,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
             this.tipoAnimal.estadoTipo = 'A';
             this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe((data) => {
                 if (data != null) {
-                    alert('succesfull created..')
+                    this.toastr.success('Creado Correctamente','Éxito');
                     this.ListTipoAnimal.push(data);
                     this.closeDialog();
                 }
@@ -98,7 +100,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
                     throw new Error()
                 }
                 this.closeDialog();
-                alert('succesfull updated..')
+                this.toastr.success('Creado Correctamente','Éxito');
             }
         }, (err) => {
             console.log(err)
@@ -120,7 +122,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
             .subscribe((data) => {
                 if (data != null) {
                     if (tipoAnimal.estadoTipo) {
-                        alert('Update')
+                        this.toastr.warning('Actualización','Aviso')
                     }
                 }
             });

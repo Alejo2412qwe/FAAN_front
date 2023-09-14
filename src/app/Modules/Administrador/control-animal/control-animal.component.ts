@@ -392,7 +392,7 @@ export class ControlAnimalComponent implements OnInit {
   }
 
   limpiarVacunasTemporales() {
-    alert("Vacunas canceladas");
+    this.toastr.error('Vacunas canceladas','Error');
     this.vacunasTemporales = [];
     console.log(this.vacunasTemporales);
   }

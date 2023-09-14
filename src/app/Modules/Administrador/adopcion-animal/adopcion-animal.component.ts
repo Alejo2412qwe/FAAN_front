@@ -344,7 +344,7 @@ export class AdopcionAnimalComponent implements OnInit {
 					});
 				});
 		} else {
-			alert('campos vacios..');
+			this.toastr.error('Campos Vacios','ERROR');
 		}
 
 	}
