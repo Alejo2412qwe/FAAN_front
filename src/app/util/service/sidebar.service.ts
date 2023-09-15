@@ -59,7 +59,7 @@ export class SidebarService {
       title: 'Usuarios',
       idNavigation: "controlUser-nav",
       icon: 'bi bi-person-lines-fill',
-      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
+      rols: ["SUPERADMINISTRADOR"],
       subMenu: [
         { path: 'control-usuario', subTitle: 'Control de los Usuarios' },
 
