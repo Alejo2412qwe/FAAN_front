@@ -8,6 +8,7 @@ import {
 import { Persona } from 'src/app/Models/persona';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-control-person',
@@ -42,7 +43,8 @@ export class ControlPersonComponent implements OnInit {
   constructor(
     private personService: PersonaService,
     private screenSizeService: ScreenSizeService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.formPerson = this.formBuilder.group({
       idPersona: ['', []],
@@ -189,7 +191,7 @@ export class ControlPersonComponent implements OnInit {
   public savePerson() {
     this.personService.savePersona(this.person).subscribe({
       next: (resp) => {
-        alert('succesfull created..');
+        this.toastr.success('Creado Correctamente','Éxito');
         this.listPerson.push(resp);
         this.closeDialog();
       },
@@ -216,7 +218,7 @@ export class ControlPersonComponent implements OnInit {
               throw new Error();
             }
             this.closeDialog();
-            alert('succesfull updated..');
+            this.toastr.success('Actualizado Corrrectamente','Éxito');
           }
         },
         error: (err) => {

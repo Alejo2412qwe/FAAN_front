@@ -8,6 +8,7 @@ import { RolService } from 'src/app/Service/rol.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { UsuarioService } from 'src/app/Service/usuario.service';
 import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-control-usuarios',
@@ -25,7 +26,8 @@ export class ControlUsuariosComponent implements OnInit {
     private personaService: PersonaService,
     private rolesService: RolService,
     private screenSizeService: ScreenSizeService,
-    private imagenService: ImagenService
+    private imagenService: ImagenService,
+    private toastr: ToastrService
 
   ) { }
 
@@ -129,7 +131,7 @@ export class ControlUsuariosComponent implements OnInit {
       this.usuario.fotoPerfil = key;
       this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
         this.usuario = data;
-        alert('SUCESSFULL')
+        this.toastr.success('Guardado Correctamente','Éxito')
       }, (error) => {
         console.log('2', error)
       })
@@ -149,7 +151,7 @@ export class ControlUsuariosComponent implements OnInit {
         this.personaService.updatePersona(this.persona.idPersona!, this.persona)
           .subscribe((data1) => {
             if (data1 != null) {
-              alert('datos actualizados')
+              this.toastr.success('Actualizado Correctamente','Éxito');
             }
           })
       }
