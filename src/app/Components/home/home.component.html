@@ -1,1 +1,99 @@
-<p>home works!</p>
+<app-header></app-header>
+<div class="m-4 grid grid-nogutter surface-section text-800">
+  <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
+    <section>
+      <span class="block text-6xl font-bold mb-1">Fundación Familia Amor Animal</span>
+      <div class="text-6xl text-primary font-bold mb-3">
+        organización dedicada a la protección, concienciación y defensa
+      </div>
+      <p class="mt-0 mb-4 text-700 line-height-3">
+        {{fundacion.objetivo}}
+      </p>
+      <button pButton pRipple label="Iniciar sesión"
+        class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" (click)="goLogin()"></button>
+    </section>
+  </div>
+  <div class="col-12 md:col-6 overflow-hidden">
+    <img src="../../../assets/img/narner.png" alt="Image" class="md:ml-auto block md:h-full"
+      style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)" />
+  </div>
+</div>
+
+<div class="m-5 surface-card p-4 shadow-2 border-round">
+  <div class="text-3xl font-medium text-900 mb-3 text-center">
+    Videos Informativos
+  </div>
+  <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
+    <div class="grid">
+      <div class="col-12 md:col-6 mb-6 px-5">
+        <div class="text-900 text-xl mb-3 font-medium">Acerca de FAAN</div>
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/02VY3wCVV64" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+      <div class="col-12 md:col-6 mb-6 px-5">
+        <div class="text-900 text-xl mb-3 font-medium">Ubicación</div>
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/wCZjk1SDTG4" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="m-5 surface-card p-4 shadow-2 border-round">
+  <p-carousel [value]="ListAnimales" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+    <ng-template let-animal pTemplate="item">
+      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+        <div class="mb-3">
+          <img src="https://img.freepik.com/foto-gratis/perrito-joven-posando-alegre_155003-28765.jpg"
+            [alt]="animal.fotoAnimal" class="w-6 shadow-2" />
+        </div>
+        <div>
+          <h4 class="mb-1">{{ animal.nombreAnimal }}</h4>
+          <h6 class="mt-0 mb-3">
+            <!-- {{ "Raza" + animal.razaAnimal!.nombreRaza }} -->
+          </h6>
+          <div class="car-buttons mt-5">
+            <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"
+              (onClick)="goFormulario()"></p-button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+
+<!-- SECCTION CONTACTOS -->
+<section id="contacto" data-aos="fade-up">
+  <h3 class="titulo-seccion">Contactanos</h3>
+  <div class="contenedor-form">
+    <form id="form" action="">
+      <div class="fila mitad">
+        <input type="text" placeholder="Nombre Completo *" class="input-mitad" name="emailjs_name" id="emailjs_name"
+          required />
+        <input type="email" placeholder="Dirección de Email" class="input-mitad" name="emailjs_email" id="emailjs_email"
+          required />
+      </div>
+      <div class="fila">
+        <input type="text" placeholder="Tema..." class="input-full" name="emailjs_tema" id="emailjs_tema" required />
+      </div>
+      <div class="fila">
+        <textarea name="emailjs_mensaje" id="emailjs_mensaje" cols="30" rows="10" placeholder="Tu Mensaje..."
+          class="input-full"></textarea>
+      </div>
+      <input type="submit" value="Enviar Mensaje" id="button-send" class="btn-enviar" />
+    </form>
+  </div>
+  <p id="msg" class="msg"></p>
+</section>
+
+<!-- SECCION FOOTER -->
+<app-footer></app-footer>
+
+<!-- BUTTON WHATSAPP -->
+<a href="https://wa.link/6ffvwu" class="btn-wsp" target="_blank">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>

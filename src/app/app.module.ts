@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -23,7 +23,21 @@ import { AdopcionAnimalComponent } from './Modules/Administrador/adopcion-animal
 import { ControlPersonComponent } from './Modules/Administrador/control-person/control-person.component';
 import { HomeComponent } from './Components/home/home.component';
 import { RecoverPasswordComponent } from './Components/recover-password/recover-password.component';
+
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
+import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
+import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
+import { LoaderPeticionesInterceptor } from './interceptor/loader-peticiones.interceptor';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { LayoutComponent } from './Components/layout/layout.component';
+import { HeaderComponent } from './Components/header/header.component';
+import { FooterComponent } from './Components/footer/footer.component';
+import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
+import { FooterdComponent } from './shared/footerd/footerd.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { InformationComponent } from './Components/information/information.component';
+
+
 
 @NgModule({
   declarations: [
@@ -41,7 +55,18 @@ import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for
     ControlPersonComponent,
     HomeComponent,
     RecoverPasswordComponent,
-    ForAdopcionComponent
+
+    ForAdopcionComponent,
+    DonacionesComponent,
+    ContactoComponent,
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    BreadcrumbsComponent,
+    FooterdComponent,
+    SidebarComponent,
+    InformationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -54,9 +79,14 @@ import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for
     CommonModule,
     BrowserAnimationsModule,
     SlickCarouselModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgxUiLoaderModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderPeticionesInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

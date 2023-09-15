@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { MessageService } from 'primeng/api';
 import { Animal } from 'src/app/Models/animal';
 import { DetalleAdopcion } from 'src/app/Models/detalleEncabezado';
 import { EncabezadoAdopcion } from 'src/app/Models/encabezadoAdopcion';
@@ -12,6 +13,7 @@ import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
+import { FOLDER_DOCUMENTS } from 'src/app/util/const-data';
 
 @Component({
 	selector: 'app-adopcion-animal',
@@ -79,7 +81,8 @@ export class AdopcionAnimalComponent implements OnInit {
 		private screenSizeService: ScreenSizeService,
 		private toastService: ToastrService,
 		private encabezadoAdopcion: EncabezadoAdopcionService,
-		private detalleEncabezadoService: DetalleEncabezadoService
+		private detalleEncabezadoService: DetalleEncabezadoService,
+		private toastr: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -302,7 +305,7 @@ export class AdopcionAnimalComponent implements OnInit {
 	public async uploadImage() {
 		try {
 			const result = await this.imagenService
-				.savePictureInBuket(this.selectedFile)
+				.savePictureInBuket(this.selectedFile, FOLDER_DOCUMENTS)
 				.toPromise();
 			return result.key;
 		} catch (error) {
@@ -332,11 +335,11 @@ export class AdopcionAnimalComponent implements OnInit {
 					this.detalleEncabesadoObject.documento = key;
 					this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
 						if (data2 != null) {
-							alert('succesfull created..');
+							this.toastr.success(this.animalSelect.nombreAnimal + ' fue adoptado');
 							this.CloseDialog();
 							this.cargar();
 						} else {
-							alert('succesfull no created..');
+							this.toastr.error('Error ' + this.animalSelect.nombreAnimal + 'no fue adoptado');
 						}
 					});
 				});
@@ -368,24 +371,24 @@ export class AdopcionAnimalComponent implements OnInit {
 										fini++;
 										if (data2 != null) {
 											if (this.listAnimalSelectAdopcion.length == fini) {
-												alert('succesfull created..');
+												this.toastr.success(this.animalSelect.nombreAnimal + ' fue adoptado');
 												this.CloseDialog();
 												this.cargar();
 											}
 										} else {
-											alert('succesfull no created..');
+											this.toastr.error('Error ' + this.animalSelect.nombreAnimal + 'no fue adoptado');
 										}
 									});
 								});
 						} else {
 							fini++;
-							alert('Error al almacenar un animal ya registrado..');
+							this.toastr.error('Error al almacenar un animal ya registrado..');
 						}
 					}
 				)
 			}
 		} else {
-			alert('campos vacios..');
+			this.toastr.warning('campos vacios..');
 		}
 
 	}
@@ -426,11 +429,11 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	isButtonClicked(animal: Animal): boolean {
 		for (let a = 0; a < this.clickedButtons.length; a++) {
-		  if (this.clickedButtons[a].idAnimal == animal.idAnimal) {
-			return true;
-		  }
+			if (this.clickedButtons[a].idAnimal == animal.idAnimal) {
+				return true;
+			}
 		}
 		return false;
-	  }
+	}
 
 }

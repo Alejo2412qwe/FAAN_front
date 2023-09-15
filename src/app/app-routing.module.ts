@@ -16,46 +16,58 @@ import { AdopcionAnimalComponent } from './Modules/Administrador/adopcion-animal
 import { RecoverPasswordComponent } from './Components/recover-password/recover-password.component';
 import { ControlPersonComponent } from './Modules/Administrador/control-person/control-person.component';
 import { HomeComponent } from './Components/home/home.component';
+
 import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for-adopcion.component';
+import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
+import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
+import { InformationComponent } from './Components/information/information.component';
+
 
 
 const routes: Routes = [
-  //Public
-  { path: 'home', component: HomeComponent },
+
+  // { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+
 
   //Password recover..
-  { path: 'recover/password/:token', component: RecoverPasswordComponent },
+  { path: 'recover/password/:token', component: RecoverPasswordComponent, data: { titulo: 'Dashboard' } },
   // { path: 'recover-password', component: RecoverPasswordComponent },
 
-  { path: 'person/gestion', component: ControlPersonComponent },
+  { path: 'person/gestion', component: ControlPersonComponent, data: { titulo: 'Personas' } },
 
   // MASCOTAS
 
-  { path: 'registro-mascota', component: RegistroMascotasComponent},
-  { path: 'control-animal', component: ControlAnimalComponent},
-  { path: 'adopcion-animal', component: AdopcionAnimalComponent},
+  { path: 'registro-mascota', component: RegistroMascotasComponent, data: { titulo: 'Animal' } },
+  { path: 'control-animal', component: ControlAnimalComponent, data: { titulo: 'Control Animal' } },
+  { path: 'adopcion-animal', component: AdopcionAnimalComponent, data: { titulo: 'Adopcion' } },
 
 
   //REGISTRO DE TIPO DE ANIMAL-----------------------------------------------------
-  { path: 'animal-tipo', component: RegisterTipoAnimalComponent },
-  { path: 'animal-raza', component: RegisterRazaAnimalComponent },
+  { path: 'animal-tipo', component: RegisterTipoAnimalComponent, data: { titulo: 'Tipo Animal' } },
+  { path: 'animal-raza', component: RegisterRazaAnimalComponent, data: { titulo: 'Raza Animal' } },
 
   // SHARED
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'fundacion', component: FundacionComponent },
-  { path: 'perfil-usuario', component: PerfilUsuarioComponent },
+  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+  { path: 'fundacion', component: FundacionComponent, data: { titulo: 'Fundacion' } },
+  { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil usuario' } },
 
   // SUPERADMIN
-  { path: 'control-usuario', component: ControlUsuariosComponent },
+  { path: 'control-usuario', component: ControlUsuariosComponent, data: { titulo: 'Usuarios' } },
 
   // PUBLIC
   { path: 'login', component: LoginComponent },
+  { path: 'informacion', component: InformationComponent },
   { path: 'formulario-adopcion', component: ForAdopcionComponent },
-  { path: '**', redirectTo: 'login' },
+  { path: 'donaciones', component: DonacionesComponent },
+  { path: 'contacto', component: ContactoComponent },
+  { path: 'home', component: HomeComponent },
+
+  { path: '**', redirectTo: 'home' },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

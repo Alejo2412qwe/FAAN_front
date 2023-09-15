@@ -7,6 +7,7 @@ import { PersonaService } from 'src/app/Service/persona.service';
 import { RolService } from 'src/app/Service/rol.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { UsuarioService } from 'src/app/Service/usuario.service';
+import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
 
 @Component({
   selector: 'app-control-usuarios',
@@ -56,7 +57,7 @@ export class ControlUsuariosComponent implements OnInit {
 
   public async uploadImage() {
     try {
-      const result = await this.imagenService.savePictureInBuket(this.selectedFile).toPromise();
+      const result = await this.imagenService.savePictureInBuket(this.selectedFile, FOLDER_IMAGES).toPromise();
       return result.key;
     } catch (error) {
       throw new Error()
@@ -64,22 +65,22 @@ export class ControlUsuariosComponent implements OnInit {
   }
 
 
-  
-  
+
+
   checked: boolean = true;
 
   getSeverity(estadoUsuario: boolean): string {
     return estadoUsuario ? 'success' : 'danger';
   }
-  
+
   toggleUserState(usuario: any) {
-   usuario.estadoUsuario = this.checked;
-   this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
-     .subscribe(updatedUser => {
-       console.log('User updated:', updatedUser);
- 
-     });
- }
+    usuario.estadoUsuario = this.checked;
+    this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
+      .subscribe(updatedUser => {
+        console.log('User updated:', updatedUser);
+
+      });
+  }
 
   // ADD UPDATE
   public editUsuario(usuario: Usuario) {
@@ -89,8 +90,8 @@ export class ControlUsuariosComponent implements OnInit {
   }
 
   //CHANGE STATE
-  public inhaUser(usuario: Usuario){
-    this.usuario = {...usuario};
+  public inhaUser(usuario: Usuario) {
+    this.usuario = { ...usuario };
     this.persona = this.usuario.persona;
     this.desactivarUser = true;
   }
@@ -142,15 +143,15 @@ export class ControlUsuariosComponent implements OnInit {
   public updateUsuario() {
     this.usuario.roles = this.selectedRoles
     this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
-      if(data!=null){
-        this.usuario = {...this.usuario}
+      if (data != null) {
+        this.usuario = { ...this.usuario }
 
         this.personaService.updatePersona(this.persona.idPersona!, this.persona)
-        .subscribe((data1)=> {
-          if(data1!=null){
-            alert('datos actualizados')
-          }
-        })
+          .subscribe((data1) => {
+            if (data1 != null) {
+              alert('datos actualizados')
+            }
+          })
       }
     }, (error) => {
       console.log('2', error)
@@ -226,7 +227,6 @@ export class ControlUsuariosComponent implements OnInit {
     }
   }
 
-
   public hideDialog() {
     this.desactivarUser = false;
     this.userDialog = false;
@@ -235,6 +235,11 @@ export class ControlUsuariosComponent implements OnInit {
     this.usuario = {} as Usuario;
     this.userDialog = false;
     this.fullname = '';
+  }
+
+  //OBTENER LA IMAGEN NEW MOTHOD------------------------------
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGES);
   }
 
 }
