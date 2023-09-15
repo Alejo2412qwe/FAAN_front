@@ -2,17 +2,20 @@
 
 	<p-toolbar styleClass="mb-3 gap-2">
 		<ng-template pTemplate="left">
-			<button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2"
-				(click)="openNewAnimal()"></button>
+			<button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+				(click)="openNewAnimal()" pTooltip="Registrar nueva mascota" tooltipPosition="bottom"></button>
 		</ng-template>
 
 		<ng-template pTemplate="right">
-			<button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+			<button type="button" pButton pRipple icon="pi pi-file-excel" (click)="handleStatusModal(1)"
+				class="p-button-success mr-2" pTooltip="Excel de Animal: XLS" tooltipPosition="bottom"></button>
+			<button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="handleStatusModal(2)"
+				class="p-button-danger mr-2" pTooltip="Pdf de Animal: PDF" tooltipPosition="bottom"></button>
 		</ng-template>
 	</p-toolbar>
 
 	<p-table #dt [value]="listAnimal" [lazy]="true" (onLazyLoad)="loadRazaAnimalLazy($event)" dataKey="idAnimal"
-		[tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
+		[tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="5" [totalRecords]="totalRecords"
 		[rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords}  Animales"
 		[showCurrentPageReport]="true" [loading]="loading"
 		[globalFilterFields]="['idAnimal', 'nombreAnimal', 'tipoAnimal.nombreTipo']">
@@ -28,40 +31,43 @@
 
 				<div class="col-12 md:col-4">
 					<div class="p-inputgroup">
-						<input type="text" [(ngModel)]="valueAtribute" pInputText placeholder="Search by name raza.." />
+						<input type="text" [(ngModel)]="valueAtribute" pInputText placeholder="Buscar..."
+							pTooltip="Buscar por nombre de mascota" tooltipPosition="bottom" />
 						<button type="button" pButton pRipple [class]="submitFindAtribute ? 'p-button-danger' : ''"
 							[icon]="'pi' + (submitFindAtribute ? ' pi-times' : ' pi-search')" styleClass="p-button-warn"
 							[disabled]="valueAtribute ? false: true"
-							(click)="submitFindAtribute ? clearInputAndStatus() : findByAtributeName(1) "></button>
+							(click)="submitFindAtribute ? clearInputAndStatus() : findByAtributeName(1)"
+							[pTooltip]="'' + (submitFindAtribute ? 'Limpiar' : ' Buscar por Nombre')"
+							tooltipPosition="bottom"></button>
 					</div>
-
 				</div>
-
 			</div>
-
 		</ng-template>
-
 
 		<ng-template pTemplate="header">
 			<tr>
-				<th pSortableColumn="idAnimal" style="min-width:15rem"><strong>ID</strong> <p-sortIcon
+				<th pSortableColumn="idAnimal" style="min-width:5rem"><strong>ID</strong> <p-sortIcon
 						field="idAnimal"></p-sortIcon></th>
 
-				<th pSortableColumn="fotoAnimal" style="min-width:15rem"><strong>FOTO</strong> <p-sortIcon
+				<th pSortableColumn="fotoAnimal" style="min-width:12rem"><strong>FOTO</strong> <p-sortIcon
 						field="fotoAnimal"></p-sortIcon>
 				</th>
 
-				<th pSortableColumn="nombreAnimal" style="min-width:15rem"><strong>NOMBRE</strong> <p-sortIcon
+				<th pSortableColumn="nombreAnimal" style="min-width:12rem"><strong>NOMBRE</strong> <p-sortIcon
 						field="nombreAnimal"></p-sortIcon></th>
 
-				<th pSortableColumn="placaAnimal" style="min-width:15rem"><strong>PLACA</strong> <p-sortIcon
+				<th pSortableColumn="placaAnimal" style="min-width:12rem"><strong>PLACA</strong> <p-sortIcon
 						field="placaAnimal"></p-sortIcon></th>
 
-				<th pSortableColumn="estadoAnimal" style="min-width:15rem"><strong>ESTADO</strong> <p-sortIcon
-						field="estadoAnimal"></p-sortIcon>
-				</th>
-				<th></th>
 
+				<th pSortableColumn="estadoAnimal" style="min-width:13rem" class="text-center"><strong>ESTADO</strong>
+					<p-sortIcon field="estadoAnimal"></p-sortIcon>
+
+				</th>
+				<th pSortableColumn="esterilizado" style="min-width:13rem" class="text-center">
+					<strong>ESTERILIZADO</strong> <p-sortIcon field="esterilizado"></p-sortIcon>
+				</th>
+				<th><strong>GESTIÓN</strong></th>
 
 			</tr>
 		</ng-template>
@@ -73,12 +79,29 @@
 
 				<td>{{ animal.nombreAnimal }}</td>
 				<td>{{ animal.placaAnimal }}</td>
-				<td>{{ animal.estadoAnimal }}</td>
+				<td class="text-center">
+
+					<p-tag [icon]="'pi '+(animal.estadoAnimal? 'pi-check':'pi-times')"
+						[severity]="animal.estadoAnimal === 'A' ? '':'success'"
+						[value]="animal.estadoAnimal === 'A'? 'ADOPTADO':'EN FUNDACIÓN'"
+						[pTooltip]="animal.nombreAnimal+' se encuentra ' + (animal.estadoAnimal === 'A'? 'Adoptado':'en la fundación')"
+						tooltipPosition="bottom"></p-tag>
+				</td>
+				<td class="text-center">
+
+
+					<p-tag [icon]="'pi '+(animal.esterilizado? 'pi-check':'pi-times')"
+						[severity]="animal.esterilizado? 'success':'warning'" [value]="animal.esterilizado? 'SI':'NO'"
+						[pTooltip]="animal.nombreAnimal.toUpperCase() + (animal.esterilizado? ' ESTA':' NO ESTA')+' ESTERILIZADO'"
+						tooltipPosition="bottom"></p-tag>
+
+
+				</td>
 
 				<td>
 					<button pButton pRipple icon="pi pi-pencil"
-						class="p-button-rounded p-button-success p-button-outlined mr-2"
-						(click)="editAnimal(animal)"></button>
+						class="p-button-rounded p-button-success p-button-outlined mr-2" (click)="editAnimal(animal)"
+						[pTooltip]="'Editar a: '+animal.nombreAnimal" tooltipPosition="bottom"></button>
 
 					<!-- <button pButton pRipple [icon]="razaAnimal.estadoRaza === 'A' ? 'pi pi-check' : 'pi pi-trash'"
 						[ngClass]="'p-button-rounded ' + (razaAnimal.estadoRaza === 'A' ? 'p-button-secondary' : 'p-button-danger') + ' p-button-outlined mt-1'"
@@ -340,6 +363,20 @@
 						</div>
 					</div>
 
+					<div class="grid p-fluid align-items-center ">
+						<div class="col-12 md:col-6">
+							<div class="field">
+								<label for="nombreRaza"><strong>¿El animalito esta esterilizado?</strong></label>
+								<div class="flex align-items-center gap-1">
+									<p-inputSwitch [(ngModel)]="animal.esterilizado"
+										[pTooltip]="(animal.esterilizado ? '':'No')+' Esterilizado'"
+										tooltipPosition="bottom"></p-inputSwitch>
+									<label for="esterilizado" class="mx-2">{{animal.esterilizado ? 'SI':'NO'}}</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 
 				<div class="col-12 md:col-4">
@@ -423,24 +460,6 @@
 				<div class="row justify-content-center">
 					<div class="col-12 col-md-6">
 
-
-						<!-- <div class="field">
-							
-														<label for="nombreRaza"><strong>Descripción</strong></label>
-														<textarea id="descripcionFichaRegistro" name="descripcionFichaRegistro"
-															[class]="submitted && (!fichaRegister.descripcionFichaRegistro) ? 'ng-invalid ng-dirty':''"
-															pInputTextarea rows="3" cols="20" [(ngModel)]="fichaRegister.descripcionFichaRegistro"
-															required placeholder="Ingrese descripcion." pTooltip="Descripción"
-															tooltipPosition="bottom"></textarea>
-							
-														<small class="p-error"
-															*ngIf="submitted && !fichaRegister.descripcionFichaRegistro">Descripción
-															ingreso
-															es
-															requerido.</small>
-							
-													</div> -->
-
 						<label for="nombreRaza"><strong>Origen: </strong></label>
 						<span class="p-input-icon-right ">
 							<i class="pi pi-info-circle"
@@ -514,4 +533,23 @@
 		<button pButton pRipple [label]="'Guardar'" icon="pi pi-save" class="p-button-text"
 			(click)="saveIncomeSituation()"></button>
 	</ng-template>
+</p-dialog>
+
+
+<p-dialog [(visible)]="showDropdownModal" [style]="{ width: '450px' }" header="TIPO DE CONSULTA" [modal]="true"
+	styleClass="p-fluid">
+	<ng-template pTemplate="content">
+		<p-dropdown [options]="filterDataExport" (onChange)="handleDropdownChange($event)" optionLabel="name"
+			[filter]="true" filterBy="name" [showClear]="true" placeholder="Seleccione Forma" appendTo="body"
+			[style]="{'overflow-y': 'auto'}">
+
+			<ng-template let-data pTemplate="item" [style.max-height.rem]="2 * 2">
+				<div class="flex align-items-center gap-2">
+					<div>{{ data.name }}</div>
+				</div>
+			</ng-template>
+		</p-dropdown>
+
+	</ng-template>
+
 </p-dialog>

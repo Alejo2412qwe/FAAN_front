@@ -30,11 +30,15 @@ export class RazaAnimalService {
       .set('sort', sort.join(','))
       .set('columnName', nameAtribute)
       .set('value', valueAtricute);
-      
+
     return this.http.get<RazaAnimal[]>(environment.apiuri + '/razaAnimal/pageable/find', { params });
   }
 
-  public getListaRazaAnimal(): Observable<RazaAnimal[]> {
+  public findByAllRazaAnimalStatus(): Observable<RazaAnimal[]> {
+    return this.http.get<RazaAnimal[]>(environment.apiuri + '/razaAnimal/status');
+  }
+
+  public getAllRazaA(): Observable<RazaAnimal[]> {
     return this.http.get<RazaAnimal[]>(environment.apiuri + '/razaAnimal/list');
   }
 

@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs';
 import { Animal } from 'src/app/Models/animal';
 
 import { FichaRegistro } from 'src/app/Models/fichaRegistro';
@@ -9,8 +8,10 @@ import { Persona } from 'src/app/Models/persona';
 import { RazaAnimal } from 'src/app/Models/razaAnimal';
 import { SituacionIngreso } from 'src/app/Models/situacionIngreso';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
+import { AnimalFilter } from 'src/app/Payloads/animal-filter';
 import { AnimalService } from 'src/app/Service/animal.service';
 import { FichaRegistroService } from 'src/app/Service/fichaRegistro.service';
+import { ImageService } from 'src/app/Service/image.service';
 import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
@@ -18,6 +19,15 @@ import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SituacionIngresoService } from 'src/app/Service/situacionIngreso.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
+import { DATA_STYLES_PDF } from 'src/app/util/const-validate';
+import { generateCustomContent } from 'src/app/util/data-reutilizable';
+import { DATA_EXPORT_FILTER } from 'src/app/util/request-data-export';
+import { ExcelExportService } from 'src/app/util/service/excel-export.service';
+
+
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-registro-mascotas',
@@ -74,6 +84,7 @@ export class RegistroMascotasComponent implements OnInit {
 	public listHeightAnimal: string[] | undefined;
 	public selectedHeightAnimal: string | undefined;
 
+	public filterDataExport: any[] = [];
 
 	constructor(
 		private razaAnimalService: RazaAnimalService,
@@ -85,6 +96,7 @@ export class RegistroMascotasComponent implements OnInit {
 		private imagenService: ImagenService,
 		private fichaRegisterService: FichaRegistroService,
 		private toastService: ToastrService,
+		private imageService: ImageService, private excelService: ExcelExportService
 	) { }
 
 	ngOnInit(): void {
@@ -98,6 +110,8 @@ export class RegistroMascotasComponent implements OnInit {
 		this.getSizeWindowResize();
 
 		this.loading = true;
+
+		this.filterDataExport = DATA_EXPORT_FILTER;
 	}
 
 	public getSizeWindowResize() {
@@ -115,18 +129,31 @@ export class RegistroMascotasComponent implements OnInit {
 		if (code === 1) {
 			this.loading = true;
 			this.submitFindAtribute = true;
-			this.razaAnimalService
-				.getAllRazaAnimalAtribute(
+			this.animalService
+				.getAllAnimalAtribute(
 					0,
 					4,
-					['idRazaAnimal', 'asc'],
-					'nombreRaza',
+					['idAnimal', 'asc'],
+					'nombreAnimal',
 					this.valueAtribute
 				)
-				.subscribe((data: any) => {
-					if (data !== null) {
-						this.listRazaAnimal = data.content;
+				.subscribe({
+					next: (resp: any) => {
+						if (resp.content.length === 0) {
+							this.toastService.warning(
+								'',
+								'NO SE ENCONTRO RESULTADOS.'
+							);
+						}
+						this.listAnimal = resp.content;
+
 						this.loading = false;
+					},
+					error: (err) => {
+						this.toastService.warning(
+							'',
+							'LA BÚSQUEDA GENERO UNA FALENCIA.'
+						);
 					}
 				});
 		} else {
@@ -170,17 +197,14 @@ export class RegistroMascotasComponent implements OnInit {
 	}
 
 	public pageablePersona(page: number, size: number, sort: string[]) {
-		try {
-			this.personaService
-				.getListaPersonas(page, size, sort)
-				.subscribe((data: any) => {
-					this.lisPersona = data.content;
-					this.totalPersons = data.totalElements;
-					this.loadingPerson = false;
-				});
-		} catch (error) {
-			throw new Error();
-		}
+
+		this.personaService
+			.getListaPersonas(page, size, sort)
+			.subscribe((data: any) => {
+				this.lisPersona = data.content;
+				this.totalPersons = data.totalElements;
+				this.loadingPerson = false;
+			});
 	}
 
 	// event: LazyLoadEvent 
@@ -222,12 +246,12 @@ export class RegistroMascotasComponent implements OnInit {
 					this.saveAnimal();
 				} else {
 					this.toastService.error('', 'CAMPOS INCOMPLETOS.', { timeOut: 2000 });
-					// alert('campos incompletos2');
+
 				}
 			}
 		} else {
 			this.toastService.error('', 'CAMPOS INCOMPLETOS.', { timeOut: 2000 });
-			// alert('campos incompletos1');
+
 		}
 	}
 
@@ -261,7 +285,7 @@ export class RegistroMascotasComponent implements OnInit {
 		try {
 			key = await this.uploadImage();
 		} catch (error) {
-			console.error("Upload image a problem");
+			this.toastService.error('Upload image a problem');
 		}
 
 		this.fichaRegister.situacionIngreso = this.catchIncomeSituation;
@@ -273,13 +297,13 @@ export class RegistroMascotasComponent implements OnInit {
 				this.animal.fichaRegistro = data;
 
 				this.animal.fotoAnimal = key;
-				this.animal.estadoAnimal = 'A';
+				this.animal.estadoAnimal = 'F';
 				this.animal.razaAnimal = this.razaAnimal;
 				this.animal.fundacion = this.fundacion;
 
 				this.animalService.saveAnimal(this.animal).subscribe((data) => {
 					if (data != null) {
-						alert('succesfull created..');
+						this.toastService.success('succesfull created.');
 						this.listAnimal.push(data);
 						this.closeDialog();
 					}
@@ -292,7 +316,7 @@ export class RegistroMascotasComponent implements OnInit {
 			try {
 				this.animal.fotoAnimal = await this.uploadImage();
 			} catch (error) {
-				console.error('A problme upload.')
+				this.toastService.error('A problem upload');
 			}
 
 		}
@@ -310,7 +334,7 @@ export class RegistroMascotasComponent implements OnInit {
 					.updateAnimal(this.animal.idAnimal!, this.animal)
 					.subscribe((data) => {
 						if (data != null) {
-							alert('succesfull updated..');
+							this.toastService.success('succesfull updated');
 							const indexfind = this.listAnimal.findIndex(
 								(animal) => animal.idAnimal === data.idAnimal
 							);
@@ -347,7 +371,7 @@ export class RegistroMascotasComponent implements OnInit {
 			.subscribe((data) => {
 				if (data != null) {
 					if (razaAnimal.estadoRaza) {
-						alert('Update');
+						this.toastService.success('Update');
 					}
 				}
 			});
@@ -389,12 +413,10 @@ export class RegistroMascotasComponent implements OnInit {
 			this.listTipoAnimal = JSON.parse(dataLocal);
 		} else {
 			this.tipoAnimalService
-				.findByAllTipoAnimal(0, 5, [])
-				.subscribe((data: any) => {
-					if (data != null) {
-						this.listTipoAnimal = data.content;
-						localStorage.setItem('listTipos', JSON.stringify(data.content));
-					}
+				.findByAllTipoAnimalStatus()
+				.subscribe((data) => {
+					this.listTipoAnimal = data;
+					localStorage.setItem('listTipos', JSON.stringify(data));
 				});
 		}
 	}
@@ -407,14 +429,11 @@ export class RegistroMascotasComponent implements OnInit {
 			this.loadingEventFilterRaza();
 		} else {
 			this.razaAnimalService
-				.getAllRazaAnimal(0, 5, [])
-				.subscribe((data: any) => {
-					if (data != null) {
-						this.listRazaAnimal = data.content;
-						localStorage.setItem('listRazas', JSON.stringify(data.content));
-
-						this.loadingEventFilterRaza();
-					}
+				.findByAllRazaAnimalStatus()
+				.subscribe((data) => {
+					this.listRazaAnimal = data;
+					localStorage.setItem('listRazas', JSON.stringify(data));
+					this.loadingEventFilterRaza();
 				});
 		}
 	}
@@ -496,7 +515,7 @@ export class RegistroMascotasComponent implements OnInit {
 	public clearInputAndStatus() {
 		this.submitFindAtribute = false;
 		this.valueAtribute = '';
-		this.findPageableAnimal(0, 4, ['idRazaAnimal', 'asc']);
+		this.findPageableAnimal(0, 4, ['idAnimal', 'asc']);
 	}
 
 	public closeDialog(): void {
@@ -508,8 +527,8 @@ export class RegistroMascotasComponent implements OnInit {
 	public openNewAnimal() {
 		//get list income situation..
 		this.newMethodGeneral();
-
 		this.cleanAllMethods();
+		this.avatarURL = '';
 		this.catchIncomeSituation = {} as SituacionIngreso;
 		this.animalDialog = true;
 	}
@@ -517,6 +536,7 @@ export class RegistroMascotasComponent implements OnInit {
 	public editAnimal(animal: Animal) {
 		this.newMethodGeneral();
 		this.errorUnique = '';
+		this.avatarURL = '';
 		this.animal = { ...animal };
 		this.fichaRegister = this.animal.fichaRegistro!;
 		this.catchIncomeSituation = this.fichaRegister.situacionIngreso!;
@@ -566,5 +586,122 @@ export class RegistroMascotasComponent implements OnInit {
 	//OBTENER LA IMAGEN NEW MOTHOD------------------------------
 	public getUriFile(fileName: string): string {
 		return getFile(fileName, FOLDER_IMAGES);
+	}
+
+	public showDropdownModal = false;
+	public exportName!: number;
+	public handleStatusModal(type: number) {
+		this.exportName = type;
+		this.showDropdownModal = true;
+	}
+
+	public handleDropdownChange(event: any) {
+		const dataFilter = event.value.status;
+		const dataName = event.value.name;
+		const dataKey = event.value.key;
+
+		if (dataFilter === "ES") {
+			this.findAnimalesByFilter(dataKey, null, dataName);
+		} else {
+			this.findAnimalesByFilter(null, dataKey ? 'F' : 'A', dataName);
+		}
+
+	}
+
+	public listAnimalFilter: AnimalFilter[] = [];
+	public findAnimalesByFilter(key: any, status: any, name: string) {
+		this.animalService.findByMultipleAtributesFilter(key, status).subscribe({
+			next: (resp) => {
+				this.listAnimalFilter = resp;
+
+				this.exportName === 1 ? this.exportExcel() : this.generatePdfAllTips(name);
+
+			},
+			error: (err) => {
+				this.toastService.error(
+					'',
+					'INCONVENIENTE',
+					{ timeOut: 1500 }
+				);
+			}
+		});
+	}
+
+	//EXPORT PDF-------------------------------------------------------------
+	public async generatePdfAllTips(name: string) {
+		this.showDropdownModal = false;
+		if (this.listAnimalFilter.length === 0) {
+			this.toastService.info(
+				'',
+				'NO HAY INFORMACIÓN',
+				{ timeOut: 1500 }
+			);
+			return;
+		}
+
+		const tableData = this.listAnimalFilter.map(item => [
+			{ text: item.idAnimal },
+			{ text: item.nombreAnimal, },
+			{ text: item.placaAnimal, },
+			{ text: item.esterilizado ? 'SI' : 'NO', },
+			{ text: item.estadoAnimal === 'A' ? 'ADOPTADO' : 'EN FUNDACIÓN', }
+		]);
+
+		const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/faan.jpg');
+
+		const docDefinition = {
+
+			content:
+				[
+					generateCustomContent(imageDataUrl, name),
+					{
+						table: {
+							headerRows: 1,
+							widths: ['auto', '*', '*', 'auto', 'auto'],
+							body: [['ID', 'NOMBRE ANIMAL', 'PLACA', 'ESTERILIZADO', 'ESTADO'], ...tableData],
+						},
+						style: 'table',
+
+						layout: {
+							fillColor: (rowI: number, node: any, columI: number) => {
+								return rowI === 0 ? '#65b2cc' : rowI % 2 === 0 ? '#CCCCCC' : ''
+							},
+							hLineWidth: () => 0.2,
+							vLineWidth: () => 0.2,
+						}
+					},
+				]
+			,
+			footer: function (currentPage: number, pageCount: number) {
+				return {
+					text: `Pagina ${currentPage.toString()} de ${pageCount}`,
+					style: 'footer',
+					alignment: 'center',
+					margin: [0, 10],
+					fontSize: 14,
+					color: '#3498db',
+				};
+			},
+			styles: DATA_STYLES_PDF,
+			defaultStyle: {
+				border: '1px solid black'
+			}
+		};
+		pdfMake.createPdf(docDefinition as any).open();
+		// pdfMake.createPdf(docDefinition as any).download('tipo_animal.pdf');
+	}
+
+	//EXPORT EXEL-------------------------------------------
+	public exportExcel() {
+		const dataExport = this.listAnimalFilter.map((i) => (
+			{
+				ID: i.idAnimal,
+				NOMBRE_ANIMAL: i.nombreAnimal,
+				PLACA_ANIMAL: i.placaAnimal,
+				ESTERILIZADO: i.esterilizado ? 'SI' : 'NO',
+				ESTADO: i.estadoAnimal === 'A' ? 'ADOPTADO' : 'EN FUNDACIÓN'
+			}
+		));
+		this.excelService.exportToExcel(dataExport, 'ExelAnimales');
 	}
 }
