@@ -212,12 +212,32 @@ export class ControlAnimalComponent implements OnInit {
 
 
   saveTipoVacuna() {
-    this.tipoVacuna.estado = true;
-    this.tipoVacunaService.saveTipoVacuna(this.tipoVacuna).subscribe((data) => {
-      this.tipoVacuna = {} as TipoVacuna;
-      this.visibleTipoVacuna = false;
-      this.getAllTiposVacunas();
-    })
+    // Comprobar si this.tipoVacuna y this.tipoVacuna.nombreVacuna no son undefined
+    if (!this.tipoVacuna || !this.tipoVacuna.nombreVacuna) {
+      this.toastr.error("Nombre de vacuna no especificado.");
+      return; // Salir de la función si el nombre de la vacuna no está definido
+    }
+  
+    // Convertir el nombre de la vacuna ingresada a minúsculas
+    const nombreVacunaIngresada = this.tipoVacuna.nombreVacuna.toLowerCase();
+  
+    // Filtrar la lista para eliminar elementos con nombreVacuna undefined
+    const vacunasDefinidas = this.listTipoVacuna.filter(v => v.nombreVacuna);
+  
+    // Comprobar si la vacuna con el mismo nombre ya existe
+    const vacunaExistente = vacunasDefinidas.find(v => v.nombreVacuna!.toLowerCase() === nombreVacunaIngresada);
+  
+    if (vacunaExistente) {
+      // Mostrar un mensaje de error o tomar alguna otra acción según tus necesidades
+      this.toastr.error("La vacuna ya existe.");
+    } else {
+      this.tipoVacuna.estado = true;
+      this.tipoVacunaService.saveTipoVacuna(this.tipoVacuna).subscribe((data) => {
+        this.tipoVacuna = {} as TipoVacuna;
+        this.visibleTipoVacuna = false;
+        this.getAllTiposVacunas();
+      });
+    }
   }
 
 
@@ -241,13 +261,37 @@ export class ControlAnimalComponent implements OnInit {
 
   // STATE ANIMAL
   selectEstado = new EstadoAnimal();
-
   saveEstadoAnimal() {
-    this.estadoAnimal.estado = 'A';
-    this.estadoAnimalService.saveEstadoAnimal(this.estadoAnimal).subscribe(data => {
-      this.getListEstadoAnimal();
-    })
+    // Comprobar si los campos tipoEstadoAnimal y descripcion están vacíos
+    if (!this.estadoAnimal.tipoEstadoAnimal || !this.estadoAnimal.descripcion) {
+      this.toastr.error("Completa todos los campos.");
+      return; // Detener la ejecución de la función si los campos están vacíos
+    }
+  
+    // Normalizar el valor de tipoEstadoAnimal a minúsculas (o mayúsculas si prefieres)
+    const tipoEstadoAnimal = this.estadoAnimal.tipoEstadoAnimal.toLowerCase(); // o .toUpperCase() si quieres que sea case-insensitive en mayúsculas
+  
+    // Comprobar si el estado animal ya existe en la lista (considerando diferencias de capitalización)
+    const estadoExistente = this.estadosanimales.find(e => e?.tipoEstadoAnimal?.toLowerCase() === tipoEstadoAnimal);
+  
+    if (estadoExistente) {
+      // Mostrar un mensaje de error o tomar alguna otra acción según tus necesidades
+      this.toastr.error("El estado ya existe.");
+    } else {
+      this.estadoAnimal.estado = 'A';
+      this.estadoAnimalService.saveEstadoAnimal(this.estadoAnimal).subscribe(data => {
+        this.getListEstadoAnimal();
+        this.estadovisible = false;
+        this.estadoAnimal.tipoEstadoAnimal = ""; // Limpiar el campo tipoEstadoAnimal
+        this.estadoAnimal.descripcion = "";
+        this.toastr.success("Estado Agregado");
+      });
+    }
   }
+  
+  
+  
+  
 
   getListEstadoAnimal() {
     this.estadoAnimalService.getListaEstadoAnimal().subscribe(data => {
@@ -381,7 +425,8 @@ export class ControlAnimalComponent implements OnInit {
     const index = this.vacunasTemporales.indexOf(vacuna);
     if (index !== -1) {
       this.vacunasTemporales.splice(index, 1);
-      console.log("Vacuna Eliminada");
+  
+      this.toastr.warning("Vacuna removida");
       console.log(this.vacunasTemporales);
     }
   }
@@ -392,7 +437,8 @@ export class ControlAnimalComponent implements OnInit {
   }
 
   limpiarVacunasTemporales() {
-    alert("Vacunas canceladas");
+    this.toastr.warning("Vacunas canceladas");
+
     this.vacunasTemporales = [];
     console.log(this.vacunasTemporales);
   }

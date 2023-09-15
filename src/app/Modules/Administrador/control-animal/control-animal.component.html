@@ -68,13 +68,15 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="nombreVeterinario" name="nombreVeterinario"
-                                    [(ngModel)]="control.nombreVeterinario" pattern="[A-Za-z\s]+"
-                                    title="Por favor ingrese solo letras" required />
+                                    [(ngModel)]="control.nombreVeterinario" required pattern="[A-Za-z\s]+"
+                                    title="Por favor ingrese solo letras" />
                                 <label htmlFor="nombreVeterinario">Nombre Veterinario <span
                                         class="red-asterisk"></span></label>
-                                        <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es requerido.</small>
                             </span>
                             
+                        </div>
+                        <div>
+                            <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es requerido.</small>
                         </div>
                     </div>
 
@@ -94,11 +96,13 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="number" pInputText id="pesoActual" name="pesoActual"
-                                    [(ngModel)]="control.pesoActual" required pattern="[0-9]+"
-                                    title="Por favor ingrese solo números" />
+                                    [(ngModel)]="control.pesoActual" required pattern="^\d+(\.\d{1,2})?$"
+                                    title="Por favor ingrese solo números positivos o cero" />
                                 <label htmlFor="pesoActual">Peso Actual <span class="red-asterisk"></span></label>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !control.pesoActual">Peso es requerido.</small>
+                        </div>
+                        <div>
+                            <small class="p-error" *ngIf="submitted && control.pesoActual! < 0">El peso no puede ser negativo.</small>
                         </div>
                     </div>
 
@@ -160,7 +164,7 @@
 
                     <button type="button" (click)="agregarVacuna()" class="btn btn-primarys m-2">Agregar Vacuna</button>
                     <button type="button" (click)="limpiarVacunasTemporales()"
-                        class="btn btn-primarys m-2">Elimiar</button>
+                        class="btn btn-primarys m-2">Eliminar</button>
 
                     <div class="card centered-card" *ngIf="vacunasTemporales.length > 0">
                         <p-table [value]="vacunasTemporales" responsiveLayout="scroll">
