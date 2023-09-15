@@ -14,7 +14,7 @@ export class SidebarService {
       title: 'Animales',
       idNavigation: "aminals-nav",
       icon: 'bi bi-clipboard-plus-fill',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
         { path: 'registro-mascota', subTitle: 'Registro Animal' },
         { path: 'control-animal', subTitle: 'Control Animal' }
@@ -26,7 +26,7 @@ export class SidebarService {
       title: 'Adopciones',
       idNavigation: "adoption-nav",
       icon: 'bi bi-clipboard2-fill',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
         { path: 'adopcion-animal', subTitle: 'Adopciones Animales' },
 
@@ -37,7 +37,7 @@ export class SidebarService {
       title: 'Animal Tipos',
       idNavigation: "tipoAnimal-nav",
       icon: 'bi bi-journal-text',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
         { path: 'animal-tipo', subTitle: 'Gestión Tipo Animal' },
 
@@ -48,7 +48,7 @@ export class SidebarService {
       title: 'Animal Razas',
       idNavigation: "razaAnimal-nav",
       icon: 'bi bi-layout-text-window-reverse',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
         { path: 'animal-raza', subTitle: 'Gestión Raza Animal' },
 
@@ -59,7 +59,7 @@ export class SidebarService {
       title: 'Usuarios',
       idNavigation: "controlUser-nav",
       icon: 'bi bi-person-lines-fill',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
         { path: 'control-usuario', subTitle: 'Control Usuario' },
 
@@ -70,7 +70,7 @@ export class SidebarService {
       title: 'Persona',
       idNavigation: "controlPerson-nav",
       icon: 'bi bi-person-square',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
         { path: 'person/gestion', subTitle: 'Control Persona' },
 

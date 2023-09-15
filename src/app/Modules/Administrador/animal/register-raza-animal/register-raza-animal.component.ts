@@ -5,6 +5,14 @@ import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { ExcelExportService } from 'src/app/util/service/excel-export.service';
+
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DATA_STYLES_PDF } from 'src/app/util/const-validate';
+import { ImageService } from 'src/app/Service/image.service';
+import { generateCustomContent } from 'src/app/util/data-reutilizable';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-register-raza-animal',
@@ -39,7 +47,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
 	public valueAtribute: string = '';
 	public submitFindAtribute: boolean = false;
 
-	constructor(private razaAnimalService: RazaAnimalService, private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService) { }
+	constructor(private razaAnimalService: RazaAnimalService, private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService, private imageService: ImageService, private excelService: ExcelExportService) { }
 
 	ngOnInit(): void {
 		this.findPagableRazaAnimal(0, 4, ['idRazaAnimal', 'asc']);
@@ -231,4 +239,78 @@ export class RegisterRazaAnimalComponent implements OnInit {
 		this.submitted = false;
 	}
 
+	//EXPORT PDF-------------------------------------------------------------
+	public async generatePdfAllTips() {
+		if (this.listRazaAnimal.length === 0) {
+			this.toastr.info(
+				'',
+				'NO HAY INFORMACIÓN',
+				{ timeOut: 1500 }
+			);
+			return;
+		}
+
+		const tableData = this.listRazaAnimal.map(item => [
+			{ text: item.idRazaAnimal },
+			{ text: item.nombreRaza, },
+			{ text: item.tipoAnimal?.nombreTipo, },
+			{ text: item.estadoRaza === 'A' ? 'Activo' : 'Inactivo', }
+		]);
+
+		const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/faan.jpg');
+
+		const docDefinition = {
+
+			content:
+				[
+					generateCustomContent(imageDataUrl, 'Informe razas de animales'),
+					{
+						table: {
+							headerRows: 1,
+							widths: ['auto', '*', '*', 'auto'],
+							body: [['ID', 'NOMBRE RAZA', 'TIPO ANIMAL', 'ESTADO'], ...tableData],
+						},
+						style: 'table',
+
+						layout: {
+							fillColor: (rowI: number, node: any, columI: number) => {
+								return rowI === 0 ? '#65b2cc' : rowI % 2 === 0 ? '#CCCCCC' : ''
+							},
+							hLineWidth: () => 0.2,
+							vLineWidth: () => 0.2,
+						}
+					},
+				]
+			,
+			footer: function (currentPage: number, pageCount: number) {
+				return {
+					text: `Pagina ${currentPage.toString()} de ${pageCount}`,
+					style: 'footer',
+					alignment: 'center',
+					margin: [0, 10],
+					fontSize: 14,
+					color: '#3498db',
+				};
+			},
+			styles: DATA_STYLES_PDF,
+			defaultStyle: {
+				border: '1px solid black'
+			}
+		};
+		pdfMake.createPdf(docDefinition as any).open();
+		// pdfMake.createPdf(docDefinition as any)download('tipo_animal.pdf');
+	}
+
+	//EXPORT EXEL-------------------------------------------
+	public exportExcel() {
+		const dataExport = this.listRazaAnimal.map((i) => (
+			{
+				ID: i.idRazaAnimal,
+				NOMBRE_RAZA: i.nombreRaza,
+				NOMBRE_TIPO: i.tipoAnimal?.nombreTipo,
+				ESTADO: i.estadoRaza === 'A' ? 'ACTIVO' : 'INACTIVO'
+			}
+		));
+		this.excelService.exportToExcel(dataExport, 'ListadoTiposAnimales');
+	}
 }

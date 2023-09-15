@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from '../../environment/enviroment';
 import { Animal } from '../Models/animal';
 import { StorageService } from './storage.service';
+import { AnimalFilter } from '../Payloads/animal-filter';
 
 
 @Injectable({
@@ -20,6 +21,18 @@ export class AnimalService {
   public getAllAnimalesPages(page: number, size: number, sort: string[]): Observable<Animal[]> {
     return this.http.get<Animal[]>(environment.apiuri + '/animal/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
   }
+
+  // ---------------------------------------------------
+  public findByMultipleAtributesFilter(key: any, status: any): Observable<AnimalFilter[]> {
+    let params = new HttpParams();
+
+    if (key || key === false) params = params.set('key', key);
+
+    if (status) params = params.set('status', status);
+
+    return this.http.get<AnimalFilter[]>(environment.apiuri + '/animal/findByMultipleAtributesFilter', { params });
+  }
+  // ---------------------------------------------------
 
   public getAllAnimalesPagesOrPlacaOrName(filtro: string, page: number, size: number, sort: string[]): Observable<Animal[]> {
     let params = new HttpParams()

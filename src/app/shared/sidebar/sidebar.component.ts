@@ -5,7 +5,7 @@ import { CargarScrpitsService } from 'src/app/Service/cargar-scrpits.service';
 import { NotifacionesService } from 'src/app/Service/notifaciones.service';
 import { StorageService } from 'src/app/Service/storage.service';
 import { WebSocketService } from 'src/app/Service/web-socket.service';
-import { clearLocalStorage } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, clearLocalStorage, getRole } from 'src/app/util/local-storage-manager';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { SidebarService } from 'src/app/util/service/sidebar.service';
 
@@ -46,7 +46,11 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listSidebar = this.sidebarService.dataMenu;
+    this.listSidebar = this.sidebarService.dataMenu.filter((menuItem) => {
+      // Verifica si el elemento de menú tiene roles y si el rol del usuario coincide
+      return !menuItem.rols || menuItem.rols.includes(getRole(LocalStorageKeys.ROL));
+    });
+
     console.log(this.listSidebar);
 
     this.isLogginPresent = this.storageService.isLoggedIn();

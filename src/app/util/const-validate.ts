@@ -47,7 +47,7 @@ export const stylesForm = {
 };
 
 //TIPO ANIMAL--------------------------------------------------------------
-export const TIPO_ANIMAL = {
+export const DATA_STYLES_PDF = {
 
 
     roundedImage: {

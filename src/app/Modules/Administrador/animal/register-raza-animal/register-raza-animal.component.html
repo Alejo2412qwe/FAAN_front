@@ -7,7 +7,10 @@
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                class="p-button-success mr-2" pTooltip="Excel de Razas: XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="generatePdfAllTips()"
+                class="p-button-danger mr-2" pTooltip="Pdf de Razas: PDF" tooltipPosition="bottom"></button>
         </ng-template>
     </p-toolbar>
 

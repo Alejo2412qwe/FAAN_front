@@ -7,7 +7,10 @@
 		</ng-template>
 
 		<ng-template pTemplate="right">
-			<button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+			<button type="button" pButton pRipple icon="pi pi-file-excel" (click)="handleStatusModal(1)"
+				class="p-button-success mr-2" pTooltip="Excel de Animal: XLS" tooltipPosition="bottom"></button>
+			<button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="handleStatusModal(2)"
+				class="p-button-danger mr-2" pTooltip="Pdf de Animal: PDF" tooltipPosition="bottom"></button>
 		</ng-template>
 	</p-toolbar>
 
@@ -530,4 +533,23 @@
 		<button pButton pRipple [label]="'Guardar'" icon="pi pi-save" class="p-button-text"
 			(click)="saveIncomeSituation()"></button>
 	</ng-template>
+</p-dialog>
+
+
+<p-dialog [(visible)]="showDropdownModal" [style]="{ width: '450px' }" header="TIPO DE CONSULTA" [modal]="true"
+	styleClass="p-fluid">
+	<ng-template pTemplate="content">
+		<p-dropdown [options]="filterDataExport" (onChange)="handleDropdownChange($event)" optionLabel="name"
+			[filter]="true" filterBy="name" [showClear]="true" placeholder="Seleccione Forma" appendTo="body"
+			[style]="{'overflow-y': 'auto'}">
+
+			<ng-template let-data pTemplate="item" [style.max-height.rem]="2 * 2">
+				<div class="flex align-items-center gap-2">
+					<div>{{ data.name }}</div>
+				</div>
+			</ng-template>
+		</p-dropdown>
+
+	</ng-template>
+
 </p-dialog>

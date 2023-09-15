@@ -4,14 +4,13 @@ import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 import { ImageService } from 'src/app/Service/image.service';
+import { DATA_STYLES_PDF } from 'src/app/util/const-validate';
+import { generateCustomContent } from 'src/app/util/data-reutilizable';
+import { ExcelExportService } from 'src/app/util/service/excel-export.service';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { TIPO_ANIMAL } from 'src/app/util/const-validate';
-import { EXPORT_DATE_NOW, LocalStorageKeys, getUserName } from 'src/app/util/local-storage-manager';
-import { generateCustomContent } from 'src/app/util/data-reutilizable';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-
 
 @Component({
     selector: 'app-register-tipo-animal',
@@ -34,7 +33,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
     public screenWidth: number = 0;
     public screenHeight: number = 0;
 
-    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService, private imageService: ImageService) { }
+    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService, private imageService: ImageService, private excelService: ExcelExportService) { }
 
     ngOnInit(): void {
         this.findPageableTipoAnimal();
@@ -167,6 +166,7 @@ export class RegisterTipoAnimalComponent implements OnInit {
         this.submitted = false;
     }
 
+    //EXPORT PDF-------------------------------------------------------------
     public async generatePdfAllTips() {
         if (this.ListTipoAnimal.length === 0) {
             this.toastr.info(
@@ -206,7 +206,6 @@ export class RegisterTipoAnimalComponent implements OnInit {
                             hLineWidth: () => 0.2,
                             vLineWidth: () => 0.2,
                         }
-
                     },
                 ]
             ,
@@ -220,15 +219,25 @@ export class RegisterTipoAnimalComponent implements OnInit {
                     color: '#3498db',
                 };
             },
-            styles: TIPO_ANIMAL,
+            styles: DATA_STYLES_PDF,
             defaultStyle: {
                 border: '1px solid black'
             }
         };
-
-
         pdfMake.createPdf(docDefinition as any).open();
         // pdfMake.createPdf(docDefinition as any)download('tipo_animal.pdf');
     }
 
+    //EXPORT EXEL-------------------------------------------
+    public exportExcel() {
+        const dataExport = this.ListTipoAnimal.map((i) => (
+            {
+                ID: i.idTipoAnimal,
+                NOMBRE: i.nombreTipo,
+                DESCRIPCIÓN: i.descripcionAnimal,
+                ESTADO: i.estadoTipo === 'A' ? 'ACTIVO' : 'INACTIVO'
+            }
+        ));
+        this.excelService.exportToExcel(dataExport, 'ListadoTiposAnimales');
+    }
 }
