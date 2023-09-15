@@ -311,13 +311,13 @@
                 </p-password>
 
                 <div
-                    *ngIf="formUserNew.get('password')?.invalid && formUserNew.get('password')?.touched || formUserNew.get('password')?.dirty">
+                    *ngIf="formUserEdit.get('password')?.invalid && formUserEdit.get('password')?.touched || formUserEdit.get('password')?.dirty">
                     <small class="text-danger"
-                        *ngIf="formUserNew.get('password')?.errors?.['required']"><strong>Contraseña
+                        *ngIf="formUserEdit.get('password')?.errors?.['required']"><strong>Contraseña
                             es
                             requerido.</strong></small>
                     <small class="text-danger"
-                        *ngIf="formUserNew.get('password')?.errors?.['pattern']"><strong>Contraseña
+                        *ngIf="formUserEdit.get('password')?.errors?.['pattern']"><strong>Contraseña
                             invalida.</strong>
                     </small>
                 </div>
