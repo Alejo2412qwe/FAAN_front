@@ -13,7 +13,7 @@ import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
-import { FOLDER_DOCUMENTS } from 'src/app/util/const-data';
+import { FOLDER_DOCUMENTS, FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
 
 @Component({
 	selector: 'app-adopcion-animal',
@@ -29,6 +29,8 @@ export class AdopcionAnimalComponent implements OnInit {
 	public mostrarbusqueda: string = '';
 	public mostrarbusquedaPersona: string = '';
 	public opcionesMostrar: string[] = ['ADOPTADOS', 'NO ADOPTADOS'];
+
+	public keyDocumento: string = "";
 
 	// activar o desactivar dialog
 	adopcionAnimalDialog: boolean = false;
@@ -95,6 +97,8 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.findPageableAnimal(0, 10, ['nombreAnimal', 'asc']);
 	}
 
+
+	//llama desde html
 	public loadAnimalLazy(event: any = null) {
 		this.loadingAnimal = true;
 		const page = event ? event.first / event.rows : 0;
@@ -102,6 +106,8 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.findPageableAnimal(page, size, ['nombreAnimal', 'asc']);
 	}
 
+
+	//metodo de carga animales
 	public findPageableAnimal(page: number, size: number, sort: string[]) {
 		try {
 			this.animalService.findByAdoptadoOrNoAdoptado(page, size, this.mostrar, this.mostrarbusqueda, sort).subscribe(
@@ -126,6 +132,9 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	// DIALOGO ACTIVAR SOLO VER, ADOPTAR UNO O MAS
 	openAllDialog(animalse: Animal) {
+		console.log("sssssssssssssssss  1")
+		console.log(animalse)
+		console.log("sssssssssssssssss  2")
 		if (this.mostrar) {
 			this.OpenDialogView(animalse);
 		} else {
@@ -135,32 +144,6 @@ export class AdopcionAnimalComponent implements OnInit {
 				this.OpenDialog(animalse);
 			}
 		}
-	}
-
-
-	// AL PRECIONAR X DIALOGO
-	closeAllDialog() {
-		if (!this.mostrar) {
-			this.submitted = false;
-		}
-		this.CloseDialog();
-	}
-
-	// LIMPIA AL CERRAR EL DIALOGO
-	CloseDialog() {
-		this.emptySelectedPerson();
-		this.clickedButtons = [];
-		this.listAnimalSelectAdopcion = [];
-		this.detalleEncabesadoObject = {} as DetalleAdopcion;
-		this.encabezadoAdopcionObject = {} as EncabezadoAdopcion;
-		this.animalSelect = {} as Animal;
-		this.tipoAnimalSelect = '';
-		this.razaAnimalSelect = '';
-		this.adopcionAnimalDialog = false;
-
-		this.multipleAnimal = false;
-		this.multipleAnimalUno = false;
-		this.listavacia = false;
 	}
 
 	// DIALOGO ADOPCION MAS DE UNO
@@ -185,6 +168,31 @@ export class AdopcionAnimalComponent implements OnInit {
 
 		this.fechaAdoption = new Date();
 		this.adopcionAnimalDialog = true;
+	}
+
+	// AL PRECIONAR X DIALOGO
+	closeAllDialog() {
+		if (!this.mostrar) {
+			this.submitted = false;
+		}
+		this.CloseDialog();
+	}
+
+	// LIMPIA AL CERRAR EL DIALOGO
+	CloseDialog() {
+		this.emptySelectedPerson();
+		this.clickedButtons = [];
+		this.listAnimalSelectAdopcion = [];
+		this.detalleEncabesadoObject = {} as DetalleAdopcion;
+		this.encabezadoAdopcionObject = {} as EncabezadoAdopcion;
+		this.animalSelect = {} as Animal;
+		this.tipoAnimalSelect = '';
+		this.razaAnimalSelect = '';
+		this.adopcionAnimalDialog = false;
+
+		this.multipleAnimal = false;
+		this.multipleAnimalUno = false;
+		this.listavacia = false;
 	}
 
 	// LISTA DE ADOPCION MULTIPLE
@@ -226,6 +234,7 @@ export class AdopcionAnimalComponent implements OnInit {
 	public onRowSelect(event: any) {
 		this.persona = event;
 	}
+
 
 	public loadPersonalLazy(event: any = null) {
 		this.loadingPerson = true;
@@ -286,33 +295,6 @@ export class AdopcionAnimalComponent implements OnInit {
 		return obj ? Object.keys(obj).length === 0 : true;
 	}
 
-	// ALMACENAR ARCHIVO
-	public avatarURL: string = '';
-	public selectedFile!: File;
-	public onBasicUpload(event: any) {
-		let data = event.target.files[0];
-
-		if (data.size >= 1048576) {
-			this.toastService.error('', 'IMAGEN MUY GRANDE.', { timeOut: 2000 });
-			return;
-		}
-
-		this.selectedFile = data
-		const imageURL = URL.createObjectURL(this.selectedFile);
-		this.avatarURL = imageURL;
-	}
-
-	public async uploadImage() {
-		try {
-			const result = await this.imagenService
-				.savePictureInBuket(this.selectedFile, FOLDER_DOCUMENTS)
-				.toPromise();
-			return result.key;
-		} catch (error) {
-			throw new Error();
-		}
-	}
-
 	// LIMPIAR ADOPTANTE
 	public emptySelectedPerson() {
 		this.persona = {} as Persona;
@@ -321,7 +303,13 @@ export class AdopcionAnimalComponent implements OnInit {
 	// ALMACENAR ADOPCION UNITARIA
 	async saveAdopcion() {
 		this.submitted = true;
-		const key = await this.uploadImage();
+
+		let key: string
+		try {
+			key = await this.uploadImage();
+		} catch (error) {
+			this.toastService.error('Upload image a problem');
+		}
 
 		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
 			&& !this.isEmpty(this.animalSelect) && !this.isEmpty(this.persona)) {
@@ -330,18 +318,31 @@ export class AdopcionAnimalComponent implements OnInit {
 			this.encabezadoAdopcionObject.persona = this.persona;
 			this.encabezadoAdopcion.saveEncabezadoAdopcion(this.encabezadoAdopcionObject)
 				.subscribe((data1) => {
-					this.detalleEncabesadoObject.encabezadoAdopcion = data1;
-					this.detalleEncabesadoObject.animal = this.animalSelect;
-					this.detalleEncabesadoObject.documento = key;
-					this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
-						if (data2 != null) {
-							this.toastr.success(this.animalSelect.nombreAnimal + ' fue adoptado');
-							this.CloseDialog();
-							this.cargar();
-						} else {
-							this.toastr.error('Error ' + this.animalSelect.nombreAnimal + 'no fue adoptado');
-						}
-					});
+					if (data1 != null) {
+						this.detalleEncabesadoObject.encabezadoAdopcion = data1;
+						this.detalleEncabesadoObject.animal = this.animalSelect;
+						this.detalleEncabesadoObject.documento = key;
+						this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
+							if (data2 != null) {
+								this.animalSelect.estadoAnimal = "A";
+								this.animalService.updateAnimal(Number(this.animalSelect.idAnimal), this.animalSelect).subscribe(
+									(data3) => {
+										if (data2 != null) {
+											this.toastr.success(this.animalSelect.nombreAnimal + ' fue adoptado');
+											this.CloseDialog();
+											this.cargar();
+										} else {
+											this.toastr.error('Error ' + this.animalSelect.nombreAnimal + 'no fue adoptado');
+										}
+									}
+								)
+							} else {
+								this.toastr.error('Error ' + this.animalSelect.nombreAnimal + 'no fue adoptado');
+							}
+						});
+					} else {
+						this.toastr.error('Error ' + this.animalSelect.nombreAnimal + 'no fue adoptado');
+					}
 				});
 		} else {
 			alert('campos vacios..');
@@ -395,23 +396,36 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	// DIALOGO ADOPCION VIEW A UNO
 	OpenDialogView(animalse: Animal) {
+		console.log("sssssssssssssssss  1")
+		console.log(animalse)
+		console.log("sssssssssssssssss  2")
 		this.viewAdopcion(Number(animalse.idAnimal));
 		this.adopcionAnimalDialog = true;
 	}
 
 	// CARGAR DATOS DE ADPTADOS
 	viewAdopcion(idAnimal: number) {
+		console.log("sssssssssssssssss  1")
+		console.log(idAnimal)
+		console.log("sssssssssssssssss  2")
 		this.detalleEncabezadoService.getfindByIdAnimal(idAnimal).subscribe(
 			(data) => {
+				console.log("ssssssssssssssddd  1")
+				console.log(data);
 				this.detalleEncabesadoObject = data;
-				if (this.detalleEncabesadoObject.encabezadoAdopcion?.persona != null && this.detalleEncabesadoObject.animal != null
-					&& this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza != null && this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo != null
-					&& this.detalleEncabesadoObject.encabezadoAdopcion != null) {
-					this.persona = this.detalleEncabesadoObject.encabezadoAdopcion?.persona;
-					this.animalSelect = this.detalleEncabesadoObject.animal;
-					this.razaAnimalSelect = this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza;
-					this.tipoAnimalSelect = this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo;
-					this.encabezadoAdopcionObject = this.detalleEncabesadoObject.encabezadoAdopcion;
+				if (data != null) {
+					if (this.detalleEncabesadoObject.encabezadoAdopcion?.persona != null && this.detalleEncabesadoObject.animal != null
+						&& this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza != null && this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo != null
+						&& this.detalleEncabesadoObject.encabezadoAdopcion != null && this.detalleEncabesadoObject.documento != null) {
+						console.log("ssssssssssssssdddddddd  2")
+						this.keyDocumento = this.detalleEncabesadoObject.documento;
+						this.persona = this.detalleEncabesadoObject.encabezadoAdopcion?.persona;
+						this.animalSelect = this.detalleEncabesadoObject.animal;
+						this.razaAnimalSelect = this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza;
+						this.tipoAnimalSelect = this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo;
+						this.encabezadoAdopcionObject = this.detalleEncabesadoObject.encabezadoAdopcion;
+						this.keyDocumento = this.detalleEncabesadoObject.documento;
+					}
 				}
 			}
 		)
@@ -436,4 +450,37 @@ export class AdopcionAnimalComponent implements OnInit {
 		return false;
 	}
 
+
+
+
+	//OBTENER LA IMAGEN NEW MOTHOD------------------------------
+	public getUriFile(fileName: string): string {
+		return getFile(fileName, FOLDER_DOCUMENTS);
+	}
+
+	public avatarURL: string = '';
+	public selectedFile!: File;
+	public onBasicUpload(event: any) {
+		let data = event.target.files[0];
+
+		if (data.size >= 1048576) {
+			this.toastService.error('', 'IMAGEN MUY GRANDE.', { timeOut: 2000 });
+			return;
+		}
+
+		this.selectedFile = data
+		const imageURL = URL.createObjectURL(this.selectedFile);
+		this.avatarURL = imageURL;
+	}
+
+	public async uploadImage() {
+		try {
+			const result = await this.imagenService
+				.savePictureInBuket(this.selectedFile, FOLDER_DOCUMENTS)
+				.toPromise();
+			return result.key;
+		} catch (error) {
+			throw new Error();
+		}
+	}
 }
