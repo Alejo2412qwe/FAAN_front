@@ -1,247 +1,440 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { Subject, debounceTime, forkJoin } from 'rxjs';
+import { UserDto } from 'src/app/Models/modelDto/user-data';
 import { Persona } from 'src/app/Models/persona';
 import { Rol } from 'src/app/Models/rol';
 import { Usuario } from 'src/app/Models/usuario';
-import { ImagenService } from 'src/app/Service/imagen.service';
+import { PersonFind } from 'src/app/Payloads/person-find';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RolService } from 'src/app/Service/rol.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { UsuarioService } from 'src/app/Service/usuario.service';
-import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
-import { ToastrService } from 'ngx-toastr';
+import { FOLDER_IMAGES, USER_IMAGE_DEFAULT, getFile } from 'src/app/util/const-data';
+import { Response, ValidateEquals } from 'src/app/util/model/response-validate';
 
 @Component({
-  selector: 'app-control-usuarios',
-  templateUrl: './control-usuarios.component.html',
-  styleUrls: ['./control-usuarios.component.css']
+	selector: 'app-control-usuarios',
+	templateUrl: './control-usuarios.component.html',
+	styleUrls: ['./control-usuarios.component.css'],
+	providers: [ConfirmationService, MessageService]
 })
-
-
-
 
 export class ControlUsuariosComponent implements OnInit {
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private personaService: PersonaService,
-    private rolesService: RolService,
-    private screenSizeService: ScreenSizeService,
-    private imagenService: ImagenService,
-    private toastr: ToastrService
+	// ADD NEW USUARIO
+	public submitted: boolean = false;
 
-  ) { }
+	public userDto = new UserDto();
 
-  ngOnInit(): void {
-    this.getAllUsuario(0, this.size, ['idUsuario', 'asc']);
-    this.getSizeWindowResize();
-    this.loading = true;
-  }
+	public userDialog: boolean = false;
 
-  //VARIABLE FOR SEARCH BY ATRIBUTE NAME
-  public valueAtribute: string = '';
-  public submitFindAtribute: boolean = false;
+	public editUserDialog: boolean = false;
 
-  // GET ALL USUARIOS
-  public listUsuarios: Usuario[] = [];
-  public loading: boolean = false;
-  public totalRecords!: number;
-  public size: number = 3;
+	public persona = new Persona();
+	// GET ALL ROLES
+	public listRoles: Rol[] = [];
 
-  public getAllUsuario(page: number, size: number, sort: string[]) {
-    this.usuarioService.getAllUsuario(page, size, sort).subscribe((data: any) => {
-      this.listUsuarios = data.content;
-      this.totalRecords = data.totalElements;
-      this.loading = false;
-    }, (error) => {
-      this.loading = false;
-    });
-  }
+	public usuario = new Usuario();
 
-  public async uploadImage() {
-    try {
-      const result = await this.imagenService.savePictureInBuket(this.selectedFile, FOLDER_IMAGES).toPromise();
-      return result.key;
-    } catch (error) {
-      throw new Error()
-    }
-  }
+	public personFindData = new PersonFind();
 
+	//Form validate. 
+	public formUserNew!: FormGroup;
+	public formUserEdit!: FormGroup;
 
+	public validateEquals = new ValidateEquals();
 
+	public respose = new Response();
 
-  checked: boolean = true;
+	//VARIABLE FOR SEARCH BY ATRIBUTE NAME
+	public valueAtribute: string = '';
+	public submitFindAtribute: boolean = false;
 
-  getSeverity(estadoUsuario: boolean): string {
-    return estadoUsuario ? 'success' : 'danger';
-  }
+	// GET ALL USUARIOS
+	public listUsuarios: Usuario[] = [];
+	public loading: boolean = false;
+	public totalRecords!: number;
+	public size: number = 6;
 
-  toggleUserState(usuario: any) {
-    usuario.estadoUsuario = this.checked;
-    this.usuarioService.updateUsuario(usuario.idUsuario, usuario)
-      .subscribe(updatedUser => {
-        console.log('User updated:', updatedUser);
+	public screenWidth: number = 0;
+	public screenHeight: number = 0;
 
-      });
-  }
+	constructor(
+		private usuarioService: UsuarioService,
+		private personaService: PersonaService,
+		private rolesService: RolService,
+		private screenSizeService: ScreenSizeService,
+		private formBuilder: FormBuilder,
+		private toastService: ToastrService,
+		private confirmationService: ConfirmationService, private messageService: MessageService
 
-  // ADD UPDATE
-  public editUsuario(usuario: Usuario) {
-    this.usuario = { ...usuario };
-    this.persona = this.usuario.persona;
-    this.userDialog = true;
-  }
+	) {
+		this.formUserNew = this.formBuilder.group({
+			identificacion: ['', [Validators.required, Validators.minLength(10)]],
+			correo: [
+				'',
+				[
+					Validators.required,
+					Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+				],
+			],
+			username: ['', [Validators.required, Validators.minLength(4)]],
+			password: [
+				'',
+				[
+					Validators.required,
+					Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+				],
+			],
+		});
 
-  //CHANGE STATE
-  public inhaUser(usuario: Usuario) {
-    this.usuario = { ...usuario };
-    this.persona = this.usuario.persona;
-    this.desactivarUser = true;
-  }
+		this.formUserEdit = this.formBuilder.group({
+			username: ['', [Validators.required, Validators.minLength(4)]],
+			password: [
+				'',
+				[
+					Validators.required,
+					Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+				],
+			],
+		});
+	}
 
-  // GET ALL ROLES
-  public listRoles: Rol[] = [];
+	ngOnInit(): void {
+		this.getAllUsers(0, this.size, ['idUsuario', 'asc']);
+		this.getSizeWindowResize();
+		this.getAllRolesFull();
+		this.loading = true;
 
-  public getAllRolesFull() {
-    this.rolesService.getAllRolesFull().subscribe((data) => {
-      this.listRoles = data;
-    }, (error) => {
-      console.log(error)
-    });
-  }
+		//Tiempo de ejecucución
+		this.searchInput$
+			.pipe(debounceTime(2000))
+			.subscribe((inputValue) => {
+				this.searchDataUserPerIdentificacionOrUsername(inputValue);
+			});
+	}
 
+	public getAllRolesFull() {
+		this.rolesService.getAllRolesFull().subscribe({
+			next: (resp) => {
+				this.listRoles = resp;
+			}, error: (err) => {
 
-  //ASIGNAR ROLES A USUARIO
-  public selectedRoles: Rol[] = [];
-
-  // ADD NEW USUARIO
-  public submitted: boolean = false;
-  fullname: string = "";
-  persona = new Persona();
-  usuario = new Usuario();
-
-  public async saveNewUsuario() {
-    const key = await this.uploadImage();
-    this.personaService.savePersona(this.persona).subscribe((data) => {
-      this.persona = data
-      console.log(this.persona)
-      this.usuario.idUsuario = 0;
-      this.usuario.persona = this.persona;
-      this.usuario.roles = this.selectedRoles;
-      this.usuario.estadoUsuario = true;
-      this.usuario.fotoPerfil = key;
-      this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
-        this.usuario = data;
-        this.toastr.success('Guardado Correctamente','Éxito')
-      }, (error) => {
-        console.log('2', error)
-      })
-    }, (error) => {
-      console.log('1', error)
-    });
-  }
+			}
+		});
+	}
 
 
-  // UPDATE USUARIO
-  public updateUsuario() {
-    this.usuario.roles = this.selectedRoles
-    this.usuarioService.saveUsuario(this.usuario).subscribe((data) => {
-      if (data != null) {
-        this.usuario = { ...this.usuario }
+	public getAllUsers(page: number, size: number, sort: string[]) {
+		this.usuarioService.getAllUsuario(page, size, sort).subscribe({
+			next: (resp: any) => {
+				this.listUsuarios = resp.content;
+				this.totalRecords = resp.totalElements;
+				this.loading = false;
 
-        this.personaService.updatePersona(this.persona.idPersona!, this.persona)
-          .subscribe((data1) => {
-            if (data1 != null) {
-              this.toastr.success('Actualizado Correctamente','Éxito');
-            }
-          })
-      }
-    }, (error) => {
-      console.log('2', error)
-    })
-  }
+			}, error: (err) => {
+				this.loading = false;
+
+			}
+		});
+	}
+
+	public validateUserSave() {
+		this.submitted = true;
+		if (this.formUserNew.invalid) {
+			this.submitted = false;
+			this.toastService.warning('', 'VERIFIQUE LOS CAMPOS OBLIGATORIOS', { timeOut: 2000 });
+			this.formUserNew.markAllAsTouched();
+			return;
+		}
+
+		if (this.rolsAddUser.length === 0) {
+			this.toastService.warning('', 'DEBE SELECCIONAR UN ROL', { timeOut: 2000 });
+			return;
+		}
+
+		this.userDto = this.formUserNew.value;
+
+		if (!this.isEmpty(this.personFindData)) { //cuando encuentra..
+
+			this.savePersonUserFind();
+		} else {
+			this.validateEmailAndIdentificacion();
+		}
+
+	}
+
+	public savePersonUserFind() {
+		this.persona.idPersona = this.personFindData.idPersona;
+
+		this.usuario.idUsuario = 0;
+		this.usuario.persona = this.persona;
+		this.usuario.roles = this.rolsAddUser;
+		this.usuario.username = this.userDto.username!;
+		this.usuario.password = this.userDto.password!;
+		this.usuario.fotoPerfil = USER_IMAGE_DEFAULT
+		this.usuario.estadoUsuario = true;
+
+		this.usuarioService.saveUsuario(this.usuario).subscribe({
+			next: (resp) => {
+				this.toastService.success('', 'USUARIO CREADO', { timeOut: 2000 });
+				this.listUsuarios.push(resp);
+				this.userDialog = false;
+			},
+			error: (err) => {
+				this.toastService.error('', 'INCONVENIENTE AL CREAR USUARIO', { timeOut: 2000 });
+			}
+		})
+	}
+
+	public validateEmailAndIdentificacion() {
+
+		const existIdentificacion = this.personaService.existByIdentificacion(this.userDto.identificacion!, false);
+		const existEmail = this.personaService.existsByEmail(this.userDto.correo!, false);
+		const existUsername = this.usuarioService.existByUsername(this.userDto.username!);
+
+		forkJoin([existIdentificacion, existEmail, existUsername]).subscribe(
+			([cedulaRepetidaResp, emailRepetidoResp, userNameRespetidoResp]) => {
+				this.respose.ci = cedulaRepetidaResp ? 'Identificación existente' : ''
+				this.respose.emailValidate = emailRepetidoResp ? 'Direccón de correo existente' : '';
+				this.respose.username = userNameRespetidoResp ? 'Nombre de usuario existente' : '';
+
+				if (!cedulaRepetidaResp && !emailRepetidoResp) {
+					this.savePersonUserNotFound();
+				}
+			}
+		);
+	}
+
+	public savePersonUserNotFound() {
+		this.persona.identificacion = this.userDto.identificacion;
+		this.persona.correo = this.userDto.correo;
+
+		this.usuarioService.existByUsername(this.userDto.username!).subscribe(data => {
+			this.respose.username = data ? 'Nombre de usuario existente' : ''
+
+			if (!data) {
+				this.personaService.savePersona(this.persona).subscribe({
+					next: (resp) => {
+
+						this.usuario.idUsuario = 0;
+						this.usuario.persona = resp;
+						this.usuario.roles = this.rolsAddUser;
+						this.usuario.username = this.userDto.username!;
+						this.usuario.password = this.userDto.password!;
+						this.usuario.fotoPerfil = USER_IMAGE_DEFAULT
+						this.usuario.estadoUsuario = true;
+						this.usuarioService.saveUsuario(this.usuario).subscribe({
+							next: (resp) => {
+								this.toastService.success('', 'USUARIO CREADO', { timeOut: 2000 });
+								this.listUsuarios.push(resp);
+								this.userDialog = false;
+							},
+							error: (err) => {
+								this.toastService.error('', 'INCONVENIENTE AL CREAR USUARIO', { timeOut: 2000 });
+							}
+						})
+
+					}, error: (err) => {
+						this.toastService.error('', 'INCONVENIENTE AL CREAR USUARIO', { timeOut: 2000 });
+					}
+				})
+			}
+		})
+
+	}
+
+	public isEmpty(personFind: PersonFind) {
+		return personFind ? Object.keys(personFind).length === 0 : true;
+	}
+
+	public findPersonByIdentificacion(event: any) {
+		let identificacion = event;
+		console.log(identificacion);
+
+		if (identificacion.length === 10) {
+			this.personaService.findPersonByIdentificacion(identificacion).subscribe({
+				next: (resp) => {
+					this.toastService.success('', 'PERSONA ENCONTRADA', { timeOut: 2000 });
+					this.personFindData = resp;
+					this.formUserNew.patchValue(resp);
+				},
+				error: (err) => {
+					this.toastService.error('', 'PERSONA NO ENCONTRADA', { timeOut: 2000 });
+					this.formUserNew.patchValue({});
+				}
+			})
+		}
+	}
+
+	public openNewUser() {
+		this.generalDataReset();
+		this.userDialog = true;
+	}
+
+	// ADD UPDATE
+	public editUsuario(usuario: Usuario) {
+		this.usuario = { ...usuario };
+		this.persona = this.usuario.persona;
+		this.formUserEdit.patchValue(this.usuario);
+		this.rolsAddUser = [...this.usuario.roles!];
+		this.editUserDialog = true;
+	}
+
+	public validateUpdateDataUser() {
+		if (this.formUserEdit.invalid) {
+			this.toastService.warning('', 'VERIFIQUE LOS CAMPOS OBLIGATORIOS', { timeOut: 2000 });
+			this.formUserEdit.markAllAsTouched();
+			return;
+		}
+
+		if (this.rolsAddUser.length === 0) {
+			this.toastService.warning('', 'DEBE SELECCIONAR UN ROL', { timeOut: 2000 });
+			return;
+		}
+
+		this.userDto = this.formUserEdit.value;
+
+		this.updateUser();
+	}
+
+	public updateUser() {
+		this.usuario.password = this.userDto.password!;
+		this.usuario.roles = this.rolsAddUser;
+		this.usuarioService.updateUsuario(this.usuario.idUsuario!, this.usuario).subscribe({
+			next: (resp) => {
+				this.toastService.success('', 'USUARIO ACTUALIZADO', { timeOut: 2000 });
+				const index = this.listUsuarios.findIndex(i => i.idUsuario === resp.idUsuario);
+				this.listUsuarios[index] = resp;
+				this.editUserDialog = false;
+			}, error: (err) => {
+				this.toastService.error('', 'INCONVENIENTE AL ACTUALIZAR', { timeOut: 2000 });
+			}
+		});
+	}
+
+	public hideDialogNewUser() {
+		this.generalDataReset();
+		this.userDialog = false;
+		this.editUserDialog = false;
+	}
+
+	public generalDataReset() {
+		this.formUserNew.reset();
+		this.submitted = false;
+		this.userDto = {} as UserDto;
+		this.personFindData = {} as PersonFind;
+		this.persona = {} as Persona;
+		this.usuario = {} as Usuario;
+		this.respose = {} as Response;
+	}
+
+	public getSizeWindowResize() {
+		const { width, height } = this.screenSizeService.getCurrentSize();
+		this.screenWidth = width;
+		this.screenHeight = height;
+		this.screenSizeService.onResize.subscribe(({ width, height }) => {
+			this.screenWidth = width;
+			this.screenHeight = height;
+		});
+	}
+
+	// EVETNS
+	public loadUsuarioLazy(event: any = null) {
+		this.loading = true;
+		const page = event ? event.first / event.rows : 0;
+		this.size = event ? event.rows : 2;
+		const sortField = event && event.sortField ? event.sortField : '';
+		const sortOrder = event && event.sortOrder === 1 ? 'asc' : 'desc';
+		this.getAllUsers(page, this.size, [sortField, sortOrder]);
+	}
+
+	//ADD NEW METHODS -- ROLS ADD--------------------------------------
+	public rolsAddUser: Rol[] = [];
+	public addRolsUser(rol: Rol) {
+
+		const index = this.rolsAddUser.findIndex(
+			(item) => item.idRol === rol.idRol
+		);
+
+		if (index !== -1) {
+			this.rolsAddUser.splice(index, 1);
+		} else {
+			this.rolsAddUser.push(rol);
+		}
+
+	}
+
+	public isRoleAssigned(role: Rol): boolean {
+
+		return this.rolsAddUser.some(
+			(assignedRole) => assignedRole.idRol === role.idRol
+		);
+	}
 
 
-  // UNIDO
+	public messageConfirmation(user: Usuario) {
+		this.usuario = { ...user }
+		this.usuario.estadoUsuario = !this.usuario.estadoUsuario;
+		this.confirmationService.confirm({
+			message: `Esta seguro en ${this.usuario.estadoUsuario ? 'activar' : 'desactivar'} a ${this.usuario.username}?'`,
+			header: 'Mensaje de confirmación',
+			icon: 'pi pi-exclamation-triangle',
+			acceptLabel: 'Aceptar',
+			rejectLabel: 'Cancelar',
+			accept: () => {
+				this.usuarioService.updateUsuario(this.usuario.idUsuario!, this.usuario).subscribe({
+					next: (resp) => {
+						this.toastService.success('', 'ESTADO ACTUALIZADO', { timeOut: 2000 });
+						const index = this.listUsuarios.findIndex(i => i.idUsuario === resp.idUsuario);
+						this.listUsuarios[index] = resp
 
-  public saveAndUpdateUsuario() {
-    this.submitted = true;
-    if (this.usuario.idUsuario) {
-      this.updateUsuario();
-    } else {
-      this.saveNewUsuario();
-    }
+					}, error: (err) => {
+						this.toastService.error('', 'INCONVENIENTE AL ACTUALIZAR ESTADO', { timeOut: 2000 });
+					}
+				});
 
-  }
+			},
+			reject: (type: any) => {
+				switch (type) {
+					case ConfirmEventType.REJECT:
+						this.toastService.info('', 'CANCELADO', { timeOut: 2000 });
 
-  // MODAL
-  userDialog = false;
-  desactivarUser = false;
+						break;
+					case ConfirmEventType.CANCEL:
+						this.toastService.info('', 'CANCELADO', { timeOut: 2000 });
+						break;
+				}
+			},
+		});
+	}
 
-  public openNewUsuario() {
-    this.getAllRolesFull();
-    this.persona = {} as Persona;
-    this.usuario = {} as Usuario;
-    this.userDialog = true;
-    this.fullname = '';
-  }
+	public searchInput$ = new Subject<string>();
+	public searchDataUserPerIdentificacionOrUsername(key: string) {
+		this.listUsuarios
+		if (!key) {
+			this.getAllUsers(0, this.size, ['idUsuario', 'asc']);
+			return;
+		}
 
-  // TABLE
-  public screenWidth: number = 0;
-  public screenHeight: number = 0;
+		this.loading = true;
+		this.usuarioService.findByIdentificacionOrUsername(key).subscribe({
+			next: (resp: any) => {
+				this.listUsuarios = resp.content;
+				this.totalRecords = resp.totalElements;
+				this.loading = false;
+			}, error: (err) => {
+				this.loading = false;
+			}
+		});
+	}
 
-  public getSizeWindowResize() {
-    const { width, height } = this.screenSizeService.getCurrentSize();
-    this.screenWidth = width;
-    this.screenHeight = height;
-    this.screenSizeService.onResize.subscribe(({ width, height }) => {
-      this.screenWidth = width;
-      this.screenHeight = height;
-    });
-  }
 
-  // EVETNS
-  public loadUsuarioLazy(event: any = null) {
-    this.loading = true;
-    const page = event ? event.first / event.rows : 0;
-    this.size = event ? event.rows : 2;
-    const sortField = event && event.sortField ? event.sortField : '';
-    const sortOrder = event && event.sortOrder === 1 ? 'asc' : 'desc';
-    this.getAllUsuario(page, this.size, [sortField, sortOrder]);
-  }
-
-  public clearInputAndStatus() {
-    this.submitFindAtribute = false;
-    this.valueAtribute = '';
-    this.getAllUsuario(0, 1, ['idUsuario', 'asc']);
-  }
-
-  // PREVIUALIZACION IMAGEN
-  public avatarURL: string = '';
-  public selectedFile!: File;
-  public onBasicUpload(event: any) {
-    this.selectedFile = event.target.files[0];
-    const imageURL = URL.createObjectURL(this.selectedFile);
-    this.avatarURL = imageURL;
-    if (this.selectedFile && this.selectedFile.size > 1000000) {
-      event.target.value = null;
-    } else {
-
-    }
-  }
-
-  public hideDialog() {
-    this.desactivarUser = false;
-    this.userDialog = false;
-    this.submitted = false;
-    this.persona = {} as Persona;
-    this.usuario = {} as Usuario;
-    this.userDialog = false;
-    this.fullname = '';
-  }
-
-  //OBTENER LA IMAGEN NEW MOTHOD------------------------------
-  public getUriFile(fileName: string): string {
-    return getFile(fileName, FOLDER_IMAGES);
-  }
-
+	//OBTENER LA IMAGEN NEW MOTHOD------------------------------
+	public getUriFile(fileName: string): string {
+		return getFile(fileName ? fileName : USER_IMAGE_DEFAULT, FOLDER_IMAGES);
+	}
 }

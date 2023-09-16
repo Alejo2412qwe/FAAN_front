@@ -80,7 +80,7 @@ export class PerfilUsuarioComponent implements OnInit {
       );
       return;
     }
-  
+
     // Verificar si persona está definido
     if (this.persona.idPersona === undefined) {
       this.toastrService.warning(
@@ -89,7 +89,7 @@ export class PerfilUsuarioComponent implements OnInit {
       );
       return;
     }
-  
+
     // Realizar actualización de la persona
     this.personaService.updatePersona(this.persona.idPersona, this.persona)
       .subscribe(
@@ -99,7 +99,7 @@ export class PerfilUsuarioComponent implements OnInit {
               'Actualización exitosa de los datos de la persona',
               '¡Bien hecho!'
             );
-  
+
             // Implementación de la carga (este código hará una recarga de la página después de 1 segundo)
             setTimeout(() => {
               location.reload();
@@ -115,14 +115,14 @@ export class PerfilUsuarioComponent implements OnInit {
         }
       );
   }
-  
-    
 
 
 
 
 
-  
+
+
+
 
   // IMAGEN SELECT
   selectedFile!: File;

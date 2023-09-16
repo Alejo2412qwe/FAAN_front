@@ -2,13 +2,10 @@
 
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2"
-                (click)="openNewUsuario()" pTooltip="Nuevo usuario" tooltipPosition="bottom"></button>
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+                (click)="openNewUser()" pTooltip="Nuevo usuario" tooltipPosition="bottom"></button>
         </ng-template>
 
-        <!-- <ng-template pTemplate="right">
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template> -->
     </p-toolbar>
 
     <p-table #dt [value]="listUsuarios" [lazy]="true" (onLazyLoad)="loadUsuarioLazy($event)" dataKey="idUsuario"
@@ -22,9 +19,22 @@
             <div class="grid p-fluid align-items-center">
                 <div class="col-12 md:col-8">
                     <div class="p-inputgroup">
-                        <h5 class="m-0"><strong>REGISTRO DE USUARIOS</strong></h5><br>
+                        <h5 class="m-0"><strong>GESTIÓN DE USUARIOS</strong></h5><br>
                     </div>
                 </div>
+
+                <div class="col-12 md:col-4">
+
+
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input type="text" pInputText placeholder="Cédula o nombre de usuario.."
+                            (input)="searchInput$.next($any($event.target).value)"
+                            pTooltip="Encontrar por cédula o nombre de usuario" tooltipPosition="top" />
+                    </span>
+
+                </div>
+
             </div>
 
         </ng-template>
@@ -35,7 +45,7 @@
                 <th pSortableColumn="idUsuario" style="min-width:2rem"><strong>ID</strong> <p-sortIcon
                         field="idUsuario"></p-sortIcon></th>
 
-                <th pSortableColumn="username" tyle="min-width:15rem"><strong>USERNAME</strong> <p-sortIcon
+                <th pSortableColumn="username" tyle="min-width:18rem"><strong>USERNAME</strong> <p-sortIcon
                         field="username"></p-sortIcon>
                 </th>
 
@@ -50,11 +60,9 @@
                 <th pSortableColumn="estadoUsuario" style="min-width:10rem"><strong>ESTADO</strong> <p-sortIcon
                         field="estadoUsuario"></p-sortIcon>
                 </th>
-                <th>
-                    <strong> CAMBIAR ESTADO</strong>
-                </th>
-                <th>
 
+                <th>
+                    <strong>GESIÓN</strong>
                 </th>
 
             </tr>
@@ -62,19 +70,29 @@
         <ng-template pTemplate="body" let-usuario>
             <tr>
                 <td>{{ usuario.idUsuario }}</td>
-                <td><p-avatar src='https://bucketgtmt.s3.amazonaws.com/' size="normal" shape="circle"
-                        pTooltip="Foto de perfil"></p-avatar> {{ usuario.username }}</td>
+                <td>
+
+                    <img [src]="getUriFile(usuario.fotoPerfil)" width="32" style="vertical-align: middle" />
+                    <span class="ml-1 vertical-align-middle">{{ usuario.username }}</span>
+
+
+                </td>
                 <td>{{ usuario.persona.nombre1 }} {{ usuario.persona.apellido1 }}</td>
                 <td>{{ usuario.persona.identificacion }}</td>
                 <td><p-tag [value]="usuario.estadoUsuario ? 'Activado' : 'Desactivado'"
-                        [severity]="getSeverity(usuario.estadoUsuario)"></p-tag></td>
+                        [severity]="usuario.estadoUsuario ?'success' : 'danger' "></p-tag></td>
+
                 <td>
-                    <p-inputSwitch [(ngModel)]="checked" (onChange)="toggleUserState(usuario)"></p-inputSwitch>
-                </td>
-                <td>
-                    <button pButton pRipple pTooltip="Editar Usuario" tooltipPosition="top" icon="pi pi-pencil"
-                        (click)="editUsuario(usuario)"
-                        class="p-button-rounded p-button-success p-button-outlined mr-2"></button>
+                    <button pButton pRipple icon="pi pi-pencil" (click)="editUsuario(usuario)"
+                        class="p-button-rounded p-button-success p-button-outlined mr-2"
+                        [pTooltip]="'Editar Usuario: '+usuario.username" tooltipPosition="top"></button>
+
+                    <button pButton pRipple [icon]="usuario.estadoUsuario ? 'pi pi-check' : 'pi pi-trash'"
+                        [ngClass]="'p-button-rounded ' + (usuario.estadoUsuario ? 'p-button-secondary' : 'p-button-danger') + ' p-button-outlined mt-1'"
+                        (click)="messageConfirmation(usuario)"
+                        [pTooltip]="(usuario.estadoUsuario ? 'Desactivar':'Activar')+' a: '+usuario.username"
+                        tooltipPosition="bottom">
+                    </button>
                 </td>
             </tr>
         </ng-template>
@@ -86,172 +104,271 @@
 </div>
 
 
-<p-dialog [(visible)]="userDialog"
-    [style]="{ width: screenWidth < 700 ? '100%' : '80%', padding: screenWidth < 700 ? '2%' : '' }"
-    header="REGISTRO USUARIO" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="userDialog" [style]="{ width: '450px' }" header="NUEVO USUARIO" [modal]="true"
+    styleClass="p-fluid">
     <ng-template pTemplate="content">
 
-        <!-- USUARIO REGISTER -->
-        <div class="">
+        <form [formGroup]="formUserNew">
 
-            <div class="grid p-fluid align-items-center m-4">
-                <div class="col-12 md:col-8">
-                    <div class="grid p-fluid align-items-center">
-                        <div class="col-12 md:col-4">
-                            <label for="nombreRaza"><strong>Identificacion</strong></label>
-                            <span class="p-input-icon-right ">
-                                <i class="pi pi-info-circle"
-                                    [style.color]="submitted && !persona.identificacion ? 'red':''"></i>
-                                <div class="p-inputgroup">
-                                    <input type="text" pTooltip="Identificación" [(ngModel)]="persona.identificacion"
-                                        [class]="submitted && (!persona.identificacion) ? 'ng-invalid ng-dirty':''"
-                                        id="identificacion" name="identificacion" pInputText
-                                        placeholder="identificacion.." required />
-                                </div>
-                            </span>
-                            <small class="p-error" *ngIf="submitted && !persona.identificacion">Identificacion es
-                                obligatotia.</small>
-                        </div>
-                        <div class="col-12 md:col-4">
-                            <label for="nombre1"><strong>Nombre</strong></label>
-                            <span class="p-input-icon-right ">
-                                <i class="pi pi-info-circle"
-                                    [style.color]="submitted && !persona.nombre1 ? 'red':''"></i>
-                                <div class="p-inputgroup">
-                                    <input pTooltip="Nombre" type="text" [(ngModel)]="persona.nombre1"
-                                        [class]="submitted && !persona.nombre1 ? 'ng-invalid ng-dirty':''" id="nombre1"
-                                        name="nombre1" pInputText placeholder="Nombre.." required />
-                                </div>
-                            </span>
-                            <small class="p-error" *ngIf="submitted && !fullname">Apellido
-                                requeridos.</small>
-                        </div>
-                        <div class="col-12 md:col-4">
-                            <label for="apellido1"><strong>Apellido</strong></label>
-                            <span class="p-input-icon-right ">
-                                <i class="pi pi-info-circle"
-                                    [style.color]="submitted && !persona.apellido1 ? 'red':''"></i>
-                                <div class="p-inputgroup">
-                                    <input pTooltip="Apellido" type="text" [(ngModel)]="persona.apellido1"
-                                        [class]="submitted && !persona.apellido1 ? 'ng-invalid ng-dirty':''"
-                                        id="apellido1" name="apellido1" pInputText placeholder="Apellido.." required />
-                                </div>
-                            </span>
-                            <small class="p-error" *ngIf="submitted && !fullname">Nombres y Apellidos
-                                requeridos.</small>
-                        </div>
-                    </div>
+            <div class="field">
+                <label for="identificacion"><strong>Identificación: (*)</strong></label>
+                <input type="identificacion" pInputText id="identificacion" name="identificacion"
+                    placeholder="Identificación / Cédula" formControlName="identificacion"
+                    [class.is-invalid]="formUserNew.get('identificacion')!.invalid && formUserNew.get('identificacion')!.touched"
+                    class="form-control" formcontrolname="identificacion" [maxlength]="10"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                    (input)="findPersonByIdentificacion($any($event.target).value)" required autofocus />
 
-                    <div class="grid p-fluid align-items-center">
-                        <div class="col-12 md:col-6">
-                            <label for="nombreRaza"><strong>Celular</strong></label>
-                            <span class="p-input-icon-right ">
-                                <div class="p-inputgroup">
-                                    <input type="text" pTooltip="Celular" [(ngModel)]="persona.celular" id="celular"
-                                        name="celular" pInputText placeholder="celular.." />
-                                </div>
-                            </span>
-                        </div>
-
-                        <div class="col-12 md:col-6">
-                            <label for="nombreRaza"><strong>Correo</strong></label>
-                            <span class="p-input-icon-right ">
-                                <div class="p-inputgroup">
-                                    <input pTooltip="Correo" type="text" [(ngModel)]="persona.correo"
-                                        [class]="submitted && !persona.correo ? 'ng-invalid ng-dirty':''" id="correo"
-                                        name="correo" pInputText placeholder="Correo electronico.." required />
-                                </div>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="grid p-fluid align-items-center">
-                        <div class="col-12 md:col-6">
-                            <label for="nombreRaza"><strong>Username</strong></label>
-                            <span class="p-input-icon-right ">
-                                <i class="pi pi-info-circle"
-                                    [style.color]="submitted && !usuario.username ? 'red':''"></i>
-                                <div class="p-inputgroup">
-                                    <input type="text" pTooltip="Username" [(ngModel)]="usuario.username"
-                                        [class]="submitted && (!usuario.username) ? 'ng-invalid ng-dirty':''"
-                                        id="username" name="username" pInputText placeholder="username.." required />
-                                </div>
-                            </span>
-                            <small class="p-error" *ngIf="submitted && !usuario.username">Username es
-                                obligatotia.</small>
-                        </div>
-                        <div class="col-12 md:col-6">
-                            <label for="nombreRaza"><strong>Password</strong></label>
-                            <span class="p-input-icon-right ">
-                                <i class="pi pi-info-circle"
-                                    [style.color]="submitted && !usuario.password ? 'red':''"></i>
-                                <div class="p-inputgroup">
-                                    <input type="password" pTooltip="Contraseña" [(ngModel)]="usuario.password"
-                                        [class]="submitted && (!usuario.password) ? 'ng-invalid ng-dirty':''"
-                                        id="password" name="password" pPassword placeholder="password.." required />
-                                </div>
-                            </span>
-                            <small class="p-error" *ngIf="submitted && !usuario.password">Contraseña es
-                                obligatoria.</small>
-                        </div>
-                    </div>
-
-                    <div class="card col-12 md:col-12">
-                        <p class="m-1"><strong>Selecione los roles:</strong></p>
-                        <div *ngFor="let roles of listRoles" class="field-checkbox m-1">
-                            <p-checkbox name="roles" [value]="roles" [(ngModel)]="selectedRoles"
-                                [inputId]="roles.nombreRol"></p-checkbox>
-                            <label [for]="roles.idRol">{{ roles.nombreRol }}</label>
-                        </div>
-                    </div>
-
+                <div
+                    *ngIf="formUserNew.get('identificacion')?.invalid && formUserNew.get('identificacion')?.touched || formUserNew.get('identificacion')?.dirty">
+                    <small class="text-danger"
+                        *ngIf="formUserNew.get('identificacion')?.errors?.['required']"><strong>Identificación
+                            es
+                            requerido.</strong></small>
+                    <small class="text-danger"
+                        *ngIf="formUserNew.get('identificacion')?.errors?.['minlength']"><strong>Minimo
+                            requerido es 10.</strong></small>
+                    <small class="text-danger" *ngIf="respose && respose.ci">
+                        <strong>{{respose.ci}}</strong></small>
                 </div>
 
-                <div class="col-12 md:col-4">
-                    <p-panel header="Foto Usuario">
-                        <section class="seccion-perfil-usuario mb-5 mt-3">
-                            <div class="perfil-usuario-header">
-                                <div class="perfil-usuario-portada">
-                                    <div class="perfil-usuario-avatar">
-                                        <img [src]="avatarURL ? avatarURL: usuario.fotoPerfil? 'https://bucketgtmt.s3.amazonaws.com/' + usuario.fotoPerfil: 'https://us.123rf.com/450wm/dervish37/dervish371805/dervish37180500017/101552833-icono-de-vector-gato-y-perro.jpg?ver=6'"
-                                            alt="img-avatar" height="165px">
-                                        <input type="file" #fileInput style="display: none;"
-                                            accept="image/jpeg, image/jpg, image/png" (change)="onBasicUpload($event)">
-                                        <button type="button" class="boton-avatar">
-                                            <i class="fas fa-camera" style="font-size: 1.3rem"
-                                                (click)="fileInput.click()"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </p-panel>
+            </div>
 
+            <div class="field">
+                <label for="correo"><strong>Correo electrónico: (*)</strong></label>
+                <input type="correo" pInputText id="correo" name="correo" placeholder="Ej: example@email.com"
+                    formControlName="correo"
+                    [class.is-invalid]="formUserNew.get('correo')!.invalid && formUserNew.get('correo')!.touched"
+                    class="form-control" formcontrolname="correo" required />
+
+                <div
+                    *ngIf="formUserNew.get('correo')?.invalid && formUserNew.get('correo')?.touched || formUserNew.get('correo')?.dirty">
+                    <small class="text-danger" *ngIf="formUserNew.get('correo')?.errors?.['required']"><strong>Correo es
+                            requerido.</strong></small>
+                    <small class="text-danger" *ngIf="formUserNew.get('correo')?.errors?.['pattern']"><strong>Dirección
+                            de correo
+                            invalido.</strong> </small>
+                    <small class="text-danger" *ngIf="respose && respose.emailValidate">
+                        <strong>{{respose.emailValidate}}</strong></small>
                 </div>
             </div>
+
+            <div class="field">
+                <label for="username"><strong>Nombre de Usuario: (*)</strong></label>
+                <input type="username" pInputText id="username" name="username" placeholder="Nombre de usuario"
+                    formControlName="username"
+                    [class.is-invalid]="formUserNew.get('username')!.invalid && formUserNew.get('username')!.touched"
+                    class="form-control" formcontrolname="username" [maxlength]="12"
+                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
+                    required />
+
+                <div
+                    *ngIf="formUserNew.get('username')?.invalid && formUserNew.get('username')?.touched || formUserNew.get('username')?.dirty">
+                    <small class="text-danger" *ngIf="formUserNew.get('username')?.errors?.['required']"><strong>Nombre
+                            de usuario
+                            es
+                            requerido.</strong></small>
+                    <small class="text-danger" *ngIf="formUserNew.get('username')?.errors?.['minlength']"><strong>Minimo
+                            requerido es 4.</strong></small>
+                    <small class="text-danger" *ngIf="respose && respose.username">
+                        <strong>{{respose.username}}</strong></small>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="correo"><strong>Contraseña: (*)</strong></label>
+
+                <p-password type="password" id="password" name="password" placeholder="Ej: **********"
+                    formControlName="password"
+                    [class.is-invalid]="formUserNew.get('password')!.invalid && formUserNew.get('password')!.touched"
+                    class="form-control" formcontrolname="password" required class="p-inputtext-sm" [toggleMask]="true"
+                    required [maxLength]="15">
+                    <ng-template pTemplate="header">
+                        <h6>Elige una contraseña</h6>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">Sugerencias</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>Al menos una minúscula</li>
+                            <li>Al menos una mayúscula</li>
+                            <li>Al menos un numéro</li>
+                            <li>Minimo 8 caracteres</li>
+                        </ul>
+                    </ng-template>
+                </p-password>
+
+                <div
+                    *ngIf="formUserNew.get('password')?.invalid && formUserNew.get('password')?.touched || formUserNew.get('password')?.dirty">
+                    <small class="text-danger"
+                        *ngIf="formUserNew.get('password')?.errors?.['required']"><strong>Contraseña
+                            es
+                            requerido.</strong></small>
+                    <small class="text-danger"
+                        *ngIf="formUserNew.get('password')?.errors?.['pattern']"><strong>Contraseña invalida.</strong>
+                    </small>
+                </div>
+            </div>
+
+        </form>
+
+
+        <div class="card col-12 md:col-12">
+            <p class="m-1"><strong>Seleccione los roles: </strong> <strong
+                    [style]="submitted && rolsAddUser.length === 0 ? 'color: red':''">(*)</strong></p>
+
+
+            <div *ngFor="let role of listRoles" class="field-checkbox mt-2">
+
+
+                <button *ngIf="isRoleAssigned(role)" type="button" pButton pRipple [label]="role.nombreRol!"
+                    class="w-full custom-button" (click)="addRolsUser(role)"
+                    [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
+                    <p-tag [icon]="'pi pi-'+(isRoleAssigned(role)? 'times':'check')"
+                        [severity]="isRoleAssigned(role)? 'success':'danger'"
+                        [value]="isRoleAssigned(role)?'Rol Asignado':'Asignar Rol'"
+                        [pTooltip]="'Aplaste el boton para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
+                        tooltipPosition="bottom"></p-tag>
+                </button>
+
+
+                <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple [label]="role.nombreRol!"
+                    class="w-full custom-button" (click)="addRolsUser(role)"
+                    [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
+                    <p-tag [icon]="'pi pi-'+(isRoleAssigned(role)? 'times':'check')"
+                        [severity]="isRoleAssigned(role)? 'success':'danger'"
+                        [value]="isRoleAssigned(role)?'Rol Asignado':'Asignar Rol'"
+                        [pTooltip]="'Aplaste el botón para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
+                        tooltipPosition="bottom"></p-tag>
+                </button>
+
+            </div>
+
+
         </div>
+
+
     </ng-template>
+
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple [label]=" usuario.idUsuario ? 'Actualizar': 'Guardar'" icon="pi pi-save"
-            class="p-button-text" (click)="saveAndUpdateUsuario()"></button>
+        <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger mt-2"
+            (onClick)="hideDialogNewUser()"></p-button>
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-raised"
+            (click)="validateUserSave()"></p-button>
     </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="desactivarUser"
-    [style]="{ width: screenWidth < 400 ? '50%' : '30%', padding: screenWidth < 400 ? '2%' : '' }"
-    header="CAMBIAR ESTADO DE USUARIO" [modal]="true" styleClass="p-fluid">
 
-    <div class="card shadow-3">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h5>¿DESEA INHABILITAR ESTE USUARIO?</h5><br>
-                <p>Al hacerlo, el usuario perdera el acceso al sistema.</p>
+<p-dialog [(visible)]="editUserDialog" [style]="{ width: '450px' }" header="EDITAR USUARIO" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <form [formGroup]="formUserEdit">
+            <div class="field">
+                <label for="username"><strong>Nombre de Usuario: (*)</strong></label>
+                <input type="username" pInputText id="username" name="username" placeholder="Nombre de usuario"
+                    formControlName="username"
+                    [class.is-invalid]="formUserEdit.get('username')!.invalid && formUserEdit.get('username')!.touched"
+                    class="form-control" formcontrolname="username" [maxlength]="12"
+                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
+                    required />
+
+                <div
+                    *ngIf="formUserEdit.get('username')?.invalid && formUserEdit.get('username')?.touched || formUserEdit.get('username')?.dirty">
+                    <small class="text-danger" *ngIf="formUserEdit.get('username')?.errors?.['required']"><strong>Nombre
+                            de usuario
+                            es
+                            requerido.</strong></small>
+                    <small class="text-danger"
+                        *ngIf="formUserEdit.get('username')?.errors?.['minlength']"><strong>Minimo
+                            requerido es 4.</strong></small>
+                    <small class="text-danger" *ngIf="respose && respose.username">
+                        <strong>{{respose.username}}</strong></small>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Inhabilitar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+            <div class="field">
+                <label for="correo"><strong>Contraseña: (*)</strong></label>
+
+                <p-password type="password" id="password" name="password" placeholder="Ej: **********"
+                    formControlName="password"
+                    [class.is-invalid]="formUserEdit.get('password')!.invalid && formUserEdit.get('password')!.touched"
+                    class="form-control" formcontrolname="password" required class="p-inputtext-sm" [toggleMask]="true"
+                    required [maxLength]="15">
+                    <ng-template pTemplate="header">
+                        <h6>Elige una contraseña</h6>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">Sugerencias</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>Al menos una minúscula</li>
+                            <li>Al menos una mayúscula</li>
+                            <li>Al menos un numéro</li>
+                            <li>Minimo 8 caracteres</li>
+                        </ul>
+                    </ng-template>
+                </p-password>
+
+                <div
+                    *ngIf="formUserEdit.get('password')?.invalid && formUserEdit.get('password')?.touched || formUserEdit.get('password')?.dirty">
+                    <small class="text-danger"
+                        *ngIf="formUserEdit.get('password')?.errors?.['required']"><strong>Contraseña
+                            es
+                            requerido.</strong></small>
+                    <small class="text-danger"
+                        *ngIf="formUserEdit.get('password')?.errors?.['pattern']"><strong>Contraseña
+                            invalida.</strong>
+                    </small>
+                </div>
             </div>
+
+
+
+        </form>
+
+        <div class="card col-12 md:col-12">
+            <p class="m-1"><strong>Seleccione los roles: </strong> <strong
+                    [style]="submitted && rolsAddUser.length === 0 ? 'color: red':''">(*)</strong></p>
+
+
+            <div *ngFor="let role of listRoles" class="field-checkbox mt-2">
+
+
+                <button *ngIf="isRoleAssigned(role)" type="button" pButton pRipple [label]="role.nombreRol!"
+                    class="w-full custom-button" (click)="addRolsUser(role)"
+                    [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
+                    <p-tag [icon]="'pi pi-'+(isRoleAssigned(role)? 'times':'check')"
+                        [severity]="isRoleAssigned(role)? 'success':'danger'"
+                        [value]="isRoleAssigned(role)?'Rol Asignado':'Asignar Rol'"
+                        [pTooltip]="'Aplaste el boton para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
+                        tooltipPosition="bottom"></p-tag>
+                </button>
+
+
+                <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple [label]="role.nombreRol!"
+                    class="w-full custom-button" (click)="addRolsUser(role)"
+                    [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
+                    <p-tag [icon]="'pi pi-'+(isRoleAssigned(role)? 'times':'check')"
+                        [severity]="isRoleAssigned(role)? 'success':'danger'"
+                        [value]="isRoleAssigned(role)?'Rol Asignado':'Asignar Rol'"
+                        [pTooltip]="'Aplaste el botón para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
+                        tooltipPosition="bottom"></p-tag>
+                </button>
+
+            </div>
+
+
         </div>
-    </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger mt-2"
+            (onClick)="hideDialogNewUser()"></p-button>
+        <p-button label="Actualizar" icon="pi pi-save" styleClass="p-button-raised"
+            (click)="validateUpdateDataUser()"></p-button>
+    </ng-template>
 </p-dialog>
+
+
+<p-confirmDialog [style]="{width: '30vw'}"></p-confirmDialog>
