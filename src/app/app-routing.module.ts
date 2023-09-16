@@ -33,26 +33,26 @@ const routes: Routes = [
   { path: 'recover/password/:token', component: RecoverPasswordComponent, data: { titulo: 'Dashboard' } },
   // { path: 'recover-password', component: RecoverPasswordComponent },
 
-  { path: 'person/gestion', component: ControlPersonComponent, data: { titulo: 'Personas' } },
+  { path: 'person/gestion', component: ControlPersonComponent, data: { titulo: 'Control de las Personas/Rescatistas' } },
 
   // MASCOTAS
 
-  { path: 'registro-mascota', component: RegistroMascotasComponent, data: { titulo: 'Animal' } },
-  { path: 'control-animal', component: ControlAnimalComponent, data: { titulo: 'Control Animal' } },
-  { path: 'adopcion-animal', component: AdopcionAnimalComponent, data: { titulo: 'Adopcion' } },
+  { path: 'registro-mascota', component: RegistroMascotasComponent, data: { titulo: 'Registro de Animales' } },
+  { path: 'control-animal', component: ControlAnimalComponent, data: { titulo: 'Control de los Animales' } },
+  { path: 'adopcion-animal', component: AdopcionAnimalComponent, data: { titulo: 'Adopción de los Animales' } },
 
 
   //REGISTRO DE TIPO DE ANIMAL-----------------------------------------------------
-  { path: 'animal-tipo', component: RegisterTipoAnimalComponent, data: { titulo: 'Tipo Animal' } },
-  { path: 'animal-raza', component: RegisterRazaAnimalComponent, data: { titulo: 'Raza Animal' } },
+  { path: 'animal-tipo', component: RegisterTipoAnimalComponent, data: { titulo: 'Gestión del Tipo de Animal' } },
+  { path: 'animal-raza', component: RegisterRazaAnimalComponent, data: { titulo: 'Gestión de las Razas de los Animales' } },
 
   // SHARED
   { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
-  { path: 'fundacion', component: FundacionComponent, data: { titulo: 'Fundacion' } },
-  { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil usuario' } },
+  { path: 'fundacion', component: FundacionComponent, data: { titulo: 'Administración de la Fundación' } },
+  { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil del Usuario' } },
 
   // SUPERADMIN
-  { path: 'control-usuario', component: ControlUsuariosComponent, data: { titulo: 'Usuarios' } },
+  { path: 'control-usuario', component: ControlUsuariosComponent, data: { titulo: 'Control de los Usuarios' } },
 
   // PUBLIC
   { path: 'login', component: LoginComponent },

@@ -12,6 +12,7 @@ import { NotifacionesService } from 'src/app/Service/notifaciones.service';
 import { PayloadService } from 'src/app/Service/peyloads.service';
 import { TipoVacunaService } from 'src/app/Service/tipoVacuna.service';
 import { VacunaService } from 'src/app/Service/vacuna.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-control-animal',
   templateUrl: './control-animal.component.html',
@@ -27,7 +28,8 @@ export class ControlAnimalComponent implements OnInit {
     private controlAnimalService: ControlAnimalService,
     private estadoAnimalService: EsatadoAnimalService,
     private payloadservice: PayloadService,
-    private notificacionesService: NotifacionesService
+    private notificacionesService: NotifacionesService,
+    private toastr: ToastrService
   ) { }
   tipoVacunaSeleccionada: TipoVacuna = new TipoVacuna();
   originalAvailableTVacuna: any[] = [];
@@ -210,7 +212,7 @@ export class ControlAnimalComponent implements OnInit {
   saveTipoVacuna() {
     this.tipoVacuna.estado = true;
     this.tipoVacunaService.saveTipoVacuna(this.tipoVacuna).subscribe((data) => {
-      alert('SUCESSFULL');
+      this.toastr.success('Guardado Correctamente','Éxito');
       this.tipoVacuna = {} as TipoVacuna;
       this.visibleTipoVacuna = false;
     })
@@ -241,7 +243,7 @@ export class ControlAnimalComponent implements OnInit {
   saveEstadoAnimal() {
     this.estadoAnimal.estado = 'A';
     this.estadoAnimalService.saveEstadoAnimal(this.estadoAnimal).subscribe(data => {
-      alert('SUCESSFULL');
+      this.toastr.success('Guardado Correctamente.','Éxito');
       this.getListEstadoAnimal();
     })
   }
@@ -282,14 +284,14 @@ export class ControlAnimalComponent implements OnInit {
     console.log(this.control.animal);
     this.control.estadoControl = true;
     if (Object.keys(this.objetoanimal).length === 0) {
-      alert('Debe seleccionar un animal');
+      this.toastr.warning('Debe seleccionar un animal','AVISO');
     } else {
       if (Object.keys(this.selectEstado).length === 0) {
-        alert('No ha seleccionado un estado');
+        this.toastr.warning('No ha seleccionado un estado','AVISO');
       } else {
         const validVaccine = this.vacunasTemporales.some(vacuna => vacuna.fechaProximaVacuna);
         if (!validVaccine) {
-          alert('Debe ingresar al menos una fecha de próxima vacuna para guardar la notificación.');
+          this.toastr.warning('Debe ingresar al menos una fecha de próxima vacuna para guardar la notificación.','AVISO');
         } else {
           this.controlAnimalService.saveControl(this.control).subscribe((data) => {
             this.control = data;
@@ -318,7 +320,7 @@ export class ControlAnimalComponent implements OnInit {
               }
             }
   
-            alert('ÉXITO');
+            this.toastr.success('Éxito')
             this.getListaVacunasByIdControlAnimal(this.isControlAnimal.idControlAnimal!);
             this.control = {} as ControlAnimal;
             this.isControlAnimal = {} as ControlAnimal;
@@ -338,7 +340,7 @@ export class ControlAnimalComponent implements OnInit {
       this.vacuna.estadoVacuna = true;
     this.vacunaService.saveVacuna(this.vacuna).subscribe((data) => {
       console.log(data);
-      alert('SUCESSFULL');
+      this.toastr.success('Guardado Éxitoso')
       this.getListaVacunasByIdControlAnimal(this.isControlAnimal.idControlAnimal!)
       this.vacuna = {} as Vacuna;
       this.isControlAnimal = {} as ControlAnimal;
@@ -367,7 +369,7 @@ export class ControlAnimalComponent implements OnInit {
       diasFaltantes: daysUntilNextVaccination, 
     });
     
-    alert("Vacuna Agregada");
+    this.toastr.success('Vacuna Agregada Correctamente','Éxito');
     this.limpiarCampos();
     console.log(this.vacunasTemporales);
   }
@@ -386,7 +388,7 @@ export class ControlAnimalComponent implements OnInit {
   }
 
   limpiarVacunasTemporales() {
-    alert("Vacunas canceladas");
+    this.toastr.warning('Vacunas Canceladas','AVISO')
     this.vacunasTemporales = [];
     console.log(this.vacunasTemporales);
   }
