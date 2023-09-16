@@ -81,6 +81,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 // Fin de primeNG
 import { FieldsetModule } from 'primeng/fieldset';
 import { DragDropModule } from 'primeng/dragdrop';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 @NgModule({
   declarations: [],
   imports: [
@@ -162,7 +163,8 @@ import { DragDropModule } from 'primeng/dragdrop';
     AutoFocusModule,
     SkeletonModule,
 
-    InplaceModule
+    InplaceModule,
+    NgxExtendedPdfViewerModule
   ]
 })
 export class PrimengModule { }
