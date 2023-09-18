@@ -2,7 +2,7 @@
 
 	<p-toolbar styleClass="mb-3 gap-2">
 		<ng-template pTemplate="left">
-			<button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+			<button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-primary mr-2"
 				(click)="openNewAnimal()" pTooltip="Registrar nueva mascota" tooltipPosition="bottom"></button>
 		</ng-template>
 
@@ -25,7 +25,7 @@
 			<div class="grid p-fluid align-items-center">
 				<div class="col-12 md:col-8">
 					<div class="p-inputgroup">
-						<h5 class="m-0"><strong>REGISTRO DE ANIMAL</strong></h5><br>
+						<h5 class="m-0"><strong>LISTADO DE ANIMALES</strong></h5><br>
 					</div>
 				</div>
 
@@ -122,7 +122,7 @@
 
 <p-dialog [(visible)]="animalDialog"
 	[style]="{ width: screenWidth < 700 ? '100%' : '80%', padding: screenWidth < 700 ? '2%' : '' }"
-	header="{{animal.idAnimal ? 'GÉSTIONAR ANIMAL': 'REGISTRO ANIMAL'}}" [modal]="true" styleClass="p-fluid"
+	header="{{animal.idAnimal ? 'GÉSTIONAR ANIMAL': 'REGISTRO DEL ANIMAL'}}" [modal]="true" styleClass="p-fluid"
 	[closable]="animal.idAnimal ? true: false">
 	<ng-template pTemplate="content">
 
@@ -238,7 +238,7 @@
 
 					<div class="grid p-fluid align-items-center">
 						<div class="col-12 md:col-6">
-							<label for="nombreRaza"><strong>Nombre Animal</strong></label>
+							<label for="nombreRaza"><strong>Nombre del Animal</strong></label>
 							<span class="p-input-icon-right ">
 								<i class="pi pi-info-circle"
 									[style.color]="submitted && !animal.nombreAnimal ? 'red':''"></i>
@@ -254,7 +254,7 @@
 						</div>
 
 						<div class="col-12 md:col-6">
-							<label for="nombreRaza"><strong>Placa Animal</strong></label>
+							<label for="nombreRaza"><strong>Placa del Animal</strong></label>
 
 							<div class="p-inputgroup">
 
@@ -275,7 +275,7 @@
 
 					<div class="grid p-fluid align-items-center ">
 						<div class="col-12 md:col-6">
-							<label for="nombreRaza"><strong>Edad Animal</strong></label>
+							<label for="nombreRaza"><strong>Edad del Animal (En meses)</strong></label>
 
 							<div class="p-inputgroup">
 
@@ -288,7 +288,7 @@
 
 							</div>
 
-							<small class="p-error" *ngIf="submitted && !animal.edadAnimal">Edad is required.</small>
+							<small class="p-error" *ngIf="submitted && !animal.edadAnimal">Edad es requerido.</small>
 
 						</div>
 
@@ -299,7 +299,7 @@
 							<!-- <div class="field"> -->
 							<label for="nombreRaza"><strong>Estatura</strong></label>
 							<p-dropdown [options]="listHeightAnimal" [(ngModel)]="selectedHeightAnimal"
-								[showClear]="true" placeholder="Seleccione Estatura" pTooltip="Estatura"
+								[showClear]="true" placeholder="Seleccione la estatura" pTooltip="Estatura"
 								tooltipPosition="bottom"></p-dropdown>
 
 							<small class="p-error" *ngIf="submitted && isEmpty(tipoAnimal)">Estatura es
@@ -312,10 +312,10 @@
 					<div class="grid p-fluid align-items-center mt-2">
 						<div class="col-12 md:col-6">
 							<div class="field">
-								<label for="nombreRaza"><strong>Tipo Animal</strong></label>
+								<label for="nombreRaza"><strong>Tipo de Animal</strong></label>
 								<p-dropdown [options]="listTipoAnimal" [(ngModel)]="tipoAnimal" optionLabel="nombreTipo"
 									(ngModelChange)="eventCatchTipoFilter($event)" [filter]="true" filterBy="nombreTipo"
-									[showClear]="true" placeholder="Seleccione tipo" appendTo="body"
+									[showClear]="true" placeholder="Seleccione el tipo" appendTo="body"
 									[style]="{'overflow-y': 'auto'}" pTooltip="Tipo Animal" tooltipPosition="bottom">
 									<ng-template pTemplate="selectedItem">
 
@@ -337,11 +337,11 @@
 
 						<div class="col-12 md:col-6">
 							<div class="field">
-								<label for="nombreRaza"><strong>Raza Animal</strong></label>
+								<label for="nombreRaza"><strong>Raza del Animal</strong></label>
 
 								<p-dropdown [options]="listRazaFiltered" [(ngModel)]="razaAnimal"
 									optionLabel="nombreRaza" [filter]="true" filterBy="nombreRaza" [showClear]="true"
-									placeholder="Raza Animal" appendTo="body" [style]="{'overflow-y': 'auto'}"
+									placeholder="Raza del Animal" appendTo="body" [style]="{'overflow-y': 'auto'}"
 									[disabled]="isEmpty(tipoAnimal) ? true : false" pTooltip="Raza Animal"
 									tooltipPosition="bottom">
 									<ng-template pTemplate="selectedItem">
@@ -366,7 +366,7 @@
 					<div class="grid p-fluid align-items-center ">
 						<div class="col-12 md:col-6">
 							<div class="field">
-								<label for="nombreRaza"><strong>¿El animalito esta esterilizado?</strong></label>
+								<label for="nombreRaza"><strong>¿El animalito está esterilizado?</strong></label>
 								<div class="flex align-items-center gap-1">
 									<p-inputSwitch [(ngModel)]="animal.esterilizado"
 										[pTooltip]="(animal.esterilizado ? '':'No')+' Esterilizado'"
@@ -381,7 +381,7 @@
 
 				<div class="col-12 md:col-4">
 
-					<p-panel header="Foto Animal">
+					<p-panel header="Foto del Animal">
 
 						<section class="seccion-perfil-usuario mb-5 mt-3">
 							<div class="perfil-usuario-header">
@@ -420,14 +420,14 @@
 		</p-panel>
 
 		<!-- FICHA REGISTRO -->
-		<p-panel header="Ficha Registro" [toggleable]="true" styleClass="mt-4">
+		<p-panel header="Ficha de Registro del Animal" [toggleable]="true" styleClass="mt-4">
 			<div class="grid p-fluid mt-2">
 				<div class="col-12 md:col-8">
 					<div class="field">
 
 						<p-dropdown [options]="listIncomeSituation" [(ngModel)]="catchIncomeSituation"
 							optionLabel="nombreSituacionIngreso" [filter]="true" filterBy="nombreSituacionIngreso"
-							[showClear]="true" placeholder="Situación Ingreso" appendTo="body"
+							[showClear]="true" placeholder="Situación de Ingreso" appendTo="body"
 							[style]="{'overflow-y': 'auto'}" pTooltip="Situación ingreso" tooltipPosition="bottom">
 							<ng-template pTemplate="selectedItem">
 
@@ -484,7 +484,7 @@
 							<textarea id="descripcionFichaRegistro" name="descripcionFichaRegistro"
 								[class]="submitted && (!fichaRegister.descripcionFichaRegistro) ? 'ng-invalid ng-dirty':''"
 								pInputTextarea rows="3" cols="20" [(ngModel)]="fichaRegister.descripcionFichaRegistro"
-								required placeholder="Ingrese descripcion." pTooltip="Descripción"
+								required placeholder="Ingrese una breve descripción." pTooltip="Descripción"
 								tooltipPosition="bottom"></textarea>
 
 							<small class="p-error"
@@ -516,10 +516,10 @@
 
 <!-- [style]="{ width: screenWidth < 700 ? '100%' : '80%' , padding: screenWidth < 700 ? '2%' : '' }" -->
 <p-dialog [(visible)]="dialogIncomeSituation" [style]="{ width: '450px', padding: screenWidth < 700 ? '10px' : '' }"
-	header="Situación ingreso" [modal]="true" styleClass="p-fluid">
+	header="Situación de Ingreso" [modal]="true" styleClass="p-fluid">
 	<ng-template pTemplate="content">
 		<div class="field">
-			<label for="name">Nombre situación</label>
+			<label for="name">Ingrese la Situación en la que ingresa</label>
 			<input type="text" pInputText id="name" [(ngModel)]="incomeSituation.nombreSituacionIngreso" required
 				autofocus />
 			<small class="p-error" *ngIf="submittedIncomeSituation && !incomeSituation.nombreSituacionIngreso">Name is
