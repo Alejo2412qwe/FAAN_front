@@ -3,19 +3,6 @@
     <!-- BUSQUEDA Y ADOPTADO OR NO ADOPTADO -->
     <p-card header="">
         <h1 class="title">Adopcion del Animal </h1>
-<<<<<<< Updated upstream
-        <div class="row">
-            <div class="col-2">
-            <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS" onIcon="pi pi-heart-fill"
-                offIcon="pi pi-heart" style="width: 100%; height: 100%;" (onChange)="cargar()"></p-toggleButton>
-            </div>
-            <div class="col-8">
-            <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
-                style="width: 100%; height: 100%" [(ngModel)]="mostrarbusqueda" />
-            </div>
-            <div class="col-2">
-            <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}" (onClick)="cargar()"></p-button>
-=======
         <div class="formgrid grid">
             <div class="field col-12 md:col-3">
                                 <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
@@ -29,7 +16,6 @@
             <div class="field col-12 md:col-2">
                                 <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}"
                     (onClick)="cargar()"></p-button>
->>>>>>> Stashed changes
             </div>
         </div>
     </p-card>
@@ -379,14 +365,7 @@
                                                         <!-- <p-panel header="Foto Animal"> -->
                                                         <section class="seccion-animal-foto mb-5 mt-3">
                                                             <div class="imagen-container">
-<<<<<<< Updated upstream
-                                                                <a href="'https://bucketgtmt.s3.amazonaws.com/'+ keyDocumento"><img src="../../../../assets/img/dowload_file.png" alt="keyDocumento" height="160px"></a>
-=======
-                                                                <a
-                                                                    href="'https://bucketgtmt.s3.amazonaws.com/'+ keyDocumento"><img
-                                                                        src="../../../../assets/img/dowload_file.png"
-                                                                        alt="keyDocumento" height="160px"></a>
->>>>>>> Stashed changes
+                                                                <img src="../../../../assets/img/dowload_file.png" alt="keyDocumento" height="160px">
                                                             </div>
                                                         </section>
                                                         <!-- </p-panel> -->
@@ -400,18 +379,9 @@
                                                                 <div class="perfil-usuario-avatar">
                                                                     <h1>keyDocumento</h1>
 
-<<<<<<< Updated upstream
                                                                         <img *ngIf="avatarURL" src="../../../../assets/img/get_file.png"
                                                                         alt="img-avatar" style="height: 160px; padding-left: 10px; padding-right: 10px;">
                                                                         <img *ngIf="!animal.fotoAnimal && !avatarURL" src="../../../../assets/img/post_file.png"
-=======
-                                                                    <img *ngIf="avatarURL"
-                                                                        src="../../../../assets/img/get_file.png"
-                                                                        alt="img-avatar"
-                                                                        style="height: 160px; padding-left: 10px; padding-right: 10px;">
-                                                                    <img *ngIf="!animal.fotoAnimal && !avatarURL"
-                                                                        src="../../../../assets/img/post_file.png"
->>>>>>> Stashed changes
                                                                         alt="img-avatar" height="160px">
                                                                     <input type="file" #fileInput style="display: none;"
                                                                         accept="application/pdf"
