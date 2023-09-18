@@ -10,7 +10,7 @@
 
     <p-table #dt [value]="listUsuarios" [lazy]="true" (onLazyLoad)="loadUsuarioLazy($event)" dataKey="idUsuario"
         [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="size" [totalRecords]="totalRecords"
-        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords}  Usuarios"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Usuario/S"
         [showCurrentPageReport]="true" [loading]="loading"
         [globalFilterFields]="['idUsuario', 'username', 'usuario.persona.identificacion']">
 

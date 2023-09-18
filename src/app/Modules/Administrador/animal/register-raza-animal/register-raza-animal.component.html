@@ -16,7 +16,7 @@
 
     <p-table #dt [value]="listRazaAnimal" [lazy]="true" (onLazyLoad)="loadRazaAnimalLazy($event)" dataKey="id"
         [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
-        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} Raza animales"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Raza/S de animales"
         [showCurrentPageReport]="true" [loading]="loading"
         [globalFilterFields]="['idRazaAnimal', 'nombreRaza', 'tipoAnimal.nombreTipo']">
 
