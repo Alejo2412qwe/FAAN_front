@@ -1,17 +1,22 @@
 <div class="card p-3">
 
     <!-- BUSQUEDA Y ADOPTADO OR NO ADOPTADO -->
-    <p-card header="" class="m-2">
+    <p-card header="">
         <h1 class="title">Adopcion del Animal </h1>
-        <div class="d-flex align-items-center">
-            <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS" onIcon="pi pi-heart-fill"
-                offIcon="pi pi-heart" style="flex: 20%;" (onChange)="cargar()"></p-toggleButton>
-
-            <span class="p-input-icon-left" style="flex: 50%;">
-                <i class="pi pi-search"></i>
-                <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
-                    style="width: 100%;" [(ngModel)]="mostrarbusqueda" (ngModelChange)="cargar()" />
-            </span>
+        <div class="formgrid grid">
+            <div class="field col-12 md:col-3">
+                                <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
+                    onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width: 100%; height: 100%;"
+                    (onChange)="cargar()"></p-toggleButton>
+            </div>
+            <div class="field col-12 md:col-7">
+                                <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
+                    style="width: 100%; height: 100%" [(ngModel)]="mostrarbusqueda" />
+            </div>
+            <div class="field col-12 md:col-2">
+                                <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}"
+                    (onClick)="cargar()"></p-button>
+            </div>
         </div>
     </p-card>
 
@@ -351,7 +356,7 @@
                                                     required.</small>
                                                 <br>
 
-                                                <label for="fotoAnimal"><strong>Foto del Animal</strong></label>
+                                                <label for="fotoAnimal"><strong>Documento .pdf</strong></label>
                                                 <p-card>
 
                                                     <div class="perfil-usuario-portada" *ngIf="mostrar == true">
@@ -360,8 +365,7 @@
                                                         <!-- <p-panel header="Foto Animal"> -->
                                                         <section class="seccion-animal-foto mb-5 mt-3">
                                                             <div class="imagen-container">
-                                                                <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
-                                                                    [alt]="animalSelect.nombreAnimal" width="30%" />
+                                                                <img src="../../../../assets/img/dowload_file.png" alt="keyDocumento" height="160px">
                                                             </div>
                                                         </section>
                                                         <!-- </p-panel> -->
@@ -373,10 +377,14 @@
                                                         <div class="perfil-usuario-header">
                                                             <div class="perfil-usuario-portada">
                                                                 <div class="perfil-usuario-avatar">
-                                                                    <img [src]="avatarURL ? avatarURL: animal.fotoAnimal ? 'https://bucketgtmt.s3.amazonaws.com/' +animal.fotoAnimal: 'https://thumbs.dreamstime.com/b/icono-de-l%C3%ADnea-documento-archivo-copia-simple-vector-relleno-plana-papel-s%C3%ADmbolo-delgado-logo-pictograma-negro-s%C3%B3lido-aislado-271230212.jpg'"
-                                                                        alt="img-avatar" height="165px">
+                                                                    <h1>keyDocumento</h1>
+
+                                                                        <img *ngIf="avatarURL" src="../../../../assets/img/get_file.png"
+                                                                        alt="img-avatar" style="height: 160px; padding-left: 10px; padding-right: 10px;">
+                                                                        <img *ngIf="!animal.fotoAnimal && !avatarURL" src="../../../../assets/img/post_file.png"
+                                                                        alt="img-avatar" height="160px">
                                                                     <input type="file" #fileInput style="display: none;"
-                                                                        accept="application/pdf, image/jpeg, image/jpg, image/png"
+                                                                        accept="application/pdf"
                                                                         (change)="onBasicUpload($event)">
 
                                                                     <button type="button" class="boton-avatar"
@@ -390,7 +398,7 @@
                                                                 <div class="text-center">
                                                                     <small class="p-error"
                                                                         *ngIf="submitted && !avatarURL  && mostrar == false"><strong
-                                                                            style="font-size: 14px;">Foto
+                                                                            style="font-size: 14px;">Documento .pdf
                                                                             es
                                                                             requerido.</strong></small>
                                                                 </div>
