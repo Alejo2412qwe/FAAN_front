@@ -14,10 +14,10 @@ export class SidebarService {
       title: 'Animales',
       idNavigation: "aminals-nav",
       icon: 'bi bi-clipboard-plus-fill',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
-        { path: 'registro-mascota', subTitle: 'Registro Animal' },
-        { path: 'control-animal', subTitle: 'Control Animal' }
+        { path: 'registro-mascota', subTitle: 'Registro de Animales' },
+        { path: 'control-animal', subTitle: 'Control de los Animales' }
       ]
     },
 
@@ -26,31 +26,31 @@ export class SidebarService {
       title: 'Adopciones',
       idNavigation: "adoption-nav",
       icon: 'bi bi-clipboard2-fill',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
-        { path: 'adopcion-animal', subTitle: 'Adopciones Animales' },
+        { path: 'adopcion-animal', subTitle: 'Adopción de los Animales' },
 
       ]
     },
 
     {
-      title: 'Animal Tipos',
+      title: 'Tipo de Animales',
       idNavigation: "tipoAnimal-nav",
       icon: 'bi bi-journal-text',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
-        { path: 'animal-tipo', subTitle: 'Gestión Tipo Animal' },
+        { path: 'animal-tipo', subTitle: 'Gestión del Tipo de Animal' },
 
       ]
     },
 
     {
-      title: 'Animal Razas',
+      title: 'Razas de los Animales',
       idNavigation: "razaAnimal-nav",
       icon: 'bi bi-layout-text-window-reverse',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
-        { path: 'animal-raza', subTitle: 'Gestión Raza Animal' },
+        { path: 'animal-raza', subTitle: 'Gestión de las Razas de los Animales' },
 
       ]
     },
@@ -59,20 +59,20 @@ export class SidebarService {
       title: 'Usuarios',
       idNavigation: "controlUser-nav",
       icon: 'bi bi-person-lines-fill',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR"],
       subMenu: [
-        { path: 'control-usuario', subTitle: 'Control Usuario' },
+        { path: 'control-usuario', subTitle: 'Control de los Usuarios' },
 
       ]
     },
 
     {
-      title: 'Persona',
+      title: 'Personas',
       idNavigation: "controlPerson-nav",
       icon: 'bi bi-person-square',
-      rols: ROLS_SYSTEM,
+      rols: ["SUPERADMINISTRADOR", "ADMINISTRADOR"],
       subMenu: [
-        { path: 'person/gestion', subTitle: 'Control Persona' },
+        { path: 'person/gestion', subTitle: 'Control de las Personas/Rescatistas' },
 
       ]
     },

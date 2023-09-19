@@ -39,16 +39,28 @@
 
         <p-card header="" class="m-5 text-center align-items-center">
 
-            <div class="grid p-fluid m-4">
-                <div class="card flex justify-content-center">
-                    <div class="col-12 md:col-12 mt-1">
-                        <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <input type="file" accept="image/jpeg, image/jpg, image/png"
-                                    (change)="onFileSelected($event)" />
-                            </span>
+
+            <div class=" grid p-fluid ">
+                <div class=" col-12 md:col-12">
+                    <section class="seccion-perfil-usuario mb-5 ">
+                        <div class="perfil-usuario-header">
+                            <div class="perfil-usuario-portada">
+                                <div class="perfil-usuario-avatar">
+                                    <img [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? getUriFile(fundacion.logoFundacion) : 'assets/img/faan.jpg'"
+                                        alt="img-avatar" height="165px">
+                                    <input type="file" #fileInput style="display: none;"
+                                        accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)">
+
+                                    <button type="button" class="boton-avatar" pTooltip="Foto de perfil"
+                                        tooltipPosition="bottom">
+
+                                        <i class="fas fa-camera" style="font-size: 1.3rem"
+                                            (click)="fileInput.click()"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
 
@@ -113,7 +125,7 @@
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <select type="text" pInputText  name="genero" id="genero" [(ngModel)]="persona.genero">
+                            <select type="text" pInputText name="genero" id="genero" [(ngModel)]="persona.genero">
                                 <option value="M">Masculino</option>
                                 <option value="F">Femenino</option>
                             </select>
@@ -180,7 +192,8 @@
             </div>
             <div class="p-card-body">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primarys" pButton label="Actualizar" icon="pi pi-user"></button>
+                    <button type="submit" class="btn btn-primarys" pButton label="Actualizar"
+                        icon="pi pi-user"></button>
                 </div>
             </div>
         </p-card>

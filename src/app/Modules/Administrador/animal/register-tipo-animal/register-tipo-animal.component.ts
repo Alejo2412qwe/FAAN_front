@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
+import { ImageService } from 'src/app/Service/image.service';
+import { DATA_STYLES_PDF } from 'src/app/util/const-validate';
+import { generateCustomContent } from 'src/app/util/data-reutilizable';
+import { ExcelExportService } from 'src/app/util/service/excel-export.service';
+
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
     selector: 'app-register-tipo-animal',
@@ -25,11 +33,10 @@ export class RegisterTipoAnimalComponent implements OnInit {
     public screenWidth: number = 0;
     public screenHeight: number = 0;
 
-    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService) { }
+    constructor(private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService, private imageService: ImageService, private excelService: ExcelExportService) { }
 
     ngOnInit(): void {
         this.findPageableTipoAnimal();
-
         this.getSizeWindowResize();
     }
 
@@ -45,17 +52,9 @@ export class RegisterTipoAnimalComponent implements OnInit {
     }
 
     public findPageableTipoAnimal() {
-        try {
-            this.tipoAnimalService.findByAllTipoAnimal(0, 3, []).subscribe((data: any) => {
-                if (data !== null) {
-                    console.log(data)
-                    this.ListTipoAnimal = data.content;
-                }
-            });
-        } catch (error) {
-            throw new Error()
-        }
-
+        this.tipoAnimalService.findByAllTipoAnimal().subscribe((data) => {
+            this.ListTipoAnimal = data;
+        });
     }
 
     public saveAndUpdateTipoAnimal() {
@@ -66,44 +65,53 @@ export class RegisterTipoAnimalComponent implements OnInit {
             } else {
                 this.createTipoAnimal(this.tipoAnimal);
             }
+        } else {
+            this.toastr.info(
+                '',
+                'LLENE LOS CAMPOS'
+            );
         }
     }
 
-    public createTipoAnimal(tipoAnimal: TipoAnimal): void {
-        try {
-            this.tipoAnimal.estadoTipo = 'A';
-            this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe((data) => {
-                if (data != null) {
-                    alert('succesfull created..')
-                    this.ListTipoAnimal.push(data);
-                    this.closeDialog();
-                }
-            }, (err) => {
+    public createTipoAnimal(tipoAnimal: TipoAnimal) {
+        this.tipoAnimal.estadoTipo = 'A';
+        this.tipoAnimalService.saveTipoAnimal(tipoAnimal).subscribe({
+            next: (resp) => {
+                this.toastr.success(
+                    '',
+                    'CORRECTO AL CREAR'
+                );
+                this.ListTipoAnimal.push(resp);
+                this.closeDialog();
+            },
+            error: (err) => {
                 if (err.error) {
                     this.errorUnique = 'Nombre existente.';
+                    this.toastr.error(
+                        '',
+                        'Nombre existente.'
+                    );
                 }
-            })
-        } catch (error) {
-            throw new Error()
-        }
+            }
+        })
     }
 
-    public updateTipoAnimal(tipoAnimal: TipoAnimal): void {
-        this.tipoAnimalService.updateTipoAnimal(tipoAnimal.idTipoAnimal!, tipoAnimal).subscribe((data) => {
-            if (data != null) {
-                try {
-                    const indexfind = this.ListTipoAnimal.findIndex((tanimal) => tanimal.idTipoAnimal === data.idTipoAnimal);
-                    this.ListTipoAnimal[indexfind] = data;
-                } catch (error) {
-                    throw new Error()
-                }
+    public updateTipoAnimal(tipoAnimal: TipoAnimal) {
+        this.tipoAnimalService.updateTipoAnimal(tipoAnimal.idTipoAnimal!, tipoAnimal).subscribe({
+            next: (resp) => {
+                const indexfind = this.ListTipoAnimal.findIndex((tanimal) => tanimal.idTipoAnimal === resp.idTipoAnimal);
+                this.ListTipoAnimal[indexfind] = resp;
+                this.toastr.success(
+                    '',
+                    'CORRECTO AL ACTUALIZAR'
+                );
                 this.closeDialog();
-                alert('succesfull updated..')
-            }
-        }, (err) => {
-            console.log(err)
-            if (err.status === 400) {
-                this.errorUnique = 'Nombre existente.';
+            },
+            error: (err) => {
+                this.toastr.error(
+                    '',
+                    'Inconveniente al actualizar.'
+                );
             }
         })
     }
@@ -117,11 +125,18 @@ export class RegisterTipoAnimalComponent implements OnInit {
             .updateTipoAnimal(
                 tipoAnimal.idTipoAnimal!, tipoAnimal
             )
-            .subscribe((data) => {
-                if (data != null) {
-                    if (tipoAnimal.estadoTipo) {
-                        alert('Update')
-                    }
+            .subscribe({
+                next: (resp) => {
+                    this.toastr.success(
+                        '',
+                        'CORRECTO AL' + (tipoAnimal.estadoTipo === 'A' ? ' HABILITAR' : ' INHABILITAR')
+                    );
+                },
+                error: (err) => {
+                    this.toastr.error(
+                        '',
+                        'Inconveniente al actualizar.'
+                    );
                 }
             });
     }
@@ -151,7 +166,78 @@ export class RegisterTipoAnimalComponent implements OnInit {
         this.submitted = false;
     }
 
-}
+    //EXPORT PDF-------------------------------------------------------------
+    public async generatePdfAllTips() {
+        if (this.ListTipoAnimal.length === 0) {
+            this.toastr.info(
+                '',
+                'NO HAY INFORMACIÓN',
+                { timeOut: 1500 }
+            );
+            return;
+        }
 
-// para vaciar una interface
-//    this.tipoAnimal = {} as TipoAnimal;
+        const tableData = this.ListTipoAnimal.map(item => [
+            { text: item.idTipoAnimal },
+            { text: item.nombreTipo, },
+            { text: item.descripcionAnimal, },
+            { text: item.estadoTipo === 'A' ? 'Activo' : 'Inactivo', }
+        ]);
+
+        const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/faan.jpg');
+
+        const docDefinition = {
+
+            content:
+                [
+                    generateCustomContent(imageDataUrl, 'Informe tipo de animales'),
+                    {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', 'auto', '*', 'auto'],
+                            body: [['ID', 'NOMBRE', 'DESCRIPCIÓN', 'ESTADO'], ...tableData],
+                        },
+                        style: 'table',
+
+                        layout: {
+                            fillColor: (rowI: number, node: any, columI: number) => {
+                                return rowI === 0 ? '#65b2cc' : rowI % 2 === 0 ? '#CCCCCC' : ''
+                            },
+                            hLineWidth: () => 0.2,
+                            vLineWidth: () => 0.2,
+                        }
+                    },
+                ]
+            ,
+            footer: function (currentPage: number, pageCount: number) {
+                return {
+                    text: `Pagina ${currentPage.toString()} de ${pageCount}`,
+                    style: 'footer',
+                    alignment: 'center',
+                    margin: [0, 10],
+                    fontSize: 14,
+                    color: '#3498db',
+                };
+            },
+            styles: DATA_STYLES_PDF,
+            defaultStyle: {
+                border: '1px solid black'
+            }
+        };
+        pdfMake.createPdf(docDefinition as any).open();
+        // pdfMake.createPdf(docDefinition as any)download('tipo_animal.pdf');
+    }
+
+    //EXPORT EXEL-------------------------------------------
+    public exportExcel() {
+        const dataExport = this.ListTipoAnimal.map((i) => (
+            {
+                ID: i.idTipoAnimal,
+                NOMBRE: i.nombreTipo,
+                DESCRIPCIÓN: i.descripcionAnimal,
+                ESTADO: i.estadoTipo === 'A' ? 'ACTIVO' : 'INACTIVO'
+            }
+        ));
+        this.excelService.exportToExcel(dataExport, 'ListadoTiposAnimales');
+    }
+}

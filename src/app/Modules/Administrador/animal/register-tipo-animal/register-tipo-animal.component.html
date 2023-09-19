@@ -2,12 +2,16 @@
 
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="openNewTipoAnimal()"></button>
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+                (click)="openNewTipoAnimal()" pTooltip="Crear nuevo tipo" tooltipPosition="bottom"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                class="p-button-success mr-2" pTooltip="Excel de Tipos: XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="generatePdfAllTips()"
+                class="p-button-danger mr-2" pTooltip="Pdf de Tipos: PDF" tooltipPosition="bottom"></button>
         </ng-template>
     </p-toolbar>
 
@@ -18,13 +22,10 @@
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
 
-
-
-
             <div class="grid p-fluid align-items-center">
                 <div class="col-12 md:col-8">
                     <div class="p-inputgroup">
-                        <h5 class="m-0"><strong>Tipos animales</strong></h5><br>
+                        <h5 class="m-0"><strong>Tipos de Animales</strong></h5><br>
                     </div>
                 </div>
 
@@ -33,12 +34,11 @@
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Search..." /> </span>
+                            placeholder="Buscar..." pTooltip="Buscar por nombre o descripción"
+                            tooltipPosition="bottom" /> </span>
                 </div>
 
             </div>
-
-
 
         </ng-template>
         <ng-template pTemplate="header">
@@ -52,7 +52,8 @@
 
                 <th pSortableColumn="descripcionAnimal" style="min-width:15rem"><strong>DESCRIPCIÓN</strong> <p-sortIcon
                         field="category"></p-sortIcon></th>
-                <th  style="min-width:2rem"></th>
+                <th style="min-width:2rem"><strong>GESTIÓN</strong></th>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-tipoAnimal>
@@ -66,11 +67,14 @@
                 <td>
                     <button pButton pRipple icon="pi pi-pencil"
                         class="p-button-rounded p-button-success p-button-outlined mr-2"
-                        (click)="editTipoAnimal(tipoAnimal)"></button>
+                        (click)="editTipoAnimal(tipoAnimal)" [pTooltip]="'Editar Tipo: '+tipoAnimal.nombreTipo"
+                        tooltipPosition="bottom"></button>
 
                     <button pButton pRipple [icon]="tipoAnimal.estadoTipo === 'A' ? 'pi pi-check' : 'pi pi-trash'"
                         [ngClass]="'p-button-rounded ' + (tipoAnimal.estadoTipo === 'A' ? 'p-button-secondary' : 'p-button-danger') + ' p-button-outlined mt-1'"
-                        (click)="eliminadoLogicoDeLosTiposAnimales(tipoAnimal)">
+                        (click)="eliminadoLogicoDeLosTiposAnimales(tipoAnimal)"
+                        [pTooltip]="(tipoAnimal.estadoTipo === 'A' ? 'Desactivar':'Activar')+' Tipo: '+tipoAnimal.nombreTipo"
+                        tooltipPosition="bottom">
                     </button>
 
                 </td>
@@ -96,9 +100,10 @@
                 <input type="text"
                     [class]="submitted && (!tipoAnimal.nombreTipo || errorUnique) ? 'ng-invalid ng-dirty':''"
                     id="nombreTipo" placeholder="Nombre tipo" pInputText [(ngModel)]="tipoAnimal.nombreTipo" required
-                    autofocus />
+                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
+                    [maxlength]="25" autofocus />
             </span>
-            <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo">Name is required.</small>
+            <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo">Nombre es requerido.</small>
             <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo || errorUnique">{{errorUnique}}</small>
 
         </div>
@@ -108,7 +113,9 @@
             <label for="descripcionAnimal"><strong>Descripción</strong></label>
             <textarea id="descripcionAnimal" name="descripcionAnimal" pInputTextarea
                 placeholder="Descripción del tipo animal" [(ngModel)]="tipoAnimal.descripcionAnimal" required rows="3"
-                cols="20" [class]="submitted && !tipoAnimal.nombreTipo ? 'ng-dirty':''"></textarea>
+                cols="20" [class]="submitted && !tipoAnimal.nombreTipo ? 'ng-dirty':''"
+                onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
+                [maxlength]="250"></textarea>
             <small class="p-error" *ngIf="submitted && !tipoAnimal.descripcionAnimal">Description is required.</small>
         </div>
 

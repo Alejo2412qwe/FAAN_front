@@ -5,9 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { Persona } from 'src/app/Models/persona';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
+import { Response, ValidateEquals } from 'src/app/util/model/response-validate';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-control-person',
@@ -17,14 +21,15 @@ import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 export class ControlPersonComponent implements OnInit {
   public personDialog: boolean = false;
 
+  public respose = new Response();
+
   public person = new Persona();
 
   public submitted: boolean = false;
 
   public listPerson: Persona[] = [];
 
-  public errorUnique: string = '';
-
+  public validateEquals = new ValidateEquals();
   //Size of window..
   public screenWidth: number = 0;
   public screenHeight: number = 0;
@@ -42,7 +47,8 @@ export class ControlPersonComponent implements OnInit {
   constructor(
     private personService: PersonaService,
     private screenSizeService: ScreenSizeService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.formPerson = this.formBuilder.group({
       idPersona: ['', []],
@@ -100,9 +106,9 @@ export class ControlPersonComponent implements OnInit {
 
     return new Date().getFullYear() - fechaNacimiento.getFullYear() < 18
       ? {
-          fechaNacimientoInvalida: true,
-          mensaje: 'Debe ser mayor de edad.',
-        }
+        fechaNacimientoInvalida: true,
+        mensaje: 'Debe ser mayor de edad.',
+      }
       : null;
   }
 
@@ -172,14 +178,36 @@ export class ControlPersonComponent implements OnInit {
       this.formPerson.markAllAsTouched();
       return;
     }
+
     this.submitted = true;
     this.person = this.formPerson.value;
 
-    if (this.person.idPersona) {
-      this.updatePerson();
-    } else {
-      this.savePerson();
-    }
+    this.validateEmailAndCi(this.person.identificacion!, this.person.correo!);
+  }
+
+  public validateEmailAndCi(identificacion: string, email: string) {
+
+    const identificacionEqualsValidate = this.validateEquals.identificacion === this.person.identificacion;
+    const emailEqualsValidate = this.validateEquals.emailValidate === this.person.correo;
+
+    const existIdentificacion = this.personService.existByIdentificacion(identificacion, identificacionEqualsValidate);
+    const existEmail = this.personService.existsByEmail(email, emailEqualsValidate);
+
+    forkJoin([existIdentificacion, existEmail]).subscribe(
+      ([cedulaRepetidaResp, emailRepetidoResp]) => {
+
+        this.respose.ci = cedulaRepetidaResp ? 'Identificación existente' : ''
+        this.respose.emailValidate = emailRepetidoResp ? 'Direccón de correo existente' : '';
+
+        if (!cedulaRepetidaResp && !emailRepetidoResp) {
+          if (this.person.idPersona) {
+            this.updatePerson();
+          } else {
+            this.savePerson();
+          }
+        }
+      }
+    );
   }
 
   public isEmpty(obj: any) {
@@ -189,14 +217,12 @@ export class ControlPersonComponent implements OnInit {
   public savePerson() {
     this.personService.savePersona(this.person).subscribe({
       next: (resp) => {
-        alert('succesfull created..');
+        this.toastr.success('Creado Correctamente','Éxito');
         this.listPerson.push(resp);
         this.closeDialog();
       },
       error: (err) => {
-        if (err.status === 400) {
-          this.errorUnique = 'Nombre existente.';
-        }
+        alert('err');
       },
     });
   }
@@ -206,24 +232,16 @@ export class ControlPersonComponent implements OnInit {
       .updatePersona(this.person.idPersona!, this.person)
       .subscribe({
         next: (resp) => {
-          if (resp != null) {
-            try {
-              const indexfind = this.listPerson.findIndex(
-                (person) => person.idPersona === resp.idPersona
-              );
-              this.listPerson[indexfind] = resp;
-            } catch (error) {
-              throw new Error();
-            }
-            this.closeDialog();
-            alert('succesfull updated..');
-          }
+          alert('succesfull updated..');
+          const indexfind = this.listPerson.findIndex(
+            (person) => person.idPersona === resp.idPersona
+          );
+          this.listPerson[indexfind] = resp;
+          this.closeDialog();
         },
         error: (err) => {
           console.log(err);
-          if (err.status === 400) {
-            this.errorUnique = 'Nombre existente.';
-          }
+          alert('err');
         },
       });
   }
@@ -237,21 +255,22 @@ export class ControlPersonComponent implements OnInit {
   public closeDialog(): void {
     this.personDialog = false;
     this.person = {} as Persona;
-    this.errorUnique = '';
   }
 
   public openNewPerson() {
-    this.errorUnique = '';
+    this.respose = {} as Response;
+    this.validateEquals = {} as ValidateEquals;
     this.formPerson.reset();
     this.person = {} as Persona;
     this.submitted = false;
     this.personDialog = true;
   }
 
+
   public editPerson(person: Persona) {
-    this.errorUnique = '';
     this.formPerson.reset();
     this.person = { ...person };
+    this.validateEquals = { identificacion: this.person.identificacion, emailValidate: this.person.correo }
     this.person.fechaNacimiento = new Date(this.person.fechaNacimiento!);
     this.formPerson.patchValue(this.person);
     this.personDialog = true;

@@ -14,8 +14,8 @@ export class ContactoComponent {
   constructor(
     private enviarGmail:RecoverPasswordService,
     private toastr: ToastrService
-
   ) {}
+
   enviarCorreo() {
     if (
       this.enviarG.nombre &&
@@ -37,4 +37,4 @@ export class ContactoComponent {
     }
   }
 }
- 
+

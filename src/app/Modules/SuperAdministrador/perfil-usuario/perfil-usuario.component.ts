@@ -4,13 +4,14 @@ import { Fundacion, Persona, Rol, Usuario } from 'src/app/Models/models';
 import { FundacionService } from 'src/app/Service/fundacion.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { UsuarioService } from 'src/app/Service/usuario.service';
+import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
 
 @Component({
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
   styleUrls: ['./perfil-usuario.component.css']
 })
-export class PerfilUsuarioComponent implements OnInit {
+export class PerfilUsuarioComponent implements OnInit { 
 
   constructor(
     private usuarioService: UsuarioService,
@@ -21,6 +22,12 @@ export class PerfilUsuarioComponent implements OnInit {
   ) { }
 
   public idUsuarioLoggin?: any;
+  public avatarURL: string = '';
+
+  //OBTENER LA IMAGEN NEW MOTHOD------------------------------
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGES);
+  }
 
   ngOnInit(): void {
     this.idUsuarioLoggin = localStorage.getItem('id_username');
@@ -64,15 +71,7 @@ export class PerfilUsuarioComponent implements OnInit {
     if (
 
       !this.persona.nombre1 ||
-      !this.persona.nombre2 ||
-      !this.persona.apellido1 ||
-      !this.persona.apellido2 ||
-      !this.persona.fechaNacimiento ||
-      !this.persona.direccion ||
-      !this.persona.telefono ||
-      !this.persona.celular ||
-      !this.persona.correo ||
-      !this.persona.genero
+      !this.persona.apellido1
     ) {
       this.toastrService.warning(
         'Uno o más campos vacíos',
@@ -80,7 +79,7 @@ export class PerfilUsuarioComponent implements OnInit {
       );
       return;
     }
-  
+
     // Verificar si persona está definido
     if (this.persona.idPersona === undefined) {
       this.toastrService.warning(
@@ -89,7 +88,7 @@ export class PerfilUsuarioComponent implements OnInit {
       );
       return;
     }
-  
+
     // Realizar actualización de la persona
     this.personaService.updatePersona(this.persona.idPersona, this.persona)
       .subscribe(
@@ -99,7 +98,7 @@ export class PerfilUsuarioComponent implements OnInit {
               'Actualización exitosa de los datos de la persona',
               '¡Bien hecho!'
             );
-  
+
             // Implementación de la carga (este código hará una recarga de la página después de 1 segundo)
             setTimeout(() => {
               location.reload();
@@ -115,14 +114,14 @@ export class PerfilUsuarioComponent implements OnInit {
         }
       );
   }
-  
-    
 
 
 
 
 
-  
+
+
+
 
   // IMAGEN SELECT
   selectedFile!: File;
