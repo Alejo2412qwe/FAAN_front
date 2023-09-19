@@ -17,7 +17,7 @@ export class UsuarioService {
     return this.http.post<Usuario>(environment.apiuri + '/usuario/save', usuario);
   }
 
-  public getAllUsuario(page:number,size:number,sort:string[]): Observable<Usuario[]> {
+  public getAllUsuario(page: number, size: number, sort: string[]): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(environment.apiuri + '/usuario/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
   }
 
@@ -29,4 +29,13 @@ export class UsuarioService {
     return this.http.put<Usuario>(environment.apiuri + '/usuario/update/' + idUsusario, usuario);
   }
 
+  // other changes
+  public existByUsername(username: string): Observable<boolean> {
+    return this.http.get<boolean>(environment.apiuri + `/usuario/existByUsername/${username}`);
+  }
+
+
+  public findByIdentificacionOrUsername(key: string): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(environment.apiuri + '/usuario/findByIdentificacionOrUsername/filter/' + key);
+  }
 }
