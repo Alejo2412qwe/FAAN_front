@@ -126,15 +126,16 @@
 	[closable]="animal.idAnimal ? true: false">
 	<ng-template pTemplate="content">
 
+		<p style="font-size: 13px; color: red;" class="mt-1">Los campos marcados con * son de ingreso obligatorio</p>
 
-		<p-panel header="Rescatista" [toggleable]="true">
+		<p-panel header="Rescatista: *" [toggleable]="true">
 
 
 			<div class="text-center">
 
 
 				<div *ngIf="!isEmpty(persona); else notSubmittedContent">
-					<div class="">
+					<div class="mt-2">
 						<div class="card persona-card">
 
 							<div class="card-body">
@@ -190,9 +191,11 @@
 								<div class="p-inputgroup">
 									<button type="button" pButton pRipple icon="pi pi-filter-slash"
 										styleClass="p-button-success" [disabled]="valueAtributeCI ? false : true"
-										pTooltip="Quitar busqueta" tooltipPosition="bottom"></button>
+										pTooltip="Quitar busqueta" tooltipPosition="bottom"
+										(click)="pageablePersona(0, 3, ['idPersona', 'asc'])"></button>
 
-									<input type="text" pInputText placeholder="Cédula.." [(ngModel)]="valueAtributeCI">
+									<input type="text" pInputText placeholder="Cédula.." [(ngModel)]="valueAtributeCI"
+										onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
 									<button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"
 										[disabled]="valueAtributeCI ? false : true" (click)="findByAtributeName(2)"
 										pTooltip="Buscar" tooltipPosition="bottom"></button>
@@ -238,7 +241,7 @@
 
 					<div class="grid p-fluid align-items-center">
 						<div class="col-12 md:col-6">
-							<label for="nombreRaza"><strong>Nombre del Animal</strong></label>
+							<label for="nombreRaza"><strong>Nombre del Animal: *</strong></label>
 							<span class="p-input-icon-right ">
 								<i class="pi pi-info-circle"
 									[style.color]="submitted && !animal.nombreAnimal ? 'red':''"></i>
@@ -249,12 +252,13 @@
 										pTooltip="Nombre Animal" tooltipPosition="bottom" />
 								</div>
 							</span>
-							<small class="p-error" *ngIf="submitted && !animal.nombreAnimal">Name is required.</small>
+							<small class="p-error" *ngIf="submitted && !animal.nombreAnimal">Nombre es
+								requerido.</small>
 
 						</div>
 
 						<div class="col-12 md:col-6">
-							<label for="nombreRaza"><strong>Placa del Animal</strong></label>
+							<label for="nombreRaza"><strong>Placa del Animal: *</strong></label>
 
 							<div class="p-inputgroup">
 
@@ -264,10 +268,11 @@
 									required pTooltip="Placa Animal" tooltipPosition="bottom">
 								<button type="button" pButton pRipple
 									[icon]="'pi ' + (animal.placaAnimal ? 'pi-refresh' : 'pi-key')"
-									styleClass="p-button-warn" (click)="generatePlacaAnimal(8)"
+									styleClass="p-button-warn" (click)="generatePlacaAnimal(16)"
 									[disabled]="animal.idAnimal ? true : false"></button>
 							</div>
-							<small class="p-error" *ngIf="submitted && !animal.placaAnimal">Placa is required.</small>
+							<small class="p-error" *ngIf="submitted && !animal.placaAnimal">Placa es
+								requerido.</small>
 
 						</div>
 
@@ -275,7 +280,7 @@
 
 					<div class="grid p-fluid align-items-center ">
 						<div class="col-12 md:col-6">
-							<label for="nombreRaza"><strong>Edad del Animal (En meses)</strong></label>
+							<label for="nombreRaza"><strong>Edad del Animal: *</strong></label>
 
 							<div class="p-inputgroup">
 
@@ -292,12 +297,10 @@
 
 						</div>
 
-
-
 						<!-- implement code  -->
 						<div class="col-12 md:col-6 mt-2">
 							<!-- <div class="field"> -->
-							<label for="nombreRaza"><strong>Estatura</strong></label>
+							<label for="nombreRaza"><strong>Estatura: *</strong></label>
 							<p-dropdown [options]="listHeightAnimal" [(ngModel)]="selectedHeightAnimal"
 								[showClear]="true" placeholder="Seleccione la estatura" pTooltip="Estatura"
 								tooltipPosition="bottom"></p-dropdown>
@@ -312,7 +315,7 @@
 					<div class="grid p-fluid align-items-center mt-2">
 						<div class="col-12 md:col-6">
 							<div class="field">
-								<label for="nombreRaza"><strong>Tipo de Animal</strong></label>
+								<label for="nombreRaza"><strong>Tipo de Animal: *</strong></label>
 								<p-dropdown [options]="listTipoAnimal" [(ngModel)]="tipoAnimal" optionLabel="nombreTipo"
 									(ngModelChange)="eventCatchTipoFilter($event)" [filter]="true" filterBy="nombreTipo"
 									[showClear]="true" placeholder="Seleccione el tipo" appendTo="body"
@@ -329,15 +332,15 @@
 										</div>
 									</ng-template>
 								</p-dropdown>
-								<small class="p-error" *ngIf="submitted && isEmpty(tipoAnimal)">Tipo animal is
-									required.</small>
+								<small class="p-error" *ngIf="submitted && isEmpty(tipoAnimal)">Tipo animal es
+									requerido.</small>
 
 							</div>
 						</div>
 
 						<div class="col-12 md:col-6">
 							<div class="field">
-								<label for="nombreRaza"><strong>Raza del Animal</strong></label>
+								<label for="nombreRaza"><strong>Raza del Animal: *</strong></label>
 
 								<p-dropdown [options]="listRazaFiltered" [(ngModel)]="razaAnimal"
 									optionLabel="nombreRaza" [filter]="true" filterBy="nombreRaza" [showClear]="true"
@@ -356,8 +359,8 @@
 										</div>
 									</ng-template>
 								</p-dropdown>
-								<small class="p-error" *ngIf="submitted && isEmpty(razaAnimal)">Raza animal is
-									required.</small>
+								<small class="p-error" *ngIf="submitted && isEmpty(razaAnimal)">Raza animal es
+									requerido.</small>
 
 							</div>
 						</div>
@@ -381,7 +384,7 @@
 
 				<div class="col-12 md:col-4">
 
-					<p-panel header="Foto del Animal">
+					<p-panel header="Foto del Animal: *">
 
 						<section class="seccion-perfil-usuario mb-5 mt-3">
 							<div class="perfil-usuario-header">
@@ -413,14 +416,12 @@
 
 				</div>
 
-
-
 			</div>
 
 		</p-panel>
 
 		<!-- FICHA REGISTRO -->
-		<p-panel header="Ficha de Registro del Animal" [toggleable]="true" styleClass="mt-4">
+		<p-panel header="Ficha de Registro del Animal: *" [toggleable]="true" styleClass="mt-4">
 			<div class="grid p-fluid mt-2">
 				<div class="col-12 md:col-8">
 					<div class="field">
@@ -460,7 +461,7 @@
 				<div class="row justify-content-center">
 					<div class="col-12 col-md-6">
 
-						<label for="nombreRaza"><strong>Origen: </strong></label>
+						<label for="nombreRaza"><strong>Origen: * </strong></label>
 						<span class="p-input-icon-right ">
 							<i class="pi pi-info-circle"
 								[style.color]="submitted && !fichaRegister.origen ? 'red':''"></i>
@@ -480,7 +481,7 @@
 					<div class="col-12 col-md-6">
 						<div class="field">
 
-							<label for="nombreRaza"><strong>Descripción</strong></label>
+							<label for="nombreRaza"><strong>Descripción: *</strong></label>
 							<textarea id="descripcionFichaRegistro" name="descripcionFichaRegistro"
 								[class]="submitted && (!fichaRegister.descripcionFichaRegistro) ? 'ng-invalid ng-dirty':''"
 								pInputTextarea rows="3" cols="20" [(ngModel)]="fichaRegister.descripcionFichaRegistro"
@@ -496,12 +497,9 @@
 						</div>
 					</div>
 
-
 				</div>
 			</div>
 		</p-panel>
-
-
 
 	</ng-template>
 
@@ -522,8 +520,8 @@
 			<label for="name">Ingrese la Situación en la que ingresa</label>
 			<input type="text" pInputText id="name" [(ngModel)]="incomeSituation.nombreSituacionIngreso" required
 				autofocus />
-			<small class="p-error" *ngIf="submittedIncomeSituation && !incomeSituation.nombreSituacionIngreso">Name is
-				required.</small>
+			<small class="p-error" *ngIf="submittedIncomeSituation && !incomeSituation.nombreSituacionIngreso">Nombre es
+				requerido.</small>
 		</div>
 	</ng-template>
 

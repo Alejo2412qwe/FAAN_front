@@ -6,6 +6,7 @@ import { DetalleAdopcion } from 'src/app/Models/detalleEncabezado';
 import { EncabezadoAdopcion } from 'src/app/Models/encabezadoAdopcion';
 import { Persona } from 'src/app/Models/persona';
 import { RazaAnimal } from 'src/app/Models/razaAnimal';
+import { AdoptedAnimal } from 'src/app/Payloads/adopted-animal';
 import { AnimalService } from 'src/app/Service/animal.service';
 import { DetalleEncabezadoService } from 'src/app/Service/detalleEncabezado.service';
 import { EncabezadoAdopcionService } from 'src/app/Service/encabezadoAdopcion.service';
@@ -13,7 +14,7 @@ import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
-import { FOLDER_DOCUMENTS, FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
+import { FOLDER_DOCUMENTS, FOLDER_IMAGES, getFile, getFileDocument } from 'src/app/util/const-data';
 
 @Component({
 	selector: 'app-adopcion-animal',
@@ -483,4 +484,24 @@ export class AdopcionAnimalComponent implements OnInit {
 			throw new Error();
 		}
 	}
+
+	public modaldetailAdopted: boolean = false;
+	public adoptedAnimal = new AdoptedAnimal();
+	public modalDetailsAdopted(idAnimal: number) {
+		this.encabezadoAdopcion.findAdoptedAnimal(idAnimal).subscribe({
+			next: (resp) => {
+				this.adoptedAnimal = resp;
+				this.modaldetailAdopted = true
+
+			}, error: (err) => {
+
+			}
+		})
+	}
+
+	public getUriResource(fileName: string, key: number): string {
+		const folder = key === 1 ? FOLDER_IMAGES : FOLDER_DOCUMENTS;
+		return getFile(fileName, folder);
+	}
+
 }

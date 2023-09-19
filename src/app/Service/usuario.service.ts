@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,6 +19,14 @@ export class UsuarioService {
 
   public getAllUsuario(page: number, size: number, sort: string[]): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(environment.apiuri + '/usuario/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
+  }
+
+  public findByAllUsers(page: number, size: number, sort: string[]): Observable<Usuario[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+    return this.http.get<Usuario[]>(environment.apiuri + '/usuario/pageable/dadmin', { params });
   }
 
   public getUsuarioById(idUsuario: number): Observable<Usuario> {

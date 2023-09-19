@@ -105,7 +105,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
 
 	public findByAllTipoAnimales() {
 		this.tipoAnimalService.findByAllTipoAnimal().subscribe((data) => {
-			this.listTipoAnimals = data;
+			this.listTipoAnimals = data.filter(i => i.estadoTipo === 'A')
 			this.totalRecords = this.listTipoAnimals.length;
 		});
 	}

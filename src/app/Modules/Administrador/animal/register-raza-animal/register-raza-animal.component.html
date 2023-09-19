@@ -96,10 +96,10 @@
 <p-dialog [(visible)]="razaAnimalDialog" [style]="{ width: '450px', padding: screenWidth < 700 ? '10px' : '' }"
     header="Razas de los animales" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
 
         <div class="field">
-            <label for="nombreRaza"><strong>Tipo de Raza</strong></label>
+            <label for="nombreRaza"><strong>Tipo de Raza: *</strong></label>
 
             <!--    [style]="{'max-height': '70px', 'overflow-y': 'auto'}" -->
             <p-dropdown [options]="listTipoAnimals" [(ngModel)]="tipoAnimal" optionLabel="nombreTipo" [filter]="true"
@@ -124,7 +124,7 @@
 
 
         <div class="field">
-            <label for="nombreRaza"><strong>Nombre de la Raza</strong></label>
+            <label for="nombreRaza"><strong>Nombre de la Raza: *</strong></label>
 
             <span class="p-input-icon-right ">
                 <i class="pi pi-info-circle"
@@ -133,8 +133,8 @@
                     [class]="submitted && (!razaAnimal.nombreRaza || errorUnique) ? 'ng-invalid ng-dirty':''"
                     id="nombreRaza" name="nombreRaza" placeholder="Nombre de la Raza" pInputText
                     [(ngModel)]="razaAnimal.nombreRaza"
-                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
-                    [maxlength]="30" required autofocus />
+                    onkeypress='return !(event.charCode >= 48 && event.charCode <= 57)' [maxlength]="30" required
+                    autofocus />
             </span>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza">Name is required.</small>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza || errorUnique">{{errorUnique}}</small>

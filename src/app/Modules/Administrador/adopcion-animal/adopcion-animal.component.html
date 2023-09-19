@@ -6,16 +6,16 @@
         <h1 class="title">Adopcion del Animal </h1>
         <div class="formgrid grid">
             <div class="field col-12 md:col-3">
-                                <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
+                <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
                     onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width: 100%; height: 100%;"
                     (onChange)="cargar()"></p-toggleButton>
             </div>
             <div class="field col-12 md:col-7">
-                                <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
+                <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
                     style="width: 100%; height: 100%" [(ngModel)]="mostrarbusqueda" />
             </div>
             <div class="field col-12 md:col-2">
-                                <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}"
+                <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}"
                     (onClick)="cargar()"></p-button>
             </div>
         </div>
@@ -70,8 +70,16 @@
                                     (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button> -->
                             </div>
                         </div>
-                        <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
+
+
+                        <!-- GALLEGOS-------------------------------------------------------------------------------------------- -->
+                        <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
+                            *ngIf="mostrar == true"> Ver </p-button> -->
+
+                        <p-button class="btnsize" icon="pi pi-eye" (onClick)="modalDetailsAdopted(animal.idAnimal)"
                             *ngIf="mostrar == true"> Ver </p-button>
+                        <!-- END GALLEGOS-------------------------------------------------------------------------------------------- -->
+
                     </div>
                 </div>
             </div>
@@ -366,7 +374,8 @@
                                                         <!-- <p-panel header="Foto Animal"> -->
                                                         <section class="seccion-animal-foto mb-5 mt-3">
                                                             <div class="imagen-container">
-                                                                <img src="../../../../assets/img/dowload_file.png" alt="keyDocumento" height="160px">
+                                                                <img src="../../../../assets/img/dowload_file.png"
+                                                                    alt="keyDocumento" height="160px">
                                                             </div>
                                                         </section>
                                                         <!-- </p-panel> -->
@@ -380,9 +389,12 @@
                                                                 <div class="perfil-usuario-avatar">
                                                                     <h1>keyDocumento</h1>
 
-                                                                        <img *ngIf="avatarURL" src="../../../../assets/img/get_file.png"
-                                                                        alt="img-avatar" style="height: 160px; padding-left: 10px; padding-right: 10px;">
-                                                                        <img *ngIf="!animal.fotoAnimal && !avatarURL" src="../../../../assets/img/post_file.png"
+                                                                    <img *ngIf="avatarURL"
+                                                                        src="../../../../assets/img/get_file.png"
+                                                                        alt="img-avatar"
+                                                                        style="height: 160px; padding-left: 10px; padding-right: 10px;">
+                                                                    <img *ngIf="!animal.fotoAnimal && !avatarURL"
+                                                                        src="../../../../assets/img/post_file.png"
                                                                         alt="img-avatar" height="160px">
                                                                     <input type="file" #fileInput style="display: none;"
                                                                         accept="application/pdf"
@@ -435,3 +447,36 @@
         </ng-template>
     </p-dialog>
 </div>
+
+
+
+<p-dialog [(visible)]="modaldetailAdopted" [style]="{ width: '600px' }" header="Detalles de la Adopción" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6">
+                <div class="data text-center">
+                    <img [src]=" getUriResource(adoptedAnimal.uriAnimal!, 1)" style="width: 22%; height: 22%;">
+
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <div class="data text-center mt-1">
+                    <h3>{{adoptedAnimal.nombreA}}</h3>
+                </div>
+                <p><strong>Raza:</strong> {{adoptedAnimal.nombreRaza}}</p>
+                <p><strong>Tipo:</strong> {{adoptedAnimal.nombreTipo}}</p>
+                <p><strong>Placa:</strong> {{adoptedAnimal.placa}}</p>
+                <p><strong>Observación de la Adopción:</strong> {{adoptedAnimal.observacionEnca}}</p>
+                <p><strong>Correo Electrónico:</strong> {{adoptedAnimal.correo}}</p>
+                <p><strong>Fecha de Adopción:</strong> {{adoptedAnimal.fechaAdopcion | date}}</p>
+                <p><strong>Identificación:</strong> {{adoptedAnimal.identificacion}}</p>
+                <p><strong>Adoptante:</strong> {{adoptedAnimal.nombre1}} {{adoptedAnimal.apellido1}}</p>
+                <p><strong>Observación Detallada:</strong> {{adoptedAnimal.observacionDetail}}</p>
+                <p><strong>Enlace al Documento:</strong> <a [href]="getUriResource(adoptedAnimal.uriDocument!, 2)"
+                        target="_blank"> Aplaste aquí para ver el documento</a></p>
+            </div>
+
+        </div>
+    </ng-template>
+</p-dialog>
