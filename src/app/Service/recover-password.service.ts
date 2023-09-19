@@ -21,8 +21,7 @@ export class RecoverPasswordService {
     return this.http.post<String>(environment.apiuriPublic + '/auth/cambiarContraseniaUsuario', recoverPassword);
   }
 
-
-  public enviarGmail(enviargmail: EnviarGmail): Observable<EnviarGmail> {
-    return this.http.post<EnviarGmail>(environment.apiuriPublic + '/auth/enviar', enviargmail);
+  public enviarGmail(enviargmail: EnviarGmail):Observable<EnviarGmail>{
+    return this.http.post<EnviarGmail>(environment.apiuriPublic+'/auth/enviar', enviargmail);
   }
 }

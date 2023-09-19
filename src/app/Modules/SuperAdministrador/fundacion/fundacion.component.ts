@@ -17,7 +17,7 @@ export class FundacionComponent implements OnInit {
     constructor(
         private fundacionService: FundacionService,
         private imagenService: ImagenService,
-        private toastService: ToastrService
+        private toastrService: ToastrService,
     ) { }
 
     ngOnInit(): void {
@@ -49,7 +49,14 @@ export class FundacionComponent implements OnInit {
         let data = event.target.files[0];
 
         if (data.size >= 1048576) {
-            this.toastService.error('', 'IMAGEN MUY GRANDE.', { timeOut: 2000 });
+            this.toastrService.warning(
+                'El archivo seleccionado es demasiado grande',
+                ' Por favor, seleccione un archivo menor a 1000 KB.',
+                {
+                    timeOut: 1000,
+                }
+            );
+            event.target.value = null;
             return;
         }
 
@@ -73,7 +80,7 @@ export class FundacionComponent implements OnInit {
             .updateFundacionById(this.fundacion.idFudacion!, this.fundacion)
             .subscribe((data) => {
                 this.fundacion = data;
-                this.toastService.success('', 'DATOS GUARDADOS.', { timeOut: 2000 });
+                this.toastrService.success('', 'DATOS GUARDADOS.', { timeOut: 2000 });
                 this.clearData()
             });
     }
