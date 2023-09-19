@@ -2,7 +2,7 @@
 
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+            <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-primary mr-2"
                 (click)="openNewTipoAnimal()" pTooltip="Crear nuevo tipo" tooltipPosition="bottom"></button>
         </ng-template>
 
@@ -18,7 +18,7 @@
     <p-table #dt [value]="ListTipoAnimal" [rows]="10" [paginator]="true"
         [globalFilterFields]="['idTipoAnimal', 'nombreTipo', 'descripcionAnimal']"
         [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} tipos animales"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tipo/S de animales"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
 
@@ -82,24 +82,24 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">En total son {{ ListTipoAnimal ?
-                ListTipoAnimal.length : 0 }} Tipos de animales.</div>
+                ListTipoAnimal.length : 0 }} Tipo/S de animales.</div>
         </ng-template>
     </p-table>
 </div>
 
 
 <p-dialog [(visible)]="tipoAnimalDialog" [style]="{ width: '450px', padding: screenWidth < 700 ? '10px' : '' }"
-    header="Product Details" [modal]="true" styleClass="p-fluid">
+    header="Detalles del tipo de animal" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="field">
-            <label for="nombreTipo"><strong>Nombre Tipo</strong></label>
+            <label for="nombreTipo"><strong>Nombre del Tipo</strong></label>
 
             <span class="p-input-icon-right ">
                 <i class="pi pi-info-circle"
                     [style.color]="submitted && !tipoAnimal.nombreTipo || errorUnique ? 'red':''"></i>
                 <input type="text"
                     [class]="submitted && (!tipoAnimal.nombreTipo || errorUnique) ? 'ng-invalid ng-dirty':''"
-                    id="nombreTipo" placeholder="Nombre tipo" pInputText [(ngModel)]="tipoAnimal.nombreTipo" required
+                    id="nombreTipo" placeholder="Ingrese el nombre del tipo" pInputText [(ngModel)]="tipoAnimal.nombreTipo" required
                     onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
                     [maxlength]="25" autofocus />
             </span>
@@ -116,7 +116,7 @@
                 cols="20" [class]="submitted && !tipoAnimal.nombreTipo ? 'ng-dirty':''"
                 onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
                 [maxlength]="250"></textarea>
-            <small class="p-error" *ngIf="submitted && !tipoAnimal.descripcionAnimal">Description is required.</small>
+            <small class="p-error" *ngIf="submitted && !tipoAnimal.descripcionAnimal">Description es requerido.</small>
         </div>
 
 
