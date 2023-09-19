@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SelectItem } from 'primeng/api';
 import { Animal } from 'src/app/Models/animal';
+import { EnviarGmail } from 'src/app/Models/enviargmail';
 import { Fundacion } from 'src/app/Models/fundacion';
 import { RazaAnimal } from 'src/app/Models/razaAnimal';
 import { TipoAnimal } from 'src/app/Models/tipoAnimal';
@@ -9,6 +11,7 @@ import { AnimalService } from 'src/app/Service/animal.service';
 import { CargarScrpitsService } from 'src/app/Service/cargar-scrpits.service';
 import { FundacionService } from 'src/app/Service/fundacion.service';
 import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
+import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 
 @Component({
@@ -26,6 +29,7 @@ export class HomeComponent implements OnInit {
 
   public listRazaAnimal: RazaAnimal[] = [];
   public razaAnimal = new RazaAnimal();
+  public enviarG = new EnviarGmail();
 
   razaAnimal2: SelectItem[] = [];
 
@@ -36,6 +40,8 @@ export class HomeComponent implements OnInit {
     private tipoAnimalService: TipoAnimalService,
     private router: Router,
     private fundacionService: FundacionService,
+    private enviarGmail:RecoverPasswordService,
+    private toastr: ToastrService
 
   ) {
     _CargarScript.Cargar(["home"]);
@@ -128,4 +134,5 @@ export class HomeComponent implements OnInit {
       localStorage.clear();
     });
   }
+
 }

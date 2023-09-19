@@ -1,11 +1,7 @@
 <p-card header="" class="m-2">
-    <h1 class="title">Control del Animal {{isIdAnimal}} </h1>
+    <h1 class="title">Control del Animal </h1>
     <div class="d-flex align-items-center">
-        <span class="p-input-icon-left" style="flex: 70%;">
-            <i class="pi pi-search"></i>
-            <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit"
-                [(ngModel)]="isTextDigit" pInputText style="width: 100%;" />
-        </span>
+
         <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Seleccionar
             Animal</button>
     </div>
@@ -15,7 +11,13 @@
 <!-- MODAL ANIMALES -->
 <p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
     [resizable]="false">
-
+    <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Buscar
+        Animal</button>
+    <span class="p-input-icon-left" style="flex: 70%;">
+        <i class="pi pi-search"></i>
+        <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit"
+            [(ngModel)]="isTextDigit" pInputText style="width: 100%;" />
+    </span>
     <p-card header="" class="m-5 text-center align-items-center">
         <div class="container">
             <div class="cardA-container">
@@ -57,6 +59,7 @@
                                 id="fechaControlAnimal" name="fechaControlAnimal"
                                 [(ngModel)]="control.fechaControlAnimal" [required]="true"></p-calendar>
                         </div>
+                        <small class="p-error" *ngIf="submitted && !control.fechaControlAnimal">Fecha es requerido.</small>
                     </div>
                 </div>
 
@@ -65,12 +68,15 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="nombreVeterinario" name="nombreVeterinario"
-                                    [(ngModel)]="control.nombreVeterinario" pattern="[A-Za-z\s]+"
-                                    title="Por favor ingrese solo letras" required />
+                                    [(ngModel)]="control.nombreVeterinario" required pattern="[A-Za-z\s]+"
+                                    title="Por favor ingrese solo letras" />
                                 <label htmlFor="nombreVeterinario">Nombre Veterinario <span
                                         class="red-asterisk"></span></label>
-
                             </span>
+                            
+                        </div>
+                        <div>
+                            <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es requerido.</small>
                         </div>
                     </div>
 
@@ -90,10 +96,13 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="number" pInputText id="pesoActual" name="pesoActual"
-                                    [(ngModel)]="control.pesoActual" required pattern="[0-9]+"
-                                    title="Por favor ingrese solo números" />
+                                    [(ngModel)]="control.pesoActual" required pattern="^\d+(\.\d{1,2})?$"
+                                    title="Por favor ingrese solo números positivos o cero" />
                                 <label htmlFor="pesoActual">Peso Actual <span class="red-asterisk"></span></label>
                             </span>
+                        </div>
+                        <div>
+                            <small class="p-error" *ngIf="submitted && control.pesoActual! < 0">El peso no puede ser negativo.</small>
                         </div>
                     </div>
 
@@ -107,6 +116,7 @@
                                 <button pButton type="button" (click)="showDialogToAddEstado()" label="Agregar Estado"
                                     class="p-button-primary p-button-rounded "></button>
                             </span>
+                            <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado Animla es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -122,6 +132,7 @@
                                     [options]="listTipoVacuna" [(ngModel)]="selectedVacuna"
                                     placeholder="Seleccione una vacuna" optionLabel="nombreVacuna"></p-dropdown>
                             </div>
+                            <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es requerido.</small>
                         </div>
                         <div class="grid p-fluid m-2">
                             <div class="col-12 md:col-12 mt-1">
@@ -153,7 +164,7 @@
 
                     <button type="button" (click)="agregarVacuna()" class="btn btn-primarys m-2">Agregar Vacuna</button>
                     <button type="button" (click)="limpiarVacunasTemporales()"
-                        class="btn btn-primarys m-2">Elimiar</button>
+                        class="btn btn-primarys m-2">Eliminar</button>
 
                     <div class="card centered-card" *ngIf="vacunasTemporales.length > 0">
                         <p-table [value]="vacunasTemporales" responsiveLayout="scroll">
@@ -229,7 +240,6 @@
                     <th>Fecha Vacunacion</th>
                     <th>Nombre Vacuna</th>
                     <th>Observaciones</th>
-                    <th>Editar</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-columns="columns" let-data>
@@ -237,7 +247,6 @@
                     <td>{{ data.fechaVacuna }}</td>
                     <td>{{ data.nombreVacuna }}</td>
                     <td>{{ data.observaciones }}</td>
-
                 </tr>
             </ng-template>
         </p-table>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-
 import { EnviarGmail } from 'src/app/Models/enviargmail';
 import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
 
@@ -12,12 +11,11 @@ import { RecoverPasswordService } from 'src/app/Service/recover-password.service
 export class ContactoComponent {
   public enviarG = new EnviarGmail();
 
-
   constructor(
-    private enviarGmail: RecoverPasswordService,
+    private enviarGmail:RecoverPasswordService,
     private toastr: ToastrService
+  ) {}
 
-  ) { }
   enviarCorreo() {
     if (
       this.enviarG.nombre &&
