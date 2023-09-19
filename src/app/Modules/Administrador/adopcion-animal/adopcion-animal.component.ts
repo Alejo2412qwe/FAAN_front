@@ -120,21 +120,20 @@ export class AdopcionAnimalComponent implements OnInit {
 					}
 				},
 				(error) => {
-					console.error(error);
+					this.toastService.error('Error al cargar la información, intentar nuevamente....');
+					// console.error(error);
 					// this.loading = false;
 				}
 			);
 		} catch (error) {
-			throw new Error();
+			this.toastService.error('Error al cargar la información, intentar nuevamente....');
+			// throw new Error();
 		}
 	}
 
 
 	// DIALOGO ACTIVAR SOLO VER, ADOPTAR UNO O MAS
 	openAllDialog(animalse: Animal) {
-		console.log("sssssssssssssssss  1")
-		console.log(animalse)
-		console.log("sssssssssssssssss  2")
 		if (this.mostrar) {
 			this.OpenDialogView(animalse);
 		} else {
@@ -258,7 +257,8 @@ export class AdopcionAnimalComponent implements OnInit {
 					this.loadingPerson = false;
 				});
 		} catch (error) {
-			throw new Error();
+			this.toastService.error('Error al cargar la informacion de personas, intentar nuevamente....');
+			// throw new Error();
 		}
 	}
 
@@ -272,7 +272,8 @@ export class AdopcionAnimalComponent implements OnInit {
 					this.loadingPerson = false;
 				});
 		} catch (error) {
-			throw new Error();
+			this.toastService.error('Error al cargar la informacion de busqueda, intentar nuevamente....');
+			// throw new Error();
 		}
 	}
 
@@ -308,7 +309,8 @@ export class AdopcionAnimalComponent implements OnInit {
 		try {
 			key = await this.uploadImage();
 		} catch (error) {
-			this.toastService.error('Upload image a problem');
+			this.toastService.error('Error al almacenar el documento, intentar nuevamente....');
+			// this.toastService.error('Upload image a problem');
 		}
 
 		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
@@ -345,7 +347,8 @@ export class AdopcionAnimalComponent implements OnInit {
 					}
 				});
 		} else {
-			alert('campos vacios..');
+			this.toastService.warning('Campos vacios o erroneos, intentar nuevamente...');
+			// alert('campos vacios..');
 		}
 
 	}
@@ -389,35 +392,26 @@ export class AdopcionAnimalComponent implements OnInit {
 				)
 			}
 		} else {
-			this.toastr.warning('campos vacios..');
+			this.toastService.warning('Campos vacios o erroneos, intentar nuevamente...');
 		}
 
 	}
 
 	// DIALOGO ADOPCION VIEW A UNO
 	OpenDialogView(animalse: Animal) {
-		console.log("sssssssssssssssss  1")
-		console.log(animalse)
-		console.log("sssssssssssssssss  2")
 		this.viewAdopcion(Number(animalse.idAnimal));
 		this.adopcionAnimalDialog = true;
 	}
 
 	// CARGAR DATOS DE ADPTADOS
 	viewAdopcion(idAnimal: number) {
-		console.log("sssssssssssssssss  1")
-		console.log(idAnimal)
-		console.log("sssssssssssssssss  2")
 		this.detalleEncabezadoService.getfindByIdAnimal(idAnimal).subscribe(
 			(data) => {
-				console.log("ssssssssssssssddd  1")
-				console.log(data);
 				this.detalleEncabesadoObject = data;
 				if (data != null) {
 					if (this.detalleEncabesadoObject.encabezadoAdopcion?.persona != null && this.detalleEncabesadoObject.animal != null
 						&& this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza != null && this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo != null
 						&& this.detalleEncabesadoObject.encabezadoAdopcion != null && this.detalleEncabesadoObject.documento != null) {
-						console.log("ssssssssssssssdddddddd  2")
 						this.keyDocumento = this.detalleEncabesadoObject.documento;
 						this.persona = this.detalleEncabesadoObject.encabezadoAdopcion?.persona;
 						this.animalSelect = this.detalleEncabesadoObject.animal;
@@ -426,6 +420,8 @@ export class AdopcionAnimalComponent implements OnInit {
 						this.encabezadoAdopcionObject = this.detalleEncabesadoObject.encabezadoAdopcion;
 						this.keyDocumento = this.detalleEncabesadoObject.documento;
 					}
+				} else {
+					this.toastService.error('Error al cargar la informacion intentarnuevamente....');
 				}
 			}
 		)
