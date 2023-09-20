@@ -86,3 +86,9 @@
   .clicked {
   background-color: red; /* Cambia esto al color deseado */
 }
+
+
+.pRequerido{
+    color: red;
+    text-align: center;
+}

@@ -305,15 +305,16 @@ export class AdopcionAnimalComponent implements OnInit {
 	async saveAdopcion() {
 		this.submitted = true;
 
-		let key: string
-		try {
-			key = await this.uploadImage();
-		} catch (error) {
-			this.toastService.error('Upload image a problem');
-		}
-
 		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
-			&& !this.isEmpty(this.animalSelect) && !this.isEmpty(this.persona)) {
+			&& !this.isEmpty(this.animalSelect) && !this.isEmpty(this.persona) && this.avatarURL) {
+
+			let key: string
+			try {
+				key = await this.uploadImage();
+			} catch (error) {
+				this.toastr.error('Error, documento .pdf no se guardó intentar nuevamente...');
+			}
+
 			this.detalleEncabezadoService.getfindByIdAnimal(Number(this.animalSelect.idAnimal)).subscribe((data) => {
 				if (data == null) {
 					this.encabezadoAdopcionObject.fechaAdopcion = this.fechaAdoption;
@@ -333,35 +334,35 @@ export class AdopcionAnimalComponent implements OnInit {
 												this.CloseDialog();
 												this.cargar();
 											} else {
-												this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+												this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 											}
 										}, (error) => {
-											this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+											this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 										});
 									} else {
-										this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+										this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 									}
 								}, (error) => {
-									this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+									this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 								});
 							} else {
-								this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+								this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 							}
 						}, (error) => {
-							this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+							this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 						});
 				} else {
-					this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
+					this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
 					this.CloseDialog();
 					this.cargar();
 				}
 			}, (error) => {
-				this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
+				this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
 				this.CloseDialog();
 				this.cargar();
 			});
 		} else {
-			this.toastr.error('Error campos vacios intentar nuevamente...')
+			this.toastr.error('Error, campos vacíos intentar nuevamente...')
 		}
 
 	}
@@ -371,15 +372,15 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.submitted = true;
 		let fini = 0;
 
-		let key: string
-		try {
-			key = await this.uploadImage();
-		} catch (error) {
-			this.toastService.error('Upload image a problem');
-		}
-
 		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
-			&& this.listAnimalSelectAdopcion.length > 1 && !this.isEmpty(this.persona)) {
+			&& this.listAnimalSelectAdopcion.length > 1 && !this.isEmpty(this.persona) && this.avatarURL) {
+
+			let key: string
+			try {
+				key = await this.uploadImage();
+			} catch (error) {
+				this.toastr.error('Error, documento .pdf no se guardó intentar nuevamente...');
+			}
 
 			for (let a = 0; a < this.listAnimalSelectAdopcion.length; a++) {
 				this.detalleEncabezadoService.getfindByIdAnimal(Number(this.listAnimalSelectAdopcion[a].idAnimal)).subscribe((data) => {
@@ -402,39 +403,39 @@ export class AdopcionAnimalComponent implements OnInit {
 												this.cargar();
 											}
 										} else {
-											this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+											this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 											this.CloseDialog();
 											this.cargar();
 										}
 									}, (error) => {
-										this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+										this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 										this.CloseDialog();
 										this.cargar();
 									});
 								} else {
-									this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+									this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 									this.CloseDialog();
 									this.cargar();
 								}
 							});
 						}, (error) => {
-							this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
+							this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' no fue adoptado intentar nuevamente...');
 							this.CloseDialog();
 							this.cargar();
 						});
 					} else {
-						this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
+						this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
 						this.CloseDialog();
 						this.cargar();
 					}
 				}, (error) => {
-					this.toastr.error('Error ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
+					this.toastr.error('Error, ' + this.animalSelect.nombreAnimal + ' ya fue adoptado intentar nuevamente...');
 					this.CloseDialog();
 					this.cargar();
 				});
 			}
 		} else {
-			this.toastr.error('Error campos vacion intentar nuevamente...');
+			this.toastr.error('Error, campos vacíos intentar nuevamente...');
 		}
 
 	}

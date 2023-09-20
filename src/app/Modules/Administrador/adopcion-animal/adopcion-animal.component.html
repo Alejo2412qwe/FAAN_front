@@ -3,7 +3,7 @@
     <!-- BUSQUEDA Y ADOPTADO OR NO ADOPTADO -->
 
     <p-card header="">
-        <h1 class="title">Adopcion del Animal </h1>
+        <h1 class="title">Adopción del Animal </h1>
         <div class="formgrid grid">
             <div class="field col-12 md:col-3">
                 <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
@@ -104,6 +104,9 @@
         header="Adopcion" [modal]="true" styleClass="p-fluid" (onHide)="closeAllDialog()">
         <ng-template pTemplate="content">
 
+
+            <p class="pRequerido">Los campos marcados con * son de ingreso obligatorio.</p>
+
             <!-- SELECCIONAR ADOPTANTE -->
             <p-panel header="Adoptante" [toggleable]="true">
                 <div class="text-center">
@@ -197,23 +200,21 @@
                             <div class="col-12 md:col-12">
 
                                 <!-- ENCABESADO ADOPCION REGISTRO -->
-                                <label for="fechaAnimal"><strong>Fecha de Adopcion</strong></label>
+                                <label for="fechaAnimal"><strong>Fecha de Adopción</strong></label>
                                 <span class="p-input-icon-right ">
                                     <div class="p-inputgroup">
                                         <input id="fechaAnimal" value="{{fechaAdoption}}" pInputText disabled="true" />
                                     </div>
                                 </span>
 
-                                <label for="observacionesAdopcion"><strong>Observaciones</strong></label>
+                                <label for="observacionesAdopcion"><strong>Observaciones: *</strong></label>
                                 <span class="p-input-icon-right ">
                                     <textarea rows="5" cols="30" id="observacionesAdopcion" pInputTextarea
                                         [disabled]="mostrar"
                                         [(ngModel)]="encabezadoAdopcionObject.observacion"></textarea>
                                 </span>
                                 <small class="p-error"
-                                    *ngIf="submitted && !encabezadoAdopcionObject.observacion && mostrar == false">Observaciones
-                                    is
-                                    required.</small>
+                                    *ngIf="submitted && !encabezadoAdopcionObject.observacion && mostrar == false">El campo observaciones es requerido.</small>
 
                                 <div class="row">
                                     <!-- DATOS ANIMAL SELECCIONADO ONE -->
@@ -350,22 +351,19 @@
                                     <!-- REGISTRO DETALLE ADOPCION -->
                                     <div class="col-12 md:col-6">
                                         <p-scrollPanel [style]="{ width: '100%', height: '650px' }">
-                                            <p-fieldset legend="Detalle Adopcion"
+                                            <p-fieldset legend="Detalle Adopción"
                                                 [style]="{ width: '100%', height: '100%' }">
-                                                <label for="observacionesAdopcionDetalle"><strong>Observaciones
-                                                        Detalle</strong></label>
+                                                <label for="observacionesAdopcionDetalle"><strong>Observaciones, detalle: *</strong></label>
                                                 <span class="p-input-icon-right ">
                                                     <textarea rows="5" cols="30" id="observacionesAdopcionDetalle"
                                                         [disabled]="mostrar" pInputTextarea
                                                         [(ngModel)]="detalleEncabesadoObject.observacion"></textarea>
                                                 </span>
                                                 <small class="p-error"
-                                                    *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">Observaciones
-                                                    Detalle is
-                                                    required.</small>
+                                                    *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">El campo observaciones, detalle es requerido.</small>
                                                 <br>
 
-                                                <label for="fotoAnimal"><strong>Documento .pdf</strong></label>
+                                                <label for="fotoAnimal"><strong>Documento .pdf: *</strong></label>
                                                 <p-card>
 
                                                     <div class="perfil-usuario-portada" *ngIf="mostrar == true">
