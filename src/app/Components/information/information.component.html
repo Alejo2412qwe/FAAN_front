@@ -1,6 +1,9 @@
 <app-header></app-header>
 
 
+
+
+
 <body style="border-width: 10px; align-items: center;">
     <section>
         <div class="slider">
@@ -56,65 +59,144 @@
         </div>
     </section>
 
-    <br>
-    <br>
-    <h5><span class="icon a"><i class="fas fa-dog"></i></span>ACERCA DE NOSOTROS:</h5>
-    <br>
-    <br>
-
-    <section class="container-boxes">
-        <div class="box">
-            <div class="icon">
-                <i class="fas fa-info-circle"></i> <!-- Icono de información -->
-            </div>
-            <div class="text">
-                <a>
-                    <h3>¿QUIENES SOMOS?</h3>
-                    <p>FAAN es un grupo de defensa animal, sin ánimo de lucro, que tiene como finalidad ayudar y acoger
-                        a
-                        cuantos animales abandonados en situaciones de riesgo se pueda, a su vez busca crear conciencia
-                        en
-                        cuanto al respeto animal.</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="icon">
-                <i class="fas fa-bullseye"></i> <!-- Icono de objetivo -->
-            </div>
-            <div class="text">
-                <a>
-                    <h3>OBJETIVOS</h3>
-                    <p>
-                        • Rescatar animales abandonados en situación de riesgo y buscarles un hogar responsable luego de
-                        haber
-                        tenido atención médica oportuna y rehabilitación social en caso de requerirse.
-                        <br>• Disminuir el maltrato animal creando conciencia acerca del tema.
-                        <br>• Fomentar la importancia de la esterilización de animales de compañía para evitar la
-                        sobrepoblación.
-                        <br>• Reducir el número de animales abandonados
-                    </p>
-                </a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="icon">
-                <i class="fas fa-donate"></i> <!-- Icono de donación -->
-            </div>
-            <div class="text">
-                <a>
-                    <h3>FINANCIAMIENTO</h3>
-                    <p>Nos financiamos de las donaciones realizadas por personas particulares o empresas que desean
-                        aportar con
-                        nuestra causa, además de recaudar fondos mediante diversas actividades realizadas por el grupo,
-                        tales
-                        como ventas de artículos donados, realización de rifas, eventos y venta de productos varios.</p>
-                </a>
-            </div>
-        </div>
-    </section>
 
 </body>
+
+
+
+
+
+
+<div class="px-4 py-8 md:px-6 lg:px-8">
+    <div class="text-900 font-bold text-6xl mb-4 text-center">
+        <h5><span class="icon a"><i class="fas fa-dog"></i></span>ACERCA DE NOSOTROS:</h5>
+    </div>
+
+    <style>
+        .datai {
+            transition: all 0.3s ease-out;
+        }
+
+
+        .datai:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #D3D3D3;
+        }
+    </style>
+
+
+    <div class="grid">
+        <div class="col-12 lg:col-4 ">
+            <div class="p-3 h-full">
+                <div class="shadow-2 p-3 h-full flex flex-column datai" style="border-radius: 6px">
+                    <div class="text-900 font-medium text-xl mb-2 text-center"><span
+                            class="font-bold text-2xl text-900">¿QUIENES
+                            SOMOS?</span>
+                    </div>
+
+                    <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span class="text-900" style="text-align: justify;">FAAN es un grupo de defensa animal, sin
+                                ánimo de lucro, que tiene
+                                como finalidad ayudar y acoger a cuantos animales
+                                abandonados en situaciones de riesgo se pueda, a su vez busca crear conciencia en cuanto
+                                al respeto animal.</span>
+                        </li>
+
+                    </ul>
+                    <div class="icon text-center">
+                        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+                    </div>
+                </div>
+                <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
+            </div>
+        </div>
+
+        <div class="col-12 lg:col-4">
+            <div class="p-3 h-full">
+                <div class="shadow-2 p-3 h-full flex flex-column datai" style="border-radius: 6px">
+                    <div class="text-900 font-medium text-xl mb-2 text-center"><span
+                            class="font-bold text-2xl text-900">OBJETIVOS</span>
+                    </div>
+
+                    <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span class="text-900" style="text-align: justify;">Rescatar animales abandonados en
+                                situación de riesgo y buscarles un hogar responsable luego de haber tenido atención
+                                médica oportuna y rehabilitación</span>
+                        </li>
+
+                    </ul>
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span class="text-900" style="text-align: justify;">Disminuir el maltrato animal creando
+                                conciencia acerca del tema.</span>
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span class="text-900" style="text-align: justify;">Fomentar la importancia de la
+                                esterilización de animales de compañía para evitar la sobrepoblación.</span>
+                        </li>
+
+                    </ul>
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span class="text-900" style="text-align: justify;">Reducir el número de animales
+                                abandonados</span>
+                        </li>
+
+                    </ul>
+                    <div class="icon text-center">
+                        <i class="fas fa-bullseye"></i> <!-- Icono de objetivo -->
+                    </div>
+                </div>
+                <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
+            </div>
+        </div>
+
+        <div class="col-12 lg:col-4">
+            <div class="p-3 h-full">
+                <div class="shadow-2 p-3 h-full flex flex-column datai" style="border-radius: 6px">
+                    <div class="text-900 font-medium text-xl mb-2 text-center"><span
+                            class="font-bold text-2xl text-900">FINANCIAMIENTO</span>
+                    </div>
+
+                    <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span class="text-900" style="text-align: justify;">Nos financiamos de las donaciones
+                                realizadas por personas particulares o empresas que desean
+                                aportar con
+                                nuestra causa, además de recaudar fondos mediante diversas actividades realizadas por el
+                                grupo,
+                                tales
+                                como ventas de artículos donados, realización de rifas, eventos y venta de productos
+                                varios.</span>
+                        </li>
+
+                    </ul>
+                    <div class="icon text-center">
+                        <i class="fas fa-donate"></i> <!-- Icono de donación -->
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
+        </div>
+    </div>
+
+</div>
+
+
 <app-footer></app-footer>

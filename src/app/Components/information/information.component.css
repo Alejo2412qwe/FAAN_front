@@ -22,12 +22,12 @@ nav {
     margin: 0 10px;
 }
 
-.link-3:hover {
+/* .link-3:hover {
     background-color: #ffffff;
     color: #003cff;
     padding: 24px 10px;
     border-radius: 50%;
-}
+} */
 
 .center-container {
     display: flex;
@@ -103,7 +103,7 @@ body {
     max-width: 90vw;
 }
 
-.box {
+/* .box {
     background: rgba(247, 250, 251);
     margin: 1rem;
     padding: .5rem;
@@ -114,12 +114,12 @@ body {
     max-height: 580px;
     min-height: 580px;
     transition: all 250ms ease-out;
-}
+} */
 
-.box:hover {
+/* .box:hover {
     background: rgb(247, 250, 251);
     transform: translateY(-20%);
-}
+} */
 
 .box a {
     text-decoration: none;
