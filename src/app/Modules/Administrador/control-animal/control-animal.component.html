@@ -11,19 +11,18 @@
 <!-- MODAL ANIMALES -->
 <p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
     [resizable]="false">
-    <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Buscar
-        Animal</button>
+    <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Buscar Animal</button>
     <span class="p-input-icon-left" style="flex: 70%;">
         <i class="pi pi-search"></i>
-        <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit"
-            [(ngModel)]="isTextDigit" pInputText style="width: 100%;" />
+        <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" [(ngModel)]="isTextDigit" pInputText style="width: 100%;" (ngModelChange)="onInputChange()" />
     </span>
     <p-card header="" class="m-5 text-center align-items-center">
         <div class="container">
             <div class="cardA-container">
                 <div class="cardA" *ngFor="let mascotas of ListAnimales">
                     <div class="img-wrapper">
-                        <img src="../../../../assets/img/dog_eyes.jpg" alt="Imagen de mascota">
+                        <img [src]="avatarURL ? avatarURL: mascotas.fotoAnimal ? getUriFile(mascotas.fotoAnimal): 'https://us.123rf.com/450wm/dervish37/dervish371805/dervish37180500017/101552833-icono-de-vector-gato-y-perro.jpg?ver=6'"
+                            alt="img-avatar" height="165px">
                     </div>
                     <p class="nombre">{{mascotas.nombreAnimal}}</p>
                     <p class="placa"><span style="font-weight: bold;">Placa:</span> {{mascotas.placaAnimal}}</p>
@@ -35,12 +34,14 @@
             </div>
         </div>
         <div class="m-5" style="text-align: center; align-items: center;">
-            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()"
-                class="btn btn-primarys p-button-rounded"><i class="pi pi-arrow-circle-left"></i></button>
-            <button *ngIf="isPage !== pageTotal" type="button" (click)="siguientePage()"
-                class="btn btn-primarys p-button-rounded " style="margin-left: 50px;"> <i
-                    class="pi pi-arrow-circle-right"></i></button>
+            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()" class="btn btn-primarys p-button-rounded">
+                <i class="pi pi-arrow-circle-left"></i>
+            </button>
+            <button *ngIf="isPage !== pageTotal - 1 && pageTotal > 0" type="button" (click)="siguientePage()" class="btn btn-primarys p-button-rounded" style="margin-left: 50px;">
+                <i class="pi pi-arrow-circle-right"></i>
+            </button>
         </div>
+        
     </p-card>
 
 </p-dialog>
@@ -59,7 +60,8 @@
                                 id="fechaControlAnimal" name="fechaControlAnimal"
                                 [(ngModel)]="control.fechaControlAnimal" [required]="true"></p-calendar>
                         </div>
-                        <small class="p-error" *ngIf="submitted && !control.fechaControlAnimal">Fecha es requerido.</small>
+                        <small class="p-error" *ngIf="submitted && !control.fechaControlAnimal">Fecha es
+                            requerido.</small>
                     </div>
                 </div>
 
@@ -68,15 +70,16 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="nombreVeterinario" name="nombreVeterinario"
-                                    [(ngModel)]="control.nombreVeterinario" required pattern="[A-Za-z\s]+"
-                                    title="Por favor ingrese solo letras" />
+                                    [(ngModel)]="control.nombreVeterinario" required pattern="[A-Za-z\s.]+"
+                                    title="Por favor ingrese solo letras y puntos" />
                                 <label htmlFor="nombreVeterinario">Nombre Veterinario <span
                                         class="red-asterisk"></span></label>
                             </span>
-                            
+
                         </div>
                         <div>
-                            <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es requerido.</small>
+                            <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es
+                                requerido.</small>
                         </div>
                     </div>
 
@@ -102,7 +105,8 @@
                             </span>
                         </div>
                         <div>
-                            <small class="p-error" *ngIf="submitted && control.pesoActual! < 0">El peso no puede ser negativo.</small>
+                            <small class="p-error" *ngIf="submitted && control.pesoActual! < 0">El peso no puede ser
+                                negativo.</small>
                         </div>
                     </div>
 
@@ -116,7 +120,8 @@
                                 <button pButton type="button" (click)="showDialogToAddEstado()" label="Agregar Estado"
                                     class="p-button-primary p-button-rounded "></button>
                             </span>
-                            <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado Animla es requerido.</small>
+                            <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado Animla es
+                                requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -132,7 +137,8 @@
                                     [options]="listTipoVacuna" [(ngModel)]="selectedVacuna"
                                     placeholder="Seleccione una vacuna" optionLabel="nombreVacuna"></p-dropdown>
                             </div>
-                            <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es requerido.</small>
+                            <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es
+                                requerido.</small>
                         </div>
                         <div class="grid p-fluid m-2">
                             <div class="col-12 md:col-12 mt-1">
@@ -206,7 +212,7 @@
                         <th>Nombre Veterinario</th>
                         <th>Peso Actual</th>
                         <th>Estado Animal</th>
-                        <th>Descripción Estado</th>
+                        <th>Observaciones</th>
                         <th>Detalle Vacunas</th>
                     </tr>
                 </ng-template>
@@ -217,7 +223,7 @@
                         <td>{{ data.nombreVeterinario }}</td>
                         <td>{{ data.pesoActual }}</td>
                         <td>{{ data.tipoEstadoAnimal}}</td>
-                        <td>{{ data.descripcion}}</td>
+                        <td>{{ data.observaciones}}</td>
                         <td>
                             <button type="button" (click)="VerDetalle(data.idControlAnimal)"
                                 class="btn btn-primarys m-2">Ver</button>

@@ -12,6 +12,7 @@ import { NotifacionesService } from 'src/app/Service/notifaciones.service';
 import { PayloadService } from 'src/app/Service/peyloads.service';
 import { TipoVacunaService } from 'src/app/Service/tipoVacuna.service';
 import { VacunaService } from 'src/app/Service/vacuna.service';
+import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
 @Component({
   selector: 'app-control-animal',
   templateUrl: './control-animal.component.html',
@@ -73,7 +74,9 @@ export class ControlAnimalComponent implements OnInit {
   isFirst: boolean = false;
   isLast: boolean = false;
   public loadingVacuna: boolean = false;
-
+  public getUriFile(fileName: string): string {
+		return getFile(fileName, FOLDER_IMAGES);
+	}
 
 
   isTextDigit: string = '';
@@ -109,6 +112,7 @@ export class ControlAnimalComponent implements OnInit {
   vacunasAnimales: VacunasAnimales[] = [];
   controlesanimales: PayloadControlAnimal[] = [];
   estadosanimales: EstadoAnimal[] = [];
+  public avatarURL: string = '';
 
   VerDetalle(idControlAnimal: number) {
     console.log(idControlAnimal);
@@ -192,7 +196,12 @@ export class ControlAnimalComponent implements OnInit {
     this.visible = true;
     this.getAllMascotas();
   }
-
+  
+  onInputChange() {
+    if (this.isTextDigit === '') {
+      this.getAllMascotas();
+    }
+  }
   // MODAL TIPO VACUNA
   tipoVacuna = new TipoVacuna();
   visibleTipoVacuna: boolean = false;
@@ -368,6 +377,7 @@ export class ControlAnimalComponent implements OnInit {
 
             this.toastr.success('Control creado con exito');
             this.getListaVacunasByIdControlAnimal(this.isControlAnimal.idControlAnimal!);
+            this.limpiarVacunasTemporales2()
             this.control = {} as ControlAnimal;
             this.isControlAnimal = {} as ControlAnimal;
           });
@@ -405,21 +415,20 @@ export class ControlAnimalComponent implements OnInit {
     } else {
       const currentDate = new Date();
       const daysUntilNextVaccination = Math.floor((new Date(this.vacuna.fechaProximaVacuna).getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
-
+      console.log(this.vacuna.fechaProximaVacuna);
       this.vacunasTemporales.push({
         tipoVacuna: this.selectedVacuna,
         observaciones: this.vacuna.observaciones,
         fechaProximaVacuna: this.vacuna.fechaProximaVacuna,
         estadoVacuna: true,
-        fechaVacuna: this.obtenerFechaActual(),
+        fechaVacuna: this.vacuna.fechaProximaVacuna, // Usar la fecha seleccionada
         diasFaltantes: daysUntilNextVaccination,
       });
-
+  
       this.toastr.info('Vacuna Agregada');
       this.limpiarCampos();
       console.log(this.vacunasTemporales);
     }
-
   }
   eliminarVacuna(vacuna: any) {
     const index = this.vacunasTemporales.indexOf(vacuna);
@@ -439,6 +448,11 @@ export class ControlAnimalComponent implements OnInit {
   limpiarVacunasTemporales() {
     this.toastr.warning("Vacunas canceladas");
 
+    this.vacunasTemporales = [];
+    console.log(this.vacunasTemporales);
+  }
+
+  limpiarVacunasTemporales2() {
     this.vacunasTemporales = [];
     console.log(this.vacunasTemporales);
   }
