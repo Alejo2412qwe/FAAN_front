@@ -58,7 +58,7 @@ export class LoaderPeticionesInterceptor implements HttpInterceptor {
     }
 
     private openMessage() {
-        this.toastrService.error('', 'SU SESION HA CADUCADO, INGRESE NUEVAMENTE', {
+        this.toastrService.error('', 'SU SESIÓN HA CADUCADO, INGRESE NUEVAMENTE', {
             timeOut: 3000,
         });
     }
