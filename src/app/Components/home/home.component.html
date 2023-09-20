@@ -46,26 +46,23 @@
   🐶Animales que están en la fundación🐱
 </div>
 <div class="m-5 surface-card p-4 shadow-2 border-round">
-  <p-carousel [value]="ListAnimales" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
-    <ng-template let-animal pTemplate="item">
-      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+  <div class="cards">
+    <div class="card" *ngFor="let aniamles of ListAnimales">
+      <div class="card__inner">
+        <span>{{aniamles.nombreAnimal}}</span>
         <div class="mb-3">
           <img src="https://img.freepik.com/foto-gratis/perrito-joven-posando-alegre_155003-28765.jpg"
             [alt]="animal.fotoAnimal" class="w-6 shadow-2" />
         </div>
-        <div>
-          <h4 class="mb-1">{{ animal.nombreAnimal }}</h4>
-          <h6 class="mt-0 mb-3">
-            <!-- {{ "Raza" + animal.razaAnimal!.nombreRaza }} -->
-          </h6>
-          <div class="car-buttons mt-5">
-            <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"
-              (onClick)="goFormulario()"></p-button>
-          </div>
-        </div>
       </div>
-    </ng-template>
-  </p-carousel>
+    </div>
+  </div>
+  <div class="page m-5" style="text-align: center; align-items: center; margin-bottom: 10px;">
+    <button *ngIf="isPage !== 0" type="button" (click)="anteriorE()" class="btn p-button-rounded"
+      style="margin: 5px; margin-bottom: 30px;"><i class="pi pi-arrow-circle-left"></i></button>
+    <button *ngIf="isPage !== pageTotal" type="button" (click)="siguienteE()" class="btn p-button-rounded "
+      style="margin: 5px; margin-bottom: 30px; margin-left: 50px;"> <i class="pi pi-arrow-circle-right"></i></button>
+  </div>
 </div>
 
 <!-- SECCION FOOTER -->

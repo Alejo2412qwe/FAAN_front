@@ -17,7 +17,7 @@ import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   public animal = new Animal();
@@ -40,26 +40,14 @@ export class HomeComponent implements OnInit {
     private tipoAnimalService: TipoAnimalService,
     private router: Router,
     private fundacionService: FundacionService,
-    private enviarGmail:RecoverPasswordService,
+    private enviarGmail: RecoverPasswordService,
     private toastr: ToastrService
 
   ) {
     _CargarScript.Cargar(["home"]);
   }
 
-  // MODEL
-  public fundacion = new Fundacion();
-
-  public getDataFundation(idFundacion: number) {
-    this.fundacionService.getFundacionById(idFundacion).subscribe({
-      next: (resp) => {
-        this.fundacion = resp;
-      }, error: (err) => {
-        console.error('err');
-      }
-    });
-  }
-
+  responsiveOptions: any[] | undefined;
 
   ngOnInit(): void {
 
@@ -86,13 +74,25 @@ export class HomeComponent implements OnInit {
     this.getAllMascotas()
 
   }
+  // MODEL
+  public fundacion = new Fundacion();
+
+  public getDataFundation(idFundacion: number) {
+    this.fundacionService.getFundacionById(idFundacion).subscribe({
+      next: (resp) => {
+        this.fundacion = resp;
+      }, error: (err) => {
+        console.error('err');
+      }
+    });
+  }
 
   // GET ANIMALES FOR PARAMETERS
   public ListAnimales!: Animal[];
 
   // PAGES
   isPage: number = 0;
-  isSize: number = 8
+  isSize: number = 3;
   isSosrt: string[] = ['nombreAnimal', 'asc']
 
   pageTotal: number = 0;
@@ -105,22 +105,27 @@ export class HomeComponent implements OnInit {
       this.animalesService.getAllAnimalesPagesOrPlacaOrName(this.isTextDigit!, this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
         if (data !== null) {
           this.ListAnimales = data.content;
-          console.log("----")
-          console.log(data.content)
           this.pageTotal = data.totalPages
         }
       });
     } catch (error) {
-      console.log('Exeption')
+      null;
     }
   }
 
-  responsiveOptions: any[] | undefined;
+  anteriorE(): void {
+    if (!this.isFirst) {
+      this.isPage--;
+      this.getAllMascotas();
+    }
+  }
 
-
-
-
-
+  siguienteE(): void {
+    if (!this.isLast) {
+      this.isPage++;
+      this.getAllMascotas();
+    }
+  }
 
   // NEW
   goLogin() {
