@@ -113,6 +113,8 @@
 
                 <p-panel header="DATOS PERSONALES">
                     <!-- FIRTS DATA -->
+
+                    <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
                     <div class="grid p-fluid">
                         <div class="col-12 md:col-4 mt-2">
                             <span class="p-float-label">
@@ -120,7 +122,7 @@
                                     class="p-inputtext-sm"
                                     onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
                                     required />
-                                <label for="nombre">Nombre *</label>
+                                <label for="nombre">Nombre: *</label>
                             </span>
                             <small class="p-error" *ngIf="submitted && !formulario.nombre">{{error}}</small>
                         </div>
@@ -131,7 +133,7 @@
                                     [(ngModel)]="formulario.ocupacion" class="p-inputtext-sm"
                                     onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
                                     required />
-                                <label for="ocupacion">Ocupación *</label>
+                                <label for="ocupacion">Ocupación: *</label>
                             </span>
                             <small class="p-error" *ngIf="submitted && !formulario.ocupacion">{{error}}</small>
                         </div>
@@ -142,7 +144,7 @@
                                     [(ngModel)]="formulario.direccionDomiciliaria" class="p-inputtext-sm"
                                     onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
                                     required />
-                                <label for="float-input">Dirección domiciliaria *</label>
+                                <label for="float-input">Dirección domiciliaria: *</label>
                             </span>
                             <small class="p-error"
                                 *ngIf="submitted && !formulario.direccionDomiciliaria">{{error}}</small>
@@ -168,7 +170,7 @@
                             <span class="p-float-label">
                                 <input id="correoE" name="correoE" type="text" pInputText
                                     [(ngModel)]="formulario.correoE" class="p-inputtext-sm" required />
-                                <label for="float-input">Correo Electrónico *</label>
+                                <label for="float-input">Correo Electrónico: *</label>
                             </span>
                             <small class="p-error" *ngIf="submitted && !validarCorreoE(formulario.correoE)">Correo no
                                 valida</small>
@@ -179,9 +181,8 @@
                                 <input id="telefonoCasa" name="telefonoCasa" type="text" pInputText
                                     [(ngModel)]="formulario.telefonoCasa" class="p-inputtext-sm"
                                     onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' required />
-                                <label for="float-input">Teléfono Casa * </label>
+                                <label for="float-input">Teléfono Casa </label>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !formulario.telefonoCasa">{{error}}</small>
                         </div>
                     </div>
 
@@ -194,7 +195,7 @@
                                     onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' />
                                 <label for="float-input">Teléfono Trabajo</label>
                             </span>
-                            <small class="p-error" *ngIf="submitted && !formulario.telefonoTrabajo">{{error}}</small>
+
                         </div>
 
                         <div class="col-12 md:col-4 mt-2">
@@ -202,7 +203,7 @@
                                 <input id="celular" name="celular" type="text" pInputText
                                     [(ngModel)]="formulario.celular" class="p-inputtext-sm"
                                     onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' requiered />
-                                <label for="float-input">Celular *</label>
+                                <label for="float-input">Celular: *</label>
                             </span>
                             <small class="p-error" *ngIf="submitted && !formulario.celular">{{error}}</small>
                         </div>
@@ -211,7 +212,7 @@
                             <span class="p-float-label">
                                 <input id="estadoCivil" name="estadoCivil" type="text" pInputText
                                     [(ngModel)]="formulario.estadoCivil" class="p-inputtext-sm" />
-                                <label for="float-input">Estado civil *</label>
+                                <label for="float-input">Estado civil: *</label>
                             </span>
                             <small class="p-error" *ngIf="submitted && !formulario.estadoCivil">{{error}}</small>
                         </div>
@@ -222,10 +223,9 @@
                         <div class="col-12 md:col-4 mt-2">
                             <p-inputNumber name="numeroMiembros" [(ngModel)]="formulario.numeroMiembros" mode="decimal"
                                 [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="10"
-                                class="p-inputtext-sm" placeholder="Número de miembros en la familia">
+                                class="p-inputtext-sm" placeholder="Número de miembros en la familia: *">
                             </p-inputNumber>
 
-                            <small class="p-error" *ngIf="submitted && !formulario.numeroMiembros">{{error}}</small>
                         </div>
 
                         <!-- NO REQUIERED -->
@@ -244,12 +244,12 @@
 
             <div class="data-about mt-2">
                 <p-panel header="INFORMACÍON">
-
+                    <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
                     <div class="p-grid p-fluid mt-2">
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.autorizacion1 ? 'color: red':''">
-                                1. ¿Quién es la persona que autorizará la adopción del animal? *
+                                1. ¿Quién es la persona que autorizará la adopción del animal?: *
                             </label>
                             <p-dropdown [options]="listPersonaAutorizada" name="autorizacion1"
                                 [(ngModel)]="formulario.autorizacion1" optionLabel="name" optionValue="name"
@@ -277,7 +277,7 @@
                                 2. ¿Están todos los miembros de la familia enterados y de acuerdo con la intención de
                                 adoptar un
                                 animal de
-                                compañía? *
+                                compañía?: *
                             </label>
 
                             <div class="flex align-items-center">
@@ -363,7 +363,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.animalesAnterioridad6 ? 'color: red':''">
-                                6. ¿Han tenido animales de compañía con anterioridad? *
+                                6. ¿Han tenido animales de compañía con anterioridad?: *
                             </label>
 
                             <div class="flex align-items-center">
@@ -385,7 +385,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.animalPasado7 ? 'color: red':''">
-                                7. ¿Qué animal era?
+                                7. ¿Qué animal era?: *
                             </label>
 
                             <input id="float-input" type="text" pInputText [(ngModel)]="formulario.animalPasado7"
@@ -400,7 +400,7 @@
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.tiempoVivido8 ? 'color: red':''">
 
-                                8. ¿Cuánto tiempo vivió con ustedes?
+                                8. ¿Cuánto tiempo vivió con ustedes?: *
                             </label>
 
                             <input id="tiempoVivido8" type="text" pInputText [(ngModel)]="formulario.tiempoVivido8"
@@ -415,7 +415,7 @@
 
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.animalAhora9 ? 'color: red':''">
-                                9. ¿En dónde está ahora el animal? ¿Por qué? Falleció, Como?
+                                9. ¿En dónde está ahora el animal? ¿Por qué? Falleció, Como?: *
                             </label>
                             <textarea rows="4" cols="30" pInputTextarea [(ngModel)]="formulario.animalAhora9"
                                 name="animalAhora9"></textarea>
@@ -428,7 +428,7 @@
 
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.vacunado10 ? 'color: red':''">
-                                10. ¿Estaba vacunado?
+                                10. ¿Estaba vacunado?: *
                             </label>
                             <div class="flex align-items-center">
                                 <p-radioButton name="vacunado10" value="SI"
@@ -452,7 +452,7 @@
                         <div class="col-12 md:col-6">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.vacunasAntes11 ? 'color: red':''">
-                                11. ¿Qué vacunas se le aplicaron? y ¿Cada cuánto tiempo se vacunaba?
+                                11. ¿Qué vacunas se le aplicaron? y ¿Cada cuánto tiempo se vacunaba?: *
                             </label>
                             <textarea rows="4" cols="30" pInputTextarea [(ngModel)]="formulario.vacunasAntes11"
                                 name="vacunasAntes11" placeholder="Ingrese respuesta"></textarea>
@@ -461,7 +461,7 @@
                         <div class="col-12 md:col-6">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.desparasitado12 ? 'color: red':''">
-                                12. ¿Estaba desparasitado? ¿Cada cuánto tiempo se desparasitaba?
+                                12. ¿Estaba desparasitado? ¿Cada cuánto tiempo se desparasitaba?: *
                             </label>
                             <textarea rows="4" cols="30" pInputTextarea [(ngModel)]="formulario.desparasitado12"
                                 name="desparasitado12" placeholder="Ingrese respuesta"></textarea>
@@ -475,7 +475,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.horasSolo14 ? 'color: red':''">
-                                13. ¿Cuántas horas del día permanecería solo?
+                                13. ¿Cuántas horas del día permanecería solo?: *
                             </label>
                             <p-inputNumber [(ngModel)]="formulario.horasSolo14" name="horasSolo14" mode="decimal"
                                 [showButtons]="true" [min]=" 0" [max]="10" class="p-inputtext-sm"
@@ -489,7 +489,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.pasariaAnimal15 ? 'color: red':''">
-                                14. ¿En dónde estaría mientras no hubiera nadie en casa? *
+                                14. ¿En dónde estaría mientras no hubiera nadie en casa?: *
                             </label>
 
                             <input id="pasariaAnimal15" type="text" pInputText [(ngModel)]="formulario.pasariaAnimal15"
@@ -504,7 +504,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.problemaAlergia16 ? 'color: red':''">
-                                15. ¿Hay alguien en su familia con problemas de alergias? *
+                                15. ¿Hay alguien en su familia con problemas de alergias?: *
                             </label>
 
                             <input id="problemaAlergia16" name="problemaAlergia16" type="text" pInputText
@@ -520,7 +520,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.resultaAlergico17 ? 'color: red':''">
-                                16. ¿Qué sucedería si alguien resultara alérgico al animal? *
+                                16. ¿Qué sucedería si alguien resultara alérgico al animal?: *
                             </label>
 
                             <input id="resultaAlergico17" name="resultaAlergico17" type="text" pInputText
@@ -536,7 +536,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.planeaHijos18 ? 'color: red':''">
-                                17. ¿Planea tener hijos? *
+                                17. ¿Planea tener hijos?: *
                             </label>
 
                             <div class="grid p-fluid">
@@ -567,7 +567,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.embaraza19 ? 'color: red':''">
-                                18. ¿Qué sucedería si usted o en caso de ser hombre, su pareja quedara embarazada? *
+                                18. ¿Qué sucedería si usted o en caso de ser hombre, su pareja quedara embarazada?: *
                             </label>
 
                             <input id="embaraza19" name="embaraza19" type="text" pInputText
@@ -581,7 +581,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.conoceGastos20 ? 'color: red':''">
-                                19. ¿Conoce los gastos que implica tener un perro o gato? *
+                                19. ¿Conoce los gastos que implica tener un perro o gato?: *
                             </label>
 
                             <input id="conoceGastos20" name="conoceGastos20" type="text" pInputText
@@ -598,7 +598,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.separacionFamilia21 ? 'color: red':''">
-                                20. Con quien quedaría el animalito en caso de separación? *
+                                20. Con quien quedaría el animalito en caso de separación?: *
                             </label>
 
                             <input id="separacionFamilia21" name="separacionFamilia21" type="text" pInputText
@@ -612,6 +612,8 @@
             <div class="data-about mt-2">
                 <p-panel header="VIVIENDA">
                     <!-- 21 -->
+                    <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
+
                     <div class="grid p-fluid mt-2">
                         <div class="col-12 md:col-6 mt-2">
 
@@ -697,7 +699,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.jardioPatio24 ? 'color: red':''">
-                                22. ¿Tiene jardín o patio? *
+                                22. ¿Tiene jardín o patio?: *
                             </label>
 
                             <div class="flex align-items-center">
@@ -765,7 +767,7 @@
 
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.dormirAnimalParte26 ? 'color: red':''">
-                                24. ¿En dónde dormiría? *
+                                24. ¿En dónde dormiría?: *
                             </label>
 
                             <div class="grid p-fluid">
@@ -806,8 +808,9 @@
                     <!-- 25 -->
                     <div class="p-grid p-fluid mt-2">
                         <div class="p-col-12 p-md-12 mt-2">
-                            <label class="font-bold block mb-2">
-                                25. Si vive en departamento, ¿hay otros vecinos que tengan animales de compañía?
+                            <label class="font-bold block mb-2"
+                                [style]="submitted && !formulario.vecinosAnimales27 ? 'color: red':''">
+                                25. Si vive en departamento, ¿hay otros vecinos que tengan animales de compañía?: *
                             </label>
 
                             <input id="vecinosAnimales27" name="vecinosAnimales27" type="text" pInputText
@@ -825,7 +828,7 @@
                                 [style]="submitted && !formulario.permiso28 ? 'color: red':''">
                                 26. En caso de renta o condominio cuentas con el permiso de tu casero o administración
                                 para
-                                poseer animales de compañía? *
+                                poseer animales de compañía?: *
                             </label>
 
                             <input id="permiso28" name="permiso28" type="text" pInputText
@@ -841,7 +844,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.mudarseLugar29 ? 'color: red':''">
-                                27. ¿Qué sucedería si tuviera que mudarse a otra casa o ciudad /país? *
+                                27. ¿Qué sucedería si tuviera que mudarse a otra casa o ciudad /país?: *
                             </label>
 
                             <textarea name="mudarseLugar29" rows="3" cols="30" pInputTextarea
@@ -859,7 +862,7 @@
                                 [style]="submitted && !formulario.mudarse30 ? 'color: red':''">
                                 28. ¿Qué sucedería si al mudarse algún lugar donde no admiten perros o gatos o de tener
                                 algún
-                                problema familiar o económico? *
+                                problema familiar o económico?: *
                             </label>
 
                             <textarea name="mudarse30" rows="3" cols="30" pInputTextarea
@@ -878,7 +881,7 @@
                                 29. ¿Está dispuesto a que el perro o gato tenga un periodo de ajuste en el que aprenda
                                 dónde
                                 debe ir al baño y se adapte
-                                a la familia? *
+                                a la familia?: *
                             </label>
 
                             <input id="dispuesto31" name="dispuesto31" type="text" pInputText
@@ -894,7 +897,7 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.enterarse32 ? 'color: red':''">
-                                30. ¿Cómo te enteraste de nosotros? *
+                                30. ¿Cómo te enteraste de nosotros?: *
                             </label>
 
                             <input id="enterarse32" name="enterarse32" type="text" pInputText
@@ -919,12 +922,12 @@
 
                     <div class="contain-principal text-center mt-3">
                         <p-button type="button" icon="pi pi-eye" [label]="loading ? 'Generando...':'Generar Formulario'"
-                            [loading]="loading" (onClick)="formValidate()"></p-button>
+                            [loading]="loading" (onClick)="formValidate()"
+                            pTooltip="Una vez completado los campos requeridos puedes generar el formulario"
+                            tooltipPosition="bottom"></p-button>
 
                     </div>
                 </p-panel>
-
-
 
             </div>
 

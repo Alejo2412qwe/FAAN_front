@@ -1,19 +1,8 @@
 export const EXCLUDE_FIELDS = [
-    'direccionTrabajo',
-    'telefonoTrabajo',
-    'numeroMiembros',
-    'edadNinos',
-    'acuerdo3',
-    'responseWhy3',
-    'animalesAnterioridad6',
-    'animalPasado7',
-    'tiempoVivido8',
-    'animalAhora9',
-    'vacunado10',
-    'vacunasAntes11',
-    'desparasitado12',
-    'tiempoDesparasitado13',
-    'horasSolo14',
+    'direccionTrabajo', //opc
+    'telefonoTrabajo', //opc 
+    'telefonoCasa', //opc
+    'numeroMiembros', //opc 
     'otrosComentarios33',
 ];
 
