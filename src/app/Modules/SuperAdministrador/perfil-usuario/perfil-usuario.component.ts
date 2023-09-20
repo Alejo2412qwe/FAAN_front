@@ -11,7 +11,7 @@ import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
   templateUrl: './perfil-usuario.component.html',
   styleUrls: ['./perfil-usuario.component.css']
 })
-export class PerfilUsuarioComponent implements OnInit { 
+export class PerfilUsuarioComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService,
@@ -23,7 +23,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
   public idUsuarioLoggin?: any;
   public avatarURL: string = '';
-
+  public avatarURLProfile: string = '';
   //OBTENER LA IMAGEN NEW MOTHOD------------------------------
   public getUriFile(fileName: string): string {
     return getFile(fileName, FOLDER_IMAGES);
@@ -35,7 +35,7 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   // GET DATA FOR USER-CONNECT
-  usuario?: Usuario;
+  usuario = new Usuario();
   roles: string[] = [];
   persona = new Persona();
 
