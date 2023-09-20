@@ -283,7 +283,7 @@
                                                         <p-card>
                                                             <section class="seccion-animal-foto mb-5 mt-3">
                                                                 <div class="imagen-container">
-                                                                    <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
+                                                                    <img [src]="getUriResource(animalSelect.fotoAnimal!, 1)"
                                                                         [alt]="animalSelect.nombreAnimal" width="30%" />
                                                                 </div>
                                                             </section>
