@@ -94,13 +94,15 @@
     header="Gestión Personas" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
 
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
+
         <form [formGroup]="formPerson">
 
             <input *ngIf="false" type="number" id="idPersona" name="idPersona" formControlName="idPersona"
                 formcontrolname="idPersona" />
 
             <div class="field">
-                <label for="identificacion"><strong>Ingrese su identificación</strong></label>
+                <label for="identificacion"><strong>Iidentificación: *</strong></label>
                 <input type="identificacion" pInputText id="identificacion" name="identificacion"
                     placeholder="Cédula..." formControlName="identificacion"
                     [class.is-invalid]="(respose && respose.ci) || formPerson.get('identificacion')!.invalid && formPerson.get('identificacion')!.touched"
@@ -118,15 +120,12 @@
                     <small class="text-danger" *ngIf="respose && respose.ci">
                         <strong>{{respose.ci}}</strong></small>
 
-
                 </div>
-
 
             </div>
 
-
             <div class="field">
-                <label for="correo"><strong>Ingrese su correo electrónico.</strong></label>
+                <label for="correo"><strong>Correo electrónico: *</strong></label>
                 <input type="correo" pInputText id="correo" name="correo" placeholder="Ej: example@email.com"
                     formControlName="correo"
                     [class.is-invalid]="(respose && respose.emailValidate) || formPerson.get('correo')!.invalid && formPerson.get('correo')!.touched"
@@ -145,7 +144,7 @@
             </div>
 
             <div class="field">
-                <label for="correo"><strong>Teléfono.</strong></label>
+                <label for="correo"><strong>Teléfono: </strong></label>
                 <input type="text" pInputText id="telefono" name="telefono" placeholder="Ej: 07454545"
                     formControlName="telefono"
                     [class.is-invalid]="formPerson.get('telefono')!.invalid && formPerson.get('telefono')!.touched"
@@ -163,7 +162,7 @@
 
             <div class="formgrid grid">
                 <div class="field col">
-                    <label for="nombre1"><strong>Primer Nombre: </strong></label>
+                    <label for="nombre1"><strong>Primer Nombre: * </strong></label>
                     <input type="text" pInputText id="nombre1" name="nombre1" placeholder="Nombre"
                         formControlName="nombre1"
                         [class.is-invalid]="formPerson.get('nombre1')!.invalid && formPerson.get('nombre1')!.touched"
@@ -188,7 +187,7 @@
 
             <div class="formgrid grid">
                 <div class="field col">
-                    <label for="apellido1"><strong>Apellido Paterno: </strong></label>
+                    <label for="apellido1"><strong>Apellido Paterno: * </strong></label>
                     <input type="text" pInputText id="apellido1" name="apellido1" placeholder="Apellido"
                         formControlName="apellido1"
                         [class.is-invalid]="formPerson.get('apellido1')!.invalid && formPerson.get('apellido1')!.touched"
@@ -211,7 +210,7 @@
 
 
             <div class="field ">
-                <label class="mb-3"><strong>Género: </strong></label>
+                <label class="mb-3"><strong>Género: * </strong></label>
 
                 <div class="formgrid grid">
                     <div class="field-radiobutton col-6">
@@ -234,17 +233,17 @@
 
             <div class="field">
                 <label for="fechaNacimiento"><strong>Fecha de Nacimiento.</strong></label>
-                <div class=" flex justify-content-center">
-                    <p-calendar class="max-w-full" [inline]="true" [showWeek]="true" formControlName="fechaNacimiento"
-                        [style]="{ 'height': '300px', 'font-size': '14px' }"></p-calendar>
-                </div>
-
                 <div *ngIf="formPerson.get('fechaNacimiento')?.dirty && formPerson.get('fechaNacimiento')?.errors">
                     <div *ngIf="formPerson.get('fechaNacimiento')?.errors?.['fechaNacimientoInvalida']">
                         <small class="text-danger"><strong>{{ formPerson.get('fechaNacimiento')?.errors?.['mensaje']
                                 }}</strong></small>
                     </div>
                 </div>
+                <div class=" flex justify-content-center">
+                    <p-calendar class="max-w-full" [inline]="true" [showWeek]="true" formControlName="fechaNacimiento"
+                        [style]="{ 'height': '300px', 'font-size': '14px' }"></p-calendar>
+                </div>
+
             </div>
 
         </form>

@@ -1,9 +1,9 @@
 <p-card header="" class="m-2">
     <section class="profile_container">
         <div class="profile_img_section">
-            <img class="profile_img-LG" [src]='"https://bucketgtmt.s3.amazonaws.com/" + usuario?.fotoPerfil' />
+            <img class="profile_img-LG" [src]="avatarURLProfile ? avatarURLProfile: usuario.fotoPerfil ? getUriFile(usuario.fotoPerfil) : 'assets/img/faan.jpg'" />
             <div class="flag_wrapper">
-                <img class="flag" [src]='"https://bucketgtmt.s3.amazonaws.com/" + fundacion.logoFundacion' alt="logo" />
+                <img class="flag" [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? getUriFile(fundacion.logoFundacion) : 'assets/img/faan.jpg'" alt="logo" />
             </div>
         </div>
         <div class="profile_desc_section">

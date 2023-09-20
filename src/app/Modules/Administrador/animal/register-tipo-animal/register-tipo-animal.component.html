@@ -91,17 +91,18 @@
 <p-dialog [(visible)]="tipoAnimalDialog" [style]="{ width: '450px', padding: screenWidth < 700 ? '10px' : '' }"
     header="Detalles del tipo de animal" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
         <div class="field">
-            <label for="nombreTipo"><strong>Nombre del Tipo</strong></label>
+            <label for="nombreTipo"><strong>Nombre del Tipo: *</strong></label>
 
             <span class="p-input-icon-right ">
                 <i class="pi pi-info-circle"
                     [style.color]="submitted && !tipoAnimal.nombreTipo || errorUnique ? 'red':''"></i>
                 <input type="text"
                     [class]="submitted && (!tipoAnimal.nombreTipo || errorUnique) ? 'ng-invalid ng-dirty':''"
-                    id="nombreTipo" placeholder="Ingrese el nombre del tipo" pInputText [(ngModel)]="tipoAnimal.nombreTipo" required
-                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
-                    [maxlength]="25" autofocus />
+                    id="nombreTipo" placeholder="Ingrese el nombre del tipo" pInputText
+                    [(ngModel)]="tipoAnimal.nombreTipo" required
+                    onkeypress='return !(event.charCode >= 48 && event.charCode <= 57)' [maxlength]="25" autofocus />
             </span>
             <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo">Nombre es requerido.</small>
             <small class="p-error" *ngIf="submitted && !tipoAnimal.nombreTipo || errorUnique">{{errorUnique}}</small>
@@ -110,13 +111,12 @@
 
 
         <div class="field">
-            <label for="descripcionAnimal"><strong>Descripción</strong></label>
+            <label for="descripcionAnimal"><strong>Descripción: *</strong></label>
             <textarea id="descripcionAnimal" name="descripcionAnimal" pInputTextarea
                 placeholder="Descripción del tipo animal" [(ngModel)]="tipoAnimal.descripcionAnimal" required rows="3"
                 cols="20" [class]="submitted && !tipoAnimal.nombreTipo ? 'ng-dirty':''"
-                onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
-                [maxlength]="250"></textarea>
-            <small class="p-error" *ngIf="submitted && !tipoAnimal.descripcionAnimal">Description es requerido.</small>
+                onkeypress='return !(event.charCode >= 48 && event.charCode <= 57)' [maxlength]="250"></textarea>
+            <small class="p-error" *ngIf="submitted && !tipoAnimal.descripcionAnimal">Descripción es requerido.</small>
         </div>
 
 

@@ -197,9 +197,9 @@ export class RegistroMascotasComponent implements OnInit {
 	}
 
 	public pageablePersona(page: number, size: number, sort: string[]) {
-
+		this.valueAtributeCI = '';
 		this.personaService
-			.getListaPersonas(page, size, sort)
+			.findByAllPerson(page, size, sort)
 			.subscribe((data: any) => {
 				this.lisPersona = data.content;
 				this.totalPersons = data.totalElements;
@@ -278,7 +278,7 @@ export class RegistroMascotasComponent implements OnInit {
 			.toPromise();
 
 		if (isPlacaAnimalTaken) {
-			this.animal.placaAnimal = this.generatePlacaAnimal(8);
+			this.animal.placaAnimal = this.generatePlacaAnimal(16);
 		}
 
 		let key: string
@@ -535,6 +535,7 @@ export class RegistroMascotasComponent implements OnInit {
 
 	public editAnimal(animal: Animal) {
 		this.newMethodGeneral();
+		this.submitted = false;
 		this.errorUnique = '';
 		this.avatarURL = '';
 		this.animal = { ...animal };
@@ -693,6 +694,15 @@ export class RegistroMascotasComponent implements OnInit {
 
 	//EXPORT EXEL-------------------------------------------
 	public exportExcel() {
+		if (this.listAnimalFilter.length === 0) {
+			this.toastService.info(
+				'',
+				'NO HAY INFORMACIÓN',
+				{ timeOut: 1500 }
+			);
+			return;
+		}
+
 		const dataExport = this.listAnimalFilter.map((i) => (
 			{
 				ID: i.idAnimal,
@@ -703,5 +713,6 @@ export class RegistroMascotasComponent implements OnInit {
 			}
 		));
 		this.excelService.exportToExcel(dataExport, 'ExelAnimales');
+		this.showDropdownModal = false;
 	}
 }

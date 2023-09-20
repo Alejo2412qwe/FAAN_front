@@ -6,78 +6,91 @@
         <h1 class="title">Adopcion del Animal </h1>
         <div class="formgrid grid">
             <div class="field col-12 md:col-3">
-                                <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
+                <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
                     onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width: 100%; height: 100%;"
                     (onChange)="cargar()"></p-toggleButton>
             </div>
             <div class="field col-12 md:col-7">
-                                <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
+                <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" pInputText
                     style="width: 100%; height: 100%" [(ngModel)]="mostrarbusqueda" />
             </div>
             <div class="field col-12 md:col-2">
-                                <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}"
+                <p-button label="Buscar" icon="pi pi-search" [style]="{width: '100%', height: '100%'}"
                     (onClick)="cargar()"></p-button>
             </div>
         </div>
     </p-card>
 
-    <!-- PAGINACION, TARGETAS -->
-    <p-dataView #dv [value]="listAnimal" responsiveLayout="scroll" [paginator]="true" [rows]="10" [lazy]="true"
-        (onLazyLoad)="loadAnimalLazy($event)" dataKey="idAnimal" [totalRecords]="totalAnimal"
-        [showCurrentPageReport]="true" [loading]="loadingAnimal" filterBy="nombreAnimal" layout="grid">
-        <ng-template let-animal pTemplate="gridItem">
+    <div class="mt-4">
 
-            <div class="col-12 md:col-3 ">
-                <div class="animal-grid-item card">
-                    <div class="animal-grid-item-content">
-                        <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animal.fotoAnimal"
-                            [alt]="animal.nombreAnimal" />
-                        <div class="animal-nombreAnimal">{{animal.nombreAnimal}}</div>
-                        <div class="animal-placaAnimal">{{animal.placaAnimal}}</div>
-                    </div>
+        <p-dataView #dv [value]="listAnimal" responsiveLayout="scroll" [paginator]="true" [rows]="10" [lazy]="true"
+            (onLazyLoad)="loadAnimalLazy($event)" dataKey="idAnimal" [totalRecords]="totalAnimal"
+            [showCurrentPageReport]="true" [loading]="loadingAnimal" filterBy="nombreAnimal" layout="grid">
+            <ng-template let-animal pTemplate="gridItem">
 
-                    <p-divider></p-divider>
-
-                    <div class="animal-grid-item-top">
-                        <div>
-                            <span class="animal-raza">Raza: </span>
-                            <span>{{animal.razaAnimal.nombreRaza}}</span>
+                <div class="col-12 md:col-3 ">
+                    <div class="animal-grid-item card">
+                        <div class="animal-grid-item-content">
+                            <img [src]="getUriResource(animal.fotoAnimal, 1) " [alt]="animal.nombreAnimal" />
+                            <div class="animal-nombreAnimal">{{animal.nombreAnimal}}</div>
+                            <div class="animal-placaAnimal">{{animal.placaAnimal}}</div>
                         </div>
-                        <div>
-                            <span class="animal-tipo">Tipo: </span>
-                            <span>{{animal.razaAnimal.tipoAnimal.nombreTipo}}</span>
-                        </div>
-                        <div>
-                            <span class="animal-edad">Edad: </span>
-                            <span>{{animal.edadAnimal}}</span>
-                        </div>
-                    </div>
 
-                    <p-divider></p-divider>
+                        <p-divider></p-divider>
 
-                    <div class="animal-grid-item-bottom">
-                        <div class="row" *ngIf="mostrar == false">
-                            <div class="col-10">
-                                <button pButton pRipple label="Adoptar" icon="pi pi-user-plus" class="p-button-raised"
-                                    (click)="openAllDialog(animal)" [disabled]="listavacia == true"></button>
+                        <div class="animal-grid-item-top">
+                            <div>
+                                <span class="animal-raza">Raza: </span>
+                                <span>{{animal.razaAnimal.nombreRaza}}</span>
                             </div>
-                            <div class="col-2">
-                                <button pButton pRipple icon="pi pi-bookmark"
-                                    [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
-                                    (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button>
-                                <!-- <button pButton pRipple icon="pi pi-bookmark" *ngIf="isButtonClicked(animal)"
+                            <div>
+                                <span class="animal-tipo">Tipo: </span>
+                                <span>{{animal.razaAnimal.tipoAnimal.nombreTipo}}</span>
+                            </div>
+                            <div>
+                                <span class="animal-edad">Edad: </span>
+                                <span>{{animal.edadAnimal}}</span>
+                            </div>
+                        </div>
+
+                        <p-divider></p-divider>
+
+                        <div class="animal-grid-item-bottom">
+                            <div class="row" *ngIf="mostrar == false">
+                                <div class="col-10">
+                                    <button pButton pRipple label="Adoptar" icon="pi pi-user-plus"
+                                        class="p-button-raised" (click)="openAllDialog(animal)"
+                                        [disabled]="listavacia == true"></button>
+                                </div>
+                                <div class="col-2">
+                                    <button pButton pRipple icon="pi pi-bookmark"
+                                        [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
+                                        (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button>
+                                    <!-- <button pButton pRipple icon="pi pi-bookmark" *ngIf="isButtonClicked(animal)"
                                     [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
                                     (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button> -->
+                                </div>
                             </div>
+
+
+                            <!-- GALLEGOS-------------------------------------------------------------------------------------------- -->
+                            <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
+                            *ngIf="mostrar == true"> Ver </p-button> -->
+
+                            <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="modalDetailsAdopted(animal.idAnimal)"
+                                *ngIf="mostrar == true"> Ver </p-button> -->
+
+                            <p-button label="Ver Detalle" icon="pi pi-eye" iconPos="right" *ngIf="mostrar == true"
+                                (onClick)="modalDetailsAdopted(animal.idAnimal)"></p-button>
+                            <!-- END GALLEGOS-------------------------------------------------------------------------------------------- -->
+
                         </div>
-                        <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
-                            *ngIf="mostrar == true"> Ver </p-button>
                     </div>
                 </div>
-            </div>
 
-        </ng-template>
-    </p-dataView>
+            </ng-template>
+        </p-dataView>
+    </div>
 
     <div class="row" *ngIf="listavacia == true">
         <div class="col-8">
@@ -270,7 +283,7 @@
                                                         <p-card>
                                                             <section class="seccion-animal-foto mb-5 mt-3">
                                                                 <div class="imagen-container">
-                                                                    <img [src]="'https://bucketgtmt.s3.amazonaws.com/'+ animalSelect.fotoAnimal"
+                                                                    <img [src]="getUriResource(animalSelect.fotoAnimal!, 1)"
                                                                         [alt]="animalSelect.nombreAnimal" width="30%" />
                                                                 </div>
                                                             </section>
@@ -366,7 +379,8 @@
                                                         <!-- <p-panel header="Foto Animal"> -->
                                                         <section class="seccion-animal-foto mb-5 mt-3">
                                                             <div class="imagen-container">
-                                                                <img src="../../../../assets/img/dowload_file.png" alt="keyDocumento" height="160px">
+                                                                <img src="../../../../assets/img/dowload_file.png"
+                                                                    alt="keyDocumento" height="160px">
                                                             </div>
                                                         </section>
                                                         <!-- </p-panel> -->
@@ -380,9 +394,12 @@
                                                                 <div class="perfil-usuario-avatar">
                                                                     <h1>keyDocumento</h1>
 
-                                                                        <img *ngIf="avatarURL" src="../../../../assets/img/get_file.png"
-                                                                        alt="img-avatar" style="height: 160px; padding-left: 10px; padding-right: 10px;">
-                                                                        <img *ngIf="!animal.fotoAnimal && !avatarURL" src="../../../../assets/img/post_file.png"
+                                                                    <img *ngIf="avatarURL"
+                                                                        src="../../../../assets/img/get_file.png"
+                                                                        alt="img-avatar"
+                                                                        style="height: 160px; padding-left: 10px; padding-right: 10px;">
+                                                                    <img *ngIf="!animal.fotoAnimal && !avatarURL"
+                                                                        src="../../../../assets/img/post_file.png"
                                                                         alt="img-avatar" height="160px">
                                                                     <input type="file" #fileInput style="display: none;"
                                                                         accept="application/pdf"
@@ -435,3 +452,36 @@
         </ng-template>
     </p-dialog>
 </div>
+
+
+
+<p-dialog [(visible)]="modaldetailAdopted" [style]="{ width: '600px' }" header="Detalles de la Adopción" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6">
+                <div class="data text-center">
+                    <img [src]=" getUriResource(adoptedAnimal.uriAnimal!, 1)" style="width: 22%; height: 22%;">
+
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <div class="data text-center mt-1">
+                    <h3>{{adoptedAnimal.nombreA}}</h3>
+                </div>
+                <p><strong>Raza:</strong> {{adoptedAnimal.nombreRaza}}</p>
+                <p><strong>Tipo:</strong> {{adoptedAnimal.nombreTipo}}</p>
+                <p><strong>Placa:</strong> {{adoptedAnimal.placa}}</p>
+                <p><strong>Observación de la Adopción:</strong> {{adoptedAnimal.observacionEnca}}</p>
+                <p><strong>Correo Electrónico:</strong> {{adoptedAnimal.correo}}</p>
+                <p><strong>Fecha de Adopción:</strong> {{adoptedAnimal.fechaAdopcion | date}}</p>
+                <p><strong>Identificación:</strong> {{adoptedAnimal.identificacion}}</p>
+                <p><strong>Adoptante:</strong> {{adoptedAnimal.nombre1}} {{adoptedAnimal.apellido1}}</p>
+                <p><strong>Observación Detallada:</strong> {{adoptedAnimal.observacionDetail}}</p>
+                <p><strong>Enlace al Documento:</strong> <a [href]="getUriResource(adoptedAnimal.uriDocument!, 2)"
+                        target="_blank"> Aplaste aquí para ver el documento</a></p>
+            </div>
+
+        </div>
+    </ng-template>
+</p-dialog>

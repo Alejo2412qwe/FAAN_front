@@ -106,7 +106,7 @@ export class ControlUsuariosComponent implements OnInit {
 	ngOnInit(): void {
 		this.getAllUsers(0, this.size, ['idUsuario', 'asc']);
 		this.getSizeWindowResize();
-		this.getAllRolesFull();
+		this.getAllRoles();
 		this.loading = true;
 
 		//Tiempo de ejecucución
@@ -117,7 +117,7 @@ export class ControlUsuariosComponent implements OnInit {
 			});
 	}
 
-	public getAllRolesFull() {
+	public getAllRoles() {
 		this.rolesService.getAllRolesFull().subscribe({
 			next: (resp) => {
 				this.listRoles = resp;
@@ -129,7 +129,7 @@ export class ControlUsuariosComponent implements OnInit {
 
 
 	public getAllUsers(page: number, size: number, sort: string[]) {
-		this.usuarioService.getAllUsuario(page, size, sort).subscribe({
+		this.usuarioService.findByAllUsers(page, size, sort).subscribe({
 			next: (resp: any) => {
 				this.listUsuarios = resp.content;
 				this.totalRecords = resp.totalElements;
@@ -137,7 +137,6 @@ export class ControlUsuariosComponent implements OnInit {
 
 			}, error: (err) => {
 				this.loading = false;
-
 			}
 		});
 	}
@@ -273,6 +272,7 @@ export class ControlUsuariosComponent implements OnInit {
 	public openNewUser() {
 		this.generalDataReset();
 		this.userDialog = true;
+		this.rolsAddUser = [];
 	}
 
 	// ADD UPDATE
@@ -369,7 +369,6 @@ export class ControlUsuariosComponent implements OnInit {
 	}
 
 	public isRoleAssigned(role: Rol): boolean {
-
 		return this.rolsAddUser.some(
 			(assignedRole) => assignedRole.idRol === role.idRol
 		);

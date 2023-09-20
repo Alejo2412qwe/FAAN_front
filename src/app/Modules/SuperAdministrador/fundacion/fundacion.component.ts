@@ -92,7 +92,7 @@ export class FundacionComponent implements OnInit {
                 .toPromise();
             return result.key;
         } catch (error) {
-            console.error('new income');
+            throw new Error();
         }
     }
 
