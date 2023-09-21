@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Fundacion, Persona, Rol, Usuario } from 'src/app/Models/models';
 import { FundacionService } from 'src/app/Service/fundacion.service';
+import { ImagenService } from 'src/app/Service/imagen.service';
 import { PersonaService } from 'src/app/Service/persona.service';
 import { UsuarioService } from 'src/app/Service/usuario.service';
 import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
@@ -17,14 +18,15 @@ export class PerfilUsuarioComponent implements OnInit {
     private usuarioService: UsuarioService,
     private fundacionService: FundacionService,
     private toastrService: ToastrService,
-    private personaService: PersonaService
-
+    private personaService: PersonaService,
+    private imagenService: ImagenService,
   ) { }
 
   public idUsuarioLoggin?: any;
   public avatarURL: string = '';
   public avatarURLProfile: string = '';
-  //OBTENER LA IMAGEN NEW MOTHOD------------------------------
+
+  //GET PROFILE PHOTO NEW METHOD
   public getUriFile(fileName: string): string {
     return getFile(fileName, FOLDER_IMAGES);
   }
@@ -36,17 +38,12 @@ export class PerfilUsuarioComponent implements OnInit {
 
   // GET DATA FOR USER-CONNECT
   usuario = new Usuario();
-  roles: string[] = [];
   persona = new Persona();
-
 
   public getDataUser(idUsername: number): void {
     this.usuarioService.getUsuarioById(idUsername).subscribe((data) => {
       this.usuario = data;
       this.persona = this.usuario.persona;
-      for (let rol of this.usuario.roles) {
-        this.roles.push(rol.nombreRol!)
-      }
       this.getDataFundation(1);
     })
   }
@@ -65,71 +62,50 @@ export class PerfilUsuarioComponent implements OnInit {
     this.visible = true;
   }
 
-  // UPDATE DATA - USER
-  public updatePerfilById() {
-    // Verificar si hay campos vacíos en Persona
-    if (
-
-      !this.persona.nombre1 ||
-      !this.persona.apellido1
-    ) {
-      this.toastrService.warning(
-        'Uno o más campos vacíos',
-        'Por favor complete todos los campos'
-      );
-      return;
+  // UPDATE USER
+  public async updatePerfilById() {
+    if (this.avatarURLProfile?.trim()) {
+      try {
+        this.usuario.fotoPerfil = await this.uploadImage();
+        if(this.usuario.fotoPerfil?.trim()) this.usuarioService.updateUsuario(this.usuario.idUsuario!, this.usuario).subscribe();
+      } catch (error) {
+        this.toastrService.warning(
+          'Problemas al subir la imagen',
+          '¡Comuniquese con soporte!'
+        );
+      }
     }
 
-    // Verificar si persona está definido
-    if (this.persona.idPersona === undefined) {
-      this.toastrService.warning(
-        'ID de la persona no definido',
-        'Error en la actualización'
-      );
-      return;
-    }
-
-    // Realizar actualización de la persona
-    this.personaService.updatePersona(this.persona.idPersona, this.persona)
-      .subscribe(
-        (data) => {
-          if (data != null) {
-            this.toastrService.success(
-              'Actualización exitosa de los datos de la persona',
-              '¡Bien hecho!'
-            );
-
-            // Implementación de la carga (este código hará una recarga de la página después de 1 segundo)
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
-          }
-        },
-        (error) => {
-          console.error(error);
-          this.toastrService.error(
-            'Error al actualizar los datos de la persona',
-            'Por favor intenta más tarde'
+    // Update person.
+    this.personaService.updatePersona(this.persona.idPersona!, this.persona).subscribe(
+      (data) => {
+        if (data != null) {
+          this.toastrService.success(
+            'Actualización exitosa de los datos de la persona',
+            '¡Bien hecho!'
           );
+          // Reload page.
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
         }
-      );
+      },
+      (error) => {
+        console.error(error);
+        this.toastrService.error(
+          'Error al actualizar los datos de la persona',
+          'Por favor intenta más tarde'
+        );
+      }
+    );
   }
-
-
-
-
-
-
-
-
 
   // IMAGEN SELECT
   selectedFile!: File;
-  isKeyImage: string = "";
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile.size)
-    if (this.selectedFile && this.selectedFile.size > 1000000) {
+  public onFileSelected(event: any) {
+    let data = event.target.files[0];
+
+    if (data.size >= 1048576) {
       this.toastrService.warning(
         'El archivo seleccionado es demasiado grande',
         ' Por favor, seleccione un archivo menor a 1000 KB.',
@@ -138,15 +114,23 @@ export class PerfilUsuarioComponent implements OnInit {
         }
       );
       event.target.value = null;
+      return;
+    }
 
-    } else {
-      this.toastrService.success(
-        'Foto seleccionada',
-        'Correctamente',
-        {
-          timeOut: 1000,
-        }
-      )
+    this.selectedFile = data;
+    const imageURL = URL.createObjectURL(this.selectedFile);
+    this.avatarURLProfile = imageURL;
+  }
+
+
+  public async uploadImage() {
+    try {
+      const result = await this.imagenService
+        .savePictureInBuket(this.selectedFile, FOLDER_IMAGES)
+        .toPromise();
+      return result.key;
+    } catch (error) {
+      throw new Error();
     }
   }
 

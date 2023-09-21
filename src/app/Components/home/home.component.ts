@@ -36,13 +36,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private _CargarScript: CargarScrpitsService,
     private animalesService: AnimalService,
-    private razaAnimalService: RazaAnimalService,
-    private tipoAnimalService: TipoAnimalService,
     private router: Router,
     private fundacionService: FundacionService,
-    private enviarGmail: RecoverPasswordService,
-    private toastr: ToastrService
-
   ) {
     _CargarScript.Cargar(["home"]);
   }

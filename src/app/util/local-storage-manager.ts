@@ -22,12 +22,10 @@ export const getTokenTimeOut = (token: string) => {
 export const clearLocalStorage = () => {
     localStorage.clear();
     sessionStorage.clear();
-    console.log('limpiado')
 };
 
 export const isLoggedInKey = (rol: string) => {
     const user = localStorage.getItem(rol);
-    console.log('En el strorage--> ' + user);
     if (user) {
         return true;
     }
