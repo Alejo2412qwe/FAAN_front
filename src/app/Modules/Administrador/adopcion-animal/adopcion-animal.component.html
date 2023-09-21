@@ -3,7 +3,7 @@
     <!-- BUSQUEDA Y ADOPTADO OR NO ADOPTADO -->
 
     <p-card header="">
-        <h1 class="title">Adopcion del Animal </h1>
+        <h1 class="title">Adopción del Animal </h1>
         <div class="formgrid grid">
             <div class="field col-12 md:col-3">
                 <p-toggleButton [(ngModel)]="mostrar" onLabel="ADOPTADOS" offLabel="NO ADOPTADOS"
@@ -21,76 +21,73 @@
         </div>
     </p-card>
 
-    <div class="mt-4">
+    <!-- PAGINACION, TARGETAS -->
+    <p-dataView #dv [value]="listAnimal" responsiveLayout="scroll" [paginator]="true" [rows]="10" [lazy]="true"
+        (onLazyLoad)="loadAnimalLazy($event)" dataKey="idAnimal" [totalRecords]="totalAnimal"
+        [showCurrentPageReport]="true" [loading]="loadingAnimal" filterBy="nombreAnimal" layout="grid">
+        <ng-template let-animal pTemplate="gridItem">
 
-        <p-dataView #dv [value]="listAnimal" responsiveLayout="scroll" [paginator]="true" [rows]="10" [lazy]="true"
-            (onLazyLoad)="loadAnimalLazy($event)" dataKey="idAnimal" [totalRecords]="totalAnimal"
-            [showCurrentPageReport]="true" [loading]="loadingAnimal" filterBy="nombreAnimal" layout="grid">
-            <ng-template let-animal pTemplate="gridItem">
+            <div class="col-12 md:col-3 ">
+                <div class="animal-grid-item card">
+                    <div class="animal-grid-item-content">
+                        <img [src]="getUriResource(animal.fotoAnimal!, 1)" [alt]="animal.nombreAnimal" />
+                        <div class="animal-nombreAnimal">{{animal.nombreAnimal}}</div>
+                        <div class="animal-placaAnimal">{{animal.placaAnimal}}</div>
+                    </div>
 
-                <div class="col-12 md:col-3 ">
-                    <div class="animal-grid-item card">
-                        <div class="animal-grid-item-content">
-                            <img [src]="getUriResource(animal.fotoAnimal, 1) " [alt]="animal.nombreAnimal" />
-                            <div class="animal-nombreAnimal">{{animal.nombreAnimal}}</div>
-                            <div class="animal-placaAnimal">{{animal.placaAnimal}}</div>
+                    <p-divider></p-divider>
+
+                    <div class="animal-grid-item-top">
+                        <div>
+                            <span class="animal-raza">Raza: </span>
+                            <span>{{animal.razaAnimal.nombreRaza}}</span>
                         </div>
-
-                        <p-divider></p-divider>
-
-                        <div class="animal-grid-item-top">
-                            <div>
-                                <span class="animal-raza">Raza: </span>
-                                <span>{{animal.razaAnimal.nombreRaza}}</span>
-                            </div>
-                            <div>
-                                <span class="animal-tipo">Tipo: </span>
-                                <span>{{animal.razaAnimal.tipoAnimal.nombreTipo}}</span>
-                            </div>
-                            <div>
-                                <span class="animal-edad">Edad: </span>
-                                <span>{{animal.edadAnimal}}</span>
-                            </div>
+                        <div>
+                            <span class="animal-tipo">Tipo: </span>
+                            <span>{{animal.razaAnimal.tipoAnimal.nombreTipo}}</span>
                         </div>
-
-                        <p-divider></p-divider>
-
-                        <div class="animal-grid-item-bottom">
-                            <div class="row" *ngIf="mostrar == false">
-                                <div class="col-10">
-                                    <button pButton pRipple label="Adoptar" icon="pi pi-user-plus"
-                                        class="p-button-raised" (click)="openAllDialog(animal)"
-                                        [disabled]="listavacia == true"></button>
-                                </div>
-                                <div class="col-2">
-                                    <button pButton pRipple icon="pi pi-bookmark"
-                                        [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
-                                        (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button>
-                                    <!-- <button pButton pRipple icon="pi pi-bookmark" *ngIf="isButtonClicked(animal)"
-                                    [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
-                                    (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button> -->
-                                </div>
-                            </div>
-
-
-                            <!-- GALLEGOS-------------------------------------------------------------------------------------------- -->
-                            <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
-                            *ngIf="mostrar == true"> Ver </p-button> -->
-
-                            <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="modalDetailsAdopted(animal.idAnimal)"
-                                *ngIf="mostrar == true"> Ver </p-button> -->
-
-                            <p-button label="Ver Detalle" icon="pi pi-eye" iconPos="right" *ngIf="mostrar == true"
-                                (onClick)="modalDetailsAdopted(animal.idAnimal)"></p-button>
-                            <!-- END GALLEGOS-------------------------------------------------------------------------------------------- -->
-
+                        <div>
+                            <span class="animal-edad">Edad: </span>
+                            <span>{{animal.edadAnimal}}</span>
                         </div>
                     </div>
-                </div>
 
-            </ng-template>
-        </p-dataView>
-    </div>
+                    <p-divider></p-divider>
+
+                    <div class="animal-grid-item-bottom">
+                        <div class="row" *ngIf="mostrar == false">
+                            <div class="col-10">
+                                <button pButton pRipple label="Adoptar" icon="pi pi-user-plus" class="p-button-raised"
+                                    (click)="openAllDialog(animal)" [disabled]="listavacia == true"></button>
+                            </div>
+                            <div class="col-2">
+                                <button pButton pRipple icon="pi pi-bookmark"
+                                    [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
+                                    (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button>
+                                <!-- <button pButton pRipple icon="pi pi-bookmark" *ngIf="isButtonClicked(animal)"
+                                    [ngClass]="{'p-button-secondary': !isButtonClicked(animal), 'p-button-warning': isButtonClicked(animal)}"
+                                    (click)="selectAdopcion(animal); selectAdopcionclicked(animal)"></button> -->
+                            </div>
+                        </div>
+
+
+                        <!-- GALLEGOS-------------------------------------------------------------------------------------------- -->
+                        <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="openAllDialog(animal)"
+                            *ngIf="mostrar == true"> Ver </p-button> -->
+
+                        <!-- <p-button class="btnsize" icon="pi pi-eye" (onClick)="modalDetailsAdopted(animal.idAnimal)"
+                            *ngIf="mostrar == true"> Ver </p-button> -->
+
+                        <p-button label="Ver Detalle" icon="pi pi-eye" iconPos="right"
+                            (onClick)="modalDetailsAdopted(animal.idAnimal)" *ngIf="mostrar == true"></p-button>
+                        <!-- END GALLEGOS-------------------------------------------------------------------------------------------- -->
+
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+    </p-dataView>
 
     <div class="row" *ngIf="listavacia == true">
         <div class="col-8">
@@ -106,8 +103,11 @@
     <!-- DIALOGO ADOPCION ANIMAL -->
     <p-dialog [(visible)]="adopcionAnimalDialog"
         [style]="{ width: screenWidth < 700 ? '100%' : '80%', padding: screenWidth < 700 ? '2%' : '' }"
-        header="Adopcion" [modal]="true" styleClass="p-fluid" (onHide)="closeAllDialog()">
+        header="Adopción" [modal]="true" styleClass="p-fluid" (onHide)="closeAllDialog()">
         <ng-template pTemplate="content">
+
+
+            <p class="pRequerido">Los campos marcados con * son de ingreso obligatorio.</p>
 
             <!-- SELECCIONAR ADOPTANTE -->
             <p-panel header="Adoptante" [toggleable]="true">
@@ -194,7 +194,7 @@
             </p-panel>
 
             <!-- REGISTRO DE ADOPCION -->
-            <p-panel header="Adopcion" [toggleable]="true" styleClass="mt-4">
+            <p-panel header="Adopción" [toggleable]="true" styleClass="mt-4">
                 <div class="grid p-fluid align-items-center">
                     <div class="col-12 md:col-12">
                         <div class="grid p-fluid align-items-center">
@@ -202,23 +202,23 @@
                             <div class="col-12 md:col-12">
 
                                 <!-- ENCABESADO ADOPCION REGISTRO -->
-                                <label for="fechaAnimal"><strong>Fecha de Adopcion</strong></label>
+                                <label for="fechaAnimal"><strong>Fecha de Adopción</strong></label>
                                 <span class="p-input-icon-right ">
                                     <div class="p-inputgroup">
-                                        <input id="fechaAnimal" value="{{fechaAdoption}}" pInputText disabled="true" />
+                                        <input id="fechaAnimal" value="{{fechaAdoption | date}}" pInputText
+                                            disabled="true" />
                                     </div>
                                 </span>
 
-                                <label for="observacionesAdopcion"><strong>Observaciones</strong></label>
+                                <label for="observacionesAdopcion"><strong>Observaciones: *</strong></label>
                                 <span class="p-input-icon-right ">
                                     <textarea rows="5" cols="30" id="observacionesAdopcion" pInputTextarea
                                         [disabled]="mostrar"
                                         [(ngModel)]="encabezadoAdopcionObject.observacion"></textarea>
                                 </span>
                                 <small class="p-error"
-                                    *ngIf="submitted && !encabezadoAdopcionObject.observacion && mostrar == false">Observaciones
-                                    is
-                                    required.</small>
+                                    *ngIf="submitted && !encabezadoAdopcionObject.observacion && mostrar == false">El
+                                    campo observaciones es requerido.</small>
 
                                 <div class="row">
                                     <!-- DATOS ANIMAL SELECCIONADO ONE -->
@@ -355,22 +355,21 @@
                                     <!-- REGISTRO DETALLE ADOPCION -->
                                     <div class="col-12 md:col-6">
                                         <p-scrollPanel [style]="{ width: '100%', height: '650px' }">
-                                            <p-fieldset legend="Detalle Adopcion"
+                                            <p-fieldset legend="Detalle Adopción"
                                                 [style]="{ width: '100%', height: '100%' }">
-                                                <label for="observacionesAdopcionDetalle"><strong>Observaciones
-                                                        Detalle</strong></label>
+                                                <label for="observacionesAdopcionDetalle"><strong>Observaciones,
+                                                        detalle: *</strong></label>
                                                 <span class="p-input-icon-right ">
                                                     <textarea rows="5" cols="30" id="observacionesAdopcionDetalle"
                                                         [disabled]="mostrar" pInputTextarea
                                                         [(ngModel)]="detalleEncabesadoObject.observacion"></textarea>
                                                 </span>
                                                 <small class="p-error"
-                                                    *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">Observaciones
-                                                    Detalle is
-                                                    required.</small>
+                                                    *ngIf="submitted && !detalleEncabesadoObject.observacion && mostrar == false">El
+                                                    campo observaciones, detalle es requerido.</small>
                                                 <br>
 
-                                                <label for="fotoAnimal"><strong>Documento .pdf</strong></label>
+                                                <label for="fotoAnimal"><strong>Documento .pdf: *</strong></label>
                                                 <p-card>
 
                                                     <div class="perfil-usuario-portada" *ngIf="mostrar == true">

@@ -55,35 +55,14 @@ export class SidebarComponent implements OnInit {
       this.conectarWebSocket();
     }
     this.userLoggin = localStorage.getItem("username")!;
-    this.rolLoggin = localStorage.getItem("rol")!;
+    this.rolLoggin = getRole(LocalStorageKeys.ROL)!;
     console.log(this.userLoggin);
-    
+
   }
 
 
   isCurrentRoute(route: string): boolean {
     return this.router.isActive(route, true);
-  }
-
-
-  // CHECK ROL
-  isSuperAdministrador: boolean = false;
-  isAdministrador: boolean = false;
-
-  public checkRolesUserLogin(nombreRol: string): void {
-    switch (nombreRol) {
-      case 'SUPERADMINISTRADOR':
-        this.isSuperAdministrador = true;
-        this.isAdministrador = false;
-        break;
-      case 'ADMINISTRADOR':
-        this.isSuperAdministrador = false;
-        this.isAdministrador = true;
-        break;
-      default:
-        this.isLogginPresent = false;
-        break;
-    };
   }
 
   // NOTIFICACIONES

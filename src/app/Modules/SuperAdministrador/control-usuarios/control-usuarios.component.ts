@@ -93,13 +93,6 @@ export class ControlUsuariosComponent implements OnInit {
 
 		this.formUserEdit = this.formBuilder.group({
 			username: ['', [Validators.required, Validators.minLength(4)]],
-			password: [
-				'',
-				[
-					Validators.required,
-					Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
-				],
-			],
 		});
 	}
 
@@ -177,7 +170,7 @@ export class ControlUsuariosComponent implements OnInit {
 		this.usuario.fotoPerfil = USER_IMAGE_DEFAULT
 		this.usuario.estadoUsuario = true;
 
-		this.usuarioService.saveUsuario(this.usuario).subscribe({
+		this.usuarioService.saveUserjwt(this.usuario).subscribe({
 			next: (resp) => {
 				this.toastService.success('', 'USUARIO CREADO', { timeOut: 2000 });
 				this.listUsuarios.push(resp);
@@ -226,7 +219,7 @@ export class ControlUsuariosComponent implements OnInit {
 						this.usuario.password = this.userDto.password!;
 						this.usuario.fotoPerfil = USER_IMAGE_DEFAULT
 						this.usuario.estadoUsuario = true;
-						this.usuarioService.saveUsuario(this.usuario).subscribe({
+						this.usuarioService.saveUserjwt(this.usuario).subscribe({
 							next: (resp) => {
 								this.toastService.success('', 'USUARIO CREADO', { timeOut: 2000 });
 								this.listUsuarios.push(resp);
@@ -302,9 +295,8 @@ export class ControlUsuariosComponent implements OnInit {
 	}
 
 	public updateUser() {
-		this.usuario.password = this.userDto.password!;
 		this.usuario.roles = this.rolsAddUser;
-		this.usuarioService.updateUsuario(this.usuario.idUsuario!, this.usuario).subscribe({
+		this.usuarioService.updateUserjwt(this.usuario.idUsuario!, this.usuario).subscribe({
 			next: (resp) => {
 				this.toastService.success('', 'USUARIO ACTUALIZADO', { timeOut: 2000 });
 				const index = this.listUsuarios.findIndex(i => i.idUsuario === resp.idUsuario);

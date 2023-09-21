@@ -12,6 +12,10 @@ export const getToken = (key: string) => {
     return !!result && result;
 };
 
+export const getTokenjwt = (key: string) => {
+    return localStorage.getItem(key);
+};
+
 export const getTokenTimeOut = (token: string) => {
     const decodedToken: TokenData = jwt_decode(token);
     const currentTime: number = Math.floor(Date.now() / 1000);

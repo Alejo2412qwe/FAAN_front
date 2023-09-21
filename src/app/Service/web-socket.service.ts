@@ -10,7 +10,7 @@ export class WebSocketService {
   private messageSubject: Subject<string> = new Subject<string>();
   private connected: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
   public connect(): void {
     if (this.connected) {

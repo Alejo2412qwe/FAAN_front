@@ -17,6 +17,10 @@ export class UsuarioService {
     return this.http.post<Usuario>(environment.apiuri + '/usuario/save', usuario);
   }
 
+  public saveUserjwt(usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(environment.apiuri + '/usuario/signUp', usuario);
+  }
+
   public getAllUsuario(page: number, size: number, sort: string[]): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(environment.apiuri + '/usuario/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
   }
@@ -35,6 +39,10 @@ export class UsuarioService {
 
   public updateUsuario(idUsusario: number, usuario: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(environment.apiuri + '/usuario/update/' + idUsusario, usuario);
+  }
+
+  public updateUserjwt(idUsusario: number, usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(environment.apiuri + '/usuario/update/data/' + idUsusario, usuario);
   }
 
   // other changes

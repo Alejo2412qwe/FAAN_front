@@ -258,17 +258,15 @@
     styleClass="p-fluid">
     <ng-template pTemplate="content">
 
-        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
-
         <form [formGroup]="formUserEdit">
             <div class="field">
-                <label for="username"><strong>Nombre de Usuario: *</strong></label>
+                <label for="username"><strong>Nombre de Usuario</strong></label>
                 <input type="username" pInputText id="username" name="username" placeholder="Nombre de usuario"
                     formControlName="username"
                     [class.is-invalid]="formUserEdit.get('username')!.invalid && formUserEdit.get('username')!.touched"
                     class="form-control" formcontrolname="username" [maxlength]="12"
                     onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
-                    required />
+                    required readonly />
 
                 <div
                     *ngIf="formUserEdit.get('username')?.invalid && formUserEdit.get('username')?.touched || formUserEdit.get('username')?.dirty">
@@ -284,49 +282,10 @@
                 </div>
             </div>
 
-            <div class="field">
-                <label for="correo"><strong>Contraseña: *</strong></label>
-
-                <p-password type="password" id="password" name="password" placeholder="Ej: **********"
-                    formControlName="password"
-                    [class.is-invalid]="formUserEdit.get('password')!.invalid && formUserEdit.get('password')!.touched"
-                    class="form-control" formcontrolname="password" required class="p-inputtext-sm" [toggleMask]="true"
-                    required [maxLength]="15">
-                    <ng-template pTemplate="header">
-                        <h6>Elige una contraseña</h6>
-                    </ng-template>
-                    <ng-template pTemplate="footer">
-                        <p-divider></p-divider>
-                        <p class="mt-2">Sugerencias</p>
-                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                            <li>Al menos una minúscula</li>
-                            <li>Al menos una mayúscula</li>
-                            <li>Al menos un numéro</li>
-                            <li>Minimo 8 caracteres</li>
-                        </ul>
-                    </ng-template>
-                </p-password>
-
-                <div
-                    *ngIf="formUserEdit.get('password')?.invalid && formUserEdit.get('password')?.touched || formUserEdit.get('password')?.dirty">
-                    <small class="text-danger"
-                        *ngIf="formUserEdit.get('password')?.errors?.['required']"><strong>Contraseña
-                            es
-                            requerido.</strong></small>
-                    <small class="text-danger"
-                        *ngIf="formUserEdit.get('password')?.errors?.['pattern']"><strong>Contraseña
-                            invalida.</strong>
-                    </small>
-                </div>
-            </div>
-
-
-
         </form>
 
         <div class="card col-12 md:col-12">
-            <p class="m-1"><strong>Seleccione los roles: *</strong> <strong
-                    [style]="submitted && rolsAddUser.length === 0 ? 'color: red':''">(*)</strong></p>
+            <p class="m-1"><strong>Seleccione los roles</strong> </p>
 
 
             <div *ngFor="let role of listRoles" class="field-checkbox mt-2">
