@@ -50,17 +50,14 @@ export class SidebarComponent implements OnInit {
       // Verifica si el elemento de menú tiene roles y si el rol del usuario coincide
       return !menuItem.rols || menuItem.rols.includes(getRole(LocalStorageKeys.ROL));
     });
-
-    console.log(this.listSidebar);
-
     this.isLogginPresent = this.storageService.isLoggedIn();
-    console.log(this.isLogginPresent)
     if (this.isLogginPresent === true) {
       this.conectarWebSocket();
     }
-
     this.userLoggin = localStorage.getItem("username")!;
     this.rolLoggin = localStorage.getItem("rol")!;
+    console.log(this.userLoggin);
+    
   }
 
 
@@ -129,7 +126,6 @@ export class SidebarComponent implements OnInit {
 
   removerNotificacion(data: any) {
     this.notificacionService.updateNotificacionEstado(data._id).subscribe(data => {
-      console.log("VISTO");
     })
   }
 

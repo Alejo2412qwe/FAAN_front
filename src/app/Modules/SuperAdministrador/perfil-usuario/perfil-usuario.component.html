@@ -1,13 +1,12 @@
 <p-card header="" class="m-2">
     <section class="profile_container">
         <div class="profile_img_section">
-            <img class="profile_img-LG" [src]="avatarURLProfile ? avatarURLProfile: usuario.fotoPerfil ? getUriFile(usuario.fotoPerfil) : 'assets/img/faan.jpg'" />
+            <img class="profile_img-LG" [src]="getUriFile(usuario.fotoPerfil!)" />
             <div class="flag_wrapper">
-                <img class="flag" [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? getUriFile(fundacion.logoFundacion) : 'assets/img/faan.jpg'" alt="logo" />
+                <img class="flag" [src]="getUriFile(fundacion.logoFundacion!)" alt="logo" />
             </div>
         </div>
         <div class="profile_desc_section">
-            <h3 *ngFor="let rol of roles">{{ rol }} </h3>
             <h2>{{persona.nombre1}} {{persona.nombre2}} {{persona.apellido1}} {{persona.apellido2}} </h2>
             <ul class="list-unstyled text-muted">
                 <li><i class='bx bx-current-location m-2'></i>{{persona.identificacion}}</li>
@@ -31,7 +30,7 @@
 
 
 <!-- MODAL EDIT DATA -->
-<p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
+<p-dialog header="Datos Usuario" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
     [resizable]="false">
 
 
@@ -46,7 +45,7 @@
                         <div class="perfil-usuario-header">
                             <div class="perfil-usuario-portada">
                                 <div class="perfil-usuario-avatar">
-                                    <img [src]="avatarURL ? avatarURL: fundacion.logoFundacion ? getUriFile(fundacion.logoFundacion) : 'assets/img/faan.jpg'"
+                                    <img [src]="avatarURLProfile ? avatarURLProfile: usuario.fotoPerfil ? getUriFile(usuario.fotoPerfil) : 'assets/img/faan.jpg'"
                                         alt="img-avatar" height="165px">
                                     <input type="file" #fileInput style="display: none;"
                                         accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)">
@@ -71,7 +70,7 @@
                         <span class="p-float-label">
                             <input type="text" pInputText id="identificacion" name="identificacion" [disabled]="true"
                                 title="Este campo no se puede editar" [(ngModel)]="persona.identificacion" />
-                            <label htmlFor="identificacion" class="pi pi-id-card"> identificacion <span
+                            <label htmlFor="identificacion" class="pi pi-id-card"> Indetifiación <span
                                     class="red-asterisk"></span></label>
                         </span>
                     </div>
@@ -102,7 +101,7 @@
                 <div class="col-12 md:col-4 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="apellido1" name="apellido1" [disabled]="true"
+                            <input type="text" pInputText id="apellido1" name="apellido1"
                                 title="Este campo no se puede editar" [(ngModel)]="persona.apellido1" />
                             <label htmlFor="apellido1" class="pi pi-id-card"> Primer Apellido <span
                                     class="red-asterisk"></span></label>
@@ -144,7 +143,7 @@
                         <span class="p-float-label">
                             <input type="text" pInputText id="direccion" name="direccion"
                                 [(ngModel)]="persona.direccion" />
-                            <label htmlFor="direccion" class="pi pi-phone"> Direccion <span
+                            <label htmlFor="direccion" class="pi pi-phone"> Dirección <span
                                     class="red-asterisk"></span></label>
                         </span>
                     </div>
@@ -154,7 +153,7 @@
                         <span class="p-float-label">
                             <input type="text" pInputText id="telefono" name="telefono"
                                 [(ngModel)]="persona.telefono" />
-                            <label htmlFor="telefono" class="pi pi-mobile"> Telefono <span
+                            <label htmlFor="telefono" class="pi pi-mobile"> Teléfono <span
                                     class="red-asterisk"></span></label>
                         </span>
                     </div>
@@ -176,7 +175,7 @@
                 <div class="col-12 md:col-6 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="correo" name="correo" [(ngModel)]="persona.correo" />
+                            <input type="text" pInputText id="correo" name="correo" [(ngModel)]="persona.correo" [disabled]="true"/>
                             <label htmlFor="correo" class="pi pi-phone"> Correo <span
                                     class="red-asterisk"></span></label>
                         </span>
