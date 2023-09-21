@@ -294,11 +294,36 @@
                         </div>
                     </div>
 
-                    <div class="p-grid p-fluid mt-2">
-                        <div class="p-col-12 p-md-12 mt-2">
+                    <div class="grid p-fluid mt-2">
+                        <div class="col-12 md:col-5 mt-2">
+                            <label class="font-bold block mb-2"
+                                [style]="submitted && !formulario.acuerdo3 ? 'color: red':''">
+                                3. ¿Están de acuerdo?: *
+                            </label>
 
+                            <div class="flex align-items-center">
+                                <p-radioButton name="acuerdo3" value="SI"
+                                    [(ngModel)]="formulario.acuerdo3"></p-radioButton>
+                                <label for="acuerdo3" class="ml-2">SI</label>
+                            </div>
+
+                            <div class="flex align-items-center">
+                                <p-radioButton name="acuerdo3" value="NO"
+                                    [(ngModel)]="formulario.acuerdo3"></p-radioButton>
+                                <label for="acuerdo3" class="ml-2">NO</label>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-7 mt-2">
+                            <label class="font-bold block mb-2"
+                                [style]="submitted && !formulario.responseWhy3 ? 'color: red':''">
+                                ¿Porqué?: *
+                            </label>
+                            <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="formulario.responseWhy3"
+                                name="responseWhy3"></textarea>
                         </div>
                     </div>
+
+                    <p-divider type="dashed"></p-divider>
 
                     <!-- 4 -->
                     <div class="p-grid p-fluid mt-2">
@@ -567,7 +592,9 @@
                         <div class="p-col-12 p-md-12 mt-2">
                             <label class="font-bold block mb-2"
                                 [style]="submitted && !formulario.embaraza19 ? 'color: red':''">
-                                18. ¿Qué sucedería si usted o en caso de ser hombre, su pareja quedara embarazada?: *
+                                18. ¿Qué sucedería si usted o en caso de ser hombre, su pareja quedara
+                                embarazada?:
+                                *
                             </label>
 
                             <input id="embaraza19" name="embaraza19" type="text" pInputText

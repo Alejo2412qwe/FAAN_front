@@ -14,8 +14,8 @@ export class Form {
 
     autorizacion1: string = "";
     todoMiembrosAcuerdo2: string = "";
-    // acuerdo3: string = "";
-    // responseWhy3: string = "";
+    acuerdo3: string = "";
+    responseWhy3: string = "";
     viviraCon4: string = "";
     considerar5: string = "";
     animalesAnterioridad6: string = "";
