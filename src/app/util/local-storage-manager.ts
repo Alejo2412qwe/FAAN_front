@@ -12,6 +12,10 @@ export const getToken = (key: string) => {
     return !!result && result;
 };
 
+export const getTokenjwt = (key: string) => {
+    return localStorage.getItem(key);
+};
+
 export const getTokenTimeOut = (token: string) => {
     const decodedToken: TokenData = jwt_decode(token);
     const currentTime: number = Math.floor(Date.now() / 1000);
@@ -22,12 +26,10 @@ export const getTokenTimeOut = (token: string) => {
 export const clearLocalStorage = () => {
     localStorage.clear();
     sessionStorage.clear();
-    console.log('limpiado')
 };
 
 export const isLoggedInKey = (rol: string) => {
     const user = localStorage.getItem(rol);
-    console.log('En el strorage--> ' + user);
     if (user) {
         return true;
     }

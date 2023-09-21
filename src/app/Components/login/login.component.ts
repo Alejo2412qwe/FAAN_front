@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/Models/models';
+import { Rol, Usuario } from 'src/app/Models/models';
 import { AuthService } from 'src/app/Service/auth.service';
 import { RecoverPasswordService } from 'src/app/Service/recover-password.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { ToastrService } from 'ngx-toastr';
+import { clearLocalStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
     private screenSizeService: ScreenSizeService,
     private sendEmailRecoverService: RecoverPasswordService,
     private sharedService: SharedService, // Inject the SharedService
-    private toastr: ToastrService
+    private toastrService: ToastrService
   ) {
     this.formulario = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]]
@@ -56,54 +57,52 @@ export class LoginComponent implements OnInit {
   }
 
   public infoUsuario!: Usuario;
-
+  public roles: Rol[] = [];
 
   public usuarioLoginDTO = {
     username: '',
     password: ''
   };
 
-
+  public info?: any;
   // METHOD AUTHENTICATION USER
   public singIn(): void {
     if (!this.usuarioLoginDTO.password || !this.usuarioLoginDTO.password) {
-      this.toastr.error('Campos Vacios','ERROR');
+      this.toastrService.error('Campos Vacios', 'ERROR');
     } else {
-      this.authService.login(this.usuarioLoginDTO).subscribe(data => {
+      this.authService.login(this.usuarioLoginDTO).subscribe((data: any) => {
         if (!data) {
-          console.log('CREDENCIALES INCORRECTAS');
-          localStorage.removeItem('id_username');
-          localStorage.removeItem('id_persona');
-          localStorage.removeItem('foto');
-          localStorage.removeItem('rol');
-          localStorage.removeItem('username');
-          localStorage.removeItem('token');
+          clearLocalStorage();
         } else {
-          this.infoUsuario = data;
-          console.log(data)
-          if (this.infoUsuario.roles.length! > 1) {
+          this.infoUsuario = data.usuario;
+          this.roles = this.infoUsuario.roles;
+          localStorage.setItem('token', String(data.token));
+          localStorage.setItem('id_username', String(this.infoUsuario.idUsuario));
+          localStorage.setItem('id_persona', String(this.infoUsuario.persona.idPersona));
+          localStorage.setItem('foto', String(this.infoUsuario.fotoPerfil));
+          localStorage.setItem('username', String(this.infoUsuario.username));
+          if (this.infoUsuario.roles.length > 1) {
             this.modalView();
-          } else {
+          } else if (this.infoUsuario.roles.length != 0) {
             this.sharedService.setIsLogginPresent(true);
-
-            this.toastr.success('Bienvenido','Inicio de Sesión Exitoso')
-            // STORE IN STORAGE
-            // localStorage.setItem('token', String(this.infoUsuario.token));
-            localStorage.setItem('id_username', String(this.infoUsuario.idUsuario));
-            localStorage.setItem('id_persona', String(this.infoUsuario.persona.idPersona));
-            localStorage.setItem('foto', String(this.infoUsuario.fotoPerfil));
-            localStorage.setItem('username', String(this.infoUsuario.username));
-
+            this.toastrService.success('Bienvenido', 'Ingreso Exitoso', {
+              timeOut: 1500,
+              progressBar: true,
+              progressAnimation: 'increasing',
+            });
             for (let rol of this.infoUsuario.roles!) {
               localStorage.setItem('rol', String(rol.nombreRol));
             }
             setTimeout(() => {
               this.router.navigate(['/dashboard']).then(() => {
-                this.sharedService.setIsLogginPresent(true); // Set 
+                this.sharedService.setIsLogginPresent(true);
                 window.location.reload();
               });
 
             }, 1500);
+          } else {
+            this.modalViewRolNoasigando();
+            clearLocalStorage();
           }
         }
       },
@@ -113,14 +112,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // VIEW TWO - MORE ROLES
-  public visiblePeriodoMensual: boolean = false;
-
-  public modalView() {
-    this.visiblePeriodoMensual = true;
+  //ROL NO ASIGNADO
+  public visibleRolnoAsignado: boolean = false;
+  public modalViewRolNoasigando() {
+    this.visibleRolnoAsignado = true;
   }
 
-  //IMPLEMENT RECOVER PASSWORD----------------------------------------------------------------
+  public visibleListRoles: boolean = false;
+  public modalView() {
+    this.visibleListRoles = true;
+  }
+
+  //IMPLEMENT RECOVER PASSWORD
   public dialogRecoverPassword: boolean = false;
   public submitted: boolean = false;
 
@@ -169,6 +172,24 @@ export class LoginComponent implements OnInit {
           this.submitted = false;
         }
       });
+  }
 
+  showSpinner: any;
+
+  public guardarRolStorage(nombre: string) {
+    this.showSpinner = true;
+
+    this.toastrService.success('Bienvenido', 'Registro Exitoso', {
+      timeOut: 1500,
+      progressBar: true,
+      progressAnimation: 'increasing',
+    });
+
+    localStorage.setItem('rol', String(nombre));
+    setTimeout(() => {
+      this.showSpinner = false;
+      window.location.reload();
+      location.replace('/home');
+    }, 1500);
   }
 }

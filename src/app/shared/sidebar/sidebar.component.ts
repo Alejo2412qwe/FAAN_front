@@ -50,43 +50,19 @@ export class SidebarComponent implements OnInit {
       // Verifica si el elemento de menú tiene roles y si el rol del usuario coincide
       return !menuItem.rols || menuItem.rols.includes(getRole(LocalStorageKeys.ROL));
     });
-
-    console.log(this.listSidebar);
-
     this.isLogginPresent = this.storageService.isLoggedIn();
-    console.log(this.isLogginPresent)
     if (this.isLogginPresent === true) {
       this.conectarWebSocket();
     }
-
     this.userLoggin = localStorage.getItem("username")!;
-    this.rolLoggin = localStorage.getItem("rol")!;
+    this.rolLoggin = getRole(LocalStorageKeys.ROL)!;
+    console.log(this.userLoggin);
+
   }
 
 
   isCurrentRoute(route: string): boolean {
     return this.router.isActive(route, true);
-  }
-
-
-  // CHECK ROL
-  isSuperAdministrador: boolean = false;
-  isAdministrador: boolean = false;
-
-  public checkRolesUserLogin(nombreRol: string): void {
-    switch (nombreRol) {
-      case 'SUPERADMINISTRADOR':
-        this.isSuperAdministrador = true;
-        this.isAdministrador = false;
-        break;
-      case 'ADMINISTRADOR':
-        this.isSuperAdministrador = false;
-        this.isAdministrador = true;
-        break;
-      default:
-        this.isLogginPresent = false;
-        break;
-    };
   }
 
   // NOTIFICACIONES
@@ -129,7 +105,6 @@ export class SidebarComponent implements OnInit {
 
   removerNotificacion(data: any) {
     this.notificacionService.updateNotificacionEstado(data._id).subscribe(data => {
-      console.log("VISTO");
     })
   }
 

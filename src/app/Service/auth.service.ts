@@ -16,6 +16,8 @@ export class AuthService {
     return this.http.post<Usuario>(environment.apiuriPublic + '/auth/signIn', usuario);
   }
 
+  // JwtResponse
+
 }
 
 
