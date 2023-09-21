@@ -84,6 +84,9 @@ export class ForAdopcionComponent implements OnInit {
 
                 { text: `\n 2. ¿Están todos los miembros de la familia enterados y de acuerdo de la intención de adogtar un animal de compañía? Si __${this.formulario.todoMiembrosAcuerdo2 === 'SI' ? 'X' : ''}__ No__${this.formulario.todoMiembrosAcuerdo2 === 'NO' ? 'X' : ''}__ `, style: 'question' },
 
+                { text: `\n 3. ¿Están de acuerdo? Si __${this.formulario.acuerdo3 === 'SI' ? 'X' : ''}__ No__${this.formulario.acuerdo3 === 'NO' ? 'X' : ''}__ `, style: 'question' },
+                { text: '\n' + this.formulario.responseWhy3, },
+
                 { text: `\n 4. El animalito viviría con: Conmigo y mi familia__${this.formulario.viviraCon4 === 'A' ? 'X' : ''}__ Es obsequio para un conocido__${this.formulario.viviraCon4 === 'B' ? 'X' : ''}__`, style: 'question' },
 
                 { text: '\n 5. Como lo vas a considerar?: ', style: 'question' },

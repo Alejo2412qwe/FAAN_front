@@ -21,6 +21,7 @@ import { ForAdopcionComponent } from './Components/formAdopcion/for-adopcion/for
 import { DonacionesComponent } from './Components/donaciones/donaciones/donaciones.component';
 import { ContactoComponent } from './Components/contacto/contacto/contacto.component';
 import { InformationComponent } from './Components/information/information.component';
+import { AuthGaurdGuard } from './guard/auth.guard';
 
 
 
@@ -33,26 +34,24 @@ const routes: Routes = [
   { path: 'recover/password/:token', component: RecoverPasswordComponent, data: { titulo: 'Dashboard' } },
   // { path: 'recover-password', component: RecoverPasswordComponent },
 
-  { path: 'person/gestion', component: ControlPersonComponent, data: { titulo: 'Control de las Personas/Rescatistas' } },
+  { path: 'person/gestion', component: ControlPersonComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Control de las Personas/Rescatistas', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   // MASCOTAS
+  { path: 'registro-mascota', component: RegistroMascotasComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Registro de Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+  { path: 'control-animal', component: ControlAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Control de los Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+  { path: 'adopcion-animal', component: AdopcionAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Adopción de los Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
-  { path: 'registro-mascota', component: RegistroMascotasComponent, data: { titulo: 'Registro de Animales' } },
-  { path: 'control-animal', component: ControlAnimalComponent, data: { titulo: 'Control de los Animales' } },
-  { path: 'adopcion-animal', component: AdopcionAnimalComponent, data: { titulo: 'Adopción de los Animales' } },
-
-
-  //REGISTRO DE TIPO DE ANIMAL-----------------------------------------------------
-  { path: 'animal-tipo', component: RegisterTipoAnimalComponent, data: { titulo: 'Gestión del Tipo de Animal' } },
-  { path: 'animal-raza', component: RegisterRazaAnimalComponent, data: { titulo: 'Gestión de las Razas de los Animales' } },
+  //REGISTRO DE TIPO Y RAZA DE ANIMAL-----------------------------------------------------
+  { path: 'animal-tipo', component: RegisterTipoAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Gestión del Tipo de Animal', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+  { path: 'animal-raza', component: RegisterRazaAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Gestión de las Razas de los Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   // SHARED
-  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
-  { path: 'fundacion', component: FundacionComponent, data: { titulo: 'Administración de la Fundación' } },
-  { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil del Usuario' } },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Dashboard', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+  { path: 'fundacion', component: FundacionComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Administración de la Fundación', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+  { path: 'perfil-usuario', component: PerfilUsuarioComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Perfil del Usuario', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   // SUPERADMIN
-  { path: 'control-usuario', component: ControlUsuariosComponent, data: { titulo: 'Control de los Usuarios' } },
+  { path: 'control-usuario', component: ControlUsuariosComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Control de los Usuarios', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   // PUBLIC
   { path: 'login', component: LoginComponent },

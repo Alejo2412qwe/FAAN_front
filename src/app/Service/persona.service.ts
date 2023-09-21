@@ -25,13 +25,20 @@ export class PersonaService {
     return this.http.get<Persona[]>(environment.apiuri + '/persona/pageable/find', { params });
   }
 
-
   public getListaPersonas(page: number, size: number, sort: string[]): Observable<Persona[]> {
     let params = new HttpParams()
       .set('page', page)
       .set('size', size)
       .set('sort', sort.join(','))
     return this.http.get<Persona[]>(environment.apiuri + '/persona/pageable', { params });
+  }
+
+  public findByAllPerson(page: number, size: number, sort: string[]): Observable<Persona[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+    return this.http.get<Persona[]>(environment.apiuri + '/persona/pageable/dadmin', { params });
   }
 
   public getPersonaById(idPersona: number): Observable<Persona> {

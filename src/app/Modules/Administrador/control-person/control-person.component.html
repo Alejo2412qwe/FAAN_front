@@ -1,7 +1,7 @@
 <div class="card p-3">
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2"
+            <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-primary mr-2"
                 (click)="openNewPerson()"></button>
         </ng-template>
 
@@ -12,7 +12,7 @@
 
     <p-table #dt [value]="listPerson" [lazy]="true" (onLazyLoad)="loadPersonLazy($event)" dataKey="id"
         [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
-        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} Personas"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Personas"
         [showCurrentPageReport]="true" [loading]="loading"
         [globalFilterFields]="['idPersona', 'nombre1', 'apellido1', 'identificacion']">
 
@@ -21,13 +21,13 @@
             <div class="grid p-fluid align-items-center">
                 <div class="col-12 md:col-8">
                     <div class="p-inputgroup">
-                        <h5 class="m-0"><strong>Gestión Personas</strong></h5><br>
+                        <h5 class="m-0"><strong>Listado de las Personas</strong></h5><br>
                     </div>
                 </div>
 
                 <div class="col-12 md:col-4">
                     <div class="p-inputgroup">
-                        <input type="text" [(ngModel)]="valueAtribute" pInputText placeholder="Encontrar por ci.." />
+                        <input type="text" [(ngModel)]="valueAtribute" pInputText placeholder="Encontrar por CI.." />
                         <button type="button" pButton pRipple [class]="submitFindAtribute ? 'p-button-danger' : ''"
                             [icon]="'pi' + (submitFindAtribute ? ' pi-times' : ' pi-search')" styleClass="p-button-warn"
                             [disabled]="valueAtribute ? false: true"
@@ -50,10 +50,10 @@
                         field="identificacion"></p-sortIcon>
                 </th>
 
-                <th pSortableColumn="nombre1" style="min-width:15rem"><strong>Nombres</strong>
+                <th pSortableColumn="nombre1" style="min-width:15rem"><strong>NOMBRES</strong>
                     <p-sortIcon field="nombre1"></p-sortIcon>
                 </th>
-                <th pSortableColumn="apellido1" style="min-width:15rem"><strong>Apellidos</strong>
+                <th pSortableColumn="apellido1" style="min-width:15rem"><strong>APELLIDOS</strong>
                     <p-sortIcon field="apellido1"></p-sortIcon>
                 </th>
                 <th></th>
@@ -82,7 +82,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">En total son {{ listPerson ?
-                totalRecords : 0 }} Personas.</div>
+                totalRecords : 0 }} Persona/S.</div>
         </ng-template>
     </p-table>
 </div>
@@ -94,13 +94,15 @@
     header="Gestión Personas" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
 
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
+
         <form [formGroup]="formPerson">
 
             <input *ngIf="false" type="number" id="idPersona" name="idPersona" formControlName="idPersona"
                 formcontrolname="idPersona" />
 
             <div class="field">
-                <label for="identificacion"><strong>Ingrese su identificacion</strong></label>
+                <label for="identificacion"><strong>Iidentificación: *</strong></label>
                 <input type="identificacion" pInputText id="identificacion" name="identificacion"
                     placeholder="Cédula..." formControlName="identificacion"
                     [class.is-invalid]="(respose && respose.ci) || formPerson.get('identificacion')!.invalid && formPerson.get('identificacion')!.touched"
@@ -113,20 +115,17 @@
                         *ngIf="formPerson.get('identificacion')?.errors?.['required']"><strong>Identificación es
                             requerido.</strong></small>
                     <small class="text-danger"
-                        *ngIf="formPerson.get('identificacion')?.errors?.['minlength']"><strong>Minimo
+                        *ngIf="formPerson.get('identificacion')?.errors?.['minlength']"><strong>Mínimo
                             requerido es 10.</strong></small>
                     <small class="text-danger" *ngIf="respose && respose.ci">
                         <strong>{{respose.ci}}</strong></small>
 
-
                 </div>
-
 
             </div>
 
-
             <div class="field">
-                <label for="correo"><strong>Ingrese su correo electrónico.</strong></label>
+                <label for="correo"><strong>Correo electrónico: *</strong></label>
                 <input type="correo" pInputText id="correo" name="correo" placeholder="Ej: example@email.com"
                     formControlName="correo"
                     [class.is-invalid]="(respose && respose.emailValidate) || formPerson.get('correo')!.invalid && formPerson.get('correo')!.touched"
@@ -145,7 +144,7 @@
             </div>
 
             <div class="field">
-                <label for="correo"><strong>Teléfono.</strong></label>
+                <label for="correo"><strong>Teléfono: </strong></label>
                 <input type="text" pInputText id="telefono" name="telefono" placeholder="Ej: 07454545"
                     formControlName="telefono"
                     [class.is-invalid]="formPerson.get('telefono')!.invalid && formPerson.get('telefono')!.touched"
@@ -163,7 +162,7 @@
 
             <div class="formgrid grid">
                 <div class="field col">
-                    <label for="nombre1"><strong>Primer Nombre: </strong></label>
+                    <label for="nombre1"><strong>Primer Nombre: * </strong></label>
                     <input type="text" pInputText id="nombre1" name="nombre1" placeholder="Nombre"
                         formControlName="nombre1"
                         [class.is-invalid]="formPerson.get('nombre1')!.invalid && formPerson.get('nombre1')!.touched"
@@ -188,7 +187,7 @@
 
             <div class="formgrid grid">
                 <div class="field col">
-                    <label for="apellido1"><strong>Apellido Paterno: </strong></label>
+                    <label for="apellido1"><strong>Apellido Paterno: * </strong></label>
                     <input type="text" pInputText id="apellido1" name="apellido1" placeholder="Apellido"
                         formControlName="apellido1"
                         [class.is-invalid]="formPerson.get('apellido1')!.invalid && formPerson.get('apellido1')!.touched"
@@ -211,7 +210,7 @@
 
 
             <div class="field ">
-                <label class="mb-3"><strong>Género: </strong></label>
+                <label class="mb-3"><strong>Género: * </strong></label>
 
                 <div class="formgrid grid">
                     <div class="field-radiobutton col-6">
@@ -234,17 +233,17 @@
 
             <div class="field">
                 <label for="fechaNacimiento"><strong>Fecha de Nacimiento.</strong></label>
-                <div class=" flex justify-content-center">
-                    <p-calendar class="max-w-full" [inline]="true" [showWeek]="true" formControlName="fechaNacimiento"
-                        [style]="{ 'height': '300px', 'font-size': '14px' }"></p-calendar>
-                </div>
-
                 <div *ngIf="formPerson.get('fechaNacimiento')?.dirty && formPerson.get('fechaNacimiento')?.errors">
                     <div *ngIf="formPerson.get('fechaNacimiento')?.errors?.['fechaNacimientoInvalida']">
                         <small class="text-danger"><strong>{{ formPerson.get('fechaNacimiento')?.errors?.['mensaje']
                                 }}</strong></small>
                     </div>
                 </div>
+                <div class=" flex justify-content-center">
+                    <p-calendar class="max-w-full" [inline]="true" [showWeek]="true" formControlName="fechaNacimiento"
+                        [style]="{ 'height': '300px', 'font-size': '14px' }"></p-calendar>
+                </div>
+
             </div>
 
         </form>

@@ -2,7 +2,7 @@
 
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+            <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-primary mr-2"
                 (click)="openNewUser()" pTooltip="Nuevo usuario" tooltipPosition="bottom"></button>
         </ng-template>
 
@@ -10,7 +10,7 @@
 
     <p-table #dt [value]="listUsuarios" [lazy]="true" (onLazyLoad)="loadUsuarioLazy($event)" dataKey="idUsuario"
         [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="size" [totalRecords]="totalRecords"
-        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords}  Usuarios"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Usuario/S"
         [showCurrentPageReport]="true" [loading]="loading"
         [globalFilterFields]="['idUsuario', 'username', 'usuario.persona.identificacion']">
 
@@ -54,7 +54,7 @@
                 </th>
 
                 <th pSortableColumn="persona.identificacion" style="min-width:10rem">
-                    <strong>IDENTIFICACION</strong> <p-sortIcon field="persona.identificacion"></p-sortIcon>
+                    <strong>IDENTIFICACIÓN</strong> <p-sortIcon field="persona.identificacion"></p-sortIcon>
                 </th>
 
                 <th pSortableColumn="estadoUsuario" style="min-width:10rem"><strong>ESTADO</strong> <p-sortIcon
@@ -107,11 +107,12 @@
 <p-dialog [(visible)]="userDialog" [style]="{ width: '450px' }" header="NUEVO USUARIO" [modal]="true"
     styleClass="p-fluid">
     <ng-template pTemplate="content">
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
 
         <form [formGroup]="formUserNew">
 
             <div class="field">
-                <label for="identificacion"><strong>Identificación: (*)</strong></label>
+                <label for="identificacion"><strong>Identificación: *</strong></label>
                 <input type="identificacion" pInputText id="identificacion" name="identificacion"
                     placeholder="Identificación / Cédula" formControlName="identificacion"
                     [class.is-invalid]="formUserNew.get('identificacion')!.invalid && formUserNew.get('identificacion')!.touched"
@@ -135,7 +136,7 @@
             </div>
 
             <div class="field">
-                <label for="correo"><strong>Correo electrónico: (*)</strong></label>
+                <label for="correo"><strong>Correo electrónico: *</strong></label>
                 <input type="correo" pInputText id="correo" name="correo" placeholder="Ej: example@email.com"
                     formControlName="correo"
                     [class.is-invalid]="formUserNew.get('correo')!.invalid && formUserNew.get('correo')!.touched"
@@ -154,7 +155,7 @@
             </div>
 
             <div class="field">
-                <label for="username"><strong>Nombre de Usuario: (*)</strong></label>
+                <label for="username"><strong>Nombre de Usuario: *</strong></label>
                 <input type="username" pInputText id="username" name="username" placeholder="Nombre de usuario"
                     formControlName="username"
                     [class.is-invalid]="formUserNew.get('username')!.invalid && formUserNew.get('username')!.touched"
@@ -176,7 +177,7 @@
             </div>
 
             <div class="field">
-                <label for="correo"><strong>Contraseña: (*)</strong></label>
+                <label for="correo"><strong>Contraseña: *</strong></label>
 
                 <p-password type="password" id="password" name="password" placeholder="Ej: **********"
                     formControlName="password"
@@ -214,8 +215,7 @@
 
 
         <div class="card col-12 md:col-12">
-            <p class="m-1"><strong>Seleccione los roles: </strong> <strong
-                    [style]="submitted && rolsAddUser.length === 0 ? 'color: red':''">(*)</strong></p>
+            <p class="m-1"><strong>Seleccione los roles: *</strong> </p>
 
 
             <div *ngFor="let role of listRoles" class="field-checkbox mt-2">
@@ -231,7 +231,6 @@
                         tooltipPosition="bottom"></p-tag>
                 </button>
 
-
                 <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple [label]="role.nombreRol!"
                     class="w-full custom-button" (click)="addRolsUser(role)"
                     [ngStyle]="isRoleAssigned(role) ? {color: 'black'}:{color: 'white'}">
@@ -241,12 +240,8 @@
                         [pTooltip]="'Aplaste el botón para '+(!isRoleAssigned(role)?'Añadir':'Quitar')+' el Rol.'"
                         tooltipPosition="bottom"></p-tag>
                 </button>
-
             </div>
-
-
         </div>
-
 
     </ng-template>
 
@@ -263,9 +258,11 @@
     styleClass="p-fluid">
     <ng-template pTemplate="content">
 
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
+
         <form [formGroup]="formUserEdit">
             <div class="field">
-                <label for="username"><strong>Nombre de Usuario: (*)</strong></label>
+                <label for="username"><strong>Nombre de Usuario: *</strong></label>
                 <input type="username" pInputText id="username" name="username" placeholder="Nombre de usuario"
                     formControlName="username"
                     [class.is-invalid]="formUserEdit.get('username')!.invalid && formUserEdit.get('username')!.touched"
@@ -288,7 +285,7 @@
             </div>
 
             <div class="field">
-                <label for="correo"><strong>Contraseña: (*)</strong></label>
+                <label for="correo"><strong>Contraseña: *</strong></label>
 
                 <p-password type="password" id="password" name="password" placeholder="Ej: **********"
                     formControlName="password"
@@ -328,7 +325,7 @@
         </form>
 
         <div class="card col-12 md:col-12">
-            <p class="m-1"><strong>Seleccione los roles: </strong> <strong
+            <p class="m-1"><strong>Seleccione los roles: *</strong> <strong
                     [style]="submitted && rolsAddUser.length === 0 ? 'color: red':''">(*)</strong></p>
 
 
