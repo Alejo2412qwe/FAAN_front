@@ -2,7 +2,7 @@
 
     <p-toolbar styleClass="mb-3 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-primary mr-2"
+            <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-primary mr-2"
                 (click)="openNewRazaAnimal()" pTooltip="Crear nueva raza" tooltipPosition="bottom"></button>
         </ng-template>
 
@@ -16,7 +16,7 @@
 
     <p-table #dt [value]="listRazaAnimal" [lazy]="true" (onLazyLoad)="loadRazaAnimalLazy($event)" dataKey="id"
         [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="4" [totalRecords]="totalRecords"
-        [rowHover]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} Raza animales"
+        [rowHover]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Raza/S de animales"
         [showCurrentPageReport]="true" [loading]="loading"
         [globalFilterFields]="['idRazaAnimal', 'nombreRaza', 'tipoAnimal.nombreTipo']">
 
@@ -55,7 +55,7 @@
                         field="nombreRaza"></p-sortIcon>
                 </th>
 
-                <th pSortableColumn="tipoAnimal.nombreTipo" style="min-width:15rem"><strong>NOMBRE TIPO</strong>
+                <th pSortableColumn="tipoAnimal.nombreTipo" style="min-width:15rem"><strong>NOMBRE DEL TIPO</strong>
                     <p-sortIcon field="tipoAnimal.nombreTipo"></p-sortIcon>
                 </th>
                 <th style="min-width:8rem"><strong>GESTIÓN</strong></th>
@@ -86,7 +86,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">En total hay {{ listRazaAnimal ?
-                totalRecords : 0 }} Razas de animales.</div>
+                totalRecords : 0 }} Raza/S de animales.</div>
         </ng-template>
     </p-table>
 </div>
@@ -94,16 +94,16 @@
 
 
 <p-dialog [(visible)]="razaAnimalDialog" [style]="{ width: '450px', padding: screenWidth < 700 ? '10px' : '' }"
-    header="Razas animales" [modal]="true" styleClass="p-fluid">
+    header="Razas de los animales" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-
+        <p style="font-size: 13px; color: red;">Los campos marcados con * son de ingreso obligatorio</p>
 
         <div class="field">
-            <label for="nombreRaza"><strong>Tipo Raza</strong></label>
+            <label for="nombreRaza"><strong>Tipo de Raza: *</strong></label>
 
             <!--    [style]="{'max-height': '70px', 'overflow-y': 'auto'}" -->
             <p-dropdown [options]="listTipoAnimals" [(ngModel)]="tipoAnimal" optionLabel="nombreTipo" [filter]="true"
-                filterBy="nombreTipo" [showClear]="true" placeholder="Seleccione tipo" appendTo="body"
+                filterBy="nombreTipo" [showClear]="true" placeholder="Seleccione el tipo" appendTo="body"
                 [style]="{'overflow-y': 'auto'}">
                 <ng-template pTemplate="selectedItem">
 
@@ -124,17 +124,17 @@
 
 
         <div class="field">
-            <label for="nombreRaza"><strong>Nombre Raza</strong></label>
+            <label for="nombreRaza"><strong>Nombre de la Raza: *</strong></label>
 
             <span class="p-input-icon-right ">
                 <i class="pi pi-info-circle"
                     [style.color]="submitted && !razaAnimal.nombreRaza || errorUnique ? 'red':''"></i>
                 <input type="text"
                     [class]="submitted && (!razaAnimal.nombreRaza || errorUnique) ? 'ng-invalid ng-dirty':''"
-                    id="nombreRaza" name="nombreRaza" placeholder="Nombre raza" pInputText
+                    id="nombreRaza" name="nombreRaza" placeholder="Nombre de la Raza" pInputText
                     [(ngModel)]="razaAnimal.nombreRaza"
-                    onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
-                    [maxlength]="30" required autofocus />
+                    onkeypress='return !(event.charCode >= 48 && event.charCode <= 57)' [maxlength]="30" required
+                    autofocus />
             </span>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza">Name is required.</small>
             <small class="p-error" *ngIf="submitted && !razaAnimal.nombreRaza || errorUnique">{{errorUnique}}</small>

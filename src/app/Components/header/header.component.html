@@ -1,17 +1,42 @@
-<div class="p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap"
-    style="background-color: var(--blue)">
-    <div class="font-bold mr-4">FAAN</div>
-    <div class="align-items-center hidden lg:flex">
-        <span class="line-height-3">🐶 Fundación Familia Amor Animal</span>
+<div class="data text-center p-2" style="background-color: var(--blue)">
+    <ul class=" p-0 m-0">
+        <li class="align-items-center ">
+            <span class="text-900"><strong class="ml-3">FAAN </strong> 🐶 Fundación Familia Amor Animal</span>
+        </li>
+    </ul>
+</div>
+
+
+<nav class="navbar navbar-expand-lg" style="background-color: var(--blue); ">
+    <div class="container-fluid">
+        <a class="text-900" *ngIf="screenWidth < 1000"><strong class="ml-3">FAAN </strong> 🐶</a>
+
+        <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+            <ul [class]="'navbar-nav text-center '+ (screenWidth < 1000 ? 'mt-3':'') + ' ml-2 mx-2'"
+                style="font-size: 18px;">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/home']">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/informacion']">Información</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/formulario-adopcion']">Formulario para
+                        adopción</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/donaciones']">Donaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " [routerLink]="['/contacto']">Contactos</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-<div>
-    <nav id="nav-3">
-        <a class="link-3 " [routerLink]="['/home']">Home</a>
-        <a class="link-3" [routerLink]="['/informacion']">Información</a>
-        <a class="link-3" [routerLink]="['/formulario-adopcion']">Formulario para adopción</a>
-        <a class="link-3" [routerLink]="['/donaciones']">Donaciones</a>
-        <a class="link-3" [routerLink]="['/contacto']">Contactos</a>
-          
-    </nav>
-</div>
+</nav>
