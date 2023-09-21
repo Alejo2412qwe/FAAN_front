@@ -11,10 +11,12 @@
 <!-- MODAL ANIMALES -->
 <p-dialog header="Datos Fundación" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
     [resizable]="false">
-    <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Buscar Animal</button>
+    <button type="button" (click)="showModalAnimales()" class="btn btn-primarys m-2" style="flex: 30%;">Buscar
+        Animal</button>
     <span class="p-input-icon-left" style="flex: 70%;">
         <i class="pi pi-search"></i>
-        <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" [(ngModel)]="isTextDigit" pInputText style="width: 100%;" (ngModelChange)="onInputChange()" />
+        <input placeholder="Buscar Mascota" type="text" id="isTextDigit" name="isTextDigit" [(ngModel)]="isTextDigit"
+            pInputText style="width: 100%;" (ngModelChange)="onInputChange()" />
     </span>
     <p-card header="" class="m-5 text-center align-items-center">
         <div class="container">
@@ -34,14 +36,16 @@
             </div>
         </div>
         <div class="m-5" style="text-align: center; align-items: center;">
-            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()" class="btn btn-primarys p-button-rounded">
+            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()"
+                class="btn btn-primarys p-button-rounded">
                 <i class="pi pi-arrow-circle-left"></i>
             </button>
-            <button *ngIf="isPage !== pageTotal - 1 && pageTotal > 0" type="button" (click)="siguientePage()" class="btn btn-primarys p-button-rounded" style="margin-left: 50px;">
+            <button *ngIf="isPage !== pageTotal - 1 && pageTotal > 0" type="button" (click)="siguientePage()"
+                class="btn btn-primarys p-button-rounded" style="margin-left: 50px;">
                 <i class="pi pi-arrow-circle-right"></i>
             </button>
         </div>
-        
+
     </p-card>
 
 </p-dialog>
@@ -54,76 +58,98 @@
             <form (ngSubmit)="saveControl()" ngNativeValidate style="padding: 15px;">
                 <div class="grid p-fluid m-2">
                     <div class="col-12 md:col-12 mt-1">
-                        <div class="p-inputgroup">
-                            <p-calendar [inline]="false" [style]="{ 'position': 'relative', 'z-index': '1000' }"
-                                inputId="edad" class="ng-dirty" [showIcon]="false" placeholder="Fecha del Control"
-                                id="fechaControlAnimal" name="fechaControlAnimal"
-                                [(ngModel)]="control.fechaControlAnimal" [required]="true"></p-calendar>
-                        </div>
+                        <label for="fechaControlAnimal"><strong>Fecha del Control: *</strong></label>
+                        <span class="p-input-icon-right">
+                            <i class="pi pi-info-circle"
+                                [style.color]="submitted && !control.fechaControlAnimal ? 'red' : ''"></i>
+                            <div class="p-inputgroup">
+                                <p-calendar [(ngModel)]="control.fechaControlAnimal"
+                                    [styleClass]="submitted && !control.fechaControlAnimal ? 'ng-invalid ng-dirty' : ''"
+                                    id="fechaControlAnimal" name="fechaControlAnimal" [showIcon]="true"
+                                    placeholder="Fecha del Control" [required]="true" pTooltip="Fecha del Control"
+                                    tooltipPosition="bottom"></p-calendar>
+                            </div>
+                        </span>
                         <small class="p-error" *ngIf="submitted && !control.fechaControlAnimal">Fecha es
+                            requerido.</small>
+
+                    </div>
+                </div>
+
+                <div class="grid p-fluid m-2">
+                    <div class="col-12 md:col-12 mt-1">
+                        <label for="nombreRaza"><strong>Nombre del Veterinario: *</strong></label>
+                        <span class="p-input-icon-right ">
+                            <i class="pi pi-info-circle"
+                                [style.color]="submitted && !control.nombreVeterinario ? 'red':''"></i>
+                            <div class="p-inputgroup">
+                                <input type="text" [(ngModel)]="control.nombreVeterinario"
+                                    [class]="submitted && (!control.nombreVeterinario) ? 'ng-invalid ng-dirty':''"
+                                    id="nombreVeterinario" name="nombreVeterinario" pInputText
+                                    placeholder="Veterinario.." required pattern="[A-Za-z\s.]+"
+                                    pTooltip="Nombre Veterinario" tooltipPosition="bottom" />
+                            </div>
+                        </span>
+                        <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre es
+                            requerido.</small>
+                    </div>
+
+                    <div class="col-12 md:col-12 mt-1">
+
+                        <label for="nombreRaza"><strong>Observación del Animal: *</strong></label>
+                        <span class="p-input-icon-right ">
+                            <i class="pi pi-info-circle"
+                                [style.color]="submitted && !control.observaciones ? 'red':''"></i>
+                            <div class="p-inputgroup">
+                                <input type="text" [(ngModel)]="control.observaciones"
+                                    [class]="submitted && (!control.observaciones) ? 'ng-invalid ng-dirty':''"
+                                    id="observacionAnimal" name="observacionAnimal" pInputText
+                                    placeholder="Observación.." required pTooltip="Observación Animal"
+                                    tooltipPosition="bottom" />
+                            </div>
+                        </span>
+                        <small class="p-error" *ngIf="submitted && !control.observaciones">Observación es
                             requerido.</small>
                     </div>
                 </div>
 
                 <div class="grid p-fluid m-2">
-                    <div class="col-12 md:col-12 mt-1">
-                        <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <input type="text" pInputText id="nombreVeterinario" name="nombreVeterinario"
-                                    [(ngModel)]="control.nombreVeterinario" required pattern="[A-Za-z\s.]+"
-                                    title="Por favor ingrese solo letras y puntos" />
-                                <label htmlFor="nombreVeterinario">Nombre Veterinario <span
-                                        class="red-asterisk"></span></label>
-                            </span>
-
-                        </div>
-                        <div>
-                            <small class="p-error" *ngIf="submitted && !control.nombreVeterinario">Nombre Veterinario es
-                                requerido.</small>
-                        </div>
-                    </div>
-
-                    <div class="col-12 md:col-12 mt-1">
-                        <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <input type="text" pInputText id="observaciones" name="observaciones"
-                                    [(ngModel)]="control.observaciones" />
-                                <label htmlFor="observaciones"> Observacion <span class="red-asterisk"></span></label>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid p-fluid m-2">
                     <div class="col-12 md:col-6 mt-1">
+
+                        <label for="nombreRaza"><strong>Peso del Animal: *</strong></label>
+
                         <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <input type="number" pInputText id="pesoActual" name="pesoActual"
-                                    [(ngModel)]="control.pesoActual" required pattern="^\d+(\.\d{1,2})?$"
-                                    title="Por favor ingrese solo números positivos o cero" />
-                                <label htmlFor="pesoActual">Peso Actual <span class="red-asterisk"></span></label>
-                            </span>
+
+                            <p-inputNumber [(ngModel)]="control.pesoActual" [showButtons]="true"
+                                inputId="minmax-buttons" [min]="0" [max]="15"
+                                [class]="submitted && (!control.pesoActual) ? 'ng-invalid ng-dirty':''" id="pesoAnimal"
+                                name="pesoAnimal" placeholder="Peso.." pTooltip="Peso" tooltipPosition="bottom">
+                            </p-inputNumber>
+
                         </div>
-                        <div>
-                            <small class="p-error" *ngIf="submitted && control.pesoActual! < 0">El peso no puede ser
-                                negativo.</small>
+
+                        <small class="p-error" *ngIf="submitted && !control.pesoActual">Peso es requerido.</small>
+                    </div>
+                    <div class="grid p-fluid mt-2 text-center">
+                        <div class="col-12 md:col-8 mx-auto">
+                            <div class="field">
+                                <label for="Estado"><strong>Estado Animal: *</strong></label>
+                                <p-dropdown [options]="estadosanimales" id="selectEstado" name="selectEstado" [(ngModel)]="selectEstado" [showClear]="true"
+                                    placeholder="Seleccione estado animal" pTooltip="Estado" 
+                                    optionLabel="tipoEstadoAnimal" tooltipPosition="bottom"></p-dropdown>
+                                <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado es
+                                    requerido.</small>
+                            </div>
                         </div>
+                        <div class="col-12 md:col-4">
+                            <p-button label="AÑADIR SITUACIÓN" icon="pi pi-plus"
+                                (onClick)="showDialogToAddEstado()"></p-button>
+
+                        </div>
+
                     </div>
 
-                    <div class="col-12 md:col-6 mt-1">
-                        <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <p-dropdown appendTo="body" id="selectEstado" name="selectEstado"
-                                    [options]="estadosanimales" [(ngModel)]="selectEstado"
-                                    [style]="{'width': 'calc(100%)'}" placeholder="Seleccione una estado"
-                                    optionLabel="tipoEstadoAnimal"></p-dropdown>
-                                <button pButton type="button" (click)="showDialogToAddEstado()" label="Agregar Estado"
-                                    class="p-button-primary p-button-rounded "></button>
-                            </span>
-                            <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado Animla es
-                                requerido.</small>
-                        </div>
-                    </div>
+
                 </div>
 
 
@@ -133,35 +159,55 @@
                     <form ngNativeValidate style="padding: 15px;">
                         <div class="grid p-fluid m-2">
                             <div class="col-12 md:col-12 mt-1 justify-content-center">
-                                <p-dropdown appendTo="body" id="selectedVacuna" name="selectedVacuna"
-                                    [options]="listTipoVacuna" [(ngModel)]="selectedVacuna"
-                                    placeholder="Seleccione una vacuna" optionLabel="nombreVacuna"></p-dropdown>
+                                <label for="nombreVacuna"><strong>Vacuna: *</strong></label>
+                                <p-dropdown [options]="listTipoVacuna" [(ngModel)]="selectedVacuna" [showClear]="true"
+                                    placeholder="Seleccione una vacuna" pTooltip="nombreVacuna" id="selectedVacuna" name="selectedVacuna"
+                                    optionLabel="nombreVacuna" tooltipPosition="bottom"></p-dropdown>
+
+                                <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es
+                                    requerido.</small>
                             </div>
-                            <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es
-                                requerido.</small>
                         </div>
                         <div class="grid p-fluid m-2">
                             <div class="col-12 md:col-12 mt-1">
-                                <div class="p-inputgroup">
-                                    <span class="p-float-label">
-                                        <input type="text" pInputText id="observaciones" name="observaciones"
-                                            [(ngModel)]="vacuna.observaciones" />
-                                        <label htmlFor="observaciones"> Observacion <span
-                                                class="red-asterisk"></span></label>
-                                    </span>
-                                </div>
+                                <label for="nombreRaza"><strong>Observación del Animal: *</strong></label>
+                                <span class="p-input-icon-right ">
+                                    <i class="pi pi-info-circle"
+                                        [style.color]="submitted && !vacuna.observaciones ? 'red':''"></i>
+                                    <div class="p-inputgroup">
+                                        <input type="text" [(ngModel)]="vacuna.observaciones"
+                                            [class]="submitted && (!vacuna.observaciones) ? 'ng-invalid ng-dirty':''"
+                                            id="observacionAnimal" name="observacionAnimal" pInputText
+                                            placeholder="Observación.." required pTooltip="Observación Animal"
+                                            tooltipPosition="bottom" />
+                                    </div>
+                                </span>
+                                <small class="p-error" *ngIf="submitted && !vacuna.observaciones">Observación es
+                                    requerido.</small>
                             </div>
                         </div>
 
-                        <h5>Proxima vacuna</h5>
+                        <h5>Próxima vacuna</h5>
                         <div class="grid p-fluid m-2">
                             <div class="col-12 md:col-12 mt-1">
-                                <div class="p-inputgroup">
-                                    <p-calendar [inline]="true" [style]="{ 'position': 'relative', 'z-index': '1000' }"
-                                        inputId="edad" class="ng-dirty" [showIcon]="true"
-                                        placeholder="Fecha Proxima Vacuna" id="fechaProximaVacuna"
-                                        name="fechaProximaVacuna" [(ngModel)]="vacuna.fechaProximaVacuna"></p-calendar>
-                                </div>
+                                <label for="fechaProximaVacuna"><strong>Fecha Próximo Control: *</strong></label>
+                                <span class="p-input-icon-right">
+                                    <i class="pi pi-info-circle"
+                                        [style.color]="submitted && !vacuna.fechaProximaVacuna ? 'red' : ''"></i>
+                                    <div class="p-inputgroup">
+                                        <p-calendar [inline]="true"
+                                            [style]="{ 'position': 'relative', 'z-index': '1000' }"
+                                            [(ngModel)]="vacuna.fechaProximaVacuna"
+                                            [styleClass]="submitted && !vacuna.fechaProximaVacuna ? 'ng-invalid ng-dirty' : ''"
+                                            id="fechaProximaVacuna" name="fechaProximaVacuna" [showIcon]="true"
+                                            placeholder="Fecha Próximo Control" [required]="true"
+                                            pTooltip="Fecha Próximo Control" tooltipPosition="bottom"></p-calendar>
+                                    </div>
+                                </span>
+                                <small class="p-error" *ngIf="submitted && !vacuna.fechaProximaVacuna">Fecha es
+                                    requerido.</small>
+
+
                             </div>
                         </div>
 
@@ -245,14 +291,12 @@
                 <tr>
                     <th>Fecha Vacunacion</th>
                     <th>Nombre Vacuna</th>
-                    <th>Observaciones</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-columns="columns" let-data>
                 <tr>
                     <td>{{ data.fechaVacuna }}</td>
                     <td>{{ data.nombreVacuna }}</td>
-                    <td>{{ data.observaciones }}</td>
                 </tr>
             </ng-template>
         </p-table>
