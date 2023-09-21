@@ -192,7 +192,7 @@ export class ForAdopcionComponent implements OnInit {
                     text: 'Es obligación de FAAN entregarte al animalito vacunado, desparasitado y esterilizado si tiene edad para hacerlo.'
                 },
                 {
-                    text: 'Si al terminar de leer aún estas convencido de aDOGtar, llénala esta solicitud y envíala a nuestros contactos 0998681859 - 0987614520.'
+                    text: 'Si al terminar de leer aún estas convencido de aDOGtar, llénala esta solicitud y envíala a nuestros contactos 0998681859.'
                 },
 
             ],
