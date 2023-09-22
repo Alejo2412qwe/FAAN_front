@@ -56,6 +56,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  public initAuthSpinner: boolean = false;
+
+
   public infoUsuario!: Usuario;
   public roles: Rol[] = [];
 
@@ -70,10 +73,17 @@ export class LoginComponent implements OnInit {
     if (!this.usuarioLoginDTO.password || !this.usuarioLoginDTO.password) {
       this.toastrService.error('Campos Vacios', 'ERROR');
     } else {
+      this.initAuthSpinner = true;
+
       this.authService.login(this.usuarioLoginDTO).subscribe((data: any) => {
         if (!data) {
           clearLocalStorage();
         } else {
+          setTimeout(() => {
+
+            this.initAuthSpinner = false;
+          }, 3000);
+
           this.infoUsuario = data.usuario;
           this.roles = this.infoUsuario.roles;
           localStorage.setItem('token', String(data.token));
@@ -107,6 +117,7 @@ export class LoginComponent implements OnInit {
         }
       },
         (err) => {
+          this.initAuthSpinner = false;
           console.log('Error -> ' + err)
         })
     }
@@ -192,4 +203,6 @@ export class LoginComponent implements OnInit {
       location.replace('/home');
     }, 1500);
   }
+
+
 }

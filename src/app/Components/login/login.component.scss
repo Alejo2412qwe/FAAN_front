@@ -78,3 +78,55 @@ main {
 .dialog-title {
     margin: 0;
 }
+
+
+
+/* PROGRES */
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* O ajusta la altura según tus necesidades */
+}
+
+.loading-text {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+
+.centered-container {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.loading-text {
+    font-size: 16px;
+}
+
+#loading-dots::after {
+    content: '...';
+    animation: dots 1.5s infinite;
+
+}
+
+@keyframes dots {
+
+    0%,
+    20% {
+        content: '.';
+    }
+
+    40% {
+        content: '..';
+    }
+
+    60% {
+        content: '...';
+    }
+}

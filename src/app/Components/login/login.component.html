@@ -1,4 +1,4 @@
-<main>
+<main *ngIf="!initAuthSpinner">
     <div class="lateral"></div>
     <div class="login">
         <div class="p-4 d w-full lg:w-6" style="background-color: #f7fafb;">
@@ -88,10 +88,18 @@
             <div class="select col-12 md:col-6 md:mb-4 mb-0 px-3" *ngFor="let list of roles">
                 <span class="p-3 shadow-2 mb-3 inline-block surface-card"
                     style="border-radius: 10px; background-color: #4b99b4" (click)="guardarRolStorage(list.nombreRol!)">
-                    <i class="pi pi-prime" [style.color]="list.nombreRol === 'ADMINISTRADOR' ? 'blue' : 'green'" style="font-size: 50px;"></i>
+                    <i class="pi pi-prime" [style.color]="list.nombreRol === 'ADMINISTRADOR' ? 'blue' : 'green'"
+                        style="font-size: 50px;"></i>
                 </span>
                 <div class="text-900 text-xl mb-3 font-medium" style="color: #4b99b4">{{list.nombreRol}}</div>
             </div>
         </div>
     </div>
 </p-dialog>
+
+<div class="centered-container" *ngIf="initAuthSpinner">
+    <p-progressSpinner></p-progressSpinner>
+    <p class="loading-text" style="font-size: 20px; color: #000;">
+        <strong>Iniciando sesión</strong><span id="loading-dots"></span>
+    </p>
+</div>
