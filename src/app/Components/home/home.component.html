@@ -7,7 +7,13 @@
         organización dedicada a la protección, concienciación y defensa
       </div>
       <p class="mt-0 mb-4 text-700 line-height-3">
-        {{fundacion.objetivo}}
+        Por 8 años, FAAN ( Fundación Familia Amor Animal ) ha servido como santuario para perros maltratados,
+        abandonados,
+        descuidados y de alto rango en el área metropolitana de Cuenca, Ecuador, con un temporal refugio ubicado en
+        Tarqui. Hay
+        más de 150 perros a nuestro cuidado. FAAN es una organización ecuatoriana sin fines de lucro dedicada al
+        bienestar y la
+        seguridad de los animales en el área metropolitana de Cuenca.
       </p>
       <button pButton pRipple label="Iniciar sesión"
         class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" (click)="goLogin()"></button>
@@ -40,28 +46,6 @@
           allowfullscreen></iframe>
       </div>
     </div>
-  </div>
-</div>
-<div class="text-3xl font-medium text-900 mb-3 text-center">
-  🐶Animales que están en la fundación🐱
-</div>
-<div class="m-5 surface-card p-4 shadow-2 border-round">
-  <div class="cards">
-    <div class="card" *ngFor="let aniamles of ListAnimales">
-      <div class="card__inner">
-        <span>{{aniamles.nombreAnimal}}</span>
-        <div class="mb-3">
-          <img src="https://img.freepik.com/foto-gratis/perrito-joven-posando-alegre_155003-28765.jpg"
-            [alt]="animal.fotoAnimal" class="w-6 shadow-2" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="page m-5" style="text-align: center; align-items: center; margin-bottom: 10px;">
-    <button *ngIf="isPage !== 0" type="button" (click)="anterior()" class="btn p-button-rounded"
-      style="margin: 5px; margin-bottom: 30px;"><i class="pi pi-arrow-circle-left"></i></button>
-    <button *ngIf="isPage !== pageTotal" type="button" (click)="siguiente()" class="btn p-button-rounded "
-      style="margin: 5px; margin-bottom: 30px; margin-left: 50px;"> <i class="pi pi-arrow-circle-right"></i></button>
   </div>
 </div>
 
