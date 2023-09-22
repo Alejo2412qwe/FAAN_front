@@ -65,9 +65,8 @@
     </ng-template>
 </p-dialog>
 
-<p-dialog header="" [(visible)]="visibleRolnoAsignado"
-    [modal]="true" [style]="{ width: '25vw', height: '10' }" [draggable]="false" [resizable]="false" [responsive]="true"
-    [appendTo]="'body'">
+<p-dialog header="" [(visible)]="visibleRolnoAsignado" [modal]="true" [style]="{ width: '25vw', height: '10' }"
+    [draggable]="false" [resizable]="false" [responsive]="true" [appendTo]="'body'">
     <div class="container p-fluid">
         <div class="card">
             <div class="card-header">
@@ -82,9 +81,9 @@
     </div>
 </p-dialog>
 
-<p-dialog header="Seleccione el rol con el cual va ingresar al sistema" [(visible)]="visibleListRoles"
-  [modal]="true" [style]="{ width: '100vh', height: '38vh' }" [draggable]="false" [resizable]="false">
-  <div class="grid flex p-fluid m-2" style="align-items: center;text-align: center;justify-content: center; ">
+<p-dialog header="Seleccione el rol con el cual va ingresar al sistema" [(visible)]="visibleListRoles" [modal]="true"
+    [style]="{ width: '100vh', height: '38vh' }" [draggable]="false" [resizable]="false">
+    <!-- <div class="grid flex p-fluid m-2" style="align-items: center;text-align: center;justify-content: center; ">
     <div class="" *ngFor="let list of roles">          
           <div class="badge-wrapper" (click)="guardarRolStorage(list.nombreRol!)" >
             <div class="trait_badge" [ngClass]="list.nombreRol === 'ADMINISTRADOR' ? 'yellow' : list.nombreRol === 'SUPERADMINISTRADOR' ? 'blue-dark' : 'green'">
@@ -97,7 +96,24 @@
                 </div>  
             </div>            
           </div>
+    </div> -->
+    <div class="grid">
+        <div class="col-12 md:col-4 mb-4 px-5">
+            <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                <i class="pi pi-lock text-4xl text-blue-500"></i>
+            </span>
+            <div class="text-900 text-xl mb-3 font-medium">End-to-End Encryption</div>
+            <span class="text-700 line-height-3">Risus nec feugiat in fermentum posuere urna nec. Posuere sollicitudin
+                aliquam ultrices sagittis.</span>
+        </div>
+        <div class="col-12 md:col-4 md:mb-4 mb-0 px-3">
+            <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                <i class="pi pi-shield text-4xl text-blue-500"></i>
+            </span>
+            <div class="text-900 text-xl mb-3 font-medium">Trusted Securitty</div>
+            <span class="text-700 line-height-3">Mattis rhoncus urna neque viverra justo nec ultrices. Id cursus metus
+                aliquam eleifend.</span>
+        </div>
     </div>
-  </div>
 
 </p-dialog>
