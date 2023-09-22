@@ -23,8 +23,7 @@
             <div class="cardA-container">
                 <div class="cardA" *ngFor="let mascotas of ListAnimales">
                     <div class="img-wrapper">
-                        <img [src]="avatarURL ? avatarURL: mascotas.fotoAnimal ? getUriFile(mascotas.fotoAnimal): 'https://us.123rf.com/450wm/dervish37/dervish371805/dervish37180500017/101552833-icono-de-vector-gato-y-perro.jpg?ver=6'"
-                            alt="img-avatar" height="165px">
+                        <img [src]=" getUriFile(mascotas.fotoAnimal!)" alt="img-avatar" height="165px">
                     </div>
                     <p class="nombre">{{mascotas.nombreAnimal}}</p>
                     <p class="placa"><span style="font-weight: bold;">Placa:</span> {{mascotas.placaAnimal}}</p>
@@ -115,10 +114,10 @@
 
                 <div class="grid p-fluid m-2">
                     <div class="col-12 md:col-6 mt-1">
+                        <div class="field">
+                            <label for="nombreRaza"><strong>Peso del Animal: *</strong></label>
 
-                        <label for="nombreRaza"><strong>Peso del Animal: *</strong></label>
-
-                        <div class="p-inputgroup">
+                            <!-- <div class="p-inputgroup"> -->
 
                             <p-inputNumber [(ngModel)]="control.pesoActual" [showButtons]="true"
                                 inputId="minmax-buttons" [min]="0" [max]="15"
@@ -126,28 +125,34 @@
                                 name="pesoAnimal" placeholder="Peso.." pTooltip="Peso" tooltipPosition="bottom">
                             </p-inputNumber>
 
-                        </div>
+                            <!-- </div> -->
 
-                        <small class="p-error" *ngIf="submitted && !control.pesoActual">Peso es requerido.</small>
+                            <small class="p-error" *ngIf="submitted && !control.pesoActual">Peso es requerido.</small>
+                        </div>
                     </div>
-                    <div class="grid p-fluid mt-2 text-center">
-                        <div class="col-12 md:col-8 mx-auto">
-                            <div class="field">
-                                <label for="Estado"><strong>Estado Animal: *</strong></label>
-                                <p-dropdown [options]="estadosanimales" id="selectEstado" name="selectEstado" [(ngModel)]="selectEstado" [showClear]="true"
-                                    placeholder="Seleccione estado animal" pTooltip="Estado" 
-                                    optionLabel="tipoEstadoAnimal" tooltipPosition="bottom"></p-dropdown>
-                                <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado es
-                                    requerido.</small>
-                            </div>
-                        </div>
-                        <div class="col-12 md:col-4">
-                            <p-button label="AÑADIR SITUACIÓN" icon="pi pi-plus"
-                                (onClick)="showDialogToAddEstado()"></p-button>
 
+                    <div class="col-12 md:col-4 mx-auto">
+                        <div class="field">
+                            <label for="Estado"><strong>Estado Animal: *</strong></label>
+                            <p-dropdown [options]="estadosanimales" id="selectEstado" name="selectEstado"
+                                [(ngModel)]="selectEstado" [showClear]="true" placeholder="Seleccione estado animal"
+                                pTooltip="Estado" optionLabel="tipoEstadoAnimal" tooltipPosition="bottom"></p-dropdown>
+                            <small class="p-error" *ngIf="submitted && isEmpty(estadosanimales)">Estado es
+                                requerido.</small>
                         </div>
+                    </div>
+                    <div class="col-12 md:col-2">
+                        <!-- <label for="nombreRaza"><strong>Peso del Animal: *</strong></label> -->
+                        <div class="field" class="mt-5">
+                            <p-button label="ESTADO" icon="pi pi-plus" (onClick)="showDialogToAddEstado()"></p-button>
+                        </div>
+
 
                     </div>
+                    <!-- <div class="grid p-fluid mt-2 text-center">
+                       
+
+                    </div> -->
 
 
                 </div>
@@ -161,8 +166,9 @@
                             <div class="col-12 md:col-12 mt-1 justify-content-center">
                                 <label for="nombreVacuna"><strong>Vacuna: *</strong></label>
                                 <p-dropdown [options]="listTipoVacuna" [(ngModel)]="selectedVacuna" [showClear]="true"
-                                    placeholder="Seleccione una vacuna" pTooltip="nombreVacuna" id="selectedVacuna" name="selectedVacuna"
-                                    optionLabel="nombreVacuna" tooltipPosition="bottom"></p-dropdown>
+                                    placeholder="Seleccione una vacuna" pTooltip="nombreVacuna" id="selectedVacuna"
+                                    name="selectedVacuna" optionLabel="nombreVacuna"
+                                    tooltipPosition="bottom"></p-dropdown>
 
                                 <small class="p-error" *ngIf="submitted && isEmpty(listTipoVacuna)">Vacuna es
                                     requerido.</small>
