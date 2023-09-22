@@ -50,17 +50,6 @@ export class ControlAnimalComponent implements OnInit {
     return obj ? Object.keys(obj).length === 0 : true;
   }
 
-  // showCard(section: number) {
-  //   const index = this.selectedSections.indexOf(section);
-  //   if (index === -1) {
-  //     // If the section is not already selected, add it to the array.
-  //     this.selectedSections.push(section);
-  //   } else {
-  //     // If the section is already selected, remove it from the array.
-  //     this.selectedSections.splice(index, 1);
-  //   }
-  // }
-
   // GET ANIMALES FOR PARAMETERS
   public ListAnimales!: Animal[];
 
@@ -524,18 +513,6 @@ export class ControlAnimalComponent implements OnInit {
     }
     return index;
   }
-
-  // getSeverity(status: string) {
-  //   switch (status) {
-  //     case 'INSTOCK':
-  //       return 'success';
-  //     case 'LOWSTOCK':
-  //       return 'warning';
-  //     case 'OUTOFSTOCK':
-  //       return 'danger';
-  //     default: return '';
-  //   }
-  // }
 
   selectedTipoVacunas: any[] = [];
 
