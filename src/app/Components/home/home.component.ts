@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getDataFundation(1);
 
     // RESPONSIVE
     this.responsiveOptions = [
@@ -57,67 +56,10 @@ export class HomeComponent implements OnInit {
         numScroll: 1
       }
     ];
-    this.getAllMascotas()
+
 
   }
-  // MODEL
-  public fundacion = new Fundacion();
-
-  public getDataFundation(idFundacion: number) {
-    this.fundacionService.getFundacionById(idFundacion).subscribe({
-      next: (resp) => {
-        this.fundacion = resp;
-      }, error: (err) => {
-        null;
-      }
-    });
-  }
-
-  // GET ANIMALES FOR PARAMETERS
-  public ListAnimales!: Animal[];
-
-  // PAGES
-  isPage: number = 0;
-  isSize: number = 3;
-  isSosrt: string[] = ['nombreAnimal', 'asc']
-
-  pageTotal: number = 0;
-  isFirst: boolean = false;
-  isLast: boolean = false;
-  public isTextDigit: string = ""
-
-  // Get photo
-  public getUriFile(fileName: string): string {
-    return getFile(fileName, FOLDER_IMAGES);
-  }
-
-  public getAllMascotas(): void {
-    try {
-      this.animalesService.getAll(this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
-        if (data !== null) {
-          this.ListAnimales = data.content;
-          this.pageTotal = data.totalPages
-        }
-      });
-    } catch (error) {
-      null;
-    }
-  }
-
-  anterior(): void {
-    if (!this.isFirst) {
-      this.isPage--;
-      this.getAllMascotas();
-    }
-  }
-
-  siguiente(): void {
-    if (!this.isLast) {
-      this.isPage++;
-      this.getAllMascotas();
-    }
-  }
-
+  // MODE
   // NEW
   goLogin() {
     this.router.navigate(['/login']).then(() => {
