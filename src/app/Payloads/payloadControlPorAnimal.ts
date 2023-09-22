@@ -5,5 +5,5 @@ export class PayloadControlAnimal{
     pesoActual!: number;
     tipoEstadoAnimal!: string;
     descripcion!: string;
-
+    observaciones!: string;
 }
