@@ -22,6 +22,10 @@ export class AnimalService {
     return this.http.get<Animal[]>(environment.apiuri + '/animal/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
   }
 
+  public getAll(page: number, size: number, sort: string[]): Observable<Animal[]> {
+    return this.http.get<Animal[]>(environment.apiuri + '/animal/all/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
+  }
+
   // ---------------------------------------------------
   public findByMultipleAtributesFilter(key: any, status: any): Observable<AnimalFilter[]> {
     let params = new HttpParams();
