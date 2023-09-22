@@ -135,4 +135,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
+
+  public showModalWhatsapp: boolean = false;
+  public showModalMessage() {
+    this.showModalWhatsapp = true;
+  }
+
+  public redirectMessage() {
+    const numberPhone = "https://api.whatsapp.com/send?phone=593998681859&text=Hola%20Fundaci%C3%B3n%20FAAN%20quiero%20mas%20informaci%C3%B3n";
+    window.open(numberPhone, "_blank");
+    this.showModalWhatsapp = false;
+  }
+
 }

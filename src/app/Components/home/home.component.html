@@ -69,7 +69,44 @@
 <app-footer></app-footer>
 
 <!-- BUTTON WHATSAPP -->
-<a href="https://api.whatsapp.com/send?phone=593998681859&text=Hola%20Fundaci%C3%B3n%20FAAN%20quiero%20mas%20informaci%C3%B3n"
-  class="btn-wsp" target="_blank">
+<a (click)="showModalMessage()" class="btn-wsp" target="_blank">
   <i class="fa-brands fa-whatsapp"></i>
 </a>
+
+
+<p-dialog [(visible)]="showModalWhatsapp" [style]="{ width: '450px' }" header="Consideraciones" [modal]="true"
+  styleClass="custom-dialog">
+  <ng-template pTemplate="content">
+    <div class="info-section">
+      <h5 class="info-heading">¡Importante! Si deseas enviar tu formulario de adopción:</h5>
+      <ul class="info-list">
+        <li>
+          <span class="info-text">Adjunta el formulario de adopción y una copia legible de tu cédula de identidad en un
+            solo archivo <strong>PDF</strong>.</span>
+        </li>
+        <li>
+          <span class="info-text">Haz clic en <strong>"Aceptar"</strong> para que se redireccione al número
+            telefónico.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h5 class="info-heading">Por información:</h5>
+      <ul class="info-list">
+        <li>
+          <span class="info-text">Si tienes preguntas o necesitas más detalles, no dudes en contactarnos.</span>
+        </li>
+        <li>
+          <span class="info-text">Haz clic en <strong>"Aceptar"</strong> para que se redireccione al número
+            telefónico.</span>
+        </li>
+      </ul>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Aceptar" icon="pi pi-send" styleClass="p-button-outlined p-button-primary"
+      (onClick)="redirectMessage()"></p-button>
+  </ng-template>
+</p-dialog>
