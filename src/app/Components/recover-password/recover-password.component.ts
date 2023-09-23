@@ -64,7 +64,7 @@ export class RecoverPasswordComponent implements OnInit {
         });
 
       } else {
-        this.toastService.warning('', 'Contraseñas no concistentes.', { timeOut: 1000 });
+        this.toastService.warning('', 'Contraseñas no consistentes.', { timeOut: 1000 });
       }
     }
   }

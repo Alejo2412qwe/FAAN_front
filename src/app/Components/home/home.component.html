@@ -7,7 +7,13 @@
         organización dedicada a la protección, concienciación y defensa
       </div>
       <p class="mt-0 mb-4 text-700 line-height-3">
-        {{fundacion.objetivo}}
+        Por 8 años, FAAN ( Fundación Familia Amor Animal ) ha servido como santuario para perros maltratados,
+        abandonados,
+        descuidados y de alto rango en el área metropolitana de Cuenca, Ecuador, con un temporal refugio ubicado en
+        Tarqui. Hay
+        más de 150 perros a nuestro cuidado. FAAN es una organización ecuatoriana sin fines de lucro dedicada al
+        bienestar y la
+        seguridad de los animales en el área metropolitana de Cuenca.
       </p>
       <button pButton pRipple label="Iniciar sesión"
         class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" (click)="goLogin()"></button>
@@ -42,34 +48,49 @@
     </div>
   </div>
 </div>
-<div class="text-3xl font-medium text-900 mb-3 text-center">
-  🐶Animales que están en la fundación🐱
-</div>
-<div class="m-5 surface-card p-4 shadow-2 border-round">
-  <div class="cards">
-    <div class="card" *ngFor="let aniamles of ListAnimales">
-      <div class="card__inner">
-        <span>{{aniamles.nombreAnimal}}</span>
-        <div class="mb-3">
-          <img src="https://img.freepik.com/foto-gratis/perrito-joven-posando-alegre_155003-28765.jpg"
-            [alt]="animal.fotoAnimal" class="w-6 shadow-2" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="page m-5" style="text-align: center; align-items: center; margin-bottom: 10px;">
-    <button *ngIf="isPage !== 0" type="button" (click)="anteriorE()" class="btn p-button-rounded"
-      style="margin: 5px; margin-bottom: 30px;"><i class="pi pi-arrow-circle-left"></i></button>
-    <button *ngIf="isPage !== pageTotal" type="button" (click)="siguienteE()" class="btn p-button-rounded "
-      style="margin: 5px; margin-bottom: 30px; margin-left: 50px;"> <i class="pi pi-arrow-circle-right"></i></button>
-  </div>
-</div>
 
 <!-- SECCION FOOTER -->
 <app-footer></app-footer>
 
 <!-- BUTTON WHATSAPP -->
-<a href="https://api.whatsapp.com/send?phone=593998681859&text=Hola%20Fundaci%C3%B3n%20FAAN%20quiero%20mas%20informaci%C3%B3n"
-  class="btn-wsp" target="_blank">
+<a (click)="showModalMessage()" class="btn-wsp" target="_blank">
   <i class="fa-brands fa-whatsapp"></i>
 </a>
+
+
+<p-dialog [(visible)]="showModalWhatsapp" [style]="{ width: '450px' }" header="Consideraciones" [modal]="true"
+  styleClass="custom-dialog">
+  <ng-template pTemplate="content">
+    <div class="info-section">
+      <h5 class="info-heading">¡Importante! Si deseas enviar tu formulario de adopción:</h5>
+      <ul class="info-list">
+        <li>
+          <span class="info-text">Adjunta el formulario de adopción y una copia legible de tu cédula de identidad en un
+            solo archivo <strong>PDF</strong>.</span>
+        </li>
+        <li>
+          <span class="info-text">Haz clic en <strong>"Aceptar"</strong> para que se redireccione al número
+            telefónico.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h5 class="info-heading">Por información:</h5>
+      <ul class="info-list">
+        <li>
+          <span class="info-text">Si tienes preguntas o necesitas más detalles, no dudes en contactarnos.</span>
+        </li>
+        <li>
+          <span class="info-text">Haz clic en <strong>"Aceptar"</strong> para que se redireccione al número
+            telefónico.</span>
+        </li>
+      </ul>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Aceptar" icon="pi pi-send" styleClass="p-button-outlined p-button-primary"
+      (onClick)="redirectMessage()"></p-button>
+  </ng-template>
+</p-dialog>

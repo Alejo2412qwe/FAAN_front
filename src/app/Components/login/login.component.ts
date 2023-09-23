@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Rol, Usuario } from 'src/app/Models/models';
 import { AuthService } from 'src/app/Service/auth.service';
@@ -8,188 +13,192 @@ import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { clearLocalStorage } from 'src/app/util/local-storage-manager';
+import { UserResponse } from 'src/app/Models/modelDto/user-response';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+	//Form validate.
+	public formulario!: FormGroup;
 
-  //Form validate.
-  public formulario!: FormGroup;
+	//responde server
+	public responseServer = {} as any;
 
-  //responde server
-  public responseServer = {} as any;
+	//Window size..
+	public screenWidth: number = 0;
+	public screenHeight: number = 0;
 
-  //Window size..
-  public screenWidth: number = 0;
-  public screenHeight: number = 0;
+	constructor(
+		private router: Router,
+		private authService: AuthService,
+		private formBuilder: FormBuilder,
+		private screenSizeService: ScreenSizeService,
+		private sendEmailRecoverService: RecoverPasswordService,
+		private sharedService: SharedService, // Inject the SharedService
+		private toastrService: ToastrService
+	) {
+		this.formulario = this.formBuilder.group({
+			email: [
+				'',
+				[
+					Validators.required,
+					Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+				],
+			],
+		});
+	}
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private screenSizeService: ScreenSizeService,
-    private sendEmailRecoverService: RecoverPasswordService,
-    private sharedService: SharedService, // Inject the SharedService
-    private toastrService: ToastrService
-  ) {
-    this.formulario = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]]
-    });
+	ngOnInit(): void {
+		this.getSizeWindowResize();
+	}
 
-  }
+	public getSizeWindowResize() {
+		const { width, height } = this.screenSizeService.getCurrentSize();
+		this.screenWidth = width;
+		this.screenHeight = height;
 
-  ngOnInit(): void {
-    this.getSizeWindowResize();
-  }
+		this.screenSizeService.onResize.subscribe(({ width, height }) => {
+			this.screenWidth = width;
+			this.screenHeight = height;
+		});
+	}
 
-  public getSizeWindowResize() {
-    const { width, height } = this.screenSizeService.getCurrentSize();
-    this.screenWidth = width;
-    this.screenHeight = height;
+	public initAuthSpinner: boolean = false;
 
-    this.screenSizeService.onResize.subscribe(({ width, height }) => {
-      this.screenWidth = width;
-      this.screenHeight = height;
-    });
-  }
+	public useResponse = new UserResponse();
+	public roles: Rol[] = [];
 
-  public infoUsuario!: Usuario;
-  public roles: Rol[] = [];
+	public usuarioLoginDTO = {
+		username: '',
+		password: '',
+	};
 
-  public usuarioLoginDTO = {
-    username: '',
-    password: ''
-  };
+	public info?: any;
+	// METHOD AUTHENTICATION USER
+	public singIn(): void {
+		if (!this.usuarioLoginDTO.password || !this.usuarioLoginDTO.password) {
+			this.toastrService.error('Campos Vacíos', 'ERROR');
+		} else {
+			this.initAuthSpinner = true;
 
-  public info?: any;
-  // METHOD AUTHENTICATION USER
-  public singIn(): void {
-    if (!this.usuarioLoginDTO.password || !this.usuarioLoginDTO.password) {
-      this.toastrService.error('Campos Vacios', 'ERROR');
-    } else {
-      this.authService.login(this.usuarioLoginDTO).subscribe((data: any) => {
-        if (!data) {
-          clearLocalStorage();
-        } else {
-          this.infoUsuario = data.usuario;
-          this.roles = this.infoUsuario.roles;
-          localStorage.setItem('token', String(data.token));
-          localStorage.setItem('id_username', String(this.infoUsuario.idUsuario));
-          localStorage.setItem('id_persona', String(this.infoUsuario.persona.idPersona));
-          localStorage.setItem('foto', String(this.infoUsuario.fotoPerfil));
-          localStorage.setItem('username', String(this.infoUsuario.username));
-          if (this.infoUsuario.roles.length > 1) {
-            this.modalView();
-          } else if (this.infoUsuario.roles.length != 0) {
-            this.sharedService.setIsLogginPresent(true);
-            this.toastrService.success('Bienvenido', 'Ingreso Exitoso', {
-              timeOut: 1500,
-              progressBar: true,
-              progressAnimation: 'increasing',
-            });
-            for (let rol of this.infoUsuario.roles!) {
-              localStorage.setItem('rol', String(rol.nombreRol));
-            }
-            setTimeout(() => {
-              this.router.navigate(['/dashboard']).then(() => {
-                this.sharedService.setIsLogginPresent(true);
-                window.location.reload();
-              });
+			this.authService.login(this.usuarioLoginDTO).subscribe({
+				next: (resp) => {
+					clearLocalStorage();
 
-            }, 1500);
-          } else {
-            this.modalViewRolNoasigando();
-            clearLocalStorage();
-          }
-        }
-      },
-        (err) => {
-          console.log('Error -> ' + err)
-        })
-    }
-  }
+					this.initAuthSpinner = false;
 
-  //ROL NO ASIGNADO
-  public visibleRolnoAsignado: boolean = false;
-  public modalViewRolNoasigando() {
-    this.visibleRolnoAsignado = true;
-  }
+					this.useResponse = resp.userResponse!;
+					this.roles = this.useResponse.roles!;
+					localStorage.setItem('token', String(resp.token));
+					localStorage.setItem(
+						'id_username',
+						String(this.useResponse.idUsuario)
+					);
 
-  public visibleListRoles: boolean = false;
-  public modalView() {
-    this.visibleListRoles = true;
-  }
+					localStorage.setItem('foto', String(this.useResponse.urlPhoto));
+					localStorage.setItem('username', String(this.useResponse.username));
+					if (this.useResponse.roles!.length > 1) {
+						this.modalView();
+					} else if (this.useResponse.roles!.length != 0) {
+						this.sharedService.setIsLogginPresent(true);
 
-  //IMPLEMENT RECOVER PASSWORD
-  public dialogRecoverPassword: boolean = false;
-  public submitted: boolean = false;
+						for (let rol of this.useResponse.roles!) {
+							localStorage.setItem('rol', String(rol.nombreRol));
+						}
+						setTimeout(() => {
+							this.router.navigate(['/dashboard']).then(() => {
+								this.sharedService.setIsLogginPresent(true);
+								window.location.reload();
+							});
+						}, 1500);
+					} else {
+						this.modalViewRolNoasigando();
+						clearLocalStorage();
+					}
 
-  public openDialogRecoverPassword() {
-    this.closeDialog();
-    this.dialogRecoverPassword = true;
-  }
+				}, error: (err) => {
+					this.initAuthSpinner = false;
+					this.toastrService.error('REVISE SUS CREDENCIALES', 'ERROR');
+				}
+			})
+		}
+	}
 
-  public hideDialog() {
-    this.closeDialog();
-    this.dialogRecoverPassword = false;
-  }
+	//ROL NO ASIGNADO
+	public visibleRolnoAsignado: boolean = false;
+	public modalViewRolNoasigando() {
+		this.visibleRolnoAsignado = true;
+	}
 
-  public closeDialog() {
-    this.responseServer = {} as any;
-    this.formulario.reset();
-    this.submitted = false;
-  }
+	public visibleListRoles: boolean = false;
+	public modalView() {
+		this.visibleListRoles = true;
+	}
 
-  public isEmpty(obj: any) {
-    return obj ? Object.keys(obj).length === 0 : true;
-  }
+	//IMPLEMENT RECOVER PASSWORD
+	public dialogRecoverPassword: boolean = false;
+	public submitted: boolean = false;
 
-  public sendRecoverPassword() {
-    if (this.formulario.invalid) {
-      this.formulario.markAllAsTouched();
-      return;
-    }
-    this.submitted = true;
+	public openDialogRecoverPassword() {
+		this.closeDialog();
+		this.dialogRecoverPassword = true;
+	}
 
-    console.log(this.formulario.value);
-    this.sendEmailRecoverService.sendEmailRecoverPassword(this.formulario.value.email).subscribe(
-      {
-        next: resp => {
-          this.responseServer = { status: 200, message: resp }
-          this.submitted = false;
-          this.formulario.reset();
+	public hideDialog() {
+		this.closeDialog();
+		this.dialogRecoverPassword = false;
+	}
 
-          setTimeout(() => {
-            this.hideDialog();
-          }, 2500);
+	public closeDialog() {
+		this.responseServer = {} as any;
+		this.formulario.reset();
+		this.submitted = false;
+	}
 
-        },
-        error: err => {
-          this.responseServer = { status: err.status, message: err.error }
-          this.submitted = false;
-        }
-      });
-  }
+	public isEmpty(obj: any) {
+		return obj ? Object.keys(obj).length === 0 : true;
+	}
 
-  showSpinner: any;
+	public sendRecoverPassword() {
+		if (this.formulario.invalid) {
+			this.formulario.markAllAsTouched();
+			return;
+		}
+		this.submitted = true;
 
-  public guardarRolStorage(nombre: string) {
-    this.showSpinner = true;
+		console.log(this.formulario.value);
+		this.sendEmailRecoverService
+			.sendEmailRecoverPassword(this.formulario.value.email)
+			.subscribe({
+				next: (resp) => {
+					this.responseServer = { status: 200, message: resp };
+					this.submitted = false;
+					this.formulario.reset();
 
-    this.toastrService.success('Bienvenido', 'Registro Exitoso', {
-      timeOut: 1500,
-      progressBar: true,
-      progressAnimation: 'increasing',
-    });
+					setTimeout(() => {
+						this.hideDialog();
+					}, 2500);
+				},
+				error: (err) => {
+					this.responseServer = { status: err.status, message: err.error };
+					this.submitted = false;
+				},
+			});
+	}
 
-    localStorage.setItem('rol', String(nombre));
-    setTimeout(() => {
-      this.showSpinner = false;
-      window.location.reload();
-      location.replace('/home');
-    }, 1500);
-  }
+	showSpinner: any;
+
+	public guardarRolStorage(nombre: string) {
+		this.showSpinner = true;
+
+		localStorage.setItem('rol', String(nombre));
+		setTimeout(() => {
+			this.showSpinner = false;
+			window.location.reload();
+			location.replace('/home');
+		}, 1500);
+	}
 }
