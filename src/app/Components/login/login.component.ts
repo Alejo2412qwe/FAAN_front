@@ -56,6 +56,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  public initAuthSpinner: boolean = false;
+
+
   public infoUsuario!: Usuario;
   public roles: Rol[] = [];
 
@@ -70,12 +73,20 @@ export class LoginComponent implements OnInit {
     if (!this.usuarioLoginDTO.password || !this.usuarioLoginDTO.password) {
       this.toastrService.error('Campos Vacios', 'ERROR');
     } else {
-      this.authService.login(this.usuarioLoginDTO).subscribe(data => {
+      this.initAuthSpinner = true;
+
+      this.authService.login(this.usuarioLoginDTO).subscribe((data: any) => {
         if (!data) {
           clearLocalStorage();
         } else {
-          this.infoUsuario = data;
+          setTimeout(() => {
+
+            this.initAuthSpinner = false;
+          }, 3000);
+
+          this.infoUsuario = data.usuario;
           this.roles = this.infoUsuario.roles;
+          localStorage.setItem('token', String(data.token));
           localStorage.setItem('id_username', String(this.infoUsuario.idUsuario));
           localStorage.setItem('id_persona', String(this.infoUsuario.persona.idPersona));
           localStorage.setItem('foto', String(this.infoUsuario.fotoPerfil));
@@ -94,7 +105,7 @@ export class LoginComponent implements OnInit {
             }
             setTimeout(() => {
               this.router.navigate(['/dashboard']).then(() => {
-                this.sharedService.setIsLogginPresent(true); 
+                this.sharedService.setIsLogginPresent(true);
                 window.location.reload();
               });
 
@@ -106,6 +117,7 @@ export class LoginComponent implements OnInit {
         }
       },
         (err) => {
+          this.initAuthSpinner = false;
           console.log('Error -> ' + err)
         })
     }
@@ -191,4 +203,6 @@ export class LoginComponent implements OnInit {
       location.replace('/home');
     }, 1500);
   }
+
+
 }

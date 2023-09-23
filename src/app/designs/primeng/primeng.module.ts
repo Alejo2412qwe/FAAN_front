@@ -13,7 +13,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DataViewModule } from 'primeng/dataview';
 import { ChartModule } from 'primeng/chart';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CarouselModule } from 'primeng/carousel';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -77,7 +77,7 @@ import { InplaceModule } from 'primeng/inplace';
 
 import { AccordionModule } from 'primeng/accordion';
 
-import {SkeletonModule} from 'primeng/skeleton';
+import { SkeletonModule } from 'primeng/skeleton';
 // Fin de primeNG
 import { FieldsetModule } from 'primeng/fieldset';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -131,7 +131,7 @@ import { DragDropModule } from 'primeng/dragdrop';
     ToggleButtonModule,
     TreeSelectModule,
     SpeedDialModule,
-
+    ProgressSpinnerModule,
     DividerModule,
     FieldsetModule,
     SplitterModule,
