@@ -36,21 +36,16 @@ export class ControlAnimalComponent implements OnInit {
   ngOnInit(): void {
     this.getAllTiposVacunas();
     this.getListEstadoAnimal();
-    this.selectedTVacuna = [];
-    this.originalAvailableTVacuna = [...this.availableTVacuna];
   }
 
   // selectedSections: number[] = [];
   showVacunas: boolean = false;
   selectedEstado!: EstadoAnimal;
   public submitted: boolean = false;
-
-  public isEmpty(obj: any) {
-    // return Object.keys(obj).length === 0;
-    return obj ? Object.keys(obj).length === 0 : true;
-  }
-
-  // GET ANIMALES FOR PARAMETERS
+  tipoVacuna = new TipoVacuna();
+  visibleTipoVacuna: boolean = false;
+  control = new ControlAnimal();
+  visibleControl: boolean = false;
   public ListAnimales!: Animal[];
 
   // PAGES
@@ -62,26 +57,56 @@ export class ControlAnimalComponent implements OnInit {
   pageTotal: number = 0;
   isFirst: boolean = false;
   isLast: boolean = false;
+  isTextDigit: string = '';
   public loadingVacuna: boolean = false;
+  vacunasAnimales: VacunasAnimales[] = [];
+  controlesanimales: PayloadControlAnimal[] = [];
+  estadosanimales: EstadoAnimal[] = [];
+  public avatarURL: string = '';
+  fechacon?: Date;
+  observa!: any;
+  nombrevete!: any;
+  pesoact!: any;
+  idcontro!: any;
+  visibleEditarControl: boolean = false;
+  estadovisible: boolean = false;
+  listTipoVacuna: TipoVacuna[] = [];
+  selectedVacuna = new TipoVacuna();
+  selectEstado = new EstadoAnimal();
+  vacuna = new Vacuna();
+  visibleVacuna: boolean = false;
+  mostrarPanel: boolean = false;
+  estadoAnimal = new EstadoAnimal();
+  idestado?: any;
+  objetoanimal = new Animal();
+  vacunasTemporales: any[] = [];
+  isIdAnimal!: any
+  isControlAnimal = new ControlAnimal();
+
+
+  //Foto
   public getUriFile(fileName: string): string {
-    // alert(fileName)
     return getFile(fileName, FOLDER_IMAGES);
   }
 
+  //Validaciones
+  public isEmpty(obj: any) {
+    return obj ? Object.keys(obj).length === 0 : true;
+  }
 
-  isTextDigit: string = '';
+
+  //Busqueda Mascota Paginado
   public getAllMascotas(): void {
-
     this.animalesService.getAllAnimalesPagesOrPlacaOrName(this.isTextDigit, this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
       if (data !== null) {
         this.ListAnimales = data.content;
-        console.log(data.content)
         this.pageTotal = data.totalPages
       }
     });
 
   }
 
+  //Pagina Anterior
   anteriorPage(): void {
     if (!this.isFirst) {
       this.isPage--;
@@ -89,6 +114,7 @@ export class ControlAnimalComponent implements OnInit {
     }
   }
 
+  //Pagina Siguiente
   siguientePage(): void {
     if (!this.isLast) {
       this.isPage++;
@@ -96,12 +122,7 @@ export class ControlAnimalComponent implements OnInit {
     }
   }
 
-  // VER DATOS VACUNAS
-  vacunasAnimales: VacunasAnimales[] = [];
-  controlesanimales: PayloadControlAnimal[] = [];
-  estadosanimales: EstadoAnimal[] = [];
-  public avatarURL: string = '';
-
+  // Ver Datos de Vacuna Detalle
   VerDetalle(idControlAnimal: number) {
     this.payloadservice.getPeyloadVacunasAnimalById(idControlAnimal).subscribe(data => {
       this.vacunasAnimales = data
@@ -109,12 +130,7 @@ export class ControlAnimalComponent implements OnInit {
     })
   }
 
-  fechacon?: Date;
-  observa!: any;
-  nombrevete!: any;
-  pesoact!: any;
-  idcontro!: any;
-  visibleEditarControl: boolean = false;
+  //Carga de Datos de Control
   CargarDatodControl(idControlAnimal: number) {
     this.controlAnimalService.getControlById(idControlAnimal).subscribe(data => {
       this.idcontro = data.idControlAnimal;
@@ -127,69 +143,29 @@ export class ControlAnimalComponent implements OnInit {
     })
   }
 
-  ActulizarDatosControl() {
-    this.control.nombreVeterinario = this.nombrevete;
-    this.control.observaciones = this.observa;
-    this.control.pesoActual = this.pesoact;
-    this.control.fechaControlAnimal = this.fechacon;
-    this.controlAnimalService.updateControl(this.idcontro, this.control).subscribe(data => {
-    })
-  }
 
-  CancelarEditarControl() {
-    this.idcontro = "";
-    this.visibleEditarControl = false;
-    this.fechacon = new Date;
-    this.observa = "";
-    this.nombrevete = "";
-    this.pesoact = "";
-  }
-
+  //Listar vacunas segun el control
   getListaVacunasByIdControlAnimal(idControlAnimal: number) {
     this.payloadservice.getPeyloadVacunasAnimalById(idControlAnimal).subscribe(data => {
       this.vacunasAnimales = data
     })
   }
 
+  //Listar control segun el animal
   getListaControlAnimal(idAnimal: number) {
     this.payloadservice.getPeyloadControlAnimal(idAnimal).subscribe(data2 => {
       this.controlesanimales = data2;
     })
   }
 
-  estadovisible: boolean = false;
-
-  showDialogToAddEstado() {
-    this.estadovisible = true;
-  }
-
-  public onRowSelect(event: any) {
-    this.tipoVacuna = event;
-    this.tipoVacunaSeleccionada = event;
-  }
-
-
-
   // MODAL
   visible: boolean = false;
 
+  //Abrir Modals
   showModalAnimales() {
     this.visible = true;
     this.getAllMascotas();
   }
-
-  onInputChange() {
-    if (this.isTextDigit === '') {
-      this.getAllMascotas();
-    }
-  }
-  // MODAL TIPO VACUNA
-  tipoVacuna = new TipoVacuna();
-  visibleTipoVacuna: boolean = false;
-
-  control = new ControlAnimal();
-  visibleControl: boolean = false;
-
   showModalTipoVacuna() {
     this.visibleTipoVacuna = true;
     this.tipoVacuna = {} as TipoVacuna;
@@ -199,26 +175,41 @@ export class ControlAnimalComponent implements OnInit {
     this.visibleControl = true;
     this.control = {} as ControlAnimal;
   }
+  showDialogToAddEstado() {
+    this.estadovisible = true;
+  }
+
+  showModalVacuna() {
+    this.getAllTiposVacunas();
+    this.visibleVacuna = true;
+    this.vacuna = {} as Vacuna;
+  }
+
+  public onRowSelect(event: any) {
+    this.tipoVacuna = event;
+    this.tipoVacunaSeleccionada = event;
+  }
+
+  //Metodo automatico de carga de mascota
+  onInputChange() {
+    if (this.isTextDigit === '') {
+      this.getAllMascotas();
+    }
+  }
 
 
+  //Guardar Vacuna
   saveTipoVacuna() {
-    // Comprobar si this.tipoVacuna y this.tipoVacuna.nombreVacuna no son undefined
     if (!this.tipoVacuna || !this.tipoVacuna.nombreVacuna) {
       this.toastr.error("Nombre de vacuna no especificado.");
-      return; // Salir de la función si el nombre de la vacuna no está definido
+      return;
     }
-
-    // Convertir el nombre de la vacuna ingresada a minúsculas
     const nombreVacunaIngresada = this.tipoVacuna.nombreVacuna.toLowerCase();
-
-    // Filtrar la lista para eliminar elementos con nombreVacuna undefined
     const vacunasDefinidas = this.listTipoVacuna.filter(v => v.nombreVacuna);
 
-    // Comprobar si la vacuna con el mismo nombre ya existe
     const vacunaExistente = vacunasDefinidas.find(v => v.nombreVacuna!.toLowerCase() === nombreVacunaIngresada);
 
     if (vacunaExistente) {
-      // Mostrar un mensaje de error o tomar alguna otra acción según tus necesidades
       this.toastr.error("La vacuna ya existe.");
     } else {
       this.tipoVacuna.estado = true;
@@ -231,48 +222,38 @@ export class ControlAnimalComponent implements OnInit {
   }
 
 
-  // GET VACUNAS
-  listTipoVacuna: TipoVacuna[] = [];
-  selectedVacuna = new TipoVacuna();
-
+  //Listar Vacunas
   getAllTiposVacunas() {
     this.tipoVacunaService.getListaTipoVacuna().subscribe((data) => {
       this.listTipoVacuna = data;
-      this.availableTVacuna = data;
     });
   }
 
+
+  //Listar Tipo Vacuna
   getAllControlAnimal() {
     this.tipoVacunaService.getListaTipoVacuna().subscribe((data) => {
       this.listTipoVacuna = data;
     });
   }
 
-
-  // STATE ANIMAL
-  selectEstado = new EstadoAnimal();
+  //Guardar Estado Animal
   saveEstadoAnimal() {
-    // Comprobar si los campos tipoEstadoAnimal y descripcion están vacíos
     if (!this.estadoAnimal.tipoEstadoAnimal || !this.estadoAnimal.descripcion) {
       this.toastr.error("Completa todos los campos.");
-      return; // Detener la ejecución de la función si los campos están vacíos
+      return;
     }
-
-    // Normalizar el valor de tipoEstadoAnimal a minúsculas (o mayúsculas si prefieres)
-    const tipoEstadoAnimal = this.estadoAnimal.tipoEstadoAnimal.toLowerCase(); // o .toUpperCase() si quieres que sea case-insensitive en mayúsculas
-
-    // Comprobar si el estado animal ya existe en la lista (considerando diferencias de capitalización)
+    const tipoEstadoAnimal = this.estadoAnimal.tipoEstadoAnimal.toLowerCase();
     const estadoExistente = this.estadosanimales.find(e => e?.tipoEstadoAnimal?.toLowerCase() === tipoEstadoAnimal);
-
     if (estadoExistente) {
-      // Mostrar un mensaje de error o tomar alguna otra acción según tus necesidades
+
       this.toastr.error("El estado ya existe.");
     } else {
       this.estadoAnimal.estado = 'A';
       this.estadoAnimalService.saveEstadoAnimal(this.estadoAnimal).subscribe(data => {
         this.getListEstadoAnimal();
         this.estadovisible = false;
-        this.estadoAnimal.tipoEstadoAnimal = ""; // Limpiar el campo tipoEstadoAnimal
+        this.estadoAnimal.tipoEstadoAnimal = "";
         this.estadoAnimal.descripcion = "";
         this.toastr.success("Estado Agregado");
       });
@@ -280,39 +261,14 @@ export class ControlAnimalComponent implements OnInit {
   }
 
 
-
-
-
+  //Listado de Estado Animales
   getListEstadoAnimal() {
     this.estadoAnimalService.getListaEstadoAnimal().subscribe(data => {
       this.estadosanimales = data;
     })
   }
 
-
-
-
-  // MODAl ADD VACUNA FOR ANIMAL
-  vacuna = new Vacuna();
-  visibleVacuna: boolean = false;
-
-
-  showModalVacuna() {
-    this.getAllTiposVacunas();
-    this.visibleVacuna = true;
-    this.vacuna = {} as Vacuna;
-  }
-
-
-
-
-  mostrarPanel: boolean = false;
-  estadoAnimal = new EstadoAnimal();
-  idestado?: any;
-
-
-  objetoanimal = new Animal();
-
+  //Guardar Control
   saveControl() {
     this.submitted = true;
     this.control.estadoAnimal = this.selectEstado;
@@ -345,7 +301,9 @@ export class ControlAnimalComponent implements OnInit {
                   estadoNotifacion: 'A',
                   proximaFechaFacunacion: vacunaTemporal.fechaProximaVacuna,
                 };
+
                 this.notificacionesService.saveNotificacion(notificacion).subscribe((data) => {
+
                 });
               }
             }
@@ -363,7 +321,7 @@ export class ControlAnimalComponent implements OnInit {
 
 
 
-
+  //Guardar Vacuna
   saveVacuna(control: ControlAnimal, vacunaTemporal: any) {
     this.vacuna.tipoVacuna = vacunaTemporal.tipoVacuna,
       this.vacuna.controlAnimal = control;
@@ -379,10 +337,7 @@ export class ControlAnimalComponent implements OnInit {
   }
 
 
-
-
-  vacunasTemporales: any[] = [];
-
+  //Agregar Vacuna en lista Temporal
   agregarVacuna() {
     if (this.selectedVacuna == null || this.vacuna.observaciones == null || this.vacuna.fechaProximaVacuna == null) {
       this.toastr.warning('Debe completar los campos de la vacuna');
@@ -394,42 +349,49 @@ export class ControlAnimalComponent implements OnInit {
         observaciones: this.vacuna.observaciones,
         fechaProximaVacuna: this.vacuna.fechaProximaVacuna,
         estadoVacuna: true,
-        fechaVacuna: this.vacuna.fechaProximaVacuna, // Usar la fecha seleccionada
+        fechaVacuna: this.vacuna.fechaProximaVacuna,
         diasFaltantes: daysUntilNextVaccination,
       });
+
       this.toastr.info('Vacuna Agregada');
       this.limpiarCampos();
     }
   }
+
+  //Eliminar Vacuna en lista Temporal
   eliminarVacuna(vacuna: any) {
     const index = this.vacunasTemporales.indexOf(vacuna);
     if (index !== -1) {
       this.vacunasTemporales.splice(index, 1);
+
       this.toastr.warning("Vacuna removida");
     }
   }
 
+  //limpiar Campos en lista Temporal
   limpiarCampos() {
     this.vacuna.observaciones = '';
     this.vacuna.fechaProximaVacuna = new Date();
   }
 
+  //Limpiar Vacunas en lista Temporal
   limpiarVacunasTemporales() {
     this.toastr.warning("Vacunas canceladas");
     this.vacunasTemporales = [];
   }
 
+  //Limpiar Vacunas en lista Temporal
   limpiarVacunasTemporales2() {
     this.vacunasTemporales = [];
   }
 
+  //Obtener Fecha Actual
   obtenerFechaActual(): Date {
     return new Date();
   }
 
-  // SELECT ANIMAL
-  isIdAnimal!: any
-  isControlAnimal = new ControlAnimal();
+
+  //Seleccionar Animal
   selectAnimal(idAnimal: number) {
     this.isIdAnimal = idAnimal;
     this.visible = false;
@@ -437,70 +399,5 @@ export class ControlAnimalComponent implements OnInit {
       this.objetoanimal = data;
     })
     this.getListaControlAnimal(idAnimal);
-  }
-
-
-
-  actualizarVacuna() {
-
-    if (this.tipoVacunaSeleccionada) {
-      this.tipoVacunaService.updateTipoVacuna(this.tipoVacunaSeleccionada.idTipoVacuna, this.tipoVacunaSeleccionada)
-        .subscribe((updatedVacuna: TipoVacuna) => {
-          this.visibleTipoVacuna = false;
-        }, (error) => {
-          null;
-        });
-    }
-  }
-
-  availableTVacuna!: any[];
-  selectedTVacuna: any[] = [];
-  draggedTVacuna: any | undefined | null;
-
-  dragStart(product: any) {
-    this.draggedTVacuna = product;
-  }
-
-  drop() {
-    if (this.draggedTVacuna) {
-      if (this.selectedTVacuna.includes(this.draggedTVacuna)) {
-        return;
-      }
-
-      let draggedProductIndex = this.findIndex(this.draggedTVacuna);
-      this.selectedTVacuna = [...this.selectedTVacuna, this.draggedTVacuna];
-      this.availableTVacuna = this.availableTVacuna?.filter((val, i) => i != draggedProductIndex);
-      this.draggedTVacuna = null;
-    }
-  }
-
-  dragEnd() {
-    this.draggedTVacuna = null;
-  }
-
-  findIndex(product: any) {
-    let index = -1;
-    for (let i = 0; i < (this.availableTVacuna as any[]).length; i++) {
-      if (product.id === (this.availableTVacuna as any[])[i].id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
-  }
-
-  selectedTipoVacunas: any[] = [];
-
-  addSelectedTipoVacunas() {
-    this.visibleVacuna = true;
-    this.selectedTipoVacunas = [...this.selectedTipoVacunas, ...this.selectedTVacuna];
-  }
-
-  resetTable() {
-    this.selectedTVacuna = [];
-    this.tipoVacunaService.getListaTipoVacuna().subscribe((data) => {
-      this.listTipoVacuna = data;
-      this.availableTVacuna = data;
-    });
   }
 }

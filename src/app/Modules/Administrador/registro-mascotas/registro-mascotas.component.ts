@@ -187,7 +187,7 @@ export class RegistroMascotasComponent implements OnInit {
 					}
 				},
 				(error) => {
-					console.error(error);
+					this.toastService.error('', 'INCONVENIENTE', { timeOut: 2000 });
 					this.loading = false;
 				}
 			);
@@ -448,13 +448,11 @@ export class RegistroMascotasComponent implements OnInit {
 
 	public listRazaFiltered: RazaAnimal[] = [];
 	public eventCatchTipoFilter(e: any) {
-		console.log({ tipo: e });
-		console.log(...this.listRazaAnimal);
+
 		const datacopy = [...this.listRazaAnimal];
 		this.listRazaFiltered = datacopy.filter((raza: any) => {
 			return raza.tipoAnimal.idTipoAnimal === e.idTipoAnimal;
 		});
-		console.log(datacopy);
 	}
 
 	public avatarURL: string = '';
