@@ -6,7 +6,6 @@ import { RazaAnimalService } from 'src/app/Service/razaAnimal.service';
 import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { TipoAnimalService } from 'src/app/Service/tipo-animal.service';
 import { ExcelExportService } from 'src/app/util/service/excel-export.service';
-
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DATA_STYLES_PDF } from 'src/app/util/const-validate';
@@ -43,11 +42,11 @@ export class RegisterRazaAnimalComponent implements OnInit {
 	public loading: boolean = false;
 	public totalRecords!: number;
 
-	//VARIABLE FOR SEARCH BY ATRIBUTE NAME
+	//VARIABLE FOR SEARCH BY ATTRIBUTE NAME
 	public valueAtribute: string = '';
 	public submitFindAtribute: boolean = false;
 
-	constructor(private razaAnimalService: RazaAnimalService, private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toastr: ToastrService, private imageService: ImageService, private excelService: ExcelExportService) { }
+	constructor(private razaAnimalService: RazaAnimalService, private tipoAnimalService: TipoAnimalService, private screenSizeService: ScreenSizeService, private toast: ToastrService, private imageService: ImageService, private excelService: ExcelExportService) { }
 
 	ngOnInit(): void {
 		this.findPagableRazaAnimal(0, 4, ['idRazaAnimal', 'asc']);
@@ -76,7 +75,6 @@ export class RegisterRazaAnimalComponent implements OnInit {
 				this.loading = false;
 			},
 			error: (err) => {
-				console.error(err);
 				this.loading = false;
 			}
 		})
@@ -113,7 +111,6 @@ export class RegisterRazaAnimalComponent implements OnInit {
 	public saveAndUpdateRazaAnimal() {
 		this.submitted = true;
 		this.razaAnimal.tipoAnimal = this.tipoAnimal;
-		console.log(this.isEmpty(this.tipoAnimal))
 		if (this.razaAnimal.nombreRaza?.trim() && !this.isEmpty(this.tipoAnimal)) {
 			if (this.razaAnimal.idRazaAnimal) {
 				this.updateRazaAnimal(this.razaAnimal);
@@ -124,7 +121,6 @@ export class RegisterRazaAnimalComponent implements OnInit {
 	}
 
 	public isEmpty(obj: any) {
-		// return Object.keys(obj).length === 0;
 		return obj ? Object.keys(obj).length === 0 : true;
 	}
 
@@ -133,7 +129,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
 		this.razaAnimal.estadoRaza = 'A';
 		this.razaAnimalService.saveRazaAnimal(razaAnimal).subscribe({
 			next: (resp) => {
-				this.toastr.success(
+				this.toast.success(
 					'',
 					'CORRECTO AL CREAR'
 				);
@@ -143,12 +139,12 @@ export class RegisterRazaAnimalComponent implements OnInit {
 			error: (err) => {
 				if (err.status === 400) {
 					this.errorUnique = 'Nombre existente.';
-					this.toastr.error(
+					this.toast.error(
 						'',
 						'Nombre existente.'
 					);
 				} else {
-					this.toastr.error(
+					this.toast.error(
 						'',
 						'Inconveniente al crear.'
 					);
@@ -160,7 +156,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
 	public updateRazaAnimal(razaAnimal: RazaAnimal) {
 		this.razaAnimalService.updateRazaAnimal(razaAnimal.idRazaAnimal!, razaAnimal).subscribe({
 			next: (resp) => {
-				this.toastr.success(
+				this.toast.success(
 					'',
 					'CORRECTO AL ACTUALIZAR'
 				);
@@ -169,7 +165,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
 				this.closeDialog();
 			},
 			error: (err) => {
-				this.toastr.error(
+				this.toast.error(
 					'',
 					'Inconveniente al actualizar.'
 				);
@@ -190,13 +186,13 @@ export class RegisterRazaAnimalComponent implements OnInit {
 			)
 			.subscribe({
 				next: (resp) => {
-					this.toastr.success(
+					this.toast.success(
 						'',
 						'CORRECTO AL' + (razaAnimal.estadoRaza === 'A' ? ' HABILITAR' : ' INHABILITAR')
 					);
 				},
 				error: (err) => {
-					this.toastr.error(
+					this.toast.error(
 						'',
 						'Inconveniente al actualizar.'
 					);
@@ -242,7 +238,7 @@ export class RegisterRazaAnimalComponent implements OnInit {
 	//EXPORT PDF-------------------------------------------------------------
 	public async generatePdfAllTips() {
 		if (this.listRazaAnimal.length === 0) {
-			this.toastr.info(
+			this.toast.info(
 				'',
 				'NO HAY INFORMACIÓN',
 				{ timeOut: 1500 }

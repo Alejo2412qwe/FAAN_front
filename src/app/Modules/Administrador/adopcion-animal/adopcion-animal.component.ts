@@ -44,7 +44,7 @@ export class AdopcionAnimalComponent implements OnInit {
 	public fechaAdoption = new Date();
 
 	public encabezadoAdopcionObject = new EncabezadoAdopcion();
-	public detalleEncabesadoObject = new DetalleAdopcion();
+	public detalleEncabezadoObject = new DetalleAdopcion();
 
 	public multipleAnimalUno: boolean = false;
 	public multipleAnimal: boolean = false;
@@ -114,15 +114,13 @@ export class AdopcionAnimalComponent implements OnInit {
 			this.animalService.findByAdoptadoOrNoAdoptado(page, size, this.mostrar, this.mostrarbusqueda, sort).subscribe(
 				(data: any) => {
 					if (data != null) {
-						console.log(data);
 						this.listAnimal = data.content;
 						this.totalAnimal = data.totalElements;
 						this.loadingAnimal = false;
 					}
 				},
 				(error) => {
-					console.error(error);
-					// this.loading = false;
+					null;
 				}
 			);
 		} catch (error) {
@@ -130,19 +128,15 @@ export class AdopcionAnimalComponent implements OnInit {
 		}
 	}
 
-
 	// DIALOGO ACTIVAR SOLO VER, ADOPTAR UNO O MAS
-	openAllDialog(animalse: Animal) {
-		console.log("sssssssssssssssss  1")
-		console.log(animalse)
-		console.log("sssssssssssssssss  2")
+	openAllDialog(animales: Animal) {
 		if (this.mostrar) {
-			this.OpenDialogView(animalse);
+			this.OpenDialogView(animales);
 		} else {
 			if (this.multipleAnimal) {
 				this.OpenDialogList();
 			} else {
-				this.OpenDialog(animalse);
+				this.OpenDialog(animales);
 			}
 		}
 	}
@@ -154,11 +148,11 @@ export class AdopcionAnimalComponent implements OnInit {
 	}
 
 	// DIALOGO ADOPCION UNO
-	OpenDialog(animalse: Animal) {
-		if (animalse.idAnimal != null) {
-			this.animalSelect = animalse;
-			this.tipoAnimalSelect = animalse.razaAnimal?.tipoAnimal?.nombreTipo || '';
-			this.razaAnimalSelect = animalse.razaAnimal?.nombreRaza || '';
+	OpenDialog(animales: Animal) {
+		if (animales.idAnimal != null) {
+			this.animalSelect = animales;
+			this.tipoAnimalSelect = animales.razaAnimal?.tipoAnimal?.nombreTipo || '';
+			this.razaAnimalSelect = animales.razaAnimal?.nombreRaza || '';
 		} else {
 			this.animalSelect = this.listAnimalSelectAdopcion[0];
 			if (this.listAnimalSelectAdopcion[0].razaAnimal?.tipoAnimal?.nombreTipo && this.listAnimalSelectAdopcion[0].razaAnimal?.nombreRaza) {
@@ -184,13 +178,12 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.emptySelectedPerson();
 		this.clickedButtons = [];
 		this.listAnimalSelectAdopcion = [];
-		this.detalleEncabesadoObject = {} as DetalleAdopcion;
+		this.detalleEncabezadoObject = {} as DetalleAdopcion;
 		this.encabezadoAdopcionObject = {} as EncabezadoAdopcion;
 		this.animalSelect = {} as Animal;
 		this.tipoAnimalSelect = '';
 		this.razaAnimalSelect = '';
 		this.adopcionAnimalDialog = false;
-
 		this.multipleAnimal = false;
 		this.multipleAnimalUno = false;
 		this.listavacia = false;
@@ -228,7 +221,6 @@ export class AdopcionAnimalComponent implements OnInit {
 		} else {
 			this.multipleAnimal = false;
 		}
-		console.log(this.listAnimalSelectAdopcion.length + "   " + anim.nombreAnimal)
 	}
 
 	// SELECCION DE ADOPTANTE
@@ -236,20 +228,18 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.persona = event;
 	}
 
-
 	public loadPersonalLazy(event: any = null) {
 		this.loadingPerson = true;
 		const page = event ? event.first / event.rows : 0;
 		const size = event ? event.rows : 10;
-
 		if (this.mostrarbusquedaPersona == '') {
-			this.pageablePersona(page, size, ['identificacion', 'asc']);
+			this.pagablePersona(page, size, ['identificacion', 'asc']);
 		} else {
-			this.pageablePersonaBusqueda(page, size, ['identificacion', 'asc']);
+			this.pagablePersonaBusqueda(page, size, ['identificacion', 'asc']);
 		}
 	}
 
-	public pageablePersona(page: number, size: number, sort: string[]) {
+	public pagablePersona(page: number, size: number, sort: string[]) {
 		try {
 			this.personaService
 				.getListaPersonas(page, size, sort)
@@ -263,7 +253,7 @@ export class AdopcionAnimalComponent implements OnInit {
 		}
 	}
 
-	public pageablePersonaBusqueda(page: number, size: number, sort: string[]) {
+	public pagablePersonaBusqueda(page: number, size: number, sort: string[]) {
 		try {
 			this.personaService
 				.getAllPersonasPagesOrCedulaOrApellido(this.mostrarbusquedaPersona, page, size, sort)
@@ -276,7 +266,6 @@ export class AdopcionAnimalComponent implements OnInit {
 			throw new Error();
 		}
 	}
-
 
 	// RESPONSIVE
 	public getSizeWindowResize() {
@@ -292,7 +281,6 @@ export class AdopcionAnimalComponent implements OnInit {
 
 	// VERIFICAR SI ESTA VACIO
 	public isEmpty(obj: any) {
-		// return Object.keys(obj).length === 0;
 		return obj ? Object.keys(obj).length === 0 : true;
 	}
 
@@ -304,17 +292,14 @@ export class AdopcionAnimalComponent implements OnInit {
 	// ALMACENAR ADOPCION UNITARIA
 	async saveAdopcion() {
 		this.submitted = true;
-
-		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
+		if (this.detalleEncabezadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
 			&& !this.isEmpty(this.animalSelect) && !this.isEmpty(this.persona) && this.avatarURL) {
-
 			let key: string
 			try {
 				key = await this.uploadImage();
 			} catch (error) {
 				this.toastr.error('Error, documento .pdf no se guardó intentar nuevamente...');
 			}
-
 			this.detalleEncabezadoService.getfindByIdAnimal(Number(this.animalSelect.idAnimal)).subscribe((data) => {
 				if (data == null) {
 					this.encabezadoAdopcionObject.fechaAdopcion = this.fechaAdoption;
@@ -322,10 +307,10 @@ export class AdopcionAnimalComponent implements OnInit {
 					this.encabezadoAdopcion.saveEncabezadoAdopcion(this.encabezadoAdopcionObject)
 						.subscribe((data1) => {
 							if (data1 != null) {
-								this.detalleEncabesadoObject.encabezadoAdopcion = data1;
-								this.detalleEncabesadoObject.animal = this.animalSelect;
-								this.detalleEncabesadoObject.documento = key;
-								this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
+								this.detalleEncabezadoObject.encabezadoAdopcion = data1;
+								this.detalleEncabezadoObject.animal = this.animalSelect;
+								this.detalleEncabezadoObject.documento = key;
+								this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabezadoObject).subscribe((data2) => {
 									if (data2 != null) {
 										this.animalSelect.estadoAnimal = "A";
 										this.animalService.updateAnimal(Number(this.animalSelect.idAnimal), this.animalSelect).subscribe((data3) => {
@@ -372,7 +357,7 @@ export class AdopcionAnimalComponent implements OnInit {
 		this.submitted = true;
 		let fini = 0;
 
-		if (this.detalleEncabesadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
+		if (this.detalleEncabezadoObject.observacion?.trim() && this.encabezadoAdopcionObject.observacion?.trim()
 			&& this.listAnimalSelectAdopcion.length > 1 && !this.isEmpty(this.persona) && this.avatarURL) {
 
 			let key: string
@@ -388,10 +373,10 @@ export class AdopcionAnimalComponent implements OnInit {
 						this.encabezadoAdopcionObject.fechaAdopcion = this.fechaAdoption;
 						this.encabezadoAdopcionObject.persona = this.persona;
 						this.encabezadoAdopcion.saveEncabezadoAdopcion(this.encabezadoAdopcionObject).subscribe((data1) => {
-							this.detalleEncabesadoObject.encabezadoAdopcion = data1;
-							this.detalleEncabesadoObject.animal = this.listAnimalSelectAdopcion[a];
-							this.detalleEncabesadoObject.documento = key;
-							this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabesadoObject).subscribe((data2) => {
+							this.detalleEncabezadoObject.encabezadoAdopcion = data1;
+							this.detalleEncabezadoObject.animal = this.listAnimalSelectAdopcion[a];
+							this.detalleEncabezadoObject.documento = key;
+							this.detalleEncabezadoService.saveDetalleAdopcion(this.detalleEncabezadoObject).subscribe((data2) => {
 								fini++;
 								if (data2 != null) {
 									this.listAnimalSelectAdopcion[a].estadoAnimal = "A";
@@ -450,18 +435,18 @@ export class AdopcionAnimalComponent implements OnInit {
 	viewAdopcion(idAnimal: number) {
 		this.detalleEncabezadoService.getfindByIdAnimal(idAnimal).subscribe(
 			(data) => {
-				this.detalleEncabesadoObject = data;
+				this.detalleEncabezadoObject = data;
 				if (data != null) {
-					if (this.detalleEncabesadoObject.encabezadoAdopcion?.persona != null && this.detalleEncabesadoObject.animal != null
-						&& this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza != null && this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo != null
-						&& this.detalleEncabesadoObject.encabezadoAdopcion != null && this.detalleEncabesadoObject.documento != null) {
-						this.keyDocumento = this.detalleEncabesadoObject.documento;
-						this.persona = this.detalleEncabesadoObject.encabezadoAdopcion?.persona;
-						this.animalSelect = this.detalleEncabesadoObject.animal;
-						this.razaAnimalSelect = this.detalleEncabesadoObject.animal.razaAnimal?.nombreRaza;
-						this.tipoAnimalSelect = this.detalleEncabesadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo;
-						this.encabezadoAdopcionObject = this.detalleEncabesadoObject.encabezadoAdopcion;
-						this.keyDocumento = this.detalleEncabesadoObject.documento;
+					if (this.detalleEncabezadoObject.encabezadoAdopcion?.persona != null && this.detalleEncabezadoObject.animal != null
+						&& this.detalleEncabezadoObject.animal.razaAnimal?.nombreRaza != null && this.detalleEncabezadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo != null
+						&& this.detalleEncabezadoObject.encabezadoAdopcion != null && this.detalleEncabezadoObject.documento != null) {
+						this.keyDocumento = this.detalleEncabezadoObject.documento;
+						this.persona = this.detalleEncabezadoObject.encabezadoAdopcion?.persona;
+						this.animalSelect = this.detalleEncabezadoObject.animal;
+						this.razaAnimalSelect = this.detalleEncabezadoObject.animal.razaAnimal?.nombreRaza;
+						this.tipoAnimalSelect = this.detalleEncabezadoObject.animal.razaAnimal?.tipoAnimal?.nombreTipo;
+						this.encabezadoAdopcionObject = this.detalleEncabezadoObject.encabezadoAdopcion;
+						this.keyDocumento = this.detalleEncabezadoObject.documento;
 					}
 				}
 			}
@@ -487,10 +472,7 @@ export class AdopcionAnimalComponent implements OnInit {
 		return false;
 	}
 
-
-
-
-	//OBTENER LA IMAGEN NEW MOTHOD------------------------------
+	//OBTENER LA IMAGEN NEW METHOD
 	public getUriFile(fileName: string): string {
 		return getFile(fileName, FOLDER_DOCUMENTS);
 	}
@@ -501,10 +483,9 @@ export class AdopcionAnimalComponent implements OnInit {
 		let data = event.target.files[0];
 
 		if (data.size >= 1048576) {
-			this.toastService.error('', 'IMAGEN MUY GRANDE.', { timeOut: 2000 });
+			this.toastService.error('', 'IMAGEN ES MUY GRANDE.', { timeOut: 2000 });
 			return;
 		}
-
 		this.selectedFile = data
 		const imageURL = URL.createObjectURL(this.selectedFile);
 		this.avatarURL = imageURL;
