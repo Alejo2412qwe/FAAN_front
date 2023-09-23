@@ -60,7 +60,7 @@ export class ForAdopcionComponent implements OnInit {
         const documentDefinition = {
             content: [
                 { image: imageDataUrl, width: 300, height: 130, style: 'roundedImage' },
-                { text: 'SOLICICITUD DE ADOPCIÓN', style: 'header' },
+                { text: 'SOLICITUD DE ADOPCIÓN', style: 'header' },
 
                 { text: 'PERSONALES:', style: 'subheader' },
                 {
@@ -82,7 +82,7 @@ export class ForAdopcionComponent implements OnInit {
                 { text: '\n 1. ¿Quién es la persona que autorizará la adopción del animal? (madre, padre, tutor, etc) ', style: 'question' },
                 { text: '\n' + this.formulario.autorizacion1 },
 
-                { text: `\n 2. ¿Están todos los miembros de la familia enterados y de acuerdo de la intención de adogtar un animal de compañía? Si __${this.formulario.todoMiembrosAcuerdo2 === 'SI' ? 'X' : ''}__ No__${this.formulario.todoMiembrosAcuerdo2 === 'NO' ? 'X' : ''}__ `, style: 'question' },
+                { text: `\n 2. ¿Están todos los miembros de la familia enterados y de acuerdo de la intención de adoptar un animal de compañía? Si __${this.formulario.todoMiembrosAcuerdo2 === 'SI' ? 'X' : ''}__ No__${this.formulario.todoMiembrosAcuerdo2 === 'NO' ? 'X' : ''}__ `, style: 'question' },
 
                 { text: `\n 3. ¿Están de acuerdo? Si __${this.formulario.acuerdo3 === 'SI' ? 'X' : ''}__ No__${this.formulario.acuerdo3 === 'NO' ? 'X' : ''}__ `, style: 'question' },
                 { text: '\n' + this.formulario.responseWhy3, },

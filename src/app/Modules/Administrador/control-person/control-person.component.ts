@@ -170,7 +170,6 @@ export class ControlPersonComponent implements OnInit {
 
 	public validateSaveAndUpdatePerson() {
 		if (this.formPerson.invalid) {
-			console.log(this.formPerson);
 			this.formPerson.markAllAsTouched();
 			return;
 		}
