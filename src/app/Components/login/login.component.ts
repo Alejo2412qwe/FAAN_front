@@ -13,6 +13,7 @@ import { ScreenSizeService } from 'src/app/Service/screen-size-service.service';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { clearLocalStorage } from 'src/app/util/local-storage-manager';
+import { UserResponse } from 'src/app/Models/modelDto/user-response';
 
 @Component({
 	selector: 'app-login',
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
 
 	public initAuthSpinner: boolean = false;
 
-	public infoUsuario!: Usuario;
+	public useResponse = new UserResponse();
 	public roles: Rol[] = [];
 
 	public usuarioLoginDTO = {
@@ -83,53 +84,46 @@ export class LoginComponent implements OnInit {
 		} else {
 			this.initAuthSpinner = true;
 
-			this.authService.login(this.usuarioLoginDTO).subscribe(
-				(data: any) => {
-					if (!data) {
-						clearLocalStorage();
-					} else {
-						setTimeout(() => {
-							this.initAuthSpinner = false;
-						}, 3000);
+			this.authService.login(this.usuarioLoginDTO).subscribe({
+				next: (resp) => {
+					clearLocalStorage();
 
-						this.infoUsuario = data.usuario;
-						this.roles = this.infoUsuario.roles;
-						localStorage.setItem('token', String(data.token));
-						localStorage.setItem(
-							'id_username',
-							String(this.infoUsuario.idUsuario)
-						);
-						localStorage.setItem(
-							'id_persona',
-							String(this.infoUsuario.persona.idPersona)
-						);
-						localStorage.setItem('foto', String(this.infoUsuario.fotoPerfil));
-						localStorage.setItem('username', String(this.infoUsuario.username));
-						if (this.infoUsuario.roles.length > 1) {
-							this.modalView();
-						} else if (this.infoUsuario.roles.length != 0) {
-							this.sharedService.setIsLogginPresent(true);
+					this.initAuthSpinner = false;
 
-							for (let rol of this.infoUsuario.roles!) {
-								localStorage.setItem('rol', String(rol.nombreRol));
-							}
-							setTimeout(() => {
-								this.router.navigate(['/dashboard']).then(() => {
-									this.sharedService.setIsLogginPresent(true);
-									window.location.reload();
-								});
-							}, 1500);
-						} else {
-							this.modalViewRolNoasigando();
-							clearLocalStorage();
+					this.useResponse = resp.userResponse!;
+					this.roles = this.useResponse.roles!;
+					localStorage.setItem('token', String(resp.token));
+					localStorage.setItem(
+						'id_username',
+						String(this.useResponse.idUsuario)
+					);
+
+					localStorage.setItem('foto', String(this.useResponse.urlPhoto));
+					localStorage.setItem('username', String(this.useResponse.username));
+					if (this.useResponse.roles!.length > 1) {
+						this.modalView();
+					} else if (this.useResponse.roles!.length != 0) {
+						this.sharedService.setIsLogginPresent(true);
+
+						for (let rol of this.useResponse.roles!) {
+							localStorage.setItem('rol', String(rol.nombreRol));
 						}
+						setTimeout(() => {
+							this.router.navigate(['/dashboard']).then(() => {
+								this.sharedService.setIsLogginPresent(true);
+								window.location.reload();
+							});
+						}, 1500);
+					} else {
+						this.modalViewRolNoasigando();
+						clearLocalStorage();
 					}
-				},
-				(err) => {
+
+				}, error: (err) => {
 					this.initAuthSpinner = false;
 					this.toastrService.error('REVISE SUS CREDENCIALES', 'ERROR');
 				}
-			);
+			})
 		}
 	}
 
@@ -199,12 +193,6 @@ export class LoginComponent implements OnInit {
 
 	public guardarRolStorage(nombre: string) {
 		this.showSpinner = true;
-
-		this.toastrService.success('Bienvenido', 'Registro Exitoso', {
-			timeOut: 1500,
-			progressBar: true,
-			progressAnimation: 'increasing',
-		});
 
 		localStorage.setItem('rol', String(nombre));
 		setTimeout(() => {
