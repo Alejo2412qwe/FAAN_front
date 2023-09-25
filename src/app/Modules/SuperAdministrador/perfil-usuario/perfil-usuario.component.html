@@ -18,7 +18,7 @@
                     <span *ngIf="persona.genero === 'M'">Masculino</span>
                     <span *ngIf="persona.genero === 'F'">Femenino</span>
                 </li>
-                <li><i class='bx bxs-calendar m-2'></i>{{persona.fechaNacimiento}} </li>
+                <li><i class='bx bxs-calendar m-2'></i>{{persona.fechaNacimiento }} </li>
             </ul>
         </div>
     </section>
@@ -175,7 +175,8 @@
                 <div class="col-12 md:col-6 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="correo" name="correo" [(ngModel)]="persona.correo" [disabled]="true"/>
+                            <input type="text" pInputText id="correo" name="correo" [(ngModel)]="persona.correo"
+                                [disabled]="true" />
                             <label htmlFor="correo" class="pi pi-phone"> Correo <span
                                     class="red-asterisk"></span></label>
                         </span>
