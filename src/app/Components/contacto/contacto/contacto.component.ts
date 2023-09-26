@@ -12,9 +12,9 @@ export class ContactoComponent {
   public enviarG = new EnviarGmail();
 
   constructor(
-    private enviarGmail:RecoverPasswordService,
+    private enviarGmail: RecoverPasswordService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   enviarCorreo() {
     if (
@@ -25,7 +25,6 @@ export class ContactoComponent {
     ) {
       console.log(this.enviarG);
       this.enviarGmail.enviarGmail(this.enviarG).subscribe((data) => {
-        console.log(data);
         this.toastr.success("Enviado Correctamente");
         this.enviarG.nombre = "";
         this.enviarG.correo = "";

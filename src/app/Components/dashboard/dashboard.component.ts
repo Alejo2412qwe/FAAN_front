@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { ToastrService } from 'ngx-toastr';
 import { NumeroAnimalTipo } from 'src/app/Payloads/PayloadNumeroAnimalTipo';
 import { PeyloadNumeroAdopcionFecha } from 'src/app/Payloads/peyloadNumeroAdopcionFecha';
 import { PeyloadNumeroAdopcionRaza } from 'src/app/Payloads/peyloadNumeroAdopcionRaza';
@@ -9,23 +10,22 @@ import { PayloadService } from 'src/app/Service/peyloads.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss','./dashboard.component.css' ]
+  styleUrls: ['./dashboard.component.scss', './dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 
   constructor(
     private _CargarScript: CargarScrpitsService,
-    private payloadService: PayloadService
+    private payloadService: PayloadService,
+    private toastrService: ToastrService
   ) {
     _CargarScript.Cargar(["dashboard"]);
   }
 
   ngOnInit(): void {
     this.getDatas();
-    this.cargarAnimalesPorTipo(); 
+    this.cargarAnimalesPorTipo();
   }
-
-
 
   payloadNAdopcionRaza: PeyloadNumeroAdopcionRaza[] = [];
   payloadNAdopcionYears: PeyloadNumeroAdopcionFecha[] = [];
@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit {
     })
     this.payloadService.getAllPeyloadNumeroAdopcionFecha().subscribe((data) => {
       this.payloadNAdopcionYears = data;
-      console.log(this.payloadNAdopcionYears)
       const years = this.payloadNAdopcionYears.map(animales => animales.fechaAdopcion);
       const adopciones = this.payloadNAdopcionYears.map(animales => animales.numeroAdopcionFecha);
       this.graficoBarras(years, adopciones);
@@ -141,22 +140,9 @@ export class DashboardComponent implements OnInit {
         this.animalesPorTipo = data;
       },
       error => {
-        console.error('Error al obtener datos de animales por tipo', error);
+        this.toastrService.error('INCONVENIENTE AL OBTENER LOS DATOS.', 'ERROR');
       }
     );
   }
-
-
-  slickCarouselConfig = {
-    slidesToShow: 3, // Cantidad de slides a mostrar a la vez
-    slidesToScroll: 1, // Cantidad de slides a mover al hacer clic en las flechas de navegación
-    arrows: true, // Mostrar flechas de navegación
-    prevArrow: '<button type="button" class="slick-prev">Previous</button>', // Texto personalizado para flecha previa
-    nextArrow: '<button type="button" class="slick-next">Next</button>', // Texto personalizado para flecha siguiente
-    verticalSwiping: false, // Deshabilita el desplazamiento vertical para que el carrusel sea horizontal
-    vertical: false, // Deshabilita la orientación vertical para que el carrusel sea horizontal
-    infinite: false, // Deshabilita el desplazamiento infinito para que el carrusel no se repita
-    centerMode: false // Deshabilita el modo centrado para que los slides se muestren a la izquierda
-  };
 
 }

@@ -5,7 +5,8 @@ import { CargarScrpitsService } from 'src/app/Service/cargar-scrpits.service';
 import { NotifacionesService } from 'src/app/Service/notifaciones.service';
 import { StorageService } from 'src/app/Service/storage.service';
 import { WebSocketService } from 'src/app/Service/web-socket.service';
-import { LocalStorageKeys, clearLocalStorage, getRole } from 'src/app/util/local-storage-manager';
+import { FOLDER_IMAGES, getFile } from 'src/app/util/const-data';
+import { LocalStorageKeys, clearLocalStorage, getPhoto, getRole } from 'src/app/util/local-storage-manager';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { SidebarService } from 'src/app/util/service/sidebar.service';
 
@@ -29,6 +30,7 @@ export class SidebarComponent implements OnInit {
   public userLoggin: string = '';
   //Rol
   public rolLoggin: string = '';
+  public urlPhoto: string = '';
 
   public listSidebar: any[] = [];
 
@@ -56,7 +58,8 @@ export class SidebarComponent implements OnInit {
     }
     this.userLoggin = localStorage.getItem("username")!;
     this.rolLoggin = getRole(LocalStorageKeys.ROL)!;
-    console.log(this.userLoggin);
+
+    this.urlPhoto = getPhoto(LocalStorageKeys.PHOTO)!;
 
   }
 
@@ -111,5 +114,9 @@ export class SidebarComponent implements OnInit {
   public dayExact(day: string): string {
     const DIAS_EXACT: Record<string, string> = { '1': 'warning', '2': 'success' }
     return DIAS_EXACT[day] || 'primary';
+  }
+
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGES);
   }
 }

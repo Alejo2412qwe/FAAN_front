@@ -245,7 +245,6 @@ export class ControlUsuariosComponent implements OnInit {
 
 	public findPersonByIdentificacion(event: any) {
 		let identificacion = event;
-		console.log(identificacion);
 
 		if (identificacion.length === 10) {
 			this.personaService.findPersonByIdentificacion(identificacion).subscribe({

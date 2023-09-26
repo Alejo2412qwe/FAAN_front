@@ -91,7 +91,8 @@
                     <i class="pi pi-prime" [style.color]="list.nombreRol === 'ADMINISTRADOR' ? 'blue' : 'green'"
                         style="font-size: 50px;"></i>
                 </span>
-                <div class="text-900 text-xl mb-3 font-medium" style="color: #4b99b4">{{list.nombreRol}}</div>
+                <div class="text-900 text-xl mb-3 font-medium" style="color: #4b99b4">
+                    {{list.nombreRol==='SUPERADMINISTRADOR' ? 'SUPERADMIN': list.nombreRol}}</div>
             </div>
         </div>
     </div>
