@@ -18,6 +18,39 @@
         }
     </style>
 
+    <!-- ANIMALES -->
+    <div class="text-900 font-bold text-6xl mb-4 text-center">
+        <h5><span class="icon a"></span>Nuestros animalitos:</h5>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let mascotas of ListAnimales">
+                <div class="card p-3 mb-4">
+                    <div class="img-wrapper">
+                        <img [src]="getUriFile(mascotas.fotoAnimal!)" alt="img-avatar" class="card-img-top">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{mascotas.nombreAnimal}}</h5>
+                        <p class="card-text"><span style="font-weight: bold;">Placa:</span> {{mascotas.placaAnimal}}</p>
+                        <p class="card-text"><span style="font-weight: bold;">Raza:</span> {{mascotas.nombreRaza}}</p>
+                        <p class="card-text"><span style="font-weight: bold;">Edad:</span> {{mascotas.edad}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-5 text-center">
+            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()"
+                class="btn btn-primary p-button-rounded">
+                <i class="pi pi-arrow-circle-left"></i>
+            </button>
+            <button *ngIf="isPage !== pageTotal - 1 && pageTotal > 0" type="button" (click)="siguientePage()"
+                class="btn btn-primary p-button-rounded" style="margin-left: 50px;">
+                <i class="pi pi-arrow-circle-right"></i>
+            </button>
+        </div>
+    </div>
 
     <div class="grid">
         <div class="col-12 lg:col-4 ">

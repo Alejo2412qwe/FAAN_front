@@ -1,9 +1,4 @@
 :host ::ng-deep {
-    /* .p-dropdown {
-        width: 14rem;
-        font-weight: normal;
-    } */
-
     .animal-nombreAnimal {
         font-size: 2rem;
         font-weight: 700;
@@ -68,8 +63,6 @@
 
 .imagen-container {
     margin: 2rem 0;
-    /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
-
     display: flex;
     justify-content: center;
 }
@@ -85,7 +78,6 @@
 
 .clicked {
     background-color: red;
-    /* Cambia esto al color deseado */
 }
 
 
