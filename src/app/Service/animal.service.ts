@@ -23,7 +23,7 @@ export class AnimalService {
   }
 
   public getAll(page: number, size: number, sort: string[]): Observable<Animal[]> {
-    return this.http.get<Animal[]>(environment.apiuri + '/animal/all/pageable?' + `page=${page}&size=${size}&sort=${sort}`);
+    return this.http.get<Animal[]>(environment.apiuri + '/animal/all?' + `page=${page}&size=${size}&sort=${sort}`);
   }
 
   // ---------------------------------------------------

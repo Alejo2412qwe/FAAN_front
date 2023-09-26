@@ -75,7 +75,6 @@ export class ControlAnimalComponent implements OnInit {
     this.animalesService.getAllAnimalesPagesOrPlacaOrName(this.isTextDigit, this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
       if (data !== null) {
         this.ListAnimales = data.content;
-        console.log(data.content)
         this.pageTotal = data.totalPages
       }
     });
