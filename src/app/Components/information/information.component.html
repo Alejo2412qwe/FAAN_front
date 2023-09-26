@@ -3,7 +3,7 @@
 
 <div class="px-4 py-8 md:px-6 lg:px-8">
     <div class="text-900 font-bold text-6xl mb-4 text-center">
-        <h5><span class="icon a"><i class="fas fa-dog"></i></span>ACERCA DE NOSOTROS:</h5>
+        <h5 class="titulo-importante" style="text-align: center; margin-top: auto; color: #70b8d0;"><span class="icon a"><i class="fas fa-dog"></i></span>ACERCA DE NOSOTROS:</h5>
     </div>
     <style>
         .datai {
@@ -18,6 +18,38 @@
         }
     </style>
 
+    <!-- ANIMALES -->
+    <div class="text-900 font-bold text-6xl mb-4 text-center">
+        <h3><span class="icon a"></span>ANIMALITOS EN NUESTRA FUNDACIÓN</h3>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let mascotas of ListAnimales">
+                <div class="card p-3 mb-4">
+                    <div class="img-wrapper">
+                        <img [src]="getUriFile(mascotas.fotoAnimal!)" alt="img-avatar" class="card-img-top">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{mascotas.nombreAnimal}}</h5>
+                        <p class="card-text"><span style="font-weight: bold;">Raza:</span> {{mascotas.nombreRaza}}</p>
+                        <p class="card-text"><span style="font-weight: bold;">Edad:</span> {{mascotas.edad}} Meses</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-5 text-center">
+            <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()"
+                class="btn btn-primary p-button-rounded">
+                <i class="pi pi-arrow-circle-left"></i>
+            </button>
+            <button *ngIf="isPage !== pageTotal - 1 && pageTotal > 0" type="button" (click)="siguientePage()"
+                class="btn btn-primary p-button-rounded" style="margin-left: 50px;">
+                <i class="pi pi-arrow-circle-right"></i>
+            </button>
+        </div>
+    </div>
 
     <div class="grid">
         <div class="col-12 lg:col-4 ">
@@ -135,7 +167,7 @@
 <body style="border-width: 10px; align-items: center;">
     <section>
         <br>
-        <h3 class="titulo-importante" style="text-align: center; margin-top: auto; color: #70b8d0;">
+        <h3 style="text-align: center; margin-top: auto;">
             ENCUENTRANOS
         </h3>
         <h5 class="location">
@@ -144,7 +176,7 @@
     </section>
 </body>
 
-<div class="data mt-2">
+<div class="data mt-2" style="margin-bottom: 30px;">
     <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3709.3433028264044!2d-79.03697322536023!3d-3.013359289952116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cd203a6e623497%3A0xf3f7f62bbb1c256b!2sEstadio%20Parroquial%20-Tarqui!5e1!3m2!1ses!2sec!4v1694054160823!5m2!1ses!2sec"
         width="100%" height="750" style="border:0;" allowfullscreen="" loading="lazy"
