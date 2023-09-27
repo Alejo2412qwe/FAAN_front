@@ -73,8 +73,24 @@ export class PerfilUsuarioComponent implements OnInit {
 
 		if (this.avatarURLProfile?.trim()) {
 			try {
-				this.usuario.fotoPerfil = await this.uploadImage();
-				if (this.usuario.fotoPerfil?.trim()) this.usuarioService.updateUsuario(this.usuario.idUsuario!, this.usuario).subscribe();
+				let uri = await this.uploadImage();
+
+				if (uri?.trim()) {
+					this.usuarioService.updatePictureUserById(this.usuario.idUsuario!, uri).subscribe({
+						next: (resp) => {
+							if (resp === 1) {
+								this.toastrService.success('Imagen actualizada correctamente.');
+								localStorage.setItem('foto', String(uri));
+							} else {
+								this.toastrService.warning('No se pudo actualizar la imagen.', 'Error');
+							}
+						},
+						error: (err) => {
+							this.toastrService.warning('Problemas al subir la imagen', '¡Comuníquese con soporte!');
+						}
+					});
+				}
+
 			} catch (error) {
 				this.toastrService.warning(
 					'Problemas al subir la imagen',

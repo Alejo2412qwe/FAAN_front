@@ -1,4 +1,5 @@
-import { environment } from "../environment/enviroment";
+import { environment } from "src/environment/enviroment";
+
 
 export const ROLS_SYSTEM = [
     "SUPERADMINISTRADOR",

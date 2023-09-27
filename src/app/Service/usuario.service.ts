@@ -50,8 +50,13 @@ export class UsuarioService {
     return this.http.get<boolean>(environment.apiuri + `/usuario/existByUsername/${username}`);
   }
 
-
   public findByIdentificacionOrUsername(key: string): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(environment.apiuri + '/usuario/findByIdentificacionOrUsername/filter/' + key);
   }
+
+  //update image-----------------------
+  public updatePictureUserById(idUser: number, picture: string): Observable<number> {
+    return this.http.get<number>(environment.apiuri + '/usuario/updatePictureUserById/' + idUser + '/' + picture);
+  }
+
 }

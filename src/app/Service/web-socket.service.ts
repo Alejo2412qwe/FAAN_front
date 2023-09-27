@@ -17,7 +17,7 @@ export class WebSocketService {
       return; // Ya está conectado, no hagas nada
     }
 
-    this.socket = new WebSocket('ws://localhost:8080/my-websocket-endpoint');
+    this.socket = new WebSocket('ws://167.99.0.239:8080/my-websocket-endpoint');
 
     this.socket.onopen = () => {
       console.log('Conexión WebSocket establecida');
