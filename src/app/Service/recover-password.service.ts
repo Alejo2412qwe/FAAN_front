@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../Models/usuario';
-import { environment } from '../environment/enviroment';
+
 import { RecoverPassword } from '../Models/recover-password';
 import { EnviarGmail } from '../Models/enviargmail';
+import { environment } from 'src/environment/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class RecoverPasswordService {
     return this.http.post<String>(environment.apiuriPublic + '/auth/cambiarContraseniaUsuario', recoverPassword);
   }
 
-  public enviarGmail(enviargmail: EnviarGmail):Observable<EnviarGmail>{
-    return this.http.post<EnviarGmail>(environment.apiuriPublic+'/auth/enviar', enviargmail);
+  public enviarGmail(enviargmail: EnviarGmail): Observable<EnviarGmail> {
+    return this.http.post<EnviarGmail>(environment.apiuriPublic + '/auth/enviar', enviargmail);
   }
 }
