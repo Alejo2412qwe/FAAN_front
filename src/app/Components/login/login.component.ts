@@ -198,7 +198,7 @@ export class LoginComponent implements OnInit {
 		setTimeout(() => {
 			this.showSpinner = false;
 			window.location.reload();
-			location.replace('/home');
-		}, 1500);
+			location.replace('/dashboard');
+		}, 200);
 	}
 }
