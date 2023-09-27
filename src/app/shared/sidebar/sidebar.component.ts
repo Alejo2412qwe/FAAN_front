@@ -107,8 +107,9 @@ export class SidebarComponent implements OnInit {
   }
 
   removerNotificacion(data: any) {
-    this.notificacionService.updateNotificacionEstado(data._id).subscribe(data => {
-    })
+    this.listNotificaciones = this.listNotificaciones.filter((item) => item._id !== data._id);
+    this.countNotificaciones = 0;
+    this.notificacionService.updateNotificacionEstado(data._id).subscribe(data => { })
   }
 
   public dayExact(day: string): string {

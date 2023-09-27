@@ -21,6 +21,7 @@ export class AuthGaurdGuard implements CanActivate {
         const role = getRole(LocalStorageKeys.ROL);
 
         if (isLoggedIn && expectedRoles.includes(role)) {
+
             return true;
         }
 

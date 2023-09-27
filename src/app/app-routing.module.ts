@@ -27,41 +27,45 @@ import { AuthGaurdGuard } from './guard/auth.guard';
 
 const routes: Routes = [
 
-  // { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+  // PUBLIC---------------------------------------------------------------------------------------------
+  { path: 'login', component: LoginComponent },
 
+  { path: 'informacion', component: InformationComponent },
 
-  //Password recover..
+  { path: 'formulario-adopcion', component: ForAdopcionComponent },
+
+  { path: 'donaciones', component: DonacionesComponent },
+
+  { path: 'contacto', component: ContactoComponent },
+
+  { path: 'home', component: HomeComponent },
+
   { path: 'recover/password/:token', component: RecoverPasswordComponent, data: { titulo: 'Dashboard' } },
-  // { path: 'recover-password', component: RecoverPasswordComponent },
 
   { path: 'person/gestion', component: ControlPersonComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Control de las Personas/Rescatistas', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
-  // MASCOTAS
   { path: 'registro-mascota', component: RegistroMascotasComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Registro de Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+
   { path: 'control-animal', component: ControlAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Control de los Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+
   { path: 'adopcion-animal', component: AdopcionAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Adopción de los Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   //REGISTRO DE TIPO Y RAZA DE ANIMAL-----------------------------------------------------
   { path: 'animal-tipo', component: RegisterTipoAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Gestión del Tipo de Animal', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+
   { path: 'animal-raza', component: RegisterRazaAnimalComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Gestión de las Razas de los Animales', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   // SHARED
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Dashboard', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+
   { path: 'fundacion', component: FundacionComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Administración de la Fundación', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
+
   { path: 'perfil-usuario', component: PerfilUsuarioComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Perfil del Usuario', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
   // SUPERADMIN
   { path: 'control-usuario', component: ControlUsuariosComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Control de los Usuarios', expectedRoles: ['SUPERADMINISTRADOR', 'ADMINISTRADOR'] } },
 
-  // PUBLIC
-  { path: 'login', component: LoginComponent },
-  { path: 'informacion', component: InformationComponent },
-  { path: 'formulario-adopcion', component: ForAdopcionComponent },
-  { path: 'donaciones', component: DonacionesComponent },
-  { path: 'contacto', component: ContactoComponent },
-  { path: 'home', component: HomeComponent },
-
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'dashboard' },
 
 ];
 
